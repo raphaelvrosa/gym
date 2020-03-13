@@ -2,7 +2,7 @@ import os
 import logging
 import time
 import json
-from gym.common.defs.tools import PROBER_TCPREPLAY
+from gym.common.defs import PROBER_TCPREPLAY
 from gym.agent.probers.prober import Prober
 
 logger = logging.getLogger()
@@ -19,9 +19,9 @@ class ProberTcpReplay(Prober):
         'pcap':'-f'
     }
 
-    METRICS = [
-        'bandwidth',
-    ]
+    METRICS = {
+        'bandwidth': 'Estimated throughput',
+    }
 
     def __init__(self):
         Prober.__init__(self, id=PROBER_TCPREPLAY, name="tcpreplay",

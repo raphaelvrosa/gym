@@ -1,60 +1,9 @@
-import logging
-logger = logging.getLogger(__name__)
-
 import os 
 import json 
+import logging
 
-from gym.common.es.es import ES
 
-
-class StorageES:
-    def __init__(self):
-        self.es = ES()
-
-    def _parse(self, item):
-        _index = item.get('where', None)
-        _type = item.get('what', None)
-        _id = item.get('id', None)
-        _body = item.get('body', None)
-        if all([_index, _type, _id]):
-            return (_index, _type, _id, _body)
-        else:
-            return None
-
-    def add(self, commit):
-        parsed = self._parse(commit)
-        if parsed:
-            _index, _type, _id, _body = parsed
-            ok = self.es.add(index=_index, type=_type, id=_id, body=_body)
-            return ok
-        return False
-
-    def remove(self, commit):
-        parsed = self._parse(commit)
-        if parsed:
-            _index, _type, _id, _ = parsed
-            ok = self.es.delete(index=_index, type=_type, id=_id)
-            return ok
-        return False
-
-    def retrieve(self, commit):
-        parsed = self._parse(commit)
-        if parsed:
-            _index, _type, _id, _ = parsed
-            data = self.es.get(index=_index, type=_type, id=_id)
-            return data
-        return None
-
-    def store(self, vnfbr):
-        logger.debug("Elasticsearch Store VNF-BR")
-        index_id = vnfbr.get_id()
-        vnfbr_json = vnfbr.to_json()
-        commit = {'where': index_id, 'what': 'vnfbr', 'id': 1, 'body': vnfbr_json}
-        
-        if self.add(commit):
-            logger.info('ok: vnfbr %s stored', index_id)
-        else:
-            logger.info('error: vnfbr NOT %s stored', index_id)
+logger = logging.getLogger(__name__)
 
 
 class StorageDisk:
@@ -100,7 +49,6 @@ class StorageDisk:
 class Storage:
     MODES = {
         "disk": StorageDisk,
-        "elastic": StorageES,
     }
     
     def __init__(self, defaults=['disk']):

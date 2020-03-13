@@ -1,40 +1,38 @@
 import logging
 import argparse
-
-from yaml import load, dump
-try:
-    from yaml import CLoader as Loader, CDumper as Dumper
-except ImportError:
-    from yaml import Loader, Dumper
+import yaml
 
 logger = logging.getLogger(__name__)
 
 
 class Config:
     def __init__(self):
-        self.config = None
+        self._info = None
 
-    def parse(self, filename):
+    def get(self):
+        return self._info
+
+    def load(self, filename):
         data = {}
         with open(filename, 'r') as f:
-            data = load(f, Loader=Loader)
+            data = yaml.load(f, Loader=yaml.SafeLoader)
         return data
 
-    def get_config(self, argv=None):
+    def parse(self, argv=None):
         parser = argparse.ArgumentParser(
             description='Gym App')
 
-        parser.add_argument('--id',
+        parser.add_argument('--uuid',
                             type=str,
-                            help='Define the app id (default: None)')
+                            help='Define the app unique id (default: None)')
 
-        parser.add_argument('--url',
+        parser.add_argument('--address',
                             type=str,
-                            help='Define the app url (host:port) (default: None)')
+                            help='Define the app address (host:port) (default: None)')
 
         parser.add_argument('--contacts',
                             nargs='+',
-                            help='Define the app contacts (default: [])')
+                            help='Define the app contacts - role/address (e.g., agent/localhost:18080) (default: [])')
 
         parser.add_argument('--debug',
                             action='store_true',
@@ -42,42 +40,46 @@ class Config:
 
         parser.add_argument('--cfg',
                             type=str,
-                            help='Define the cfg (id + url) (default: None)')
+                            help='Define the yaml cfg file (id + address) (default: None)')
 
-        self.cfg, unknown = parser.parse_known_args(argv)
+        self.cfg, _ = parser.parse_known_args(argv)
         
-        info = self.check_config()
-        return info
+        info = self.check()
+        if info:
+            self._info = info
+            return True
+        
+        return False
 
     def cfg_args(self):
         cfgFile = self.cfg.cfg
         if cfgFile:
-            cfg_data = self.parse(cfgFile)
+            cfg_data = self.load(cfgFile)
             return cfg_data
         return None
             
-    def check_config(self):
+    def check(self):
         _contacts = None
 
         if self.cfg.cfg:
             cfg_data = self.cfg_args()
-            _id = cfg_data.get('id', None)
-            _url = cfg_data.get('url', None)
+            _id = cfg_data.get('uuid', None)
+            _address = cfg_data.get('address', None)
             _contacts = cfg_data.get('contacts', None)
         else:
-            _id, _url = self.cfg.id, self.cfg.url
+            _id, _address = self.cfg.uuid, self.cfg.address
             _contacts = self.cfg.contacts
 
-        if _id and _url:
-            logger.info("Init cfg: id %s - url %s", _id, _url)
+        if _id and _address:
+            logger.info("Init cfg: id %s - address %s", _id, _address)
             info = {
-                "id": _id,
-                "url": _url,
+                "uuid": _id,
+                "address": _address,
                 "contacts": _contacts,
                 "debug": self.cfg.debug
             }
-            print("provided info", info)
+            print(f'Argv: {info}')
             return info
         else:
-            print("Init cfg NOT provided - both must exist: id and url (provided values: %s, %s)" % (_id, _url))
+            print("Init cfg NOT provided - both must exist: id and address (provided values: %s, %s)" % (_id, _address))
             return None

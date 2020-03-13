@@ -1,7 +1,7 @@
 import os
 import logging
 import json
-from gym.common.defs.tools import PROBER_PKTGEN
+from gym.common.defs import PROBER_PKTGEN
 from gym.agent.probers.prober import Prober
 
 logger = logging.getLogger()
@@ -22,9 +22,9 @@ class ProberPktgen(Prober):
         'burst': '-b',
     }
 
-    METRICS = [
-        'bandwidth',
-    ]
+    METRICS = {
+        'bandwidth': 'Estimated throughput',
+    }
 
     def __init__(self):
         Prober.__init__(self, id=PROBER_PKTGEN, name="pktgen",

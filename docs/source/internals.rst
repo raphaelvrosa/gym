@@ -73,3 +73,12 @@ Gym aims to support different storage options of its output results (VNF-BRs) in
 Debugging
 Providing the option --debug when starting any gym component, all the debug messages are shown in the terminal. 
 Later, gym aims to create granular debugging methods for its components.
+
+
+Yang Models
+***********
+
+
+Messages
+********
+

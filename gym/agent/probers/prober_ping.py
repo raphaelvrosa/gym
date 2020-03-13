@@ -3,7 +3,7 @@
 
 import logging
 from gym.agent.probers.prober import Prober
-from gym.common.defs.tools import PROBER_PING
+from gym.common.defs import PROBER_PING
 
 logger = logging.getLogger(__name__)
 
@@ -17,10 +17,13 @@ class ProberPing(Prober):
         'target':'target',
     }
 
-    METRICS = [
-        'latency',
-        'frame_loss'
-    ]
+    METRICS = {
+        'rtt_min': 'min round-trip-time',
+        'rtt_avg': 'avg round-trip-time',
+        'rtt_max': 'max round-trip-time',
+        'rtt_mdev': 'std dev round-trip-time',
+        'frame_loss': 'frame loss ratio',
+    }
 
     def __init__(self):
         Prober.__init__(self, id=PROBER_PING, name="ping",
@@ -62,46 +65,39 @@ class ProberPing(Prober):
                     pkt_loss = loss_line[-3][0]
                     pkt_loss_units = loss_line[-3][-1]
                 
-                
-
                 m1 = {
                     "name": "rtt_min",
-                    "series": False,
                     "type": "float",
                     "unit": rtt_units,
-                    "value": float(rtts[0].replace(",", ".")),
+                    "scalar": float(rtts[0].replace(",", ".")),
                 }
                 
                 m2 = {
                     "name": "rtt_avg",
-                    "series": False,
                     "type": "float",
                     "unit": rtt_units,
-                    "value": float(rtts[1].replace(",", ".")),
+                    "scalar": float(rtts[1].replace(",", ".")),
                 }
 
                 m3 = {
                     "name": "rtt_max",
-                    "series": False,
                     "type": "float",
                     "unit": rtt_units,
-                    "value": float(rtts[2].replace(",", ".")),
+                    "scalar": float(rtts[2].replace(",", ".")),
                 }
 
                 m4 = {
                     "name": "rtt_mdev",
-                    "series": False,
                     "type": "float",
                     "unit": rtt_units,
-                    "value": float(rtts[3].replace(",", ".")),
+                    "scalar": float(rtts[3].replace(",", ".")),
                 }
 
                 m5 = {
                     "name": "frame_loss",
-                    "series": False,
                     "type": "float",
                     "unit": pkt_loss_units,
-                    "value": float(pkt_loss),
+                    "scalar": float(pkt_loss),
                 }
 
                 _eval = [m1, m2, m3, m4, m5]

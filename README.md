@@ -28,99 +28,90 @@ month={Sep.},
 }
 ```
 
-## Requirements
-
-This guide assumes you have an environment properly setup with:
-* Python 3
-* Setuptools
-* Python Pip3
-* Docker
 
 ## Installing
 
 All these packages can be installed using the command below.
-This command requires root privileges. It installs gym components in the bare metal and creates the raphaelvrosa/gym:0.1 docker image to be used by the test cases.
+This command requires root privileges. It installs gym components in the bare metal and creates the raphaelvrosa/gym:latest docker image to be used by the test cases.
+
+
+### Dependencies
+
+Gym is tested in Ubuntu, version 18.04 onwards. 
+
+Gym depends on python 3.7, because it uses some gRPC libraries via asyncio. 
+
+To run most of the examples, gym makes use of Containernet (an extension of Mininet to run containers), thus it needs to install Docker and Mininet to do so.
+Besides, these dependencies also download and build other docker images needed for most of the gym examples, download some pcap files and place them under /mnt/pcaps folder.
+The installation of such dependencies are placed into the examples/build_reqs.sh file. To install such dependencies, follow:
 
 ```bash
-$ sudo ./build.sh
+$ sudo apt install git
+
+$ git clone https://github.com/raphaelvrosa/gym
+
+$ cd gym
+
+$ sudo examples/build_reqs.sh
 ```
 
-It will install all the packages and create the docker image that will be
-used in the test scenario.
 
-It's also recommended to add your user to the `docker` group:
+It's also recommended to add your user to the `docker` group (so no need to sudo the docker command in the terminal):
 
 ```bash
 $ sudo usermod -a -G docker $USER
 ```
 
-Then logout and log in back again.
+Then logout the OS and login again, so the group permissions are enabled.
+
+
+### Gym
+
+To install gym and build a docker image with all its components operational.
+
+```bash
+$ sudo ./build.sh
+```
+
+This command will install all the python packages needed by gym (see the setup.py file), and it will make available all the gym core components executables (i.e., gym-player, gym-manager, gym-monitor, gym-agent) to be run by terminal. 
+
 
 To install Gym for **development** purposes, run:
 
 ```bash
-$ sudo python3 setup.py develop
+$ sudo python3.7 setup.py develop
 ```
 
 This will not actually install all the files in your system, but just link them to your development directory, simplifying the code/deploy/test cycle.
 
 ### Docker Image
 
-You can also find the gym docker image directly at:
-* https://hub.docker.com/r/raphaelvrosa/gym
+You can also find the gym docker image directly at: https://hub.docker.com/r/raphaelvrosa/gym
 
 
-## Tests
+## Examples
 
-In the folder gym/tests there exists a run.sh file that can trigger the execution of different gym test cases.
-To execute any test just type, for instance "sudo -H ./run.sh start 0". And after run, to clean all the test data just run "sudo -H ./run.sh stop".
+In the folder gym/examples there exists a run.sh file that can trigger the execution of different examples.
+
+To execute any test just type, for instance "sudo -H ./run.sh start 0". And after run, to stop and clean all the test environment/logs/output just run "sudo -H ./run.sh stop".
 
 There are 4 tests enabled by default in the run.sh file. Each one of the tests requires different capabilities, as described below.
-For instance, to be able to run tests 1, 2 and 3, you must install:
-* Containernet: https://containernet.github.io/
 
-Besides, tests 1, 2 and 3 demand VNF images to be build. Thus:
-```bash
-$ cd gym/tests/utils
-$ sudo ./build_reqs.sh
-```
+**Important:** To execute examples 1, 2 and 3 follow the instructions in the topic Installing/Dependencies previously explained in this readme.
 
-Important: Tests were performed on Ubuntu 18.04.
+Description of the examples:
 
-### Test 0
+* #0: Performs the execution of two agents just executing ping commands locally on the host machine.
 
-Performs the execution of two agents just executing ping commands locally on the host machine.
+* #1: Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF.
 
-### Test 1
+* #2: Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF, while its container is monitored during the test.
 
-Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF.
-
-**Notice**: In the tests 1, 2 and 3, the flow of information consists in starting a player component and the containernet platform. When deployed a layout on player, it requires containernet to build the scenario to run the other gym components needed for the test. After the topology is deployed, player reaches manager to get the components status, and starts deploying the tasks. After all tasks are finished, player demands the scenario to be finished in the containernet platform and finally outputs the vnf-br to a json file.
-
-### Test 2
-
-Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF, while its container is monitored during the test.
-
-If not yet created, before running Test 2, you need to create the (SUT) VNF bypass docker image, following:
-```bash
-$ cd gym/tests/utils
-$ sudo ./build_reqs.sh
-```
-
-### Test 3
-
-Uses the containernet platform to deploy agents and a Suricata-IDS VNF. The agents perform the execution of tcpreplay traffic through the target VNF, while its container is monitored externally and the Suricata process is monitored internally in the VNF.
+* #3: Uses the containernet platform to deploy agents and a Suricata-IDS VNF. The agents perform the execution of tcpreplay traffic through the target VNF, while its container is monitored externally and the Suricata process is monitored internally in the VNF.
 The test consists in executing different pcap files using tcpreplay  while the VNF suricata has loaded different rule sets.
 In the end all the metrics are saved into csv files into the gym/tests/csv folder, included the timeseries monitoring of the container, and the overall VNF-PP metrics according to the VNF-BD input parameters. 
 
-If not yet created, before running Test 3, you need to create the (SUT) Suricata IDS docker image and download pcap files, following:
-```bash
-$ cd gym/tests/utils
-$ sudo ./build_reqs.sh
-```
-
-After that the Agent source of stimulus will be able to mount the /mnt/pcaps/ directory and replay the pcap files for Test 3.
-Thus, now the requirements are fulfilled for Test 3 execution.
+**Notice**: In the tests 1, 2 and 3, the flow of information consists in starting a player component and the containernet platform. When deployed a layout on player, it requires containernet to build the scenario to run the other gym components needed for the test. After the topology is deployed, player reaches manager to get the components status, and starts deploying the tasks. After all tasks are finished, player demands the scenario to be finished in the containernet platform and finally outputs the vnf-br to a json file.
 
 # License
 

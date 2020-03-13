@@ -11,10 +11,11 @@ Welcome to Gym's documentation!
    :caption: Contents:
 
    intro.rst
-   tests.rst
    architecture.rst
-   workflow.rst
+   workflow.rst 
    internals.rst
+   starting.rst
+   tests.rst
 
 
 

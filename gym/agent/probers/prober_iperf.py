@@ -1,6 +1,6 @@
 import logging
 import time
-from gym.common.defs.tools import PROBER_IPERF
+from gym.common.defs import PROBER_IPERF
 from gym.agent.probers.prober import Prober
 
 logger = logging.getLogger()
@@ -15,9 +15,9 @@ class ProberIperf(Prober):
         'client':'-c',
     }
 
-    METRICS = [
-        'bandwidth',
-    ]
+    METRICS = {
+        'bandwidth': 'Estimated throughput',
+    }
 
     def __init__(self):
         Prober.__init__(self, id=PROBER_IPERF, name="iperf",

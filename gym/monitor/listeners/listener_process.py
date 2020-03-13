@@ -5,7 +5,7 @@ import psutil as ps
 import os
 
 from gym.monitor.listeners.listener import Listener
-from gym.common.defs.tools import LISTENER_PROCESS
+from gym.common.defs import LISTENER_PROCESS
 
 import time
 from datetime import datetime
@@ -19,13 +19,8 @@ class ListenerProcess(Listener):
         'pid': 'pid',
         'duration': 'duration',
     }
-
-    METRICS = {
-        'cpu': 'cpu',
-        'memory': 'memory',
-        'disk': 'disk',
-        'bandwidth': 'bandwidth',
-    }
+    
+    METRICS = {0: 'cpu_num', 1: 'cpu_percent', 2: 'user_time', 3: 'system_time', 4: 'num_threads', 5: 'mem_percent', 6: 'read_count', 7: 'read_bytes', 8: 'write_count', 9: 'write_bytes', 10: 'read_chars', 11: 'write_chars', 12: 'time'}
 
     def __init__(self):
         Listener.__init__(self, id=LISTENER_PROCESS, name='Host',
@@ -224,15 +219,15 @@ class ListenerProcess(Listener):
 
         if out:
             metric_names = list(out[0].keys())
+            
             for name in metric_names:
-                metric_values = [ float(out_value.get(name)) for out_value in out ]
+                metric_values = dict([ (out.index(out_value),float(out_value.get(name))) for out_value in out ])
 
                 m = {
                     "name": name,
-                    "series": True,
                     "type": "float",
                     "unit": "",
-                    "value": metric_values,
+                    "series": metric_values,
                 }
 
                 metrics.append(m)

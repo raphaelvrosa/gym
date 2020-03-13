@@ -1,0 +1,93 @@
+'Download plantuml from http://plantuml.sourceforge.net/ 
+'Generate png with java -jar plantuml.jar <file> 
+'Output in img/<module>.png 
+'If Java spits out memory error increase heap size with java -Xmx1024m  -jar plantuml.jar <file> 
+@startuml img/vnf-pp.png 
+hide empty fields 
+hide empty methods 
+hide <<case>> circle
+hide <<augment>> circle
+hide <<choice>> circle
+hide <<leafref>> stereotype
+hide <<leafref>> circle
+page 1x1 
+Title vnf-pp 
+note top of vnf_pp_vnf_pp : <b>Namespace: </b> urn:ietf:params:xml:ns:yang:vnf-pp \n<b>Prefix: </b> vnf-pp \n<b>Organization : </b>\nIETF/BMWG \n<b>Contact : </b>\nManuel Peuster <peuster@mail.uni-paderborn.de>, Raphael Vicente Rosa <raphaelvrosa@gmail.com> \n<b>Revision : </b> 2019-10-15 \n
+package "vnf-pp:vnf-pp" as vnf_pp_vnf_pp { 
+class "vnf-pp" as vnf_pp << (M, #33CCFF) module>> 
+class "tuple" as vnf_pp_I_tuple_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_tuple_grouping : key : string  
+vnf_pp_I_tuple_grouping : value : string  
+class "settings" as vnf_pp_I_settings_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_settings_grouping : id : string  
+vnf_pp_I_settings_grouping : name : string  
+vnf_pp_I_settings_grouping : version : string  
+vnf_pp_I_settings_grouping : author : string  
+vnf_pp_I_settings_grouping : description : string  
+vnf_pp_I_settings_grouping : timestamp : string  
+class "metric" as vnf_pp_I_metric_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_metric_grouping : name : string  
+vnf_pp_I_metric_grouping : unit : string  
+vnf_pp_I_metric_grouping : type : string   {mandatory}
+class "value" as vnf_pp_I_metric_I_value <<choice>> 
+vnf_pp_I_metric_grouping .. vnf_pp_I_metric_I_value : choice 
+class "scalar" as vnf_pp_I_metric_I_value_I_scalar_case <<case>>
+vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_scalar_case  : choice value
+vnf_pp_I_metric_I_value_I_scalar_case : scalar : string   {mandatory}
+class "vector" as vnf_pp_I_metric_I_value_I_vector_case <<case>>
+vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_vector_case  : choice value
+vnf_pp_I_metric_I_value_I_vector_case : vector []: string 
+class "tuple-vector" as vnf_pp_I_metric_I_value_I_tuple_vector_case <<case>>
+vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_tuple_vector_case  : choice value
+class "tuple-vector" as vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector << (L, #FF7700) list>> 
+vnf_pp_I_metric_I_value_I_tuple_vector_case *-- "0..N" vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector 
+vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector : tuple {uses} 
+class "evaluation" as vnf_pp_I_evaluation_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_evaluation_grouping : id : string  
+class "source" as  vnf_pp_I_evaluation_I_source <<container>> 
+vnf_pp_I_evaluation_grouping *-- "1" vnf_pp_I_evaluation_I_source 
+vnf_pp_I_evaluation_I_source : id : string  
+vnf_pp_I_evaluation_I_source : name : string  
+vnf_pp_I_evaluation_I_source : type : string  
+vnf_pp_I_evaluation_I_source : version : string  
+vnf_pp_I_evaluation_I_source : call : string  
+class "timestamp" as  vnf_pp_I_evaluation_I_timestamp <<container>> 
+vnf_pp_I_evaluation_grouping *-- "1" vnf_pp_I_evaluation_I_timestamp 
+vnf_pp_I_evaluation_I_timestamp : start : string  
+vnf_pp_I_evaluation_I_timestamp : stop : string  
+class "metrics" as vnf_pp_I_evaluation_I_metrics << (L, #FF7700) list>> 
+vnf_pp_I_evaluation_grouping *-- "0..N" vnf_pp_I_evaluation_I_metrics 
+vnf_pp_I_evaluation_I_metrics : metric {uses} 
+class "snapshot" as vnf_pp_I_snapshot_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_snapshot_grouping : id : string  
+vnf_pp_I_snapshot_grouping : trial : uint32  
+class "origin" as  vnf_pp_I_snapshot_I_origin <<container>> 
+vnf_pp_I_snapshot_grouping *-- "1" vnf_pp_I_snapshot_I_origin 
+vnf_pp_I_snapshot_I_origin : id : string  
+vnf_pp_I_snapshot_I_origin : role : string  
+vnf_pp_I_snapshot_I_origin : host : string  
+class "evaluations" as vnf_pp_I_snapshot_I_evaluations << (L, #FF7700) list>> 
+vnf_pp_I_snapshot_grouping *-- "0..N" vnf_pp_I_snapshot_I_evaluations 
+vnf_pp_I_snapshot_I_evaluations : evaluation {uses} 
+class "report" as vnf_pp_I_report_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_report_grouping : test : uint32  
+class "snapshots" as vnf_pp_I_report_I_snapshots << (L, #FF7700) list>> 
+vnf_pp_I_report_grouping *-- "0..N" vnf_pp_I_report_I_snapshots 
+vnf_pp_I_report_I_snapshots : snapshot {uses} 
+class "vnf-pp" as vnf_pp_I_vnf_pp_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_vnf_pp_grouping : settings {uses} 
+class "reports" as vnf_pp_I_vnf_pp_I_reports << (L, #FF7700) list>> 
+vnf_pp_I_vnf_pp_grouping *-- "0..N" vnf_pp_I_vnf_pp_I_reports 
+vnf_pp_I_vnf_pp_I_reports : report {uses} 
+} 
+
+vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector --> vnf_pp_I_tuple_grouping : uses 
+vnf_pp_I_evaluation_I_metrics --> vnf_pp_I_metric_grouping : uses 
+vnf_pp_I_snapshot_I_evaluations --> vnf_pp_I_evaluation_grouping : uses 
+vnf_pp_I_report_I_snapshots --> vnf_pp_I_snapshot_grouping : uses 
+vnf_pp_I_vnf_pp_grouping --> vnf_pp_I_settings_grouping : uses 
+vnf_pp_I_vnf_pp_I_reports --> vnf_pp_I_report_grouping : uses 
+center footer
+ <size:20> UML Generated : 2020-02-06 19:13 </size>
+ endfooter 
+@enduml 

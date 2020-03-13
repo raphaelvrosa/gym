@@ -4,13 +4,13 @@ logger = logging.getLogger(__name__)
 import docker
 
 from gym.monitor.listeners.listener import Listener
-from gym.common.defs.tools import LISTENER_DOCKER
+from gym.common.defs import LISTENER_DOCKER
 
 import time
 from datetime import datetime
 
-
 # Based on: https://github.com/signalfx/docker-collectd-plugin/blob/master/dockerplugin.py
+
 class ListenerDocker(Listener):
     PARAMETERS = {
         'interval':'interval',
@@ -18,12 +18,7 @@ class ListenerDocker(Listener):
         'duration':'duration',
     }
 
-    METRICS = [
-        'cpu',
-        'memory',
-        'disk',
-        'network',
-    ]
+    METRICS = {0: 'system_cpu_usage', 1: 'cpu_total_usage', 2: 'cpu_usage_in_kernelmode', 3: 'cpu_usage_in_usermode', 4: 'cpu_percent', 5: 'mem_active_anon', 6: 'mem_active_file', 7: 'mem_cache', 8: 'mem_dirty', 9: 'mem_hierarchical_memory_limit', 10: 'mem_hierarchical_memsw_limit', 11: 'mem_inactive_anon', 12: 'mem_inactive_file', 13: 'mem_mapped_file', 14: 'mem_pgfault', 15: 'mem_pgmajfault', 16: 'mem_pgpgin', 17: 'mem_pgpgout', 18: 'mem_rss', 19: 'mem_rss_huge', 20: 'mem_total_active_anon', 21: 'mem_total_active_file', 22: 'mem_total_cache', 23: 'mem_total_dirty', 24: 'mem_total_inactive_anon', 25: 'mem_total_inactive_file', 26: 'mem_total_mapped_file', 27: 'mem_total_pgfault', 28: 'mem_total_pgmajfault', 29: 'mem_total_pgpgin', 30: 'mem_total_pgpgout', 31: 'mem_total_rss', 32: 'mem_total_rss_huge', 33: 'mem_total_unevictable', 34: 'mem_total_writeback', 35: 'mem_unevictable', 36: 'mem_writeback', 37: 'mem_percent', 38: 'mem_limit', 39: 'mem_max_usage', 40: 'mem_usage', 41: 'io_read', 42: 'io_write'}
 
     def __init__(self, url=None):
         Listener.__init__(self, id=LISTENER_DOCKER, name='Docker',
@@ -31,9 +26,9 @@ class ListenerDocker(Listener):
                           metrics=ListenerDocker.METRICS)
         self._command = None
         self._connected_to_docker = False
-        self.url = url
+        self._url = url
         if not url:
-            self.url = 'unix://var/run/docker.sock'
+            self._url = 'unix://var/run/docker.sock'
         self.connect()
 
     def connect(self):
@@ -140,14 +135,12 @@ class ListenerDocker(Listener):
 
     def _stats(self, name=None):
         summary_stats = {}
-        # instance = None
-        # instance = self._dc.get(name)
-        # print(dir(self._dc.stats))
-        # print(self._dc.stats(container=name))
-        # instances = self._dc.containers.list()
         
-        stats = self._dc.stats(container=name, decode=True, stream=False)
-        # stats = instance.stats(decode=True, stream=False)
+        container = self._dc.containers.get(name)
+        if container:
+            stats = container.stats(stream=False)
+        else:
+            return summary_stats
         
         stats_cpu = self._stats_cpu(stats)
         summary_stats.update(stats_cpu)
@@ -204,15 +197,15 @@ class ListenerDocker(Listener):
 
         if out:
             metric_names = list(out[0].keys())
+
             for name in metric_names:
-                metric_values = [ float(out_value.get(name)) for out_value in out ]
+                metric_values = dict([ (out.index(out_value),float(out_value.get(name))) for out_value in out ])
 
                 m = {
                     "name": name,
-                    "series": True,
                     "type": "float",
                     "unit": "",
-                    "value": metric_values,
+                    "series": metric_values,
                 }
 
                 metrics.append(m)

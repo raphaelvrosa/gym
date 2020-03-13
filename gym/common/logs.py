@@ -1,6 +1,7 @@
 import logging
 import logging.config
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -13,8 +14,11 @@ class Logs:
                 'version': 1,
                 'disable_existing_loggers': False,
                 'formatters': {
-                    'standard': {
+                    'strict': {
                         'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+                    },
+                    'standard': {
+                        'format': '%(asctime)s [%(levelname)s]: %(message)s'
                     },
                 },
                 'handlers': {
@@ -26,7 +30,7 @@ class Logs:
                     "info_file_handler": {
                         "class": "logging.handlers.RotatingFileHandler",
                         "level": "DEBUG",
-                        "formatter": "standard",
+                        "formatter": "strict",
                         "filename": filename,
                         "maxBytes": 10485760,
                         "backupCount": 20,

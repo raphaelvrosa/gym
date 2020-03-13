@@ -1,0 +1,188 @@
+syntax = "proto3";
+
+package gym;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+import "vnf_bd.proto";
+import "vnf_pp.proto";
+
+
+service Player {
+  rpc Greet(Info) returns (Info);
+  rpc CallLayout(Layout) returns (Result);
+}
+
+
+service Manager {
+  rpc Greet(Info) returns (Info);
+  rpc CallTask(Task) returns (Report);
+}
+
+
+service Agent {
+  rpc Greet(Info) returns (Info);
+  rpc CallInstruction(Instruction) returns (Snapshot);
+}
+
+
+service Monitor {
+  rpc Greet(Info) returns (Info);
+  rpc CallInstruction(Instruction) returns (Snapshot);
+}
+
+
+service Infra {
+  rpc Run(Deploy) returns (Built);
+}
+
+
+message Apparatus {
+    repeated Info agents = 1;
+    repeated Info monitors = 2;
+    repeated Info managers = 3;
+}
+
+message Artifacts{
+    repeated Tool probers = 6;
+    repeated Tool listeners = 7;
+}
+
+message Info {
+    message Environment {
+        string system = 1;
+        string host = 2;
+        string release = 3;
+        string version = 4; 
+        string processor = 5;
+        map<string, int32> cpu = 6;
+        map<string, double> memory = 7;
+        map<string, double> disk = 8;
+        map<string, string> network = 9;
+    }
+
+    string uuid = 1;
+    string role = 2;
+    string address = 3;
+    Environment environment = 4;
+    google.protobuf.Timestamp timestamp = 5;
+    Artifacts artifacts = 6;
+    Apparatus apparatus = 7;
+    repeated string contacts = 8;
+}
+
+message Action {
+    int32 id = 1;
+    map<string, string> args = 2;
+}
+
+message Instruction {
+    int32 id = 1;
+    int32 trial = 2;
+    map<int32, Action> actions = 3;
+}
+
+message Evaluation {
+
+    message Source {
+        int32 id = 1;
+        string name = 2;
+        string type = 3;
+        string version = 4;
+        string call = 5;
+    }
+
+    message Metric {
+        string name = 1;
+        string type = 2;
+        string unit = 3;
+        oneof value {
+            double scalar = 4;
+            google.protobuf.Struct series = 5;
+        }                   
+    }
+
+    message Timestamp {
+        google.protobuf.Timestamp start = 1;
+        google.protobuf.Timestamp stop = 2;
+    }
+
+    int32 id = 1;
+    Source source = 2;
+    map<string, Metric> metrics = 3;
+    Timestamp timestamp = 4;
+}
+
+message Snapshot {
+
+    message Origin {
+        string id = 1;
+        string role = 2;
+    }
+    int32 id = 1;
+    int32 trial = 2;
+    Origin origin = 3;
+    map<int32, Evaluation> evaluations = 4;
+    google.protobuf.Timestamp timestamp = 5;
+}
+
+message Tool {
+    int32 id = 1;
+    string name = 2;
+    map<string, string> parameters = 3;
+    map<string, string> metrics = 4;
+}
+
+message Task {
+
+    message Agent {
+        string uuid = 1;
+        repeated Tool probers = 2;
+    }
+
+    message Monitor {
+        string uuid = 1;
+        repeated Tool listeners = 3;
+    }
+    
+    int32 id = 1;
+    int32 trials = 2;
+    int32 test = 3;
+    repeated Agent agents = 4;
+    repeated Monitor monitors = 5;
+}
+
+message Report {    
+    int32 id = 1;
+    int32 test = 2;
+    map<int32, Snapshot> snapshots = 3;
+    google.protobuf.Timestamp timestamp = 4;
+}
+
+message Layout {
+    int32 id = 1;
+    map<string, string> inputs = 2;
+    VnfBd vnfbd = 3;
+}
+
+message Result {
+    int32 id = 1;
+    VnfPp vnfpp = 2;
+    google.protobuf.Timestamp timestamp = 3;
+}
+
+
+message Deploy {
+    int32 id = 1;
+    string workflow = 2;
+    Scenario scenario = 3;
+    Environment environment = 4;
+}
+
+message Built {
+    int32 id = 1;
+    string ack = 2;
+    string error = 3;
+    bytes info = 4;
+}

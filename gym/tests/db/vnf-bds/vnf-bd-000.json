@@ -1,0 +1,240 @@
+{
+    "id": "000",
+    "name": "vnf-bd-000",
+    "version": "0.1",
+    "author": "Raphael Vicente Rosa",
+    "description": "Realizes the test of two agents ping on localhost",
+    "experiments": {
+        "trials": 1,
+        "tests": 1
+    },
+    "environment": {
+        "name": "localhost",
+        "description": "Establishes scenario in host with processes",
+        "deploy": false,
+        "plugin": {
+            "type": "",
+            "parameters": {}
+        }
+    },
+    "targets": {
+        "None": {
+            "id": "None",
+            "name": "localhost",
+            "version": "",
+            "author": "",
+            "description": "host machine"
+        }
+    },
+    "scenario": {
+        "nodes": {
+            "agent-1": {
+                "id": "agent-1",
+                "type": "",
+                "image": "",
+                "image_format": "",
+                "resources": {
+                    "cpu": {
+                        "vcpus": 0,
+                        "cpu_bw": "",
+                        "pinning": ""
+                    },
+                    "memory": {
+                        "size": 0,
+                        "unit": ""
+                    },
+                    "storage": {
+                        "size": 0,
+                        "unit": "",
+                        "volumes": ""
+                    }
+                },
+                "connection_points": {},
+                "relationships": {},
+                "lifecycle": {}
+            },
+            "agent-2": {
+                "id": "agent-2",
+                "type": "",
+                "image": "",
+                "image_format": "",
+                "resources": {
+                    "cpu": {
+                        "vcpus": 0,
+                        "cpu_bw": "",
+                        "pinning": ""
+                    },
+                    "memory": {
+                        "size": 0,
+                        "unit": ""
+                    },
+                    "storage": {
+                        "size": 0,
+                        "unit": "",
+                        "volumes": ""
+                    }
+                },
+                "connection_points": {},
+                "relationships": {},
+                "lifecycle": {}
+            },
+            "manager": {
+                "id": "manager",
+                "type": "",
+                "image": "",
+                "image_format": "",
+                "resources": {
+                    "cpu": {
+                        "vcpus": 0,
+                        "cpu_bw": "",
+                        "pinning": ""
+                    },
+                    "memory": {
+                        "size": 0,
+                        "unit": ""
+                    },
+                    "storage": {
+                        "size": 0,
+                        "unit": "",
+                        "volumes": ""
+                    }
+                },
+                "connection_points": {},
+                "relationships": {},
+                "lifecycle": {}
+            }
+        },
+        "links": {},
+        "policies": {}
+    },
+    "proceedings": {
+        "attributes": {},
+        "agents": {
+            "agent-1": {
+                "id": "agent-1",
+                "name": "",
+                "host": {
+                    "setting": "",
+                    "node": ""
+                },
+                "probers": {
+                    "2": {
+                        "id": "2",
+                        "instances": 0,
+                        "name": "",
+                        "parameters": {
+                            "interval": {
+                                "input": "interval",
+                                "value": "1"
+                            },
+                            "duration": {
+                                "input": "duration",
+                                "value": ""
+                            },
+                            "packets": {
+                                "input": "packets",
+                                "value": "5"
+                            },
+                            "frame_size": {
+                                "input": "frame_size",
+                                "value": "64"
+                            },
+                            "target": {
+                                "input": "target",
+                                "value": "www.google.com"
+                            }
+                        }
+                    },
+                    "4": {
+                        "id": "4",
+                        "instances": 0,
+                        "name": "iperf3",
+                        "parameters": {
+                            "client": {
+                                "input": "client",
+                                "value": "True"
+                            },
+                            "server": {
+                                "input": "server",
+                                "value": "127.0.0.1"
+                            },
+                            "port": {
+                                "input": "port",
+                                "value": "6594"
+                            },
+                            "protocol": {
+                                "input": "protocol",
+                                "value": "udp"
+                            },
+                            "duration": {
+                                "input": "duration",
+                                "value": "10"
+                            },
+                            "rate": {
+                                "input": "rate",
+                                "value": "10G"
+                            }
+                        }
+                    }
+                }
+            },
+            "agent-2": {
+                "id": "agent-2",
+                "name": "",
+                "host": {
+                    "setting": "",
+                    "node": ""
+                },
+                "probers": {
+                    "2": {
+                        "id": "2",
+                        "instances": 0,
+                        "name": "",
+                        "parameters": {
+                            "interval": {
+                                "input": "interval",
+                                "value": ""
+                            },
+                            "duration": {
+                                "input": "duration",
+                                "value": "{{ settings_duration }}"
+                            },
+                            "packets": {
+                                "input": "packets",
+                                "value": ""
+                            },
+                            "frame_size": {
+                                "input": "frame_size",
+                                "value": "128"
+                            },
+                            "target": {
+                                "input": "target",
+                                "value": "127.0.0.1"
+                            }
+                        }
+                    },
+                    "4": {
+                        "id": "4",
+                        "instances": 0,
+                        "name": "",
+                        "parameters": {
+                            "client": {
+                                "input": "client",
+                                "value": "False"
+                            },
+                            "port": {
+                                "input": "port",
+                                "value": "6594"
+                            },
+                            "duration": {
+                                "input": "duration",
+                                "value": "10"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "monitors": {}
+    }
+}

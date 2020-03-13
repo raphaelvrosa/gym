@@ -2,7 +2,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from gym.monitor.listeners.listener import Listener
-from gym.common.defs.tools import LISTENER_DNS
+from gym.common.defs import LISTENER_DNS
 
 import time
 from datetime import datetime

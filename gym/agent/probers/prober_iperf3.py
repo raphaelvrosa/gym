@@ -1,7 +1,7 @@
 import logging
 import time
 import json
-from gym.common.defs.tools import PROBER_IPERF3
+from gym.common.defs import PROBER_IPERF3
 from gym.agent.probers.prober import Prober
 
 logger = logging.getLogger()
@@ -17,9 +17,9 @@ class ProberIperf3(Prober):
         'rate':'-b'
     }
 
-    METRICS = [
-        'bandwidth',
-    ]
+    METRICS = {
+        'bandwidth': 'Estimated throughput',
+    }
 
     def __init__(self):
         Prober.__init__(self, id=PROBER_IPERF3, name="iperf3",
@@ -96,51 +96,45 @@ class ProberIperf3(Prober):
             
                     m1 = {
                         "name": "bits_per_second",
-                        "series": False,
                         "type": "float",
                         "unit": "bits_per_second",
-                        "value": float(_values.get("bits_per_second")),
+                        "scalar": float(_values.get("bits_per_second")),
                     }
 
                     m2 = {
                         "name": "jitter_ms",
-                        "series": False,
                         "type": "float",
                         "unit": "ms",
-                        "value": float(_values.get("jitter_ms")),
+                        "scalar": float(_values.get("jitter_ms")),
                     }
 
                     m3 = {
                         "name": "bytes",
-                        "series": False,
                         "type": "int",
                         "unit": "bytes",
-                        "value": int(_values.get("bytes")),
+                        "scalar": int(_values.get("bytes")),
                     }
 
 
                     m4 = {
                         "name": "lost_packets",
-                        "series": False,
                         "type": "int",
                         "unit": "packets",
-                        "value": int(_values.get("lost_packets")),
+                        "scalar": int(_values.get("lost_packets")),
                     }
 
                     m5 = {
                         "name": "lost_percent",
-                        "series": False,
                         "type": "float",
                         "unit": "%",
-                        "value": float(_values.get("lost_percent")),
+                        "scalar": float(_values.get("lost_percent")),
                     }
 
                     m6 = {
                         "name": "packets",
-                        "series": False,
                         "type": "int",
                         "unit": "packets",
-                        "value": int(_values.get("packets")),
+                        "scalar": int(_values.get("packets")),
                     }
 
 

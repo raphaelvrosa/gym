@@ -12,7 +12,7 @@ from datetime import datetime
 from subprocess import check_output
 
 from gym.monitor.listeners.listener import Listener
-from gym.common.defs.tools import LISTENER_SURICATA
+from gym.common.defs import LISTENER_SURICATA
 
 
 class SuricataStats:
@@ -351,10 +351,9 @@ class ListenerSuricata(Listener):
         for name,value in out.items():
             m = {
                 "name": name,
-                "series": False,
                 "type": "float",
                 "unit": "",
-                "value": float(value),
+                "scalar": float(value),
             }
 
             metrics.append(m)        

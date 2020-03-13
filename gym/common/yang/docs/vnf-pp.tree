@@ -1,0 +1,40 @@
+module: vnf-pp
+  +--rw id?            string
+  +--rw name?          string
+  +--rw version?       string
+  +--rw author?        string
+  +--rw description?   string
+  +--rw timestamp?     string
+  +--rw reports* [test]
+     +--rw test         uint32
+     +--rw snapshots* [id]
+        +--rw id             string
+        +--rw trial?         uint32
+        +--rw origin
+        |  +--rw id?     string
+        |  +--rw role?   string
+        |  +--rw host?   string
+        +--rw evaluations* [id]
+           +--rw id           string
+           +--rw source
+           |  +--rw id?        string
+           |  +--rw name?      string
+           |  +--rw type?      string
+           |  +--rw version?   string
+           |  +--rw call?      string
+           +--rw timestamp
+           |  +--rw start?   string
+           |  +--rw stop?    string
+           +--rw metrics* [name]
+              +--rw name                  string
+              +--rw unit?                 string
+              +--rw type                  string
+              +--rw (value)
+                 +--:(scalar)
+                 |  +--rw scalar          string
+                 +--:(vector)
+                 |  +--rw vector*         string
+                 +--:(tuple-vector)
+                    +--rw tuple-vector* [key]
+                       +--rw key      string
+                       +--rw value?   string
