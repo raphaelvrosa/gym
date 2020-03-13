@@ -22,246 +22,11 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='gym',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\tgym.proto\x12\x03gym\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x0cvnf_bd.proto\x1a\x0cvnf_pp.proto\"\xc8\x03\n\x0b\x45nvironment\x12\x0e\n\x06system\x18\x01 \x01(\t\x12\x0c\n\x04host\x18\x02 \x01(\t\x12\x0f\n\x07release\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x11\n\tprocessor\x18\x05 \x01(\t\x12&\n\x03\x63pu\x18\x06 \x03(\x0b\x32\x19.gym.Environment.CpuEntry\x12,\n\x06memory\x18\x07 \x03(\x0b\x32\x1c.gym.Environment.MemoryEntry\x12(\n\x04\x64isk\x18\x08 \x03(\x0b\x32\x1a.gym.Environment.DiskEntry\x12.\n\x07network\x18\t \x03(\x0b\x32\x1d.gym.Environment.NetworkEntry\x1a*\n\x08\x43puEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a-\n\x0bMemoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a+\n\tDiskEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a.\n\x0cNetworkEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"`\n\tApparatus\x12\x19\n\x06\x61gents\x18\x01 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08monitors\x18\x02 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08managers\x18\x03 \x03(\x0b\x32\t.gym.Info\"E\n\tArtifacts\x12\x1a\n\x07probers\x18\x06 \x03(\x0b\x32\t.gym.Tool\x12\x1c\n\tlisteners\x18\x07 \x03(\x0b\x32\t.gym.Tool\"\xe1\x01\n\x04Info\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12%\n\x0b\x65nvironment\x18\x04 \x01(\x0b\x32\x10.gym.Environment\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12!\n\tartifacts\x18\x06 \x01(\x0b\x32\x0e.gym.Artifacts\x12!\n\tapparatus\x18\x07 \x01(\x0b\x32\x0e.gym.Apparatus\x12\x10\n\x08\x63ontacts\x18\x08 \x03(\t\"f\n\x06\x41\x63tion\x12\n\n\x02id\x18\x01 \x01(\x05\x12#\n\x04\x61rgs\x18\x02 \x03(\x0b\x32\x15.gym.Action.ArgsEntry\x1a+\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x95\x01\n\x0bInstruction\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12.\n\x07\x61\x63tions\x18\x03 \x03(\x0b\x32\x1d.gym.Instruction.ActionsEntry\x1a;\n\x0c\x41\x63tionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.gym.Action:\x02\x38\x01\"\x92\x04\n\nEvaluation\x12\n\n\x02id\x18\x01 \x01(\x05\x12&\n\x06source\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Source\x12-\n\x07metrics\x18\x03 \x03(\x0b\x32\x1c.gym.Evaluation.MetricsEntry\x12,\n\ttimestamp\x18\x04 \x01(\x0b\x32\x19.gym.Evaluation.Timestamp\x1aO\n\x06Source\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0c\n\x04\x63\x61ll\x18\x05 \x01(\t\x1ax\n\x06Metric\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x0c\n\x04unit\x18\x03 \x01(\t\x12\x10\n\x06scalar\x18\x04 \x01(\x01H\x00\x12)\n\x06series\x18\x05 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x42\x07\n\x05value\x1a`\n\tTimestamp\x12)\n\x05start\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x04stop\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x46\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Metric:\x02\x38\x01\"\x98\x02\n\x08Snapshot\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12$\n\x06origin\x18\x03 \x01(\x0b\x32\x14.gym.Snapshot.Origin\x12\x33\n\x0b\x65valuations\x18\x04 \x03(\x0b\x32\x1e.gym.Snapshot.EvaluationsEntry\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\"\n\x06Origin\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x1a\x43\n\x10\x45valuationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.gym.Evaluation:\x02\x38\x01\"\xdb\x01\n\x04Tool\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12-\n\nparameters\x18\x03 \x03(\x0b\x32\x19.gym.Tool.ParametersEntry\x12\'\n\x07metrics\x18\x04 \x03(\x0b\x32\x16.gym.Tool.MetricsEntry\x1a\x31\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xe0\x01\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0e\n\x06trials\x18\x02 \x01(\x05\x12\x0c\n\x04test\x18\x03 \x01(\x05\x12\x1f\n\x06\x61gents\x18\x04 \x03(\x0b\x32\x0f.gym.Task.Agent\x12#\n\x08monitors\x18\x05 \x03(\x0b\x32\x11.gym.Task.Monitor\x1a\x31\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1a\n\x07probers\x18\x02 \x03(\x0b\x32\t.gym.Tool\x1a\x35\n\x07Monitor\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1c\n\tlisteners\x18\x03 \x03(\x0b\x32\t.gym.Tool\"\xc1\x01\n\x06Report\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04test\x18\x02 \x01(\x05\x12-\n\tsnapshots\x18\x03 \x03(\x0b\x32\x1a.gym.Report.SnapshotsEntry\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a?\n\x0eSnapshotsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.gym.Snapshot:\x02\x38\x01\"\x87\x01\n\x06Layout\x12\n\n\x02id\x18\x01 \x01(\x05\x12\'\n\x06inputs\x18\x02 \x03(\x0b\x32\x17.gym.Layout.InputsEntry\x12\x19\n\x05vnfbd\x18\x03 \x01(\x0b\x32\n.gym.VnfBd\x1a-\n\x0bInputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"^\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x19\n\x05vnfpp\x18\x02 \x01(\x0b\x32\n.gym.VnfPp\x12-\n\ttimestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"G\n\x06\x44\x65ploy\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08workflow\x18\x02 \x01(\t\x12\x1f\n\x08scenario\x18\x03 \x01(\x0b\x32\r.gym.Scenario\"=\n\x05\x42uilt\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0b\n\x03\x61\x63k\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\x12\x0c\n\x04info\x18\x04 \x01(\x0c\x32O\n\x06Player\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12&\n\nCallLayout\x12\x0b.gym.Layout\x1a\x0b.gym.Result2L\n\x07Manager\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\"\n\x08\x43\x61llTask\x12\t.gym.Task\x1a\x0b.gym.Report2Z\n\x05\x41gent\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\\\n\x07Monitor\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\'\n\x05Infra\x12\x1e\n\x03Run\x12\x0b.gym.Deploy\x1a\n.gym.Builtb\x06proto3'
+  serialized_pb=b'\n\tgym.proto\x12\x03gym\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x0cvnf_bd.proto\x1a\x0cvnf_pp.proto\"`\n\tApparatus\x12\x19\n\x06\x61gents\x18\x01 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08monitors\x18\x02 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08managers\x18\x03 \x03(\x0b\x32\t.gym.Info\"E\n\tArtifacts\x12\x1a\n\x07probers\x18\x06 \x03(\x0b\x32\t.gym.Tool\x12\x1c\n\tlisteners\x18\x07 \x03(\x0b\x32\t.gym.Tool\"\xc5\x05\n\x04Info\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12*\n\x0b\x65nvironment\x18\x04 \x01(\x0b\x32\x15.gym.Info.Environment\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12!\n\tartifacts\x18\x06 \x01(\x0b\x32\x0e.gym.Artifacts\x12!\n\tapparatus\x18\x07 \x01(\x0b\x32\x0e.gym.Apparatus\x12\x10\n\x08\x63ontacts\x18\x08 \x03(\t\x1a\xdc\x03\n\x0b\x45nvironment\x12\x0e\n\x06system\x18\x01 \x01(\t\x12\x0c\n\x04host\x18\x02 \x01(\t\x12\x0f\n\x07release\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x11\n\tprocessor\x18\x05 \x01(\t\x12+\n\x03\x63pu\x18\x06 \x03(\x0b\x32\x1e.gym.Info.Environment.CpuEntry\x12\x31\n\x06memory\x18\x07 \x03(\x0b\x32!.gym.Info.Environment.MemoryEntry\x12-\n\x04\x64isk\x18\x08 \x03(\x0b\x32\x1f.gym.Info.Environment.DiskEntry\x12\x33\n\x07network\x18\t \x03(\x0b\x32\".gym.Info.Environment.NetworkEntry\x1a*\n\x08\x43puEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a-\n\x0bMemoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a+\n\tDiskEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a.\n\x0cNetworkEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"f\n\x06\x41\x63tion\x12\n\n\x02id\x18\x01 \x01(\x05\x12#\n\x04\x61rgs\x18\x02 \x03(\x0b\x32\x15.gym.Action.ArgsEntry\x1a+\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x95\x01\n\x0bInstruction\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12.\n\x07\x61\x63tions\x18\x03 \x03(\x0b\x32\x1d.gym.Instruction.ActionsEntry\x1a;\n\x0c\x41\x63tionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.gym.Action:\x02\x38\x01\"\x92\x04\n\nEvaluation\x12\n\n\x02id\x18\x01 \x01(\x05\x12&\n\x06source\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Source\x12-\n\x07metrics\x18\x03 \x03(\x0b\x32\x1c.gym.Evaluation.MetricsEntry\x12,\n\ttimestamp\x18\x04 \x01(\x0b\x32\x19.gym.Evaluation.Timestamp\x1aO\n\x06Source\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0c\n\x04\x63\x61ll\x18\x05 \x01(\t\x1ax\n\x06Metric\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x0c\n\x04unit\x18\x03 \x01(\t\x12\x10\n\x06scalar\x18\x04 \x01(\x01H\x00\x12)\n\x06series\x18\x05 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x42\x07\n\x05value\x1a`\n\tTimestamp\x12)\n\x05start\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x04stop\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x46\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Metric:\x02\x38\x01\"\x98\x02\n\x08Snapshot\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12$\n\x06origin\x18\x03 \x01(\x0b\x32\x14.gym.Snapshot.Origin\x12\x33\n\x0b\x65valuations\x18\x04 \x03(\x0b\x32\x1e.gym.Snapshot.EvaluationsEntry\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\"\n\x06Origin\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x1a\x43\n\x10\x45valuationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.gym.Evaluation:\x02\x38\x01\"\xdb\x01\n\x04Tool\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12-\n\nparameters\x18\x03 \x03(\x0b\x32\x19.gym.Tool.ParametersEntry\x12\'\n\x07metrics\x18\x04 \x03(\x0b\x32\x16.gym.Tool.MetricsEntry\x1a\x31\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xe0\x01\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0e\n\x06trials\x18\x02 \x01(\x05\x12\x0c\n\x04test\x18\x03 \x01(\x05\x12\x1f\n\x06\x61gents\x18\x04 \x03(\x0b\x32\x0f.gym.Task.Agent\x12#\n\x08monitors\x18\x05 \x03(\x0b\x32\x11.gym.Task.Monitor\x1a\x31\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1a\n\x07probers\x18\x02 \x03(\x0b\x32\t.gym.Tool\x1a\x35\n\x07Monitor\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1c\n\tlisteners\x18\x03 \x03(\x0b\x32\t.gym.Tool\"\xc1\x01\n\x06Report\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04test\x18\x02 \x01(\x05\x12-\n\tsnapshots\x18\x03 \x03(\x0b\x32\x1a.gym.Report.SnapshotsEntry\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a?\n\x0eSnapshotsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.gym.Snapshot:\x02\x38\x01\"\x87\x01\n\x06Layout\x12\n\n\x02id\x18\x01 \x01(\x05\x12\'\n\x06inputs\x18\x02 \x03(\x0b\x32\x17.gym.Layout.InputsEntry\x12\x19\n\x05vnfbd\x18\x03 \x01(\x0b\x32\n.gym.VnfBd\x1a-\n\x0bInputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"^\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x19\n\x05vnfpp\x18\x02 \x01(\x0b\x32\n.gym.VnfPp\x12-\n\ttimestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"n\n\x06\x44\x65ploy\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08workflow\x18\x02 \x01(\t\x12\x1f\n\x08scenario\x18\x03 \x01(\x0b\x32\r.gym.Scenario\x12%\n\x0b\x65nvironment\x18\x04 \x01(\x0b\x32\x10.gym.Environment\"=\n\x05\x42uilt\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0b\n\x03\x61\x63k\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\x12\x0c\n\x04info\x18\x04 \x01(\x0c\x32O\n\x06Player\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12&\n\nCallLayout\x12\x0b.gym.Layout\x1a\x0b.gym.Result2L\n\x07Manager\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\"\n\x08\x43\x61llTask\x12\t.gym.Task\x1a\x0b.gym.Report2Z\n\x05\x41gent\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\\\n\x07Monitor\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\'\n\x05Infra\x12\x1e\n\x03Run\x12\x0b.gym.Deploy\x1a\n.gym.Builtb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,vnf__bd__pb2.DESCRIPTOR,vnf__pp__pb2.DESCRIPTOR,])
 
 
-
-
-_ENVIRONMENT_CPUENTRY = _descriptor.Descriptor(
-  name='CpuEntry',
-  full_name='gym.Environment.CpuEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.Environment.CpuEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.Environment.CpuEntry.value', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=384,
-  serialized_end=426,
-)
-
-_ENVIRONMENT_MEMORYENTRY = _descriptor.Descriptor(
-  name='MemoryEntry',
-  full_name='gym.Environment.MemoryEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.Environment.MemoryEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.Environment.MemoryEntry.value', index=1,
-      number=2, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=428,
-  serialized_end=473,
-)
-
-_ENVIRONMENT_DISKENTRY = _descriptor.Descriptor(
-  name='DiskEntry',
-  full_name='gym.Environment.DiskEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.Environment.DiskEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.Environment.DiskEntry.value', index=1,
-      number=2, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=475,
-  serialized_end=518,
-)
-
-_ENVIRONMENT_NETWORKENTRY = _descriptor.Descriptor(
-  name='NetworkEntry',
-  full_name='gym.Environment.NetworkEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.Environment.NetworkEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.Environment.NetworkEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=520,
-  serialized_end=566,
-)
-
-_ENVIRONMENT = _descriptor.Descriptor(
-  name='Environment',
-  full_name='gym.Environment',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='system', full_name='gym.Environment.system', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='host', full_name='gym.Environment.host', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='release', full_name='gym.Environment.release', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='version', full_name='gym.Environment.version', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='processor', full_name='gym.Environment.processor', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='cpu', full_name='gym.Environment.cpu', index=5,
-      number=6, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='memory', full_name='gym.Environment.memory', index=6,
-      number=7, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='disk', full_name='gym.Environment.disk', index=7,
-      number=8, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='network', full_name='gym.Environment.network', index=8,
-      number=9, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[_ENVIRONMENT_CPUENTRY, _ENVIRONMENT_MEMORYENTRY, _ENVIRONMENT_DISKENTRY, _ENVIRONMENT_NETWORKENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=110,
-  serialized_end=566,
-)
 
 
 _APPARATUS = _descriptor.Descriptor(
@@ -304,8 +69,8 @@ _APPARATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=568,
-  serialized_end=664,
+  serialized_start=109,
+  serialized_end=205,
 )
 
 
@@ -342,10 +107,244 @@ _ARTIFACTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=666,
-  serialized_end=735,
+  serialized_start=207,
+  serialized_end=276,
 )
 
+
+_INFO_ENVIRONMENT_CPUENTRY = _descriptor.Descriptor(
+  name='CpuEntry',
+  full_name='gym.Info.Environment.CpuEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='gym.Info.Environment.CpuEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='gym.Info.Environment.CpuEntry.value', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=806,
+  serialized_end=848,
+)
+
+_INFO_ENVIRONMENT_MEMORYENTRY = _descriptor.Descriptor(
+  name='MemoryEntry',
+  full_name='gym.Info.Environment.MemoryEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='gym.Info.Environment.MemoryEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='gym.Info.Environment.MemoryEntry.value', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=850,
+  serialized_end=895,
+)
+
+_INFO_ENVIRONMENT_DISKENTRY = _descriptor.Descriptor(
+  name='DiskEntry',
+  full_name='gym.Info.Environment.DiskEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='gym.Info.Environment.DiskEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='gym.Info.Environment.DiskEntry.value', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=897,
+  serialized_end=940,
+)
+
+_INFO_ENVIRONMENT_NETWORKENTRY = _descriptor.Descriptor(
+  name='NetworkEntry',
+  full_name='gym.Info.Environment.NetworkEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='gym.Info.Environment.NetworkEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='gym.Info.Environment.NetworkEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=b'8\001',
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=942,
+  serialized_end=988,
+)
+
+_INFO_ENVIRONMENT = _descriptor.Descriptor(
+  name='Environment',
+  full_name='gym.Info.Environment',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='system', full_name='gym.Info.Environment.system', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='host', full_name='gym.Info.Environment.host', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='release', full_name='gym.Info.Environment.release', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='gym.Info.Environment.version', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='processor', full_name='gym.Info.Environment.processor', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='cpu', full_name='gym.Info.Environment.cpu', index=5,
+      number=6, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='memory', full_name='gym.Info.Environment.memory', index=6,
+      number=7, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='disk', full_name='gym.Info.Environment.disk', index=7,
+      number=8, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='network', full_name='gym.Info.Environment.network', index=8,
+      number=9, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_INFO_ENVIRONMENT_CPUENTRY, _INFO_ENVIRONMENT_MEMORYENTRY, _INFO_ENVIRONMENT_DISKENTRY, _INFO_ENVIRONMENT_NETWORKENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=512,
+  serialized_end=988,
+)
 
 _INFO = _descriptor.Descriptor(
   name='Info',
@@ -413,7 +412,7 @@ _INFO = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_INFO_ENVIRONMENT, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -422,8 +421,8 @@ _INFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=738,
-  serialized_end=963,
+  serialized_start=279,
+  serialized_end=988,
 )
 
 
@@ -460,8 +459,8 @@ _ACTION_ARGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1024,
-  serialized_end=1067,
+  serialized_start=1049,
+  serialized_end=1092,
 )
 
 _ACTION = _descriptor.Descriptor(
@@ -497,8 +496,8 @@ _ACTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=965,
-  serialized_end=1067,
+  serialized_start=990,
+  serialized_end=1092,
 )
 
 
@@ -535,8 +534,8 @@ _INSTRUCTION_ACTIONSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1160,
-  serialized_end=1219,
+  serialized_start=1185,
+  serialized_end=1244,
 )
 
 _INSTRUCTION = _descriptor.Descriptor(
@@ -579,8 +578,8 @@ _INSTRUCTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1070,
-  serialized_end=1219,
+  serialized_start=1095,
+  serialized_end=1244,
 )
 
 
@@ -638,8 +637,8 @@ _EVALUATION_SOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1381,
-  serialized_end=1460,
+  serialized_start=1406,
+  serialized_end=1485,
 )
 
 _EVALUATION_METRIC = _descriptor.Descriptor(
@@ -699,8 +698,8 @@ _EVALUATION_METRIC = _descriptor.Descriptor(
       name='value', full_name='gym.Evaluation.Metric.value',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=1462,
-  serialized_end=1582,
+  serialized_start=1487,
+  serialized_end=1607,
 )
 
 _EVALUATION_TIMESTAMP = _descriptor.Descriptor(
@@ -736,8 +735,8 @@ _EVALUATION_TIMESTAMP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1584,
-  serialized_end=1680,
+  serialized_start=1609,
+  serialized_end=1705,
 )
 
 _EVALUATION_METRICSENTRY = _descriptor.Descriptor(
@@ -773,8 +772,8 @@ _EVALUATION_METRICSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1682,
-  serialized_end=1752,
+  serialized_start=1707,
+  serialized_end=1777,
 )
 
 _EVALUATION = _descriptor.Descriptor(
@@ -824,8 +823,8 @@ _EVALUATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1222,
-  serialized_end=1752,
+  serialized_start=1247,
+  serialized_end=1777,
 )
 
 
@@ -862,8 +861,8 @@ _SNAPSHOT_ORIGIN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1932,
-  serialized_end=1966,
+  serialized_start=1957,
+  serialized_end=1991,
 )
 
 _SNAPSHOT_EVALUATIONSENTRY = _descriptor.Descriptor(
@@ -899,8 +898,8 @@ _SNAPSHOT_EVALUATIONSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1968,
-  serialized_end=2035,
+  serialized_start=1993,
+  serialized_end=2060,
 )
 
 _SNAPSHOT = _descriptor.Descriptor(
@@ -957,8 +956,8 @@ _SNAPSHOT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1755,
-  serialized_end=2035,
+  serialized_start=1780,
+  serialized_end=2060,
 )
 
 
@@ -995,8 +994,8 @@ _TOOL_PARAMETERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2160,
-  serialized_end=2209,
+  serialized_start=2185,
+  serialized_end=2234,
 )
 
 _TOOL_METRICSENTRY = _descriptor.Descriptor(
@@ -1032,8 +1031,8 @@ _TOOL_METRICSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2211,
-  serialized_end=2257,
+  serialized_start=2236,
+  serialized_end=2282,
 )
 
 _TOOL = _descriptor.Descriptor(
@@ -1083,8 +1082,8 @@ _TOOL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2038,
-  serialized_end=2257,
+  serialized_start=2063,
+  serialized_end=2282,
 )
 
 
@@ -1121,8 +1120,8 @@ _TASK_AGENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2380,
-  serialized_end=2429,
+  serialized_start=2405,
+  serialized_end=2454,
 )
 
 _TASK_MONITOR = _descriptor.Descriptor(
@@ -1158,8 +1157,8 @@ _TASK_MONITOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2431,
-  serialized_end=2484,
+  serialized_start=2456,
+  serialized_end=2509,
 )
 
 _TASK = _descriptor.Descriptor(
@@ -1216,8 +1215,8 @@ _TASK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2260,
-  serialized_end=2484,
+  serialized_start=2285,
+  serialized_end=2509,
 )
 
 
@@ -1254,8 +1253,8 @@ _REPORT_SNAPSHOTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2617,
-  serialized_end=2680,
+  serialized_start=2642,
+  serialized_end=2705,
 )
 
 _REPORT = _descriptor.Descriptor(
@@ -1305,8 +1304,8 @@ _REPORT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2487,
-  serialized_end=2680,
+  serialized_start=2512,
+  serialized_end=2705,
 )
 
 
@@ -1343,8 +1342,8 @@ _LAYOUT_INPUTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2773,
-  serialized_end=2818,
+  serialized_start=2798,
+  serialized_end=2843,
 )
 
 _LAYOUT = _descriptor.Descriptor(
@@ -1387,8 +1386,8 @@ _LAYOUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2683,
-  serialized_end=2818,
+  serialized_start=2708,
+  serialized_end=2843,
 )
 
 
@@ -1432,8 +1431,8 @@ _RESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2820,
-  serialized_end=2914,
+  serialized_start=2845,
+  serialized_end=2939,
 )
 
 
@@ -1465,6 +1464,13 @@ _DEPLOY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='environment', full_name='gym.Deploy.environment', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -1477,8 +1483,8 @@ _DEPLOY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2916,
-  serialized_end=2987,
+  serialized_start=2941,
+  serialized_end=3051,
 )
 
 
@@ -1529,24 +1535,25 @@ _BUILT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2989,
-  serialized_end=3050,
+  serialized_start=3053,
+  serialized_end=3114,
 )
 
-_ENVIRONMENT_CPUENTRY.containing_type = _ENVIRONMENT
-_ENVIRONMENT_MEMORYENTRY.containing_type = _ENVIRONMENT
-_ENVIRONMENT_DISKENTRY.containing_type = _ENVIRONMENT
-_ENVIRONMENT_NETWORKENTRY.containing_type = _ENVIRONMENT
-_ENVIRONMENT.fields_by_name['cpu'].message_type = _ENVIRONMENT_CPUENTRY
-_ENVIRONMENT.fields_by_name['memory'].message_type = _ENVIRONMENT_MEMORYENTRY
-_ENVIRONMENT.fields_by_name['disk'].message_type = _ENVIRONMENT_DISKENTRY
-_ENVIRONMENT.fields_by_name['network'].message_type = _ENVIRONMENT_NETWORKENTRY
 _APPARATUS.fields_by_name['agents'].message_type = _INFO
 _APPARATUS.fields_by_name['monitors'].message_type = _INFO
 _APPARATUS.fields_by_name['managers'].message_type = _INFO
 _ARTIFACTS.fields_by_name['probers'].message_type = _TOOL
 _ARTIFACTS.fields_by_name['listeners'].message_type = _TOOL
-_INFO.fields_by_name['environment'].message_type = _ENVIRONMENT
+_INFO_ENVIRONMENT_CPUENTRY.containing_type = _INFO_ENVIRONMENT
+_INFO_ENVIRONMENT_MEMORYENTRY.containing_type = _INFO_ENVIRONMENT
+_INFO_ENVIRONMENT_DISKENTRY.containing_type = _INFO_ENVIRONMENT
+_INFO_ENVIRONMENT_NETWORKENTRY.containing_type = _INFO_ENVIRONMENT
+_INFO_ENVIRONMENT.fields_by_name['cpu'].message_type = _INFO_ENVIRONMENT_CPUENTRY
+_INFO_ENVIRONMENT.fields_by_name['memory'].message_type = _INFO_ENVIRONMENT_MEMORYENTRY
+_INFO_ENVIRONMENT.fields_by_name['disk'].message_type = _INFO_ENVIRONMENT_DISKENTRY
+_INFO_ENVIRONMENT.fields_by_name['network'].message_type = _INFO_ENVIRONMENT_NETWORKENTRY
+_INFO_ENVIRONMENT.containing_type = _INFO
+_INFO.fields_by_name['environment'].message_type = _INFO_ENVIRONMENT
 _INFO.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _INFO.fields_by_name['artifacts'].message_type = _ARTIFACTS
 _INFO.fields_by_name['apparatus'].message_type = _APPARATUS
@@ -1598,7 +1605,7 @@ _LAYOUT.fields_by_name['vnfbd'].message_type = vnf__bd__pb2._VNFBD
 _RESULT.fields_by_name['vnfpp'].message_type = vnf__pp__pb2._VNFPP
 _RESULT.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _DEPLOY.fields_by_name['scenario'].message_type = vnf__bd__pb2._SCENARIO
-DESCRIPTOR.message_types_by_name['Environment'] = _ENVIRONMENT
+_DEPLOY.fields_by_name['environment'].message_type = vnf__bd__pb2._ENVIRONMENT
 DESCRIPTOR.message_types_by_name['Apparatus'] = _APPARATUS
 DESCRIPTOR.message_types_by_name['Artifacts'] = _ARTIFACTS
 DESCRIPTOR.message_types_by_name['Info'] = _INFO
@@ -1615,45 +1622,6 @@ DESCRIPTOR.message_types_by_name['Deploy'] = _DEPLOY
 DESCRIPTOR.message_types_by_name['Built'] = _BUILT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Environment = _reflection.GeneratedProtocolMessageType('Environment', (_message.Message,), {
-
-  'CpuEntry' : _reflection.GeneratedProtocolMessageType('CpuEntry', (_message.Message,), {
-    'DESCRIPTOR' : _ENVIRONMENT_CPUENTRY,
-    '__module__' : 'gym_pb2'
-    # @@protoc_insertion_point(class_scope:gym.Environment.CpuEntry)
-    })
-  ,
-
-  'MemoryEntry' : _reflection.GeneratedProtocolMessageType('MemoryEntry', (_message.Message,), {
-    'DESCRIPTOR' : _ENVIRONMENT_MEMORYENTRY,
-    '__module__' : 'gym_pb2'
-    # @@protoc_insertion_point(class_scope:gym.Environment.MemoryEntry)
-    })
-  ,
-
-  'DiskEntry' : _reflection.GeneratedProtocolMessageType('DiskEntry', (_message.Message,), {
-    'DESCRIPTOR' : _ENVIRONMENT_DISKENTRY,
-    '__module__' : 'gym_pb2'
-    # @@protoc_insertion_point(class_scope:gym.Environment.DiskEntry)
-    })
-  ,
-
-  'NetworkEntry' : _reflection.GeneratedProtocolMessageType('NetworkEntry', (_message.Message,), {
-    'DESCRIPTOR' : _ENVIRONMENT_NETWORKENTRY,
-    '__module__' : 'gym_pb2'
-    # @@protoc_insertion_point(class_scope:gym.Environment.NetworkEntry)
-    })
-  ,
-  'DESCRIPTOR' : _ENVIRONMENT,
-  '__module__' : 'gym_pb2'
-  # @@protoc_insertion_point(class_scope:gym.Environment)
-  })
-_sym_db.RegisterMessage(Environment)
-_sym_db.RegisterMessage(Environment.CpuEntry)
-_sym_db.RegisterMessage(Environment.MemoryEntry)
-_sym_db.RegisterMessage(Environment.DiskEntry)
-_sym_db.RegisterMessage(Environment.NetworkEntry)
-
 Apparatus = _reflection.GeneratedProtocolMessageType('Apparatus', (_message.Message,), {
   'DESCRIPTOR' : _APPARATUS,
   '__module__' : 'gym_pb2'
@@ -1669,11 +1637,51 @@ Artifacts = _reflection.GeneratedProtocolMessageType('Artifacts', (_message.Mess
 _sym_db.RegisterMessage(Artifacts)
 
 Info = _reflection.GeneratedProtocolMessageType('Info', (_message.Message,), {
+
+  'Environment' : _reflection.GeneratedProtocolMessageType('Environment', (_message.Message,), {
+
+    'CpuEntry' : _reflection.GeneratedProtocolMessageType('CpuEntry', (_message.Message,), {
+      'DESCRIPTOR' : _INFO_ENVIRONMENT_CPUENTRY,
+      '__module__' : 'gym_pb2'
+      # @@protoc_insertion_point(class_scope:gym.Info.Environment.CpuEntry)
+      })
+    ,
+
+    'MemoryEntry' : _reflection.GeneratedProtocolMessageType('MemoryEntry', (_message.Message,), {
+      'DESCRIPTOR' : _INFO_ENVIRONMENT_MEMORYENTRY,
+      '__module__' : 'gym_pb2'
+      # @@protoc_insertion_point(class_scope:gym.Info.Environment.MemoryEntry)
+      })
+    ,
+
+    'DiskEntry' : _reflection.GeneratedProtocolMessageType('DiskEntry', (_message.Message,), {
+      'DESCRIPTOR' : _INFO_ENVIRONMENT_DISKENTRY,
+      '__module__' : 'gym_pb2'
+      # @@protoc_insertion_point(class_scope:gym.Info.Environment.DiskEntry)
+      })
+    ,
+
+    'NetworkEntry' : _reflection.GeneratedProtocolMessageType('NetworkEntry', (_message.Message,), {
+      'DESCRIPTOR' : _INFO_ENVIRONMENT_NETWORKENTRY,
+      '__module__' : 'gym_pb2'
+      # @@protoc_insertion_point(class_scope:gym.Info.Environment.NetworkEntry)
+      })
+    ,
+    'DESCRIPTOR' : _INFO_ENVIRONMENT,
+    '__module__' : 'gym_pb2'
+    # @@protoc_insertion_point(class_scope:gym.Info.Environment)
+    })
+  ,
   'DESCRIPTOR' : _INFO,
   '__module__' : 'gym_pb2'
   # @@protoc_insertion_point(class_scope:gym.Info)
   })
 _sym_db.RegisterMessage(Info)
+_sym_db.RegisterMessage(Info.Environment)
+_sym_db.RegisterMessage(Info.Environment.CpuEntry)
+_sym_db.RegisterMessage(Info.Environment.MemoryEntry)
+_sym_db.RegisterMessage(Info.Environment.DiskEntry)
+_sym_db.RegisterMessage(Info.Environment.NetworkEntry)
 
 Action = _reflection.GeneratedProtocolMessageType('Action', (_message.Message,), {
 
@@ -1865,10 +1873,10 @@ Built = _reflection.GeneratedProtocolMessageType('Built', (_message.Message,), {
 _sym_db.RegisterMessage(Built)
 
 
-_ENVIRONMENT_CPUENTRY._options = None
-_ENVIRONMENT_MEMORYENTRY._options = None
-_ENVIRONMENT_DISKENTRY._options = None
-_ENVIRONMENT_NETWORKENTRY._options = None
+_INFO_ENVIRONMENT_CPUENTRY._options = None
+_INFO_ENVIRONMENT_MEMORYENTRY._options = None
+_INFO_ENVIRONMENT_DISKENTRY._options = None
+_INFO_ENVIRONMENT_NETWORKENTRY._options = None
 _ACTION_ARGSENTRY._options = None
 _INSTRUCTION_ACTIONSENTRY._options = None
 _EVALUATION_METRICSENTRY._options = None
@@ -1884,8 +1892,8 @@ _PLAYER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=3052,
-  serialized_end=3131,
+  serialized_start=3116,
+  serialized_end=3195,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -1917,8 +1925,8 @@ _MANAGER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   serialized_options=None,
-  serialized_start=3133,
-  serialized_end=3209,
+  serialized_start=3197,
+  serialized_end=3273,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -1950,8 +1958,8 @@ _AGENT = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=2,
   serialized_options=None,
-  serialized_start=3211,
-  serialized_end=3301,
+  serialized_start=3275,
+  serialized_end=3365,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -1983,8 +1991,8 @@ _MONITOR = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=3,
   serialized_options=None,
-  serialized_start=3303,
-  serialized_end=3395,
+  serialized_start=3367,
+  serialized_end=3459,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -2016,8 +2024,8 @@ _INFRA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=4,
   serialized_options=None,
-  serialized_start=3397,
-  serialized_end=3436,
+  serialized_start=3461,
+  serialized_end=3500,
   methods=[
   _descriptor.MethodDescriptor(
     name='Run',

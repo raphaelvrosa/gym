@@ -389,7 +389,7 @@
                         "parameters": {
                             "target": {
                                 "input": "target",
-                                "value": "mn.d2"
+                                "value": "d2"
                             },
                             "interval": {
                                 "input": "interval",

@@ -24,31 +24,34 @@ class Infra(InfraBase):
         plugins = {
             "containernet": ContainernetPlugin,
         }
-        self.plugin_instances = plugins
+        self.plugins = plugins
 
     async def play(self, command, environment, scenario):
         ack, info = False, {}
 
         plugin = environment.get("plugin")
-        if plugin in self.plugins:
-            plugin_instance = self.plugin_instances.get(plugin, None)
+        plugin_type = plugin.get("type")
+
+        if plugin_type in self.plugins:
+            plugin_instance = self.plugin_instances.get(plugin_type, None)
 
             if not plugin_instance:                    
-                plugin_cls = self.plugins.get(plugin)
+                plugin_cls = self.plugins.get(plugin_type)
                 plugin_instance = plugin_cls()
-                self.plugin_instances[plugin] = plugin_instance
-            
-            if command == "start":
-                ack, info = plugin_instance.start(scenario)
-            elif command == "stop":
-                ack, info = plugin_instance.stop(scenario)
-            elif command == "update":
-                ack, info = plugin_instance.update(scenario)
-            else:
-                logger.info(f"Unknown infra plugin command {command}")
+                self.plugin_instances[plugin_type] = plugin_instance
+
+            if plugin_instance:
+                if command == "start":
+                    ack, info = await plugin_instance.start(scenario)
+                elif command == "stop":
+                    ack, info = await plugin_instance.stop(scenario)
+                elif command == "update":
+                    ack, info = await plugin_instance.update(scenario)
+                else:
+                    logger.info(f"Unknown infra plugin command {command}")
 
         else:
-            logger.info(f"Unknown infra plugin {plugin}")
+            logger.info(f"Unknown infra plugin {plugin_type}")
         
         return ack, info                   
 
@@ -62,7 +65,7 @@ class Infra(InfraBase):
         environment = deploy_dict.get("environment")
         
         ok, msg = await self.play(command, environment, scenario)
-        info = json.dumps(msg.get("info"))
+        info = json.dumps(msg.get("info", {}))
         built_info = info.encode('utf-8')
         built = Built(id=id, ack=ok, info=built_info)
         

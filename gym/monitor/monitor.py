@@ -5,7 +5,7 @@ from datetime import datetime
 
 from gym.common.core import WorkerCore
 from gym.common.protobuf.gym_grpc import MonitorBase
-from gym.common.protobuf.gym_pb2 import Instruction, Snapshot, Evaluation, Info, Environment
+from gym.common.protobuf.gym_pb2 import Instruction, Info
 
 
 logger = logging.getLogger(__name__)
