@@ -37,11 +37,11 @@ vnf_pp_I_metric_I_value_I_scalar_case : scalar : string   {mandatory}
 class "vector" as vnf_pp_I_metric_I_value_I_vector_case <<case>>
 vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_vector_case  : choice value
 vnf_pp_I_metric_I_value_I_vector_case : vector []: string 
-class "tuple-vector" as vnf_pp_I_metric_I_value_I_tuple_vector_case <<case>>
-vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_tuple_vector_case  : choice value
-class "tuple-vector" as vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector << (L, #FF7700) list>> 
-vnf_pp_I_metric_I_value_I_tuple_vector_case *-- "0..N" vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector 
-vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector : tuple {uses} 
+class "series" as vnf_pp_I_metric_I_value_I_series_case <<case>>
+vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_series_case  : choice value
+class "series" as vnf_pp_I_metric_I_value_I_series_I_series << (L, #FF7700) list>> 
+vnf_pp_I_metric_I_value_I_series_case *-- "0..N" vnf_pp_I_metric_I_value_I_series_I_series 
+vnf_pp_I_metric_I_value_I_series_I_series : tuple {uses} 
 class "evaluation" as vnf_pp_I_evaluation_grouping <<(G,Lime) grouping>> 
 vnf_pp_I_evaluation_grouping : id : string  
 class "source" as  vnf_pp_I_evaluation_I_source <<container>> 
@@ -69,11 +69,14 @@ vnf_pp_I_snapshot_I_origin : host : string
 class "evaluations" as vnf_pp_I_snapshot_I_evaluations << (L, #FF7700) list>> 
 vnf_pp_I_snapshot_grouping *-- "0..N" vnf_pp_I_snapshot_I_evaluations 
 vnf_pp_I_snapshot_I_evaluations : evaluation {uses} 
+vnf_pp_I_snapshot_grouping : timestamp : string  
 class "report" as vnf_pp_I_report_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_report_grouping : +id : string  {key} 
 vnf_pp_I_report_grouping : test : uint32  
 class "snapshots" as vnf_pp_I_report_I_snapshots << (L, #FF7700) list>> 
 vnf_pp_I_report_grouping *-- "0..N" vnf_pp_I_report_I_snapshots 
 vnf_pp_I_report_I_snapshots : snapshot {uses} 
+vnf_pp_I_report_grouping : timestamp : string  
 class "vnf-pp" as vnf_pp_I_vnf_pp_grouping <<(G,Lime) grouping>> 
 vnf_pp_I_vnf_pp_grouping : settings {uses} 
 class "reports" as vnf_pp_I_vnf_pp_I_reports << (L, #FF7700) list>> 
@@ -81,13 +84,13 @@ vnf_pp_I_vnf_pp_grouping *-- "0..N" vnf_pp_I_vnf_pp_I_reports
 vnf_pp_I_vnf_pp_I_reports : report {uses} 
 } 
 
-vnf_pp_I_metric_I_value_I_tuple_vector_I_tuple_vector --> vnf_pp_I_tuple_grouping : uses 
+vnf_pp_I_metric_I_value_I_series_I_series --> vnf_pp_I_tuple_grouping : uses 
 vnf_pp_I_evaluation_I_metrics --> vnf_pp_I_metric_grouping : uses 
 vnf_pp_I_snapshot_I_evaluations --> vnf_pp_I_evaluation_grouping : uses 
 vnf_pp_I_report_I_snapshots --> vnf_pp_I_snapshot_grouping : uses 
 vnf_pp_I_vnf_pp_grouping --> vnf_pp_I_settings_grouping : uses 
 vnf_pp_I_vnf_pp_I_reports --> vnf_pp_I_report_grouping : uses 
 center footer
- <size:20> UML Generated : 2020-02-06 19:13 </size>
+ <size:20> UML Generated : 2020-03-18 19:50 </size>
  endfooter 
 @enduml 

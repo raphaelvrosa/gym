@@ -1,5 +1,6 @@
 import os
 import yaml
+import json
 import logging
 import asyncio
 from grpclib.client import Channel
@@ -72,13 +73,15 @@ async def callLayout(stub):
 
 
 def test_vnfbd():
-    filename = filepath('vnf-bd-000.json')
+    filename = filepath('vnf-bd-004.yaml')
     vnfbd = VNFBD()
-    vnfbd.load(filename)
+    vnfbd_dict = vnfbd.utils.data(filename, is_yaml=True)
+    print(json.dumps(vnfbd_dict, indent=4))
+    # vnfbd.load(filename)
 
 async def main():
     channel = Channel("172.17.0.1", 8990)
-    stub = gym_grpc.PlayerStub(channel)   
+    stub = gym_grpc.PlayerStub(channel)
     await callInfo(stub)
     # await callLayout(stub)
     channel.close()
@@ -89,5 +92,7 @@ async def main():
 
 if __name__ == "__main__":
     
-    logging.basicConfig(level=logging.DEBUG)
-    asyncio.run(main())
+    # logging.basicConfig(level=logging.DEBUG)
+    # asyncio.run(main())
+
+    test_vnfbd()

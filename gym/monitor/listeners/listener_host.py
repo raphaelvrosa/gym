@@ -201,7 +201,9 @@ class ListenerHost(Listener):
             metric_names = list(out[0].keys())
 
             for name in metric_names:
-                metric_values = dict([ (out.index(out_value),float(out_value.get(name))) for out_value in out ])
+                # metric_values = dict([ (out.index(out_value),float(out_value.get(name))) for out_value in out ])
+
+                metric_values = dict([ ( out.index(out_value), {"key":out.index(out_value), "value":float(out_value.get(name))} ) for out_value in out ])
 
                 m = {
                     "name": name,

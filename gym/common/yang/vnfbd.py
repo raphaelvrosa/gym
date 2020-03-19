@@ -301,9 +301,10 @@ class VNFBD():
     def parse(self, data):
         self._yang = self.utils.parse(data, vnf_bd, "vnf-bd")
 
-    def load(self, filepath):
+    def load(self, filepath, yang=True):
         self._data = self.utils.data(filepath, is_json=True)
-        self.utils.load(filepath, self._yang, YANGPathHelper(), is_json=True)
+        if yang:
+            self.utils.load(filepath, self._yang, YANGPathHelper(), is_json=True)
                 
     def save(self, filepath):
         self.utils.save(filepath, self._yang)
@@ -328,6 +329,10 @@ class VNFBD():
 
     def yang(self):
         return self._yang
+
+    def json(self):
+        yang_json = self.utils.serialise(self._yang)
+        return yang_json
 
     def satisfy(self, apparatus):
         proceedings = self._data.get("proceedings")

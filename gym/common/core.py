@@ -472,7 +472,8 @@ class PlayerCore(Core):
                         task_ids += 1
 
         logger.info("Finishing Tests")
-        ack = await self.callScenario("stop", 0, vnfbd)
+        if vnfbd.deploy():
+            ack = await self.callScenario("stop", 0, vnfbd)
 
         return vnfpp   
     

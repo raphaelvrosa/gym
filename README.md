@@ -103,9 +103,9 @@ Description of the examples:
 
 * #0: Performs the execution of two agents just executing ping commands locally on the host machine.
 
-* #1: Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF.
+* #1: Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF using multiple instances of a prober.
 
-* #2: Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF, while its container is monitored during the test.
+* #2: Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF, while its container is monitored during the test by a gym-monitor component.
 
 * #3: Uses the containernet platform to deploy agents and a Suricata-IDS VNF. The agents perform the execution of tcpreplay traffic through the target VNF, while its container is monitored externally and the Suricata process is monitored internally in the VNF.
 The test consists in executing different pcap files using tcpreplay  while the VNF suricata has loaded different rule sets.

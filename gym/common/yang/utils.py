@@ -14,15 +14,16 @@ class Utils:
     def render(self, source, context):
         rendered = ""
         try:
-            j2_tmpl = Template(source)
+            source_str = json.dumps(source)
+            j2_tmpl = Template(source_str)
             rendered = j2_tmpl.render(context)
         except TemplateError as e:
             logger.debug(f"Exception when rendering template: {e}")
-            rendered = ""
         finally:            
             logger.debug(f"Rendering: source {source} with context {context} -> {rendered}")
             if rendered:
-                return rendered
+                rendered_dict = json.loads(rendered)
+                return rendered_dict
             else:
                 return source
 
@@ -68,7 +69,7 @@ class Utils:
         data_json = pbJ.dumps(
             cls_instance,
             indent=4, 
-            filter=False, 
+            filter=True, 
             skip_subtrees=[], 
             select=False, 
             mode="default")

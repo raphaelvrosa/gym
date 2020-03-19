@@ -22,8 +22,7 @@ echo "Added pcap files smallFlows.pcap and bigFlows.pcap to /mnt/pcaps/ folder"
 echo "Installing Containernet"
 
 sudo apt-get install ansible git aptitude
-git clone https://github.com/containernet/containernet.git
+git clone https://github.com/raphaelvrosa/containernet.git
 cd containernet/ansible
 sudo ansible-playbook -i "localhost," -c local install.yml
-cd ..
-
+cd -

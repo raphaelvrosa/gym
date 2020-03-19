@@ -94,8 +94,8 @@ module vnf-pp {
                     description "List of values";
                 }
             }
-            case tuple-vector {
-                list tuple-vector {
+            case series {
+                list series {
                     key "key";
                     uses tuple;
                     description "List of key/values e.g. timeseries.";
@@ -202,11 +202,21 @@ module vnf-pp {
             uses evaluation;
             description "List of evaluations contained in a single snapshot.";
         }
+
+        leaf timestamp {
+            type string;
+            description "Time (date, hour, minute, second) when the snapshot was created.";    
+        }
     }
 
     grouping report {
         description "Set of snapshots based on a single test.";
 
+        leaf id { 
+            type string; 
+            description "Unique identifier.";
+        }
+ 
         leaf test { 
             type uint32; 
             description "Test identifier when the snapshot was obtained.";
@@ -217,6 +227,11 @@ module vnf-pp {
             uses snapshot;
             description "List of snapshots contained in a single report.";
         }
+
+        leaf timestamp {
+            type string;
+            description "Time (date, hour, minute, second) when the report was created.";    
+        }
     }
 
     grouping vnf-pp {
@@ -225,7 +240,7 @@ module vnf-pp {
         uses settings;
 
         list reports {
-            key "test";
+            key "id";
             uses report;
             description "List of reports obtained in a vnf-pp.";
         }

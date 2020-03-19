@@ -13,6 +13,7 @@ from gym.common.protobuf.gym_grpc import PlayerStub
 from gym.common.protobuf.gym_pb2 import Info, Layout
 
 from gym.common.yang.vnfbd import VNFBD
+from gym.common.yang.vnfpp import VNFPP
 
 
 logger = logging.getLogger(__name__)
@@ -26,6 +27,14 @@ TESTS = {
     1: {
         "inputs": "inputs-vnf-bd-001.json",
         "vnfbd": "vnf-bd-001.json",
+    },
+    2: {
+        "inputs": "inputs-vnf-bd-002.json",
+        "vnfbd": "vnf-bd-002.json",
+    },
+    3: {
+        "inputs": "inputs-vnf-bd-003.json",
+        "vnfbd": "vnf-bd-003.json",
     },
 }
 
@@ -89,7 +98,7 @@ class Examples:
         inputs = self.load(inputs_filename)
 
         vnfbd = VNFBD()
-        vnfbd.load(vnfbd_filename)
+        vnfbd.load(vnfbd_filename, yang=False)
         vnfbd_protobuf = vnfbd.protobuf()
 
         logger.info(f"vnf-bd protobuf: {vnfbd_protobuf}")
@@ -99,7 +108,16 @@ class Examples:
             layout.inputs[k] = v
 
         reply = await stub.CallLayout(layout)
+
         logger.info(f"Received Result {reply}")
+
+        vnfpp = VNFPP()
+        ack = vnfpp.from_protobuf(reply.vnfpp)
+
+        if ack:
+            
+            logger.info(f"VNF-PP replied {vnfpp.json()}")
+        
       
     async def calls(self):
         logger.info(f"Calling: info and layout")

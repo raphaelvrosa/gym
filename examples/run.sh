@@ -160,8 +160,8 @@ case "$COMMAND" in
         echo_bold "=> Start - Run a test case specified."
         echo_bold "=> Stop - Clean logs/results and operations performed by test case"
         echo_bold "# Test Cases:"
-        echo_bold " - 0: Simple two-agents VNF-BD exchanging ping traffic in the localhost scope"
-        echo_bold " - 1: Uses containernet to run three agents exchanging iperf3/ping traffic via a dummy VNF, while monitoring it"
+        echo_bold " - 0: Simple two agent processes exercising ping"
+        echo_bold " - 1: Uses containernet to run two agents exchanging iperf3 and ping through a dummy VNF, while monitoring it"
 
         exit 1
 esac

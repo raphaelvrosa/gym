@@ -1,5 +1,5 @@
 {
-    "id": "001",
+    "id": "002",
     "name": "Simple-VNF-BD",
     "version": "0.01",
     "author": "VNF Developer",
@@ -23,8 +23,8 @@
         }
     },
     "targets": {
-        "vnf-test-01": {
-            "id": "vnf-test-01",
+        "vnf-test-02": {
+            "id": "vnf-test-02",
             "name": "vnf/bypass:0.1",
             "version": "0.1",
             "author": "Test case",
@@ -51,7 +51,8 @@
                     },
                     "storage": {
                         "size": 2,
-                        "unit": "GB"
+                        "unit": "GB",
+                        "volumes": "/mnt/pcaps/:/mnt/pcaps:rw"
                     }
                 },
                 "connection_points": {
@@ -171,6 +172,54 @@
                             }
                         },
                         "implementation": "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                    }
+                }
+            },
+            "d4": {
+                "id": "d4",
+                "type": "external",
+                "image": "",
+                "format": "process",
+                "role": "monitor",
+                "resources": {
+                    "cpu": {
+                        "vcpus": 1,
+                        "cpu_bw": "1.0",
+                        "pinning": ""
+                    },
+                    "memory": {
+                        "size": 2048,
+                        "unit": "MB"
+                    },
+                    "storage": {
+                        "size": 2,
+                        "unit": "GB",
+                        "volumes": ""
+                    }
+                },
+                "connection_points": {},
+                "relationships": {
+                    "d4-inside-d1": {
+                        "name": "d4-inside-d2",
+                        "type": "AttachesTo",
+                        "target": "d2"
+                    }
+                },
+                "lifecycle": {
+                    "start": {
+                        "workflow": "start",
+                        "name": "",
+                        "parameters": {
+                            "host_id": {
+                                "input": "host_id",
+                                "value": "d4"
+                            },
+                            "host_ip": {
+                                "input": "host_ip",
+                                "value": "get_attrib:ip"
+                            }
+                        },
+                        "implementation": "gym-monitor --uuid {host_id} --address {host_ip}:50056"
                     }
                 }
             },
@@ -314,6 +363,37 @@
                             "protocol": {
                                 "input": "protocol",
                                 "value": "udp"
+                            },
+                            "duration": {
+                                "input": "duration",
+                                "value": "30"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "monitors": {
+            "3": {
+                "id": "3",
+                "name": "",
+                "host": {
+                    "setting": "external",
+                    "node": "d2"
+                },
+                "listeners": {
+                    "1": {
+                        "id": 11,
+                        "instances": 0,
+                        "name": "docker",
+                        "parameters": {
+                            "target": {
+                                "input": "target",
+                                "value": "d2"
+                            },
+                            "interval": {
+                                "input": "interval",
+                                "value": "1"
                             },
                             "duration": {
                                 "input": "duration",

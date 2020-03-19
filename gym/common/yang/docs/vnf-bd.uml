@@ -183,6 +183,6 @@ vnf_bd_I_vnf_bd_I_targets --> vnf_bd_I_targets_grouping : uses
 vnf_bd_I_vnf_bd_I_scenario --> vnf_bd_I_scenario_grouping : uses 
 vnf_bd_I_vnf_bd_I_proceedings --> vnf_bd_I_proceedings_grouping : uses 
 center footer
- <size:20> UML Generated : 2020-02-06 19:13 </size>
+ <size:20> UML Generated : 2020-03-18 19:50 </size>
  endfooter 
 @enduml 

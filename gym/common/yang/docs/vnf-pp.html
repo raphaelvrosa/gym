@@ -277,7 +277,7 @@ function expandAllRows() {
                                 onclick="toggleRows(this);return false"
                                 class="folder">&nbsp;
                              </a>
-                             <abbr title="List of reports obtained in a vnf-pp.">reports[test]</abbr>
+                             <abbr title="List of reports obtained in a vnf-pp.">reports[id]</abbr>
                           </div>
                        </td> 
 <td nowrap>list</td>
@@ -291,17 +291,31 @@ function expandAllRows() {
                        <td nowrap>
                           <div id=9999 class=tier3>
                              <a class="leaf">&nbsp;</a>
-                             <abbr title="Test identifier when the snapshot was obtained.">  test </abbr>
+                             <abbr title="Unique identifier.">  id </abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="string
+">string</abbr></td>
+                       <td nowrap>config</td>
+                       <td></td>
+                       <td>current</td>
+                       <td nowrap>/vnf-pp:reports/vnf-pp:id</td</tr> 
+<tr id="1-7-2" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier3>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="Test identifier when the snapshot was obtained."> <em> test </em></abbr>
                           </div>
                        </td>
                        <td>leaf</td>
                        <td nowrap><abbr title="uint32
 ">uint32</abbr></td>
                        <td nowrap>config</td>
-                       <td></td>
+                       <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:test</td</tr> 
-<tr id="1-7-2" class="a">
+<tr id="1-7-3" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier3">
                              <a href="#" id="p6000"
@@ -318,7 +332,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots</td>
                     </tr> 
-<tr id="1-7-2-1" class="a">
+<tr id="1-7-3-1" class="a">
                        <td nowrap>
                           <div id=9999 class=tier4>
                              <a class="leaf">&nbsp;</a>
@@ -332,7 +346,7 @@ function expandAllRows() {
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:id</td</tr> 
-<tr id="1-7-2-2" class="a">
+<tr id="1-7-3-2" class="a">
                        <td nowrap>
                           <div id=9999 class=tier4>
                              <a class="leaf">&nbsp;</a>
@@ -346,7 +360,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:trial</td</tr> 
-<tr id="1-7-2-3" class="a">
+<tr id="1-7-3-3" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier4">
                              <a href="#" id="p6000"
@@ -363,7 +377,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:origin</td>
                     </tr> 
-<tr id="1-7-2-3-1" class="a">
+<tr id="1-7-3-3-1" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -377,7 +391,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:origin/vnf-pp:id</td</tr> 
-<tr id="1-7-2-3-2" class="a">
+<tr id="1-7-3-3-2" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -391,7 +405,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:origin/vnf-pp:role</td</tr> 
-<tr id="1-7-2-3-3" class="a">
+<tr id="1-7-3-3-3" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -405,7 +419,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:origin/vnf-pp:host</td</tr> 
-<tr id="1-7-2-4" class="a">
+<tr id="1-7-3-4" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier4">
                              <a href="#" id="p6000"
@@ -422,7 +436,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations</td>
                     </tr> 
-<tr id="1-7-2-4-4" class="a">
+<tr id="1-7-3-4-4" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -436,7 +450,7 @@ function expandAllRows() {
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:id</td</tr> 
-<tr id="1-7-2-4-5" class="a">
+<tr id="1-7-3-4-5" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier5">
                              <a href="#" id="p6000"
@@ -453,7 +467,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:source</td>
                     </tr> 
-<tr id="1-7-2-4-5-1" class="a">
+<tr id="1-7-3-4-5-1" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -467,7 +481,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:source/vnf-pp:id</td</tr> 
-<tr id="1-7-2-4-5-2" class="a">
+<tr id="1-7-3-4-5-2" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -481,7 +495,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:source/vnf-pp:name</td</tr> 
-<tr id="1-7-2-4-5-3" class="a">
+<tr id="1-7-3-4-5-3" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -495,7 +509,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:source/vnf-pp:type</td</tr> 
-<tr id="1-7-2-4-5-4" class="a">
+<tr id="1-7-3-4-5-4" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -509,7 +523,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:source/vnf-pp:version</td</tr> 
-<tr id="1-7-2-4-5-5" class="a">
+<tr id="1-7-3-4-5-5" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -523,7 +537,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:source/vnf-pp:call</td</tr> 
-<tr id="1-7-2-4-6" class="a">
+<tr id="1-7-3-4-6" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier5">
                              <a href="#" id="p6000"
@@ -540,7 +554,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:timestamp</td>
                     </tr> 
-<tr id="1-7-2-4-6-6" class="a">
+<tr id="1-7-3-4-6-6" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -554,7 +568,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:timestamp/vnf-pp:start</td</tr> 
-<tr id="1-7-2-4-6-7" class="a">
+<tr id="1-7-3-4-6-7" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -568,7 +582,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:timestamp/vnf-pp:stop</td</tr> 
-<tr id="1-7-2-4-7" class="a">
+<tr id="1-7-3-4-7" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier5">
                              <a href="#" id="p6000"
@@ -585,7 +599,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics</td>
                     </tr> 
-<tr id="1-7-2-4-7-8" class="a">
+<tr id="1-7-3-4-7-8" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -599,7 +613,7 @@ function expandAllRows() {
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:name</td</tr> 
-<tr id="1-7-2-4-7-9" class="a">
+<tr id="1-7-3-4-7-9" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -613,7 +627,7 @@ function expandAllRows() {
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:unit</td</tr> 
-<tr id="1-7-2-4-7-10" class="a">
+<tr id="1-7-3-4-7-10" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -627,7 +641,7 @@ function expandAllRows() {
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:type</td</tr> 
-<tr id="1-7-2-4-7-11" class="a">
+<tr id="1-7-3-4-7-11" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier6">
                              <a href="#" id="p6000"
@@ -644,7 +658,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics</td>
                     </tr> 
-<tr id="1-7-2-4-7-11-1" class="a">
+<tr id="1-7-3-4-7-11-1" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier7">
                              <a href="#" id="p6000"
@@ -661,7 +675,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics</td>
                     </tr> 
-<tr id="1-7-2-4-7-11-1-1" class="a">
+<tr id="1-7-3-4-7-11-1-1" class="a">
                        <td nowrap>
                           <div id=9999 class=tier8>
                              <a class="leaf">&nbsp;</a>
@@ -675,7 +689,7 @@ function expandAllRows() {
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:scalar</td</tr> 
-<tr id="1-7-2-4-7-11-2" class="a">
+<tr id="1-7-3-4-7-11-2" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier7">
                              <a href="#" id="p6000"
@@ -692,7 +706,7 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics</td>
                     </tr> 
-<tr id="1-7-2-4-7-11-2-2" class="a">
+<tr id="1-7-3-4-7-11-2-2" class="a">
                        <td nowrap>
                           <div id=9999 class=tier8>
                              <a class="leaf-list">&nbsp;</a>
@@ -706,14 +720,14 @@ function expandAllRows() {
                        <td>*</td>
                        <td>current</td>
                        <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:vector</td</tr> 
-<tr id="1-7-2-4-7-11-3" class="a">
+<tr id="1-7-3-4-7-11-3" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier7">
                              <a href="#" id="p6000"
                                 onclick="toggleRows(this);return false"
                                 class="folder">&nbsp;
                              </a>
-                             <abbr title="No description">:(tuple-vector)</abbr>
+                             <abbr title="No description">:(series)</abbr>
                           </div>
                        </td> 
 <td nowrap>case</td>
@@ -723,14 +737,14 @@ function expandAllRows() {
                     <td>current</td>
                     <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics</td>
                     </tr> 
-<tr id="1-7-2-4-7-11-3-3" class="a">
+<tr id="1-7-3-4-7-11-3-3" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier8">
                              <a href="#" id="p6000"
                                 onclick="toggleRows(this);return false"
                                 class="folder">&nbsp;
                              </a>
-                             <abbr title="List of key/values e.g. timeseries.">tuple-vector[key]</abbr>
+                             <abbr title="List of key/values e.g. timeseries.">series[key]</abbr>
                           </div>
                        </td> 
 <td nowrap>list</td>
@@ -738,9 +752,9 @@ function expandAllRows() {
                     <td nowrap>config</td>
                     <td></td>
                     <td>current</td>
-                    <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:tuple-vector</td>
+                    <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:series</td>
                     </tr> 
-<tr id="1-7-2-4-7-11-3-3-1" class="a">
+<tr id="1-7-3-4-7-11-3-3-1" class="a">
                        <td nowrap>
                           <div id=9999 class=tier9>
                              <a class="leaf">&nbsp;</a>
@@ -753,8 +767,8 @@ function expandAllRows() {
                        <td nowrap>config</td>
                        <td></td>
                        <td>current</td>
-                       <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:tuple-vector/vnf-pp:key</td</tr> 
-<tr id="1-7-2-4-7-11-3-3-2" class="a">
+                       <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:series/vnf-pp:key</td</tr> 
+<tr id="1-7-3-4-7-11-3-3-2" class="a">
                        <td nowrap>
                           <div id=9999 class=tier9>
                              <a class="leaf">&nbsp;</a>
@@ -767,7 +781,35 @@ function expandAllRows() {
                        <td nowrap>config</td>
                        <td>?</td>
                        <td>current</td>
-                       <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:tuple-vector/vnf-pp:value</td</tr> 
+                       <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:evaluations/vnf-pp:metrics/vnf-pp:series/vnf-pp:value</td</tr> 
+<tr id="1-7-3-5" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier4>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="Time (date, hour, minute, second) when the snapshot was created."> <em> timestamp </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="string
+">string</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-pp:reports/vnf-pp:snapshots/vnf-pp:timestamp</td</tr> 
+<tr id="1-7-4" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier3>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="Time (date, hour, minute, second) when the report was created."> <em> timestamp </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="string
+">string</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-pp:reports/vnf-pp:timestamp</td</tr> 
 
 </table>
 </div>

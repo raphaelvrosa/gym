@@ -32,7 +32,7 @@
                 "id": "agent-1",
                 "type": "",
                 "image": "",
-                "image_format": "",
+                "format": "",
                 "resources": {
                     "cpu": {
                         "vcpus": 0,
@@ -57,7 +57,7 @@
                 "id": "agent-2",
                 "type": "",
                 "image": "",
-                "image_format": "",
+                "format": "",
                 "resources": {
                     "cpu": {
                         "vcpus": 0,
@@ -82,7 +82,7 @@
                 "id": "manager",
                 "type": "",
                 "image": "",
-                "image_format": "",
+                "format": "",
                 "resources": {
                     "cpu": {
                         "vcpus": 0,
@@ -120,7 +120,7 @@
                 "probers": {
                     "2": {
                         "id": 2,
-                        "instances": 0,
+                        "instances": 2,
                         "name": "",
                         "parameters": {
                             "interval": {
@@ -143,7 +143,7 @@
                     },
                     "4": {
                         "id": 4,
-                        "instances": 0,
+                        "instances": 1,
                         "name": "iperf3",
                         "parameters": {
                             "client": {
@@ -184,7 +184,7 @@
                 "probers": {
                     "2": {
                         "id": 2,
-                        "instances": 0,
+                        "instances": 1,
                         "name": "",
                         "parameters": {
                             "interval": {
@@ -207,7 +207,7 @@
                     },
                     "4": {
                         "id": 4,
-                        "instances": 0,
+                        "instances": 1,
                         "name": "",
                         "parameters": {
                             "client": {

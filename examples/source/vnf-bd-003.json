@@ -1,15 +1,15 @@
 {
-    "id": "001",
-    "name": "Simple-VNF-BD",
+    "id": "003",
+    "name": "Tests Suricata container VNF",
     "version": "0.01",
     "author": "VNF Developer",
-    "description": "VNF-BD test scenario",
+    "description": "Tests Suricata container VNF",
     "experiments": {
-        "trials": 1,
-        "tests": 1
+        "trials": "{{ settings_trials }}",
+        "tests": "{{ settings_tests }}"
     },
     "environment": {
-        "name": "Execution-Environment-Alpha",
+        "name": "Execution-Environment",
         "description": "Esablishes scenario in containernet",
         "deploy": true,
         "plugin": {
@@ -23,12 +23,12 @@
         }
     },
     "targets": {
-        "vnf-test-01": {
-            "id": "vnf-test-01",
-            "name": "vnf/bypass:0.1",
+        "vnf-sut-02": {
+            "id": "vnf-sut-02",
+            "name": "vnf/suricata:0.1",
             "version": "0.1",
             "author": "Test case",
-            "description": "Bypass VNF"
+            "description": "Suricata VNF"
         }
     },
     "scenario": {
@@ -51,7 +51,8 @@
                     },
                     "storage": {
                         "size": 2,
-                        "unit": "GB"
+                        "unit": "GB",
+                        "volumes": "/mnt/pcaps/:/mnt/pcaps:rw"
                     }
                 },
                 "connection_points": {
@@ -84,17 +85,17 @@
             "d2": {
                 "id": "d2",
                 "type": "internal",
-                "image": "vnf/bypass:0.1",
+                "image": "vnf/suricata:0.1",
                 "format": "docker",
                 "role": "sut",
                 "resources": {
                     "cpu": {
-                        "vcpus": 1,
-                        "cpu_bw": "1.0",
+                        "vcpus": "{{ sut_resources_vcpus }}",
+                        "cpu_bw": "{{ sut_resources_cpubw }}",
                         "pinning": ""
                     },
                     "memory": {
-                        "size": 2048,
+                        "size": "{{ sut_resources_memory_size }}",
                         "unit": "MB"
                     },
                     "storage": {
@@ -121,7 +122,13 @@
                 "lifecycle": {
                     "start": {
                         "workflow": "start",
-                        "implementation": "./run.sh"
+                        "parameters": {
+                            "configuration": {
+                                "input": "configuration",
+                                "value": "{{ sut_configuration }}"
+                            }
+                        },                            
+                        "implementation": "./start.sh {configuration}"
                     }
                 }
             },
@@ -174,24 +181,90 @@
                     }
                 }
             },
+            "d4": {
+                "id": "d4",
+                "type": "external",
+                "image": "",
+                "format": "process",
+                "role": "monitor",
+                "resources": null,
+                "connection_points": {},
+                "relationships": {
+                    "d4-inside-d1": {
+                        "name": "d4-inside-d2",
+                        "type": "AttachesTo",
+                        "target": "d2"
+                    }
+                },
+                "lifecycle": {
+                    "start": {
+                        "workflow": "start",
+                        "name": "",
+                        "parameters": {
+                            "host_id": {
+                                "input": "host_id",
+                                "value": "d4"
+                            },
+                            "host_ip": {
+                                "input": "host_ip",
+                                "value": "get_attrib:ip"
+                            }
+                        },
+                        "implementation": "gym-monitor --uuid {host_id} --address {host_ip}:50056"
+                    }
+                }
+            },
             "d5": {
                 "id": "d5",
+                "type": "internal",
+                "image": "",
+                "format": "process",
+                "role": "monitor",
+                "resources": null,
+                "connection_points": {},
+                "relationships": {
+                    "d4-inside-d1": {
+                        "name": "d4-inside-d2",
+                        "type": "HostedOn",
+                        "target": "d2"
+                    }
+                },
+                "lifecycle": {
+                    "start": {
+                        "workflow": "start",
+                        "name": "",
+                        "parameters": {
+                            "host_id": {
+                                "input": "host_id",
+                                "value": "d5"
+                            },
+                            "host_ip": {
+                                "input": "host_ip",
+                                "value": "get_attrib:ip"
+                            }
+                        },
+                        "implementation": "gym-monitor --uuid {host_id} --address {host_ip}:50057"
+                    }
+                }
+            },
+            "d6": {
+                "id": "d6",
                 "type": "internal",
                 "image": "raphaelvrosa/gym:latest",
                 "format": "docker",
                 "role": "manager",
                 "resources": {
                     "cpu": {
-                        "vcpus": 0,
+                        "vcpus": 1,
                         "cpu_bw": "",
                         "pinning": ""
                     },
                     "memory": {
-                        "size": 0,
+                        "size": 1024,
                         "unit": ""
                     },
                     "storage": {
-                        "size": 0,
+                        "size": 1,
                         "unit": "",
                         "volumes": ""
                     }
@@ -258,66 +331,93 @@
                 },
                 "probers": {
                     "1": {
-                        "id": 4,
+                        "id": 6,
                         "instances": 1,
-                        "name": "iperf3",
+                        "name": "tcpreplay",
                         "parameters": {
-                            "client": {
-                                "input": "client",
-                                "value": "True"
+                            "duration": {
+                                "input": "duration",
+                                "value": "{{ procs_duration }}"
                             },
-                            "server": {
-                                "input": "server",
-                                "value": "172.31.1.4"
+                            "speed": {
+                                "input": "speed",
+                                "value": "{{ procs_agent1_speed }}"
                             },
-                            "port": {
-                                "input": "port",
-                                "value": "9015"
+                            "timing": {
+                                "input": "timing",
+                                "value": "{{ procs_agent1_timing }}"
                             },
-                            "protocol": {
-                                "input": "protocol",
-                                "value": "udp"
+                            "loop": {
+                                "input": "loop",
+                                "value": "{{ procs_agent1_loop }}"
+                            },
+                            "preload": {
+                                "input": "preload",
+                                "value": "{{ procs_agent1_preload }}"
+                            },
+                            "interface": {
+                                "input": "interface",
+                                "value": "{{ procs_agent1_interface }}"
+                            },
+                            "pcap": {
+                                "input": "pcap",
+                                "value": "{{ procs_agent1_pcap }}"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "monitors": {
+            "2": {
+                "id": "2",
+                "name": "",
+                "host": {
+                    "setting": "external",
+                    "node": "d2"
+                },
+                "listeners": {
+                    "1": {
+                        "id": 11,
+                        "instances": 1,
+                        "name": "docker",
+                        "parameters": {
+                            "target": {
+                                "input": "target",
+                                "value": "{{ procs_monitor2_target }}"
+                            },
+                            "interval": {
+                                "input": "interval",
+                                "value": "{{ procs_monitor2_interval }}"
                             },
                             "duration": {
                                 "input": "duration",
-                                "value": "30"
-                            },
-                            "rate": {
-                                "input": "rate",
-                                "value": "1G"
+                                "value": "{{ procs_duration }}"
                             }
                         }
                     }
                 }
             },
-            "2": {
-                "id": "2",
+            "3": {
+                "id": "3",
                 "name": "",
                 "host": {
                     "setting": "internal",
-                    "node": "d3"
+                    "node": "d2"
                 },
-                "probers": {
+                "listeners": {
                     "1": {
-                        "id": 4,
+                        "id": 14,
                         "instances": 1,
-                        "name": "iperf3",
+                        "name": "docker",
                         "parameters": {
-                            "client": {
-                                "input": "client",
-                                "value": "False"
-                            },
-                            "port": {
-                                "input": "port",
-                                "value": "9015"
-                            },
-                            "protocol": {
-                                "input": "protocol",
-                                "value": "udp"
+                            "interface": {
+                                "input": "interface",
+                                "value": "{{ procs_monitor3_interface }}"
                             },
                             "duration": {
                                 "input": "duration",
-                                "value": "30"
+                                "value": "{{ procs_duration }}"
                             }
                         }
                     }
