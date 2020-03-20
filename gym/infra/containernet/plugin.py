@@ -188,7 +188,6 @@ class Playground:
         ok, info = self.exp_topo.start()       
         logger.info("hosts info %s", info)
         
-
         msg = {
             "info": info,
             "error": None,

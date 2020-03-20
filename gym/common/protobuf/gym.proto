@@ -162,8 +162,9 @@ message Report {
 
 message Layout {
     int32 id = 1;
-    map<string, string> inputs = 2;
-    VnfBd vnfbd = 3;
+    VnfBd vnfbd = 2;
+    bytes inputs = 3;
+    bytes template = 4;
 }
 
 message Result {

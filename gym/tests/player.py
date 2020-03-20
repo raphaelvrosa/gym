@@ -71,13 +71,37 @@ def filepath(name):
 async def callLayout(stub):
     pass
 
+def load(filename):
+    try:
+        with open(filename, "+r") as fp:
+            data = json.load(fp)
+            
+    except Exception as e:
+        logger.debug(f"Loading file exception: {e}")
+        data = {}
+    finally:
+        return data
+
 
 def test_vnfbd():
-    filename = filepath('vnf-bd-004.yaml')
+    vfilename = filepath('vnf-bd-003.json')
+    ifilename = filepath('inputs-vnf-bd-003.json')
+    tfilename = filepath('template-vnf-bd-003.json')
+
+    template = load(tfilename)
+    inputs = load(ifilename)
+
+
+
     vnfbd = VNFBD()
-    vnfbd_dict = vnfbd.utils.data(filename, is_yaml=True)
-    print(json.dumps(vnfbd_dict, indent=4))
-    # vnfbd.load(filename)
+    vnfbd.load(vfilename)
+
+    vnfbd.inputs(inputs)
+    
+    templates = vnfbd.multiplex(template)
+
+    print(len(templates))
+
 
 async def main():
     channel = Channel("172.17.0.1", 8990)
@@ -92,7 +116,7 @@ async def main():
 
 if __name__ == "__main__":
     
-    # logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG)
     # asyncio.run(main())
 
     test_vnfbd()

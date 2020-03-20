@@ -193,7 +193,7 @@
                             },
                             "duration": {
                                 "input": "duration",
-                                "value": "{{ settings_duration }}"
+                                "value": "10"
                             },
                             "frame_size": {
                                 "input": "frame_size",

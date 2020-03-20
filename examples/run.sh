@@ -115,11 +115,11 @@ case "$COMMAND" in
             ;;
             *)
                 echo_bold "-> Starting Infra"
-                byobu new-session -d -s "gym" "gym-infra --uuid infra --address 172.17.0.1:9090"
+                byobu new-session -d -s "gym" "gym-infra --uuid infra --address 172.17.0.1:9090 --debug > logs/infra.log 2>&1"
 
                 sleep 1
                 echo_bold "-> Starting Player"
-                byobu new-window "gym-player --uuid player --address 172.17.0.1:8990 --debug"
+                byobu new-window "gym-player --uuid player --address 172.17.0.1:8990 --debug > logs/player.log 2>&1"
             ;;
         esac
 

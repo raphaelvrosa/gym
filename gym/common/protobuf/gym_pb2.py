@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='gym',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\tgym.proto\x12\x03gym\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x0cvnf_bd.proto\x1a\x0cvnf_pp.proto\"`\n\tApparatus\x12\x19\n\x06\x61gents\x18\x01 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08monitors\x18\x02 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08managers\x18\x03 \x03(\x0b\x32\t.gym.Info\"E\n\tArtifacts\x12\x1a\n\x07probers\x18\x06 \x03(\x0b\x32\t.gym.Tool\x12\x1c\n\tlisteners\x18\x07 \x03(\x0b\x32\t.gym.Tool\"\xc5\x05\n\x04Info\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12*\n\x0b\x65nvironment\x18\x04 \x01(\x0b\x32\x15.gym.Info.Environment\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12!\n\tartifacts\x18\x06 \x01(\x0b\x32\x0e.gym.Artifacts\x12!\n\tapparatus\x18\x07 \x01(\x0b\x32\x0e.gym.Apparatus\x12\x10\n\x08\x63ontacts\x18\x08 \x03(\t\x1a\xdc\x03\n\x0b\x45nvironment\x12\x0e\n\x06system\x18\x01 \x01(\t\x12\x0c\n\x04host\x18\x02 \x01(\t\x12\x0f\n\x07release\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x11\n\tprocessor\x18\x05 \x01(\t\x12+\n\x03\x63pu\x18\x06 \x03(\x0b\x32\x1e.gym.Info.Environment.CpuEntry\x12\x31\n\x06memory\x18\x07 \x03(\x0b\x32!.gym.Info.Environment.MemoryEntry\x12-\n\x04\x64isk\x18\x08 \x03(\x0b\x32\x1f.gym.Info.Environment.DiskEntry\x12\x33\n\x07network\x18\t \x03(\x0b\x32\".gym.Info.Environment.NetworkEntry\x1a*\n\x08\x43puEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a-\n\x0bMemoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a+\n\tDiskEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a.\n\x0cNetworkEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"f\n\x06\x41\x63tion\x12\n\n\x02id\x18\x01 \x01(\x05\x12#\n\x04\x61rgs\x18\x02 \x03(\x0b\x32\x15.gym.Action.ArgsEntry\x1a+\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x95\x01\n\x0bInstruction\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12.\n\x07\x61\x63tions\x18\x03 \x03(\x0b\x32\x1d.gym.Instruction.ActionsEntry\x1a;\n\x0c\x41\x63tionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.gym.Action:\x02\x38\x01\"\x92\x04\n\nEvaluation\x12\n\n\x02id\x18\x01 \x01(\x05\x12&\n\x06source\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Source\x12-\n\x07metrics\x18\x03 \x03(\x0b\x32\x1c.gym.Evaluation.MetricsEntry\x12,\n\ttimestamp\x18\x04 \x01(\x0b\x32\x19.gym.Evaluation.Timestamp\x1aO\n\x06Source\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0c\n\x04\x63\x61ll\x18\x05 \x01(\t\x1ax\n\x06Metric\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x0c\n\x04unit\x18\x03 \x01(\t\x12\x10\n\x06scalar\x18\x04 \x01(\x01H\x00\x12)\n\x06series\x18\x05 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x42\x07\n\x05value\x1a`\n\tTimestamp\x12)\n\x05start\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x04stop\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x46\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Metric:\x02\x38\x01\"\x98\x02\n\x08Snapshot\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12$\n\x06origin\x18\x03 \x01(\x0b\x32\x14.gym.Snapshot.Origin\x12\x33\n\x0b\x65valuations\x18\x04 \x03(\x0b\x32\x1e.gym.Snapshot.EvaluationsEntry\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\"\n\x06Origin\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x1a\x43\n\x10\x45valuationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.gym.Evaluation:\x02\x38\x01\"\xdb\x01\n\x04Tool\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12-\n\nparameters\x18\x03 \x03(\x0b\x32\x19.gym.Tool.ParametersEntry\x12\'\n\x07metrics\x18\x04 \x03(\x0b\x32\x16.gym.Tool.MetricsEntry\x1a\x31\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xe0\x01\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0e\n\x06trials\x18\x02 \x01(\x05\x12\x0c\n\x04test\x18\x03 \x01(\x05\x12\x1f\n\x06\x61gents\x18\x04 \x03(\x0b\x32\x0f.gym.Task.Agent\x12#\n\x08monitors\x18\x05 \x03(\x0b\x32\x11.gym.Task.Monitor\x1a\x31\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1a\n\x07probers\x18\x02 \x03(\x0b\x32\t.gym.Tool\x1a\x35\n\x07Monitor\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1c\n\tlisteners\x18\x03 \x03(\x0b\x32\t.gym.Tool\"\xc1\x01\n\x06Report\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04test\x18\x02 \x01(\x05\x12-\n\tsnapshots\x18\x03 \x03(\x0b\x32\x1a.gym.Report.SnapshotsEntry\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a?\n\x0eSnapshotsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.gym.Snapshot:\x02\x38\x01\"\x87\x01\n\x06Layout\x12\n\n\x02id\x18\x01 \x01(\x05\x12\'\n\x06inputs\x18\x02 \x03(\x0b\x32\x17.gym.Layout.InputsEntry\x12\x19\n\x05vnfbd\x18\x03 \x01(\x0b\x32\n.gym.VnfBd\x1a-\n\x0bInputsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"^\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x19\n\x05vnfpp\x18\x02 \x01(\x0b\x32\n.gym.VnfPp\x12-\n\ttimestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"n\n\x06\x44\x65ploy\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08workflow\x18\x02 \x01(\t\x12\x1f\n\x08scenario\x18\x03 \x01(\x0b\x32\r.gym.Scenario\x12%\n\x0b\x65nvironment\x18\x04 \x01(\x0b\x32\x10.gym.Environment\"=\n\x05\x42uilt\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0b\n\x03\x61\x63k\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\x12\x0c\n\x04info\x18\x04 \x01(\x0c\x32O\n\x06Player\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12&\n\nCallLayout\x12\x0b.gym.Layout\x1a\x0b.gym.Result2L\n\x07Manager\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\"\n\x08\x43\x61llTask\x12\t.gym.Task\x1a\x0b.gym.Report2Z\n\x05\x41gent\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\\\n\x07Monitor\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\'\n\x05Infra\x12\x1e\n\x03Run\x12\x0b.gym.Deploy\x1a\n.gym.Builtb\x06proto3'
+  serialized_pb=b'\n\tgym.proto\x12\x03gym\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x0cvnf_bd.proto\x1a\x0cvnf_pp.proto\"`\n\tApparatus\x12\x19\n\x06\x61gents\x18\x01 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08monitors\x18\x02 \x03(\x0b\x32\t.gym.Info\x12\x1b\n\x08managers\x18\x03 \x03(\x0b\x32\t.gym.Info\"E\n\tArtifacts\x12\x1a\n\x07probers\x18\x06 \x03(\x0b\x32\t.gym.Tool\x12\x1c\n\tlisteners\x18\x07 \x03(\x0b\x32\t.gym.Tool\"\xc5\x05\n\x04Info\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x12*\n\x0b\x65nvironment\x18\x04 \x01(\x0b\x32\x15.gym.Info.Environment\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12!\n\tartifacts\x18\x06 \x01(\x0b\x32\x0e.gym.Artifacts\x12!\n\tapparatus\x18\x07 \x01(\x0b\x32\x0e.gym.Apparatus\x12\x10\n\x08\x63ontacts\x18\x08 \x03(\t\x1a\xdc\x03\n\x0b\x45nvironment\x12\x0e\n\x06system\x18\x01 \x01(\t\x12\x0c\n\x04host\x18\x02 \x01(\t\x12\x0f\n\x07release\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x11\n\tprocessor\x18\x05 \x01(\t\x12+\n\x03\x63pu\x18\x06 \x03(\x0b\x32\x1e.gym.Info.Environment.CpuEntry\x12\x31\n\x06memory\x18\x07 \x03(\x0b\x32!.gym.Info.Environment.MemoryEntry\x12-\n\x04\x64isk\x18\x08 \x03(\x0b\x32\x1f.gym.Info.Environment.DiskEntry\x12\x33\n\x07network\x18\t \x03(\x0b\x32\".gym.Info.Environment.NetworkEntry\x1a*\n\x08\x43puEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a-\n\x0bMemoryEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a+\n\tDiskEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\x1a.\n\x0cNetworkEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"f\n\x06\x41\x63tion\x12\n\n\x02id\x18\x01 \x01(\x05\x12#\n\x04\x61rgs\x18\x02 \x03(\x0b\x32\x15.gym.Action.ArgsEntry\x1a+\n\tArgsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x95\x01\n\x0bInstruction\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12.\n\x07\x61\x63tions\x18\x03 \x03(\x0b\x32\x1d.gym.Instruction.ActionsEntry\x1a;\n\x0c\x41\x63tionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1a\n\x05value\x18\x02 \x01(\x0b\x32\x0b.gym.Action:\x02\x38\x01\"\x92\x04\n\nEvaluation\x12\n\n\x02id\x18\x01 \x01(\x05\x12&\n\x06source\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Source\x12-\n\x07metrics\x18\x03 \x03(\x0b\x32\x1c.gym.Evaluation.MetricsEntry\x12,\n\ttimestamp\x18\x04 \x01(\x0b\x32\x19.gym.Evaluation.Timestamp\x1aO\n\x06Source\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0f\n\x07version\x18\x04 \x01(\t\x12\x0c\n\x04\x63\x61ll\x18\x05 \x01(\t\x1ax\n\x06Metric\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x0c\n\x04unit\x18\x03 \x01(\t\x12\x10\n\x06scalar\x18\x04 \x01(\x01H\x00\x12)\n\x06series\x18\x05 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x42\x07\n\x05value\x1a`\n\tTimestamp\x12)\n\x05start\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x04stop\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\x46\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12%\n\x05value\x18\x02 \x01(\x0b\x32\x16.gym.Evaluation.Metric:\x02\x38\x01\"\x98\x02\n\x08Snapshot\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\x05\x12$\n\x06origin\x18\x03 \x01(\x0b\x32\x14.gym.Snapshot.Origin\x12\x33\n\x0b\x65valuations\x18\x04 \x03(\x0b\x32\x1e.gym.Snapshot.EvaluationsEntry\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\"\n\x06Origin\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x1a\x43\n\x10\x45valuationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1e\n\x05value\x18\x02 \x01(\x0b\x32\x0f.gym.Evaluation:\x02\x38\x01\"\xdb\x01\n\x04Tool\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12-\n\nparameters\x18\x03 \x03(\x0b\x32\x19.gym.Tool.ParametersEntry\x12\'\n\x07metrics\x18\x04 \x03(\x0b\x32\x16.gym.Tool.MetricsEntry\x1a\x31\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a.\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xe0\x01\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0e\n\x06trials\x18\x02 \x01(\x05\x12\x0c\n\x04test\x18\x03 \x01(\x05\x12\x1f\n\x06\x61gents\x18\x04 \x03(\x0b\x32\x0f.gym.Task.Agent\x12#\n\x08monitors\x18\x05 \x03(\x0b\x32\x11.gym.Task.Monitor\x1a\x31\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1a\n\x07probers\x18\x02 \x03(\x0b\x32\t.gym.Tool\x1a\x35\n\x07Monitor\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1c\n\tlisteners\x18\x03 \x03(\x0b\x32\t.gym.Tool\"\xc1\x01\n\x06Report\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04test\x18\x02 \x01(\x05\x12-\n\tsnapshots\x18\x03 \x03(\x0b\x32\x1a.gym.Report.SnapshotsEntry\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a?\n\x0eSnapshotsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x1c\n\x05value\x18\x02 \x01(\x0b\x32\r.gym.Snapshot:\x02\x38\x01\"Q\n\x06Layout\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x19\n\x05vnfbd\x18\x02 \x01(\x0b\x32\n.gym.VnfBd\x12\x0e\n\x06inputs\x18\x03 \x01(\x0c\x12\x10\n\x08template\x18\x04 \x01(\x0c\"^\n\x06Result\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x19\n\x05vnfpp\x18\x02 \x01(\x0b\x32\n.gym.VnfPp\x12-\n\ttimestamp\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"n\n\x06\x44\x65ploy\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x10\n\x08workflow\x18\x02 \x01(\t\x12\x1f\n\x08scenario\x18\x03 \x01(\x0b\x32\r.gym.Scenario\x12%\n\x0b\x65nvironment\x18\x04 \x01(\x0b\x32\x10.gym.Environment\"=\n\x05\x42uilt\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0b\n\x03\x61\x63k\x18\x02 \x01(\t\x12\r\n\x05\x65rror\x18\x03 \x01(\t\x12\x0c\n\x04info\x18\x04 \x01(\x0c\x32O\n\x06Player\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12&\n\nCallLayout\x12\x0b.gym.Layout\x1a\x0b.gym.Result2L\n\x07Manager\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\"\n\x08\x43\x61llTask\x12\t.gym.Task\x1a\x0b.gym.Report2Z\n\x05\x41gent\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\\\n\x07Monitor\x12\x1d\n\x05Greet\x12\t.gym.Info\x1a\t.gym.Info\x12\x32\n\x0f\x43\x61llInstruction\x12\x10.gym.Instruction\x1a\r.gym.Snapshot2\'\n\x05Infra\x12\x1e\n\x03Run\x12\x0b.gym.Deploy\x1a\n.gym.Builtb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,vnf__bd__pb2.DESCRIPTOR,vnf__pp__pb2.DESCRIPTOR,])
 
@@ -1309,43 +1309,6 @@ _REPORT = _descriptor.Descriptor(
 )
 
 
-_LAYOUT_INPUTSENTRY = _descriptor.Descriptor(
-  name='InputsEntry',
-  full_name='gym.Layout.InputsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.Layout.InputsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.Layout.InputsEntry.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2798,
-  serialized_end=2843,
-)
-
 _LAYOUT = _descriptor.Descriptor(
   name='Layout',
   full_name='gym.Layout',
@@ -1361,23 +1324,30 @@ _LAYOUT = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='inputs', full_name='gym.Layout.inputs', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='vnfbd', full_name='gym.Layout.vnfbd', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='vnfbd', full_name='gym.Layout.vnfbd', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='inputs', full_name='gym.Layout.inputs', index=2,
+      number=3, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='template', full_name='gym.Layout.template', index=3,
+      number=4, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
-  nested_types=[_LAYOUT_INPUTSENTRY, ],
+  nested_types=[],
   enum_types=[
   ],
   serialized_options=None,
@@ -1386,8 +1356,8 @@ _LAYOUT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2708,
-  serialized_end=2843,
+  serialized_start=2707,
+  serialized_end=2788,
 )
 
 
@@ -1431,8 +1401,8 @@ _RESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2845,
-  serialized_end=2939,
+  serialized_start=2790,
+  serialized_end=2884,
 )
 
 
@@ -1483,8 +1453,8 @@ _DEPLOY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2941,
-  serialized_end=3051,
+  serialized_start=2886,
+  serialized_end=2996,
 )
 
 
@@ -1535,8 +1505,8 @@ _BUILT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3053,
-  serialized_end=3114,
+  serialized_start=2998,
+  serialized_end=3059,
 )
 
 _APPARATUS.fields_by_name['agents'].message_type = _INFO
@@ -1599,8 +1569,6 @@ _REPORT_SNAPSHOTSENTRY.fields_by_name['value'].message_type = _SNAPSHOT
 _REPORT_SNAPSHOTSENTRY.containing_type = _REPORT
 _REPORT.fields_by_name['snapshots'].message_type = _REPORT_SNAPSHOTSENTRY
 _REPORT.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_LAYOUT_INPUTSENTRY.containing_type = _LAYOUT
-_LAYOUT.fields_by_name['inputs'].message_type = _LAYOUT_INPUTSENTRY
 _LAYOUT.fields_by_name['vnfbd'].message_type = vnf__bd__pb2._VNFBD
 _RESULT.fields_by_name['vnfpp'].message_type = vnf__pp__pb2._VNFPP
 _RESULT.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -1837,19 +1805,11 @@ _sym_db.RegisterMessage(Report)
 _sym_db.RegisterMessage(Report.SnapshotsEntry)
 
 Layout = _reflection.GeneratedProtocolMessageType('Layout', (_message.Message,), {
-
-  'InputsEntry' : _reflection.GeneratedProtocolMessageType('InputsEntry', (_message.Message,), {
-    'DESCRIPTOR' : _LAYOUT_INPUTSENTRY,
-    '__module__' : 'gym_pb2'
-    # @@protoc_insertion_point(class_scope:gym.Layout.InputsEntry)
-    })
-  ,
   'DESCRIPTOR' : _LAYOUT,
   '__module__' : 'gym_pb2'
   # @@protoc_insertion_point(class_scope:gym.Layout)
   })
 _sym_db.RegisterMessage(Layout)
-_sym_db.RegisterMessage(Layout.InputsEntry)
 
 Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), {
   'DESCRIPTOR' : _RESULT,
@@ -1884,7 +1844,6 @@ _SNAPSHOT_EVALUATIONSENTRY._options = None
 _TOOL_PARAMETERSENTRY._options = None
 _TOOL_METRICSENTRY._options = None
 _REPORT_SNAPSHOTSENTRY._options = None
-_LAYOUT_INPUTSENTRY._options = None
 
 _PLAYER = _descriptor.ServiceDescriptor(
   name='Player',
@@ -1892,8 +1851,8 @@ _PLAYER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=3116,
-  serialized_end=3195,
+  serialized_start=3061,
+  serialized_end=3140,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -1925,8 +1884,8 @@ _MANAGER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   serialized_options=None,
-  serialized_start=3197,
-  serialized_end=3273,
+  serialized_start=3142,
+  serialized_end=3218,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -1958,8 +1917,8 @@ _AGENT = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=2,
   serialized_options=None,
-  serialized_start=3275,
-  serialized_end=3365,
+  serialized_start=3220,
+  serialized_end=3310,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -1991,8 +1950,8 @@ _MONITOR = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=3,
   serialized_options=None,
-  serialized_start=3367,
-  serialized_end=3459,
+  serialized_start=3312,
+  serialized_end=3404,
   methods=[
   _descriptor.MethodDescriptor(
     name='Greet',
@@ -2024,8 +1983,8 @@ _INFRA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=4,
   serialized_options=None,
-  serialized_start=3461,
-  serialized_end=3500,
+  serialized_start=3406,
+  serialized_end=3445,
   methods=[
   _descriptor.MethodDescriptor(
     name='Run',

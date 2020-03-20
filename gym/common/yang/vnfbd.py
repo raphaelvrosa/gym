@@ -1,5 +1,6 @@
 import logging
 import copy
+import json
 import itertools
 from numpy import arange
 
@@ -68,16 +69,16 @@ class Inputs:
 
         return lists, lists_fields
 
-    def fill_unique(self, data_lists, unique_lists):
+    def fill_unique(self, lists_fields, unique_lists):
         unique_inputs = []
         
-        data_lists_keys = list(data_lists.keys())
+        # data_lists_keys = list(data_lists.keys())
 
         for unique_list in unique_lists:
             unique_input = copy.deepcopy(self._data)
 
-            for field_index in range(len(data_lists_keys)):
-                field = data_lists_keys[field_index]
+            for field_index in range(len(lists_fields)):
+                field = lists_fields[field_index]
                 value = unique_list[field_index] 
                 unique_input[field] = value
         
@@ -87,23 +88,22 @@ class Inputs:
 
     def multiplex(self):
         unique_inputs = []
-        lists, data_lists = self.lists()
+        lists, lists_fields = self.lists()
+        
         if lists:
             unique_lists = list(itertools.product(*lists))
-            unique_inputs = self.fill_unique(data_lists, unique_lists)
+            unique_inputs = self.fill_unique(lists_fields, unique_lists)
         
         return unique_inputs   
 
     def init(self, data):
+        self._data = data
+
         if self._data:
-            self._data = data
             self._mix_inputs = self.multiplex()
-            logger.info(f"Input multiplexed: total {len(self._mix_inputs)}")
-            return True
-
-        # logger.info(f"Input not multiplexed: No data provided")
-        return False
-
+        
+        logger.info(f"Inputs multiplexed: total {len(self._mix_inputs)}")
+        
 
 class Proceedings():
 
@@ -276,6 +276,7 @@ class VNFBD():
     def __init__(self, data=None, inputs=None):
         self._data = data
         self._inputs_data = inputs
+        self._template = None
         self._yang = vnf_bd.vnf_bd(path_helper=YANGPathHelper())
         self._protobuf = VnfBd()
         self.utils = Utils()
@@ -283,10 +284,43 @@ class VNFBD():
         self._proceedings = Proceedings()
         self.validate(self._data)
         self._inputs.init(self._inputs_data)       
+
+    def parse_bytes(self, msg):
+        msg_dict = {}
+
+        if type(msg) is bytes:
+            msg_str = msg.decode('utf32')
+            msg_dict = json.loads(msg_str)
         
+        return msg_dict
+
+    def serialize_bytes(self, msg):
+        msg_bytes = b''
+
+        if type(msg) is dict:
+            msg_str = json.dumps(msg)
+            msg_bytes = msg_str.encode('utf32')
+            
+        return msg_bytes
+
+    def init(self, inputs, template, model):
+        if template:
+            template_dict = self.parse_bytes(template)
+            self.template(template_dict)
+    
+        if inputs:
+            inputs_dict = self.parse_bytes(inputs)
+            self.inputs(inputs_dict)
+
+        ok = self.from_protobuf(model)
+        return ok
+
+    def template(self, template):
+        self._template = template
+
     def inputs(self, inputs):
         self._inputs_data = inputs
-        self._inputs.init(self._inputs)
+        self._inputs.init(self._inputs_data)
 
     def validate(self, data):
         ack = False
@@ -342,23 +376,32 @@ class VNFBD():
         else:
             return False
 
-    def multiplex(self):
+    def multiplex(self, data_template):
         rendered_mux_inputs = []
         mux_inputs = self._inputs.multiplexed()
 
         if mux_inputs:
             logger.debug(f"Rendering mux inputs - total: {len(mux_inputs)}")
             for inputs in mux_inputs:
-                rendered_data = self.utils.render(self._data, inputs)
+                rendered_data = self.utils.render(data_template, inputs)
                 rendered_mux_inputs.append(rendered_data)
         else:
             logger.debug(f"Rendering single inputs")
-            rendered_data = self.utils.render(self._data, self._inputs_data)
+            rendered_data = self.utils.render(data_template, self._inputs_data)
             rendered_mux_inputs.append(rendered_data)
 
-        logger.debug(f"vnfbd multiplexed in: {len(rendered_mux_inputs)} structures")
+        logger.info(f"vnfbd multiplexed in: {len(rendered_mux_inputs)} structures")
         logger.debug(f"{rendered_mux_inputs}")
         return rendered_mux_inputs
+
+    def instances(self):
+        if self._template:
+            templates = self.multiplex(self._template)
+        else:
+            templates = self.multiplex(self._data)
+
+        for template in templates:
+            yield VNFBD(data=template)
 
     def task(self, apparatus):
         proceedings = self._data.get("proceedings")

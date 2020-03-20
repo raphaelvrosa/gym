@@ -442,23 +442,19 @@ class PlayerCore(Core):
 
         for test in range(tests):
 
-            vnfbd_multiplexed = vnfbd.multiplex()
-
             task_ids = 9000
-            for structure in vnfbd_multiplexed:
-                vnfbd_mux_instance = VNFBD(data=structure)
+            for vnfbd_instance in vnfbd.instances():
                 
-                if vnfbd_mux_instance.deploy():
+                if vnfbd_instance.deploy():
                     command = "start"
-                    ack = await self.callScenario(command, test, vnfbd_mux_instance)
+                    ack = await self.callScenario(command, test, vnfbd_instance)
                 else: 
                     ack = True
 
-                if ack:
-                    
-                    templates = self.task(vnfbd_mux_instance)
+                if ack:                    
+                    task_templates = self.task(vnfbd_instance)
 
-                    for uuid,template in templates.items():
+                    for uuid,template in task_templates.items():
                         logger.debug(f"Creating task from template: {template}")
 
                         task = Task(id=task_ids, test=test, trials=trials)
@@ -482,13 +478,17 @@ class PlayerCore(Core):
         result = Result(id=message.id)
 
         vnfbd = VNFBD()
-        vnfbd.inputs(message.inputs)
-        ok = vnfbd.from_protobuf(message.vnfbd)
+        
+        inputs = message.inputs
+        template = message.template
+        vnfbd_model = message.vnfbd
+
+        ok = vnfbd.init(inputs, template, vnfbd_model)      
                
         if ok:
             vnfpp = await self.tests(vnfbd)
             vnfpp_msg = vnfpp.protobuf()
-            result.vnfpp.CopyFrom(vnfpp_msg)            
+            result.vnfpp.CopyFrom(vnfpp_msg)
         else:
             logger.info("Could not parse vnfbd protobuf message")
             

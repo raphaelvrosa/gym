@@ -21,7 +21,7 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("docker").setLevel(logging.WARNING)
 
-TRIGGER_DELAY = 2
+TRIGGER_DELAY = 10
 
 
 class Environment:

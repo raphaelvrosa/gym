@@ -21,19 +21,23 @@ logger = logging.getLogger(__name__)
 
 TESTS = {
     0: {
-        "inputs": "inputs-vnf-bd-000.json",
+        "inputs": None,
+        "template": None,
         "vnfbd": "vnf-bd-000.json",
     },
     1: {
-        "inputs": "inputs-vnf-bd-001.json",
+        "inputs": None,
+        "template": None,
         "vnfbd": "vnf-bd-001.json",
     },
     2: {
-        "inputs": "inputs-vnf-bd-002.json",
+        "inputs": None,
+        "template": None,
         "vnfbd": "vnf-bd-002.json",
     },
     3: {
         "inputs": "inputs-vnf-bd-003.json",
+        "template": "template-vnf-bd-003.json",
         "vnfbd": "vnf-bd-003.json",
     },
 }
@@ -83,29 +87,52 @@ class Examples:
         return filepath
 
     def load(self, filename):
-        with open(filename, "+r") as fp:
-            data = json.load(fp)
+        try:
+            with open(filename, "+r") as fp:
+                data = json.load(fp)
+                
+        except Exception as e:
+            logger.debug(f"Loading file exception: {e}")
+            data = {}
+        finally:
             return data
 
-    async def callLayout(self, stub):
-        layout = Layout(id=self.cfg.test)
+    def serialize_bytes(self, msg):
+        msg_bytes = b''
 
+        if type(msg) is dict:
+            msg_str = json.dumps(msg)
+            msg_bytes = msg_str.encode('utf32')
+            
+        return msg_bytes
+
+    async def callLayout(self, stub):
+        
         vnfbd_name = self.info.get("vnfbd")
         inputs_name = self.info.get("inputs")
+        template_name = self.info.get("template")
 
+        inputs_msg = bytes()
+        template_msg = bytes()
+               
+        
+        if inputs_name:
+            inputs_filename = self.filepath(inputs_name)       
+            inputs = self.load(inputs_filename)
+            inputs_msg = self.serialize_bytes(inputs)   
+
+        if template_name:
+            template_filename = self.filepath(template_name)       
+            template = self.load(template_filename)
+            template_msg = self.serialize_bytes(template)
+
+        layout = Layout(id=self.cfg.test, inputs=inputs_msg, template=template_msg)
+        
         vnfbd_filename = self.filepath(vnfbd_name)
-        inputs_filename = self.filepath(inputs_name)
-        inputs = self.load(inputs_filename)
-
         vnfbd = VNFBD()
-        vnfbd.load(vnfbd_filename, yang=False)
+        vnfbd.load(vnfbd_filename)
         vnfbd_protobuf = vnfbd.protobuf()
-
-        logger.info(f"vnf-bd protobuf: {vnfbd_protobuf}")
-
         layout.vnfbd.CopyFrom(vnfbd_protobuf)
-        for k,v in inputs.items():
-            layout.inputs[k] = v
 
         reply = await stub.CallLayout(layout)
 

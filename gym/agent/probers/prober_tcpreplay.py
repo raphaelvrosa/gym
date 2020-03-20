@@ -20,7 +20,8 @@ class ProberTcpReplay(Prober):
     }
 
     METRICS = {
-        'bandwidth': 'Estimated throughput',
+        'packets': 'Estimated number of packets sent',
+        'time': "Time took to send the packets"
     }
 
     def __init__(self):
@@ -73,18 +74,16 @@ class ProberTcpReplay(Prober):
 
             m1 = {
                 "name": "packets",
-                "series": False,
                 "type": "int",
                 "unit": "packets",
-                "value": int(actual_info[1]),
+                "scalar": int(actual_info[1]),
             }
 
             m2 = {
                 "name": "time",
-                "series": False,
                 "type": "float",
                 "unit": "seconds",
-                "value": float(actual_info[-2]),
+                "scalar": float(actual_info[-2]),
             }
 
             _eval = [m1, m2]
