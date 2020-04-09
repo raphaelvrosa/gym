@@ -78,7 +78,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        "implementation": [
+                            "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        ]
                     }
                 }
             },
@@ -122,7 +124,9 @@
                 "lifecycle": {
                     "start": {
                         "workflow": "start",
-                        "implementation": "./run.sh"
+                        "implementation": [
+                            "./run.sh"
+                        ]
                     }
                 }
             },
@@ -171,7 +175,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        "implementation": [
+                            "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        ]
                     }
                 }
             },
@@ -219,7 +225,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-monitor --uuid {host_id} --address {host_ip}:50056"
+                        "implementation": [
+                            "gym-monitor --uuid {host_id} --address {host_ip}:50056"
+                        ]
                     }
                 }
             },
@@ -261,7 +269,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                        "implementation": [
+                            "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                        ]
                     }
                 }
             }

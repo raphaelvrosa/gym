@@ -8,6 +8,7 @@ from gym.common.protobuf.gym_grpc import InfraBase
 from gym.common.protobuf.gym_pb2 import Deploy, Built
 
 from gym.infra.containernet.plugin import ContainernetPlugin
+from gym.infra.ssh.plugin import SSHPlugin
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +24,7 @@ class Infra(InfraBase):
     def load(self):
         plugins = {
             "containernet": ContainernetPlugin,
+            "ssh": SSHPlugin,
         }
         self.plugins = plugins
 
@@ -59,7 +61,7 @@ class Infra(InfraBase):
         deploy = await stream.recv_message()        
         deploy_dict = json_format.MessageToDict(deploy, preserving_proto_field_name=True)
         
-        id = deploy_dict.get("id")
+        id_ = deploy_dict.get("id")
         command = deploy_dict.get("workflow")
         scenario = deploy_dict.get("scenario")
         environment = deploy_dict.get("environment")
@@ -67,7 +69,7 @@ class Infra(InfraBase):
         ok, msg = await self.play(command, environment, scenario)
         info = json.dumps(msg.get("info", {}))
         built_info = info.encode('utf-8')
-        built = Built(id=id, ack=ok, info=built_info)
+        built = Built(id=id_, ack=ok, info=built_info)
         
         await stream.send_message(built)
 

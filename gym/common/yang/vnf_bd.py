@@ -2171,10 +2171,10 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
       self._extmethods = extmethods
     else:
       self._extmethods = False
-    self.__workflow = YANGDynClass(base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)
+    self.__workflow = YANGDynClass(base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'configure': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)
     self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
     self.__parameters = YANGDynClass(base=YANGListType("input",yc_parameters_vnf_bd__scenario_nodes_lifecycle_parameters, yang_name="parameters", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='input', extensions=None), is_container='list', yang_name="parameters", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-    self.__implementation = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
+    self.__implementation = YANGDynClass(unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
 
     load = kwargs.pop("load", None)
     if args:
@@ -2207,7 +2207,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     """
     Getter method for workflow, mapped from YANG variable /scenario/nodes/lifecycle/workflow (workflows)
 
-    YANG Description: Workflow
+    YANG Description: Workflow type
     """
     return self.__workflow
       
@@ -2219,7 +2219,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_workflow() directly.
 
-    YANG Description: Workflow
+    YANG Description: Workflow type
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -2229,12 +2229,12 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     if hasattr(v, "_utype"):
       v = v._utype(v)
     try:
-      t = YANGDynClass(v,base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)
+      t = YANGDynClass(v,base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'configure': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)
     except (TypeError, ValueError):
       raise ValueError({
           'error-string': """workflow must be of a type compatible with workflows""",
           'defined-type': "vnf-bd:workflows",
-          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)""",
+          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'configure': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)""",
         })
 
     self.__workflow = t
@@ -2242,14 +2242,14 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
       self._set()
 
   def _unset_workflow(self):
-    self.__workflow = YANGDynClass(base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)
+    self.__workflow = YANGDynClass(base=RestrictedClassType(base_type=six.text_type,                                     restriction_type="dict_key",                                     restriction_arg={'create': {}, 'configure': {}, 'start': {}, 'stop': {}, 'delete': {}, 'custom': {}},), is_leaf=True, yang_name="workflow", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='workflows', is_config=True)
 
 
   def _get_name(self):
     """
     Getter method for name, mapped from YANG variable /scenario/nodes/lifecycle/name (string)
 
-    YANG Description: Reference to workflow
+    YANG Description: Workflow name
     """
     return self.__name
       
@@ -2261,7 +2261,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Reference to workflow
+    YANG Description: Workflow name
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2340,12 +2340,12 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     if hasattr(v, "_utype"):
       v = v._utype(v)
     try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
+      t = YANGDynClass(v,unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
     except (TypeError, ValueError):
       raise ValueError({
           'error-string': """implementation must be of a type compatible with string""",
           'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
+          'generated-type': """YANGDynClass(unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
         })
 
     self.__implementation = t
@@ -2353,7 +2353,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
       self._set()
 
   def _unset_implementation(self):
-    self.__implementation = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
+    self.__implementation = YANGDynClass(unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="implementation", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
 
   workflow = __builtin__.property(_get_workflow, _set_workflow)
   name = __builtin__.property(_get_name, _set_name)

@@ -50,6 +50,8 @@ setup(
       'pandas',
       'docker-py',
       'psutil',
+      'paramiko',
+      'scp'
     ],
     python_requires=">=3.7",
     setup_requires=["setuptools>=41.1.0"],

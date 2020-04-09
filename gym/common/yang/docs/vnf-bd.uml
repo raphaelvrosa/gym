@@ -17,8 +17,8 @@ package "vnf-bd:vnf-bd" as vnf_bd_vnf_bd {
 class "vnf-bd" as vnf_bd << (M, #33CCFF) module>> 
 enum "workflows" as vnf_bd_I_workflows {
 create
+configure
 start
-stop
 MORE
 }
 class "settings" as vnf_bd_I_settings_grouping <<(G,Lime) grouping>> 
@@ -90,16 +90,11 @@ class "lifecycle" as vnf_bd_I_nodes_I_lifecycle << (L, #FF7700) list>>
 vnf_bd_I_nodes_grouping *-- "0..N" vnf_bd_I_nodes_I_lifecycle 
 vnf_bd_I_nodes_I_lifecycle : +workflow : workflows  {key} 
 vnf_bd_I_nodes_I_lifecycle : name : string  
-note bottom of vnf_bd_I_nodes_I_lifecycle
-<b>When</b> (name):
-../workflow = 'custom'
-
-end note 
 class "parameters" as vnf_bd_I_nodes_I_lifecycle_I_parameters << (L, #FF7700) list>> 
 vnf_bd_I_nodes_I_lifecycle *-- "0..N" vnf_bd_I_nodes_I_lifecycle_I_parameters 
 vnf_bd_I_nodes_I_lifecycle_I_parameters : +input : string  {key} 
 vnf_bd_I_nodes_I_lifecycle_I_parameters : value : string  
-vnf_bd_I_nodes_I_lifecycle : implementation : string  
+vnf_bd_I_nodes_I_lifecycle : implementation []: string 
 class "link" as vnf_bd_I_link_grouping <<(G,Lime) grouping>> 
 vnf_bd_I_link_grouping : id : string  
 vnf_bd_I_link_grouping : name : string  
@@ -183,6 +178,6 @@ vnf_bd_I_vnf_bd_I_targets --> vnf_bd_I_targets_grouping : uses
 vnf_bd_I_vnf_bd_I_scenario --> vnf_bd_I_scenario_grouping : uses 
 vnf_bd_I_vnf_bd_I_proceedings --> vnf_bd_I_proceedings_grouping : uses 
 center footer
- <size:20> UML Generated : 2020-03-18 19:50 </size>
+ <size:20> UML Generated : 2020-03-27 14:02 </size>
  endfooter 
 @enduml 

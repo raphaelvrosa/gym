@@ -56,7 +56,7 @@ module: vnf-bd
   |  |     +--rw parameters* [input]
   |  |     |  +--rw input    string
   |  |     |  +--rw value?   string
-  |  |     +--rw implementation?   string
+  |  |     +--rw implementation*   string
   |  +--rw links* [id]
   |  |  +--rw id                   string
   |  |  +--rw name?                string

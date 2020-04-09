@@ -960,13 +960,13 @@ function expandAllRows() {
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
-                             <abbr title="Workflow">  workflow </abbr>
+                             <abbr title="Workflow type">  workflow </abbr>
                           </div>
                        </td>
                        <td>leaf</td>
                        <td nowrap><abbr title="workflows
 enumeration
- : {create,start,stop,delete,custom,}">workflows</abbr></td>
+ : {create,configure,start,stop,delete,custom,}">workflows</abbr></td>
                        <td nowrap>config</td>
                        <td></td>
                        <td>current</td>
@@ -975,7 +975,7 @@ enumeration
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
-                             <abbr title="Reference to workflow"> <em> name </em></abbr>
+                             <abbr title="Workflow name"> <em> name </em></abbr>
                           </div>
                        </td>
                        <td>leaf</td>
@@ -1033,15 +1033,15 @@ enumeration
 <tr id="1-9-12-11-16" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
-                             <a class="leaf">&nbsp;</a>
-                             <abbr title="Type of implementation"> <em> implementation </em></abbr>
+                             <a class="leaf-list">&nbsp;</a>
+                             <abbr title="Type of implementation">  implementation </abbr>
                           </div>
                        </td>
-                       <td>leaf</td>
+                       <td>leaf-list</td>
                        <td nowrap><abbr title="string
 ">string</abbr></td>
                        <td nowrap>config</td>
-                       <td>?</td>
+                       <td>*</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:scenario/vnf-bd:nodes/vnf-bd:lifecycle/vnf-bd:implementation</td</tr> 
 <tr id="1-9-13" class="a">

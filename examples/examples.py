@@ -40,6 +40,11 @@ TESTS = {
         "template": "template-vnf-bd-003.json",
         "vnfbd": "vnf-bd-003.json",
     },
+    4: {
+        "inputs": "inputs-vnf-bd-004.json",
+        "template": "template-vnf-bd-004.json",
+        "vnfbd": "vnf-bd-004.json",
+    },
 }
 
 

@@ -24,7 +24,7 @@ RUN git clone https://github.com/protocolbuffers/protobuf \
 	&& python3.7 setup.py install \
 	&& cd -
 
-RUN /usr/bin/python3.7 -m pip install asyncio protobuf grpclib grpcio-tools pyang pyangbind jinja2 pandas docker-py psutil flatten_json pyyaml
+RUN /usr/bin/python3.7 -m pip install asyncio protobuf grpclib grpcio-tools pyang pyangbind jinja2 pandas docker-py psutil flatten_json pyyaml paramiko
 
 RUN mkdir -p gym/gym
 COPY * /gym/

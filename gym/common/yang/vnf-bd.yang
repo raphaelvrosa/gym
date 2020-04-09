@@ -26,6 +26,9 @@ module vnf-bd {
             enum create {
                 description "When calling the create workflow";
             }
+            enum configure {
+                description "When calling the configure workflow";
+            }
             enum start {
                 description "When calling the start workflow";
             }
@@ -259,12 +262,11 @@ module vnf-bd {
             key "workflow";
             leaf workflow {
                 type workflows;
-                description "Workflow";
+                description "Workflow type";
             }
             leaf name {
-                when "../workflow = 'custom'";     
                 type string;
-                description "Reference to workflow";   
+                description "Workflow name";   
             }
             
             list parameters { 
@@ -279,7 +281,7 @@ module vnf-bd {
                 }
                 description "Parameters to be applied to node";
             }
-            leaf implementation {
+            leaf-list implementation {
                 type string;
                 description "Type of implementation";
             }

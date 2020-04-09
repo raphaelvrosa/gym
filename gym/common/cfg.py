@@ -40,7 +40,7 @@ class Config:
 
         parser.add_argument('--cfg',
                             type=str,
-                            help='Define the yaml cfg file (id + address) (default: None)')
+                            help='Define the yaml cfg file (uuid + address) (default: None)')
 
         self.cfg, _ = parser.parse_known_args(argv)
         
@@ -81,5 +81,5 @@ class Config:
             print(f'Argv: {info}')
             return info
         else:
-            print("Init cfg NOT provided - both must exist: id and address (provided values: %s, %s)" % (_id, _address))
+            print("Init cfg NOT provided - both must exist: uuid and address (provided values: %s, %s)" % (_id, _address))
             return None

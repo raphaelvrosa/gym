@@ -238,10 +238,12 @@ class Environment:
         return None
         
     def _format_workflow(self, workflow, node_info):
-        implementation = workflow.get("implementation")
+        implementations = workflow.get("implementation")
         parameters = workflow.get("parameters")
         fmt_kwargs = {}
         
+        entrypoints = []
+
         if parameters:
             kwargs = { param.get("input"):param.get("value") for param in parameters.values() }
             
@@ -254,10 +256,11 @@ class Environment:
                         fmt_kwargs[k] = node_info.get(attrib)
                 else:
                     fmt_kwargs[k] = v
-
-            entrypoint = implementation.format(**fmt_kwargs)
+            for implementation in implementations:
+                entrypoint = implementation.format(**fmt_kwargs)
+                entrypoints.append(entrypoint)
         else:
-            entrypoint = implementation
+            entrypoints = implementations
             
         return entrypoint
     
@@ -294,11 +297,12 @@ class Environment:
                     if node_instance:
                         node_info = self.get_host_ips(node_instance)
                         self.nodes_info[node_id] = node_info
-                        entrypoint = self._format_workflow(workflow, node_info)
+                        entrypoints = self._format_workflow(workflow, node_info)
 
-                        if entrypoint:
-                            node_instance.cmd(entrypoint)
-                            LOG.debug("Node %s, format %s, workflow start %s ", node_id, format, entrypoint)
+                        if entrypoints:
+                            for entrypoint in entrypoints:
+                                node_instance.cmd(entrypoint)
+                                LOG.debug("Node %s, format %s, workflow start %s ", node_id, format, entrypoint)
 
             elif format == "process":
                 node_rels = node.get("relationships")
@@ -314,12 +318,13 @@ class Environment:
                             for workflow in start_workflows:
                                 node_info = self.get_host_ips(node_instance)
                                 self.nodes_info[node_id] = node_info
-                                entrypoint = self._format_workflow(workflow, node_info)
+                                entrypoints = self._format_workflow(workflow, node_info)
 
-                                if entrypoint:
-                                    node_instance.cmd(entrypoint)
-                                    LOG.debug("Node %s, format %s, relationship %s, target %s, workflow start %s ",
-                                                node_id, format, relationship, target, entrypoint)
+                                if entrypoints:
+                                    for entrypoint in entrypoints:
+                                        node_instance.cmd(entrypoint)
+                                        LOG.debug("Node %s, format %s, relationship %s, target %s, workflow start %s ",
+                                                    node_id, format, relationship, target, entrypoint)
 
                     if relationship == "AttachesTo":
                         node_ip = self.get_host_ip()
@@ -327,12 +332,15 @@ class Environment:
                         self.nodes_info[node_id] = node_info
 
                         for workflow in start_workflows:
-                            entrypoint = self._format_workflow(workflow, node_info)
-                            node_instance = self._new_process(entrypoint)
-                            self.nodes[node_id] = node_instance
-                            target_id = "host-" + target
-                            LOG.debug("Node %s, format %s, relationship %s, target %s, workflow start %s ",
-                                        node_id, format, relationship, target_id, entrypoint)
+                            entrypoints = self._format_workflow(workflow, node_info)
+                            
+                            if entrypoints:
+                                for entrypoint in entrypoints:
+                                    node_instance = self._new_process(entrypoint)
+                                    self.nodes[node_id] = node_instance
+                                    target_id = "host-" + target
+                                    LOG.debug("Node %s, format %s, relationship %s, target %s, workflow start %s ",
+                                                node_id, format, relationship, target_id, entrypoint)
         
         time.sleep(TRIGGER_DELAY)
 

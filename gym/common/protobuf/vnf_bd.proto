@@ -50,15 +50,16 @@ message Scenario {
       enum Workflows {
         VNFBDWORKFLOWS_UNSET = 0;
         create = 1;
-        start = 2;
-        stop = 3;
-        delete = 4;
-        custom = 5;
+        configure = 2;
+        start = 3;
+        stop = 4;
+        delete = 5;
+        custom = 6;
       }
           
 
       string name = 1;
-      string implementation = 2;
+      repeated string implementation = 2;
       map<string,Parameter> parameters = 3;
       Workflows workflow = 4;
     }
