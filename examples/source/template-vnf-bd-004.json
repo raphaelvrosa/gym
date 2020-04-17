@@ -164,8 +164,8 @@
                             }
                         },
                         "implementation": [
-                            "ssh-copy: gym",
-                            "ssh-install: gym"
+                            "ssh-copy:gym",
+                            "ssh-install:gym"
                         ]
                     },
                     "start": {
@@ -234,8 +234,8 @@
                             }
                         },
                         "implementation": [
-                            "ssh-copy: gym",
-                            "ssh-install: gym"
+                            "ssh-copy:gym",
+                            "ssh-install:gym"
                         ]
                     },
                     "start": {
@@ -354,7 +354,7 @@
                             },
                             "target": {
                                 "input": "target",
-                                "value": "127.0.0.1"
+                                "value": "8.8.8.8"
                             }
                         }
                     },

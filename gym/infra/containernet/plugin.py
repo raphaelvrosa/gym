@@ -281,10 +281,10 @@ class ContainernetPlugin(Plugin):
         cnet_scenario = self.parser.build(scenario)
         ok, msg = await self.play("start", cnet_scenario)
         logger.debug(f"Playground msg: {msg}")       
-        return ok, msg
+        return ok, msg.get("info")
 
     async def stop(self, scenario=None):     
         logger.info("Containernet Stop")
         ok, msg = await self.play("stop", scenario)
         logger.debug(f"Playground msg: {msg}")
-        return ok, msg
+        return ok, msg.get("info")

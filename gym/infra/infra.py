@@ -66,9 +66,9 @@ class Infra(InfraBase):
         scenario = deploy_dict.get("scenario")
         environment = deploy_dict.get("environment")
         
-        ok, msg = await self.play(command, environment, scenario)
-        info = json.dumps(msg.get("info", {}))
-        built_info = info.encode('utf-8')
+        ok, info = await self.play(command, environment, scenario)
+        info_json = json.dumps(info)
+        built_info = info_json.encode('utf-8')
         built = Built(id=id_, ack=ok, info=built_info)
         
         await stream.send_message(built)

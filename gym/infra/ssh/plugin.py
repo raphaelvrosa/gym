@@ -96,9 +96,10 @@ class SSHProxy:
                 
                 if self.ssh_error:
                     logger.info(f"Problem occurred while running command: error {self.ssh_error}")
-                    result_flag = False
+                    # result_flag = False
                     result = self.ssh_error
-                else:    
+                
+                if self.ssh_output:    
                     logger.info(f"Command execution completed successfully: output {self.ssh_output}")
                     result = self.ssh_output
                 
@@ -213,8 +214,9 @@ class Environment:
                 entrypoints.append(entrypoint)
         else:
             entrypoints = implementations
-            
-        return entrypoint
+        
+        logger.info(f"Formatted entrypoints for node {node_id} - entrypoints {entrypoints}")
+        return entrypoints
 
     def _get_ssh_cfg(self, node_id):
         try:
@@ -233,7 +235,7 @@ class Environment:
 
     def _filepath(self, filename):
         filepath = os.path.join(
-            os.path.abspath(os.path.curdir), 
+            os.path.abspath(os.path.dirname(__file__)), 
             filename)
         return filepath
 
@@ -263,6 +265,7 @@ class Environment:
             self.proxy.cfg(cfg)
             steps = workflow.get("implementation", [])
             
+            logger.debug(f"Configure implementation steps for node {node_id} - steps {steps}")
             for step in steps:
                 
                 if self._is_gym_configure_map(step):
@@ -352,7 +355,7 @@ class Environment:
 
         for node_id in self._config.get("nodes"):
             node_ips = self._get_mng_host_ip(node_id)
-            info.setdefault(node_id, node_ips)
+            info[node_id] = node_ips
 
         return info
 
@@ -406,10 +409,12 @@ class SSHPlugin(Plugin):
         ack, info = False, {}
         deploy = self.parser.parse(scenario)
         ack, info = self.env.start(deploy)
-        return ack, info
+        logger.info(f"SSHPlugin Start ack {ack} - info {info}")
+        return str(ack), info
 
     async def stop(self, scenario):
         ack, info = False, {}
         deploy = self.parser.parse(scenario)
         ack, info = self.env.stop(deploy)
-        return ack, info
+        logger.info(f"SSHPlugin Stop ack {ack} - info {info}")
+        return str(ack), info
