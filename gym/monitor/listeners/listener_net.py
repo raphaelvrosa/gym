@@ -1,28 +1,40 @@
 import logging
-logger = logging.getLogger(__name__)
 
 from gym.monitor.listeners.listener import Listener
-from gym.common.defs import LISTENER_DNS
+from gym.common.defs import LISTENER_NET
 
 import time
 from datetime import datetime
 from subprocess import check_output
 
 
-class ListenerDNS(Listener):
+logger = logging.getLogger(__name__)
+
+
+class ListenerNet(Listener):
     PARAMETERS = {
         'interface': 'interface',
         'duration': 'duration',
     }
 
     METRICS = {
-        'dns_metrics': 'dns_metrics',
+        "1": 'query_size',
+        "2": 'query_pkts',
+        "3": 'query_drop',
+        "4": 'reply_size',
+        "5": 'reply_pkts',
+        "6": 'reply_drop',
+        "7": 'answered',
+        "8": 'query_rate',
+        "9": 'reply_rate',
+        "10": 'query_avglen',
+        "11": 'reply_avglen',
     }
 
     def __init__(self):
-        Listener.__init__(self, id=LISTENER_DNS, name='Host',
-                          parameters=ListenerDNS.PARAMETERS,
-                          metrics=ListenerDNS.METRICS)
+        Listener.__init__(self, id=LISTENER_NET, name='network',
+                          parameters=ListenerNet.PARAMETERS,
+                          metrics=ListenerNet.METRICS)
         self._command = None
 
     def _stats(self, interface):
@@ -50,8 +62,7 @@ class ListenerDNS(Listener):
         }
         stats_diffs.update(stats_diffs_extra)
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = {}
         stop = False
         timeout = 0
@@ -61,10 +72,16 @@ class ListenerDNS(Listener):
             if k == 'duration':
                 timeout = v
             opts[k] = v
-        return opts, stop, timeout
+
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout,
+        }
+        return settings
 
     def monitor(self, opts):
-        results = []
+        results = {}
         duration = None
         interface = None
 
@@ -78,32 +95,38 @@ class ListenerDNS(Listener):
             time.sleep(duration)
             stats_after = self._stats(interface)
             stats_join = zip(stats_after.values(), stats_before.values())
-            # stats_diffs = map(lambda (x, y): x-y, stats_join)
-            stats_diffs = map(lambda x,y: x-y, stats_join)
+            stats_diffs = [x-y for (x,y) in stats_join]
             stats_diff = dict(zip(stats_before.keys(), stats_diffs))
-
             self.process_diffs(stats_diff, duration)
-            current = datetime.now()
-            _time = {'timestamp': current.strftime('%Y-%m-%dT%H:%M:%S.%fZ')}
-            stats_diff.update(_time)
-            results.append(stats_diff)
+            results = stats_diff
 
         return results
 
     def parser(self, out):
-        self._output["raw"] = out
-        return out
+        metrics = []
+
+        if out:
+            for name, value in out.items():
+                m = {
+                    "name": name,
+                    "type": "float",
+                    "unit": "",
+                    "scalar": value,
+                }
+                metrics.append(m)
+        
+        return metrics
+        
 
 
 if __name__ == '__main__':
-    opts = {
-        'interface': 'wlp2s0',
-        'duration':2,
-    }
-    #
-    # app = ListenerDNS()
-    # print app.monitor(opts)
-    #
+    # opts = {
+    #     'interface': 'wlx801f029aa9e7',
+    #     'duration':2,
+    # }
 
-    app = ListenerDNS()
+    # app = ListenerNet()
+    # print(app.monitor(opts))
+    
+    app = ListenerNet()
     print(app.main())

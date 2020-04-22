@@ -31,8 +31,7 @@ class ProberTcpReplay(Prober):
         self._command = 'tcpreplay'
         self._instances_folder = '/mnt/pcaps/'
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = []
         stop = False
         timeout = 0
@@ -52,7 +51,13 @@ class ProberTcpReplay(Prober):
             pcap_value = options.get('-f')
             pcap_path = self.filepath(pcap_value)
             opts.append(pcap_path)
-        return opts, stop, timeout
+
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
 
     def filepath(self, filename):
         _filepath = os.path.normpath(os.path.join(

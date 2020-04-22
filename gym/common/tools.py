@@ -4,6 +4,7 @@ import logging
 import asyncio
 from datetime import datetime
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -13,7 +14,7 @@ class Loader:
 
     def _get_filepath(self, root, filename, full_path):
         """Adds filepath (if relative or not) to self._files list
-        
+
         Arguments:
             root {string} -- Root folder where filename is located
             filename {string} -- Name of the file listed in root
@@ -29,7 +30,7 @@ class Loader:
 
     def _load_file(self, root, f, prefix, suffix, full_path):
         """Checks file suffix and prefix to add to files loaded
-        
+
         Arguments:
             root {string} -- Root dir in file path
             f {string} -- Filename
@@ -43,22 +44,21 @@ class Loader:
         if prefix_ok and suffix_ok:
             self._get_filepath(root, f, full_path)
         else:
-            logger.debug(f"Could not get file path by suffix {suffix} or prefix {prefix}")
+            pass
+            # logger.debug(f"Could not get file {f} path by suffix {suffix} or prefix {prefix}")
 
     def files(self, folder=None, prefix=None, suffix=None, full_path=False):
         """Gets all the names of files in a folder (not subfolders)
-        
+
         Keyword Arguments:
             folder {string} -- Path to the folder name (default: {None})
             prefix {string} -- Filter files that begin with prefix (default: {None})
             suffix {string} -- Filter files that end with suffix (default: {None})
             full_path {bool} -- If files should be in full/abs or relative path (default: {False})
-        
+
         Returns:
             [list] -- All the file names inside a folder
-        """
-        logger.info(f"Loading files in {folder}")
-
+        """       
         logger.debug(
             f"Loading files in folder {folder} - "
             f"prefix {prefix} and suffix {suffix} - full/abs path {full_path}"
@@ -345,21 +345,22 @@ class Tools:
         """
         keys = ["folder", "prefix", "suffix", "full_path"]
         if all([True if k in config else False for k in keys]):
-            self._cfg = config
+            self._cfg = {k:v for k,v in config.items() if k in keys}
             return True
         return False
 
-    async def load(self):
+    async def load(self, config):
         """Uses parameters configured in self.cfg() to load the tools into:
         - self._files (dict of tools file paths listed by Loader indexed by tool id)
         - self._info (dict of info of tools extracted with Handler indexed by tool id)
         """
-        logger.info(f"Loading tools")
+        
+        self.cfg(config)
         files = self.loader.files(**self._cfg)
 
         calls = {key: [files[key], "--info"] for key in range(len(files))}
 
-        logger.info(f"Loading tools info")
+        logger.debug(f"Loading tools info")
         outputs = await self.handler.run_serial(calls)
 
         for uuid, out in outputs.items():
@@ -375,7 +376,10 @@ class Tools:
                     f"Could not get info from {files[uuid]} - exception {expt}"
                 )
 
-        logger.debug(f"Tools info loaded: {self._info}")
+        tools_names = [tool.get("name") for tool in self._info.values()]
+        logger.info(f"Tools loaded: {tools_names}")
+
+        logger.debug(f"Tools full info: {self._info}")
 
     def info(self):
         """Gets the information of tools after listed and loaded
@@ -552,14 +556,15 @@ class Tools:
             actions {dict} -- Set of actions indexed by unique identifiers
         
         Returns:
-            dict -- Set of each action execution output 
+            dict -- Set of each action execution output
             indexed by action unique identifier
         """
-        logger.info("Handling actions")
+        logger.info("Started handling instruction actions")
         calls = self.__build_calls(actions)
         results = await self.handler.run(calls)
         outputs = self.__build_outputs(results)
-        logger.info(f"Actions outputs: {outputs}")
+        logger.info(f"Finished handling instruction actions")
+        logger.debug(f"{outputs}")
         return outputs
 
 
@@ -570,8 +575,6 @@ if __name__ == "__main__":
     
     # TODO: Code detailed example in test cases (unit + integration)
     """
-    
-    import asyncio
 
     logging.basicConfig(level=logging.DEBUG)
 

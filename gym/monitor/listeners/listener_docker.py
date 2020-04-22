@@ -21,7 +21,7 @@ class ListenerDocker(Listener):
     METRICS = {0: 'system_cpu_usage', 1: 'cpu_total_usage', 2: 'cpu_usage_in_kernelmode', 3: 'cpu_usage_in_usermode', 4: 'cpu_percent', 5: 'mem_active_anon', 6: 'mem_active_file', 7: 'mem_cache', 8: 'mem_dirty', 9: 'mem_hierarchical_memory_limit', 10: 'mem_hierarchical_memsw_limit', 11: 'mem_inactive_anon', 12: 'mem_inactive_file', 13: 'mem_mapped_file', 14: 'mem_pgfault', 15: 'mem_pgmajfault', 16: 'mem_pgpgin', 17: 'mem_pgpgout', 18: 'mem_rss', 19: 'mem_rss_huge', 20: 'mem_total_active_anon', 21: 'mem_total_active_file', 22: 'mem_total_cache', 23: 'mem_total_dirty', 24: 'mem_total_inactive_anon', 25: 'mem_total_inactive_file', 26: 'mem_total_mapped_file', 27: 'mem_total_pgfault', 28: 'mem_total_pgmajfault', 29: 'mem_total_pgpgin', 30: 'mem_total_pgpgout', 31: 'mem_total_rss', 32: 'mem_total_rss_huge', 33: 'mem_total_unevictable', 34: 'mem_total_writeback', 35: 'mem_unevictable', 36: 'mem_writeback', 37: 'mem_percent', 38: 'mem_limit', 39: 'mem_max_usage', 40: 'mem_usage', 41: 'io_read', 42: 'io_write'}
 
     def __init__(self, url=None):
-        Listener.__init__(self, id=LISTENER_DOCKER, name='Docker',
+        Listener.__init__(self, id=LISTENER_DOCKER, name='docker',
                           parameters=ListenerDocker.PARAMETERS,
                           metrics=ListenerDocker.METRICS)
         self._command = None
@@ -150,23 +150,30 @@ class ListenerDocker(Listener):
         summary_stats.update(stats_io)
         return summary_stats
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         stop = False
         timeout = 0
         args = {}
+        
         for k, v in options.items():
             if k == 'stop':
                 stop = True
             if k == 'duration':
                 timeout = v
             args[k] = v
-        return args, stop, timeout
+
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
 
     def monitor(self, opts):
         results = []
         interval = 1
         t = 3
+        
         if 'interval' in opts:
             interval = float(opts['interval'])
         if 'duration' in opts:
@@ -200,7 +207,8 @@ class ListenerDocker(Listener):
 
             for name in metric_names:
 
-                metric_values = dict([ ( out.index(out_value), {"key":out.index(out_value), "value":float(out_value.get(name))} ) for out_value in out ])
+                metric_values = dict([ ( out.index(out_value), {"key":out.index(out_value), "value":float(out_value.get(name))} )
+                                    for out_value in out ])
 
                 m = {
                     "name": name,

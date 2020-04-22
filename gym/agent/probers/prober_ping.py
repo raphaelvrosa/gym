@@ -31,8 +31,7 @@ class ProberPing(Prober):
                         metrics=ProberPing.METRICS)
         self._command = 'ping'
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = []
         stop = False
         timeout = 0
@@ -43,21 +42,31 @@ class ProberPing(Prober):
                 opts.extend([k, v])
         if 'target' in options:
             opts.append(options['target'])
-        return opts, stop, timeout
+        
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
 
     def parser(self, out):
         _eval = {}
         lines = [line for line in out.split('\n') if line.strip()]
+        
         if len(lines) > 1:
             rtt_indexes = [i for i, j in enumerate(lines) if 'rtt' in j]
+        
             if not rtt_indexes:
                 rtt_indexes = [i for i, j in enumerate(lines) if 'round-trip' in j]
+        
             if rtt_indexes:
                 rtt_index = rtt_indexes.pop()
                 rtt_line = lines[rtt_index].split(' ')
                 loss_line = lines[rtt_index-1].split(' ')
                 rtts = rtt_line[3].split('/')
                 rtt_units = rtt_line[4]
+        
                 if 'time' in loss_line:
                     pkt_loss = loss_line[-5][0]
                     pkt_loss_units = loss_line[-5][-1]

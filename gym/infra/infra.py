@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 class Infra(InfraBase):
 
     def __init__(self, info):
+        logger.info(f"Infra starting - uuid {info.get('uuid')}")
         self.plugins = {}
         self.plugin_instances = {}
         self.info = info

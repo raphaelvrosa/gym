@@ -9,18 +9,10 @@ from gym.infra.infra import Infra
 
 class GymInfra(App):
     def __init__(self):
-        App.__init__(self)
-    
-    def run(self, argv):
-        ack = self.cfg.parse(argv)
-        if ack:
-            info = self.cfg.get()
-            info["role"] = "infra"
-            app_cls = Infra
-            self.init(app_cls)
-        else:
-            print(f'Could not start {self.__class__.__name__}')
-            return -1
+        App.__init__(self,
+            app_cls = Infra,
+            app_role = "infra"
+        )
 
 
 if __name__ == '__main__':

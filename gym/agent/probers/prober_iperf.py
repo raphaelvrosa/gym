@@ -25,8 +25,7 @@ class ProberIperf(Prober):
                         metrics=ProberIperf.METRICS)
         self._command = 'iperf'
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = []
         stop = False
         timeout = 0
@@ -42,7 +41,13 @@ class ProberIperf(Prober):
             else:
                 opts.extend([k,v])
         opts.extend(['-f','m'])
-        return opts, stop, timeout
+
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
 
     def parser(self, out):
         _eval = []

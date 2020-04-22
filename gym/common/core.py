@@ -38,29 +38,31 @@ logger = logging.getLogger(__name__)
 class Core:
     def __init__(self, info):
         self.status = Status(info)
-        asyncio.create_task(self.greet(info))
+        asyncio.create_task(self.greet(info, startup=True))
 
     async def _info(self, stub, contacts=[]):
         profile = self.status.profile()
-
         info = json_format.ParseDict(profile, Info())
-
         if contacts:
             for contact in contacts:
                 info.contacts.append(contact)
-
-        info_reply = {}
 
         try:
             reply = await stub.Greet(info)
             info_reply = json_format.MessageToDict(
                 reply, preserving_proto_field_name=True
             )
+        
         except GRPCError as e:
-            logger.info(f"Exception in Greet: {e}")
+            logger.info(f"Error in Greet Info")
+            logger.debug(f"Exception in Greet: {e}")
+            info_reply = {}
+        
         except OSError as e:
             logger.info(f"Could not open channel for Greet Info")
             logger.debug(f"Exception: {e}")
+            info_reply = {}
+        
         finally:
             return info_reply
 
@@ -77,25 +79,50 @@ class Core:
             stub = ManagerStub(channel)
         else:
             logger.info(
-                f"Could not contact role {role} -\
-                no Stub class available"
+                f"Could not contact role {role} - "
+                f"no stub/client available"
             )
             stub = None
 
         if stub:
-            logger.info(f"Greeting {role} {host}:{port}")
+            logger.info(f"Greeting {role} at {host}:{port}")
             info = await self._info(stub, contacts)
 
             if info:
-                ack = self.status.info(info)
-                if ack:
-                    self.status.update_status([role])
+                logger.info(f"Adding contact")
+                self.status.info(info)
+
+                logger.info("Updating contact info in identity")
+                self.status.update_status([role])
+                # if ack_new_contact:
+                #     logger.info("Updating contact info")
+                #     self.status.update_status([role])
             else:
-                logger.info(f"Could not greet {host}:{port}")
+                logger.info(f"Could not greet contact at {host}:{port}")
 
         channel.close()
 
+    async def greet(self, info, startup=False):
+        await asyncio.sleep(0.5)
+        
+        allowed_contacts = self.status.allows(info.get("contacts"))
+        
+        if allowed_contacts:
+            logger.info(f"Greeting contacts: {allowed_contacts}")
+        
+            for contact in allowed_contacts:
+                role, address = contact.split("/")
+                host, port = address.split(":")        
+                contacts_peers = info.get("peers")
+                await self._greet(role, host, port, contacts_peers)
+        else:
+            logger.info(f"No greetings, contacts empty: {allowed_contacts}")
+
+        if startup:
+            logger.info(f"Ready!")
+
     async def info(self, message):
+        logger.info("Received Info")
         info = json_format.MessageToDict(message, preserving_proto_field_name=True)
 
         await self.greet(info)
@@ -109,74 +136,61 @@ class Core:
 
         profile = self.status.profile()
         reply = json_format.ParseDict(profile, Info())
+        logger.info("Replying Info")
         return reply
-
-    async def greet(self, info):
-        await asyncio.sleep(1.0)
-
-        roles = ["agent", "monitor", "manager", "player"]
-        contacts = self.status.allows(info.get("contacts"))
-        contacts_peers = info.get("peers")
-
-        if contacts:
-            logger.info(f"Greeting contacts {contacts}")
-            for contact in contacts:
-                role, address = contact.split("/")
-                if role and address:
-                    if role in roles:
-                        host, port = address.split(":")
-                        if host and port:
-                            await self._greet(role, host, port, contacts_peers)
-                        else:
-                            logger.info(
-                                f"Host and/or port not provided -\
-                                address must be ip:port (e.g., 127.0.0.1:8888)"
-                            )
-                    else:
-                        logger.info(
-                            f"Unkown contact role -\
-                            it must be one of {roles}"
-                        )
-                else:
-                    logger.info(
-                        f"Role and/or address not provided -\
-                        contacts must be a list of role/address\
-                        (e.g., agent/localhost:5000)"
-                    )
 
 
 class WorkerCore(Core):
     def __init__(self, info):
-        Core.__init__(self, info)
         self.tools = Tools()
+        asyncio.create_task(self.load_tools(info))
+        Core.__init__(self, info)
 
-    async def load(self, folder, types):
-        if types == "listeners":
+    def _build_cfg(self, info):
+        folder = info.get("folder")
+        role = info.get("role")
+        
+        if role == "monitor":
             prefix = "listener_"
-        elif types == "probers":
+            name = "listeners"
+        elif role == "agent":
             prefix = "prober_"
+            name = "probers"
         else:
-            logger.info(f"Tools not loaded: unkown prefix for {types}")
-            return
+            prefix = None
+            name = None
 
-        tools_cfg = {
-            "folder": folder,
-            "prefix": prefix,
-            "suffix": "py",
-            "full_path": True,
-        }
-
-        if self.tools.cfg(tools_cfg):
-            await self.tools.load()
-            logger.info(f"{types} loaded")
-
-            tools = self.tools.info()
-
-            artifacts = {
-                types: list(tools.values()),
+        if prefix:
+            tools_cfg = {
+                "name": name,
+                "folder": folder,
+                "prefix": prefix,
+                "suffix": "py",
+                "full_path": True,
             }
-            self.status.update("artifacts", artifacts)
+        else:
+            tools_cfg = {}
 
+        return tools_cfg
+
+    def _update_status(self, tools_cfg):
+        tools = self.tools.info()
+        artifacts = {
+            tools_cfg.get('name'): list(tools.values()),
+        }
+        self.status.update("artifacts", artifacts)
+
+    async def load_tools(self, info):
+        tools_cfg = self._build_cfg(info)
+
+        if tools_cfg:
+            await self.tools.load(tools_cfg)
+            self._update_status(tools_cfg)
+            logger.info(f"Loaded {info.get('role')} {tools_cfg.get('name')}")
+            
+        else:
+            logger.info(f"Tools not loaded: unkown cfgs for {info.get('role')}")
+            
     def origin(self):
         profile = self.status.profile()
         origin = {
@@ -186,26 +200,34 @@ class WorkerCore(Core):
         return origin
 
     def snapshot(self, instruction, results):
-        snap = Snapshot(id=instruction.get("id"), trial=instruction.get("trial"),)
+        snapshot = Snapshot(
+            id=instruction.get("id"),
+            trial=instruction.get("trial"),
+        )
 
-        snap_dict = {
+        snap = {
             "origin": self.origin(),
             "evaluations": results,
             "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
         }
-
-        snap = json_format.ParseDict(snap_dict, snap)
-        return snap
+        
+        snapshot = json_format.ParseDict(snap, snapshot)
+        return snapshot
 
     async def instruction(self, message):
-        logger.info("Called Instruction")
+        logger.info("Received Instruction")
+        logger.debug(f"{message}")
+
         instruction = json_format.MessageToDict(
             message, preserving_proto_field_name=True
         )
-        logger.info(f"Message: {instruction}")
+        
         actions = instruction.get("actions")
         results = await self.tools.handle(actions)
         snapshot = self.snapshot(instruction, results)
+        
+        logger.info(f"Replying Snapshot")
+        logger.debug(f"{snapshot}")
         return snapshot
 
 
@@ -214,7 +236,9 @@ class ManagerCore(Core):
         Core.__init__(self, info)
 
     def check_uuids(self, locals, requested):
-        logger.debug("Verifying requested fit local components")
+        logger.debug("Verifying if requested workers (agents/monitors) "
+                     "fit available components")
+
         local_ids = [peer_uuid for peer_uuid in locals]
         req_ids = [req.uuid for req in requested]
 
@@ -224,6 +248,7 @@ class ManagerCore(Core):
                     f"Component ID requested {req_id} not existent {local_ids}"
                 )
                 return False
+        
         logger.debug("All requested match locals")
         return True
 
@@ -264,6 +289,7 @@ class ManagerCore(Core):
             logger.info(f"Instructions built: {instructions}")
 
         else:
+            logger.debug("All requested agents/monitors do not exist and/or match locals")
             logger.info("Could not build instructions")
 
         return instructions

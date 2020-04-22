@@ -9,19 +9,11 @@ from gym.player.player import Player
 
 class GymPlayer(App):
     def __init__(self):
-        App.__init__(self)
+        App.__init__(self,
+            app_cls = Player,
+            app_role = "player"
+        )
     
-    def run(self, argv):
-        ack = self.cfg.parse(argv)
-        if ack:
-            info = self.cfg.get()
-            info["role"] = "player"
-            app_cls = Player
-            self.init(app_cls)
-        else:
-            print(f'Could not start {self.__class__.__name__}')
-            return -1
-
 
 if __name__ == '__main__':
     app = GymPlayer()

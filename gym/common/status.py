@@ -13,12 +13,6 @@ class Environment():
     def info(self):
         return self._info
 
-    def _node(self):
-        resource = self._get_node_resources()
-        info = self._get_node_info()
-        info.update(resource)
-        return info
-
     def _get_node_info(self):
         info = {}
         system, node, release, version, _, processor = pl.uname()
@@ -42,7 +36,6 @@ class Environment():
         return mem
 
     def _get_node_storage(self):
-        storage = {}
         total = ps.disk_usage('/').total
         percent = ps.disk_usage('/').percent
         
@@ -70,6 +63,21 @@ class Environment():
         resources['network'] = self._get_node_net()
         return resources
 
+    def _node(self):
+        """Extracts environment info using psutil
+        containing details of host system/platform/release
+        and resources (cpu, mem, disk, net)
+
+        Returns:
+            dict -- Host node resources categorized in
+            cpu, memory, disk, network and Host node 
+            system description (system, release, platform, version,
+            hostname)
+        """
+        info = self._get_node_info()
+        resource = self._get_node_resources()
+        info.update(resource)
+        return info
 
 class Identity:
     def __init__(self, info, env=False):
@@ -81,23 +89,30 @@ class Identity:
         self.apparatus = info.get("apparatus", {})
         self.artifacts = info.get("artifacts", {})
         self.environment = info.get("environment", {})
+        logger.info(f"Identity built: uuid {self.uuid} for {self.role} at {self.address}")
+        self.load_env(env)
+        
+    def load_env(self, env):
         if env:
             self.environment = self._env.info()
-
+            logger.info(f"Identity environment info loaded/extracted")
+        else:
+            logger.info(f"Identity environment imported")
+        
     def validate(self, roles):
         if self.uuid and self.role and self.address:
             if self.role in roles:
                 return True
             else:
-                logger.info(f"Role {self.role} not allowed for identity - accepts {roles}")
+                logger.info(f"Role {self.role} not allowed for identity - "
+                            f"accepts only {roles}")
         else:
-            logger.info(f"Mandatory fields not provided for Identity\
-                uuid {self.uuid} and/or role {self.role} and/or address {self.address}")
-        
+            logger.info(f"Mandatory fields not provided for Identity"
+                        f"uuid {self.uuid} and/or role {self.role} and/or address {self.address}")       
         return False
 
     def get(self, param):
-        value = getattr(self, param)
+        value = getattr(self, param, None)
         return value
 
     def set(self, param, value):
@@ -109,25 +124,27 @@ class Identity:
             else:
                 setattr(self, param, value)
             return True
+        
         return False
 
     def profile(self, filter_fields=None):
         info = {}
+        
         if filter_fields:
             fields = filter_fields
         else:
-            fields = ["uuid", "role", "address",\
-                "environment", "apparatus", "artifacts"]
+            fields = ["uuid", "role", "address", 
+                      "environment", "apparatus", "artifacts"]
         
-        for k,v in self.__dict__.items():
+        for k, v in self.__dict__.items():
             if k in fields:
                 info[k] = v
        
         return info
 
     def update(self, info):
-        fields = ["uuid", "role", "address",\
-            "environment", "apparatus", "artifacts"]
+        fields = ["uuid", "role", "address",
+                  "environment", "apparatus", "artifacts"]
 
         for field in fields:
             info_value = info.get(field, None)
@@ -142,6 +159,7 @@ class Peers:
 
     def add(self, info):
         uuid = info.get("uuid")
+        
         if uuid not in self.peers:
             peer = Identity(info)
 
@@ -153,30 +171,37 @@ class Peers:
                 logger.info(f'Peer not added: uuid {uuid} role {peer.get("role")}')
 
         else:
+            logger.info(f'Peer not added: already existing uuid {uuid}')
             peer = self.peers[uuid]
             peer.update(info)
-            logger.info(f'Peer existent updated: uuid {uuid} role {peer.get("role")}')
+            logger.info(f'Peer existent info updated: uuid {uuid} role {peer.get("role")}')
 
-        logger.info(f'Peer not added: already existing uuid {uuid}')
         return False
 
     def clear(self):
         self.peers.clear()
+        logger.info(f"Peers deleted/cleared")
        
     def del_peer(self, peer):
-        if peer.get('url') in self.peers:
-            del self.peers[peer.get('url')]
+        uuid = peer.get('uuid')
 
-    def get_by(self, field, value, all=False):
+        if uuid in self.peers:
+            del self.peers[uuid]
+            logger.info(f"Peer {uuid} deleted")
+        else:
+            logger.info(f"Peer {uuid} not existent/deleted")
+
+    def get_by(self, field, value, alls=False):
         rels = []
-        for _,peer in self.peers.items():
+
+        for _, peer in self.peers.items():
             if peer.get(field):
                 if peer.get(field) == value:
-                    if all:
+                    if alls:
                         rels.append(peer)
                     else:
                         return peer
-        if all:
+        if alls:
             return rels
         else:
             return None
@@ -191,6 +216,7 @@ class Status:
         
     def cfg_roles(self, info):
         role = info.get("role")
+        
         if role == "agent" or role == "monitor":       
             allowed_roles = ["manager"]
         elif role == "manager":
@@ -198,11 +224,14 @@ class Status:
         elif role == "player":
             allowed_roles = ["manager"]
         else:
-            logger.info(f"Status allowed roles not configured - unknown role {role}")
+            logger.info(f"Status allowed roles empty, "
+                        f"unknown identity role {role}")
+
             allowed_roles = []
 
         self.allowed_roles = allowed_roles
         self.peers.allowed_roles = allowed_roles
+        logger.info(f"Status configured: allowed contact roles: {allowed_roles}")
 
     def profile(self, filter_fields=None):
         profile = self.identity.profile(filter_fields)
@@ -246,14 +275,15 @@ class Status:
             pass
 
         if apparatus:
-            logger.info(f'Updating apparatus {apparatus}')
+            logger.info(f'Updating identity apparatus')
+            logger.debug(f"{apparatus}")
             self.update("apparatus", apparatus)
 
     def update_status(self, roles):
         feats = {}
                 
         for role in roles:
-            peers = self.peers.get_by("role", role, all=True)
+            peers = self.peers.get_by("role", role, alls=True)
 
             if peers:
                 feat_name = role + 's'
@@ -265,14 +295,16 @@ class Status:
         if feats:
             self.update_identity(feats)
 
-    def get_peers(self, field, types, all):
+    def get_peers(self, field, types, alls):
         info = {}
-        peers = self.peers.get_by(field, types, all=all)
+        peers = self.peers.get_by(field, types, alls=alls)
         for peer in peers:
-            info[peer.get("uuid")] = peer        
+            uuid = peer.get("uuid")
+            info[uuid] = peer        
         return info
 
     def allows(self, contacts):
+        logger.info(f"Filtering contacts allowed by roles for {self.identity.get('role')}")
         allowed = []
 
         if contacts:
@@ -280,5 +312,7 @@ class Status:
                 role, _ = contact.split("/")
                 if role in self.allowed_roles:
                     allowed.append(contact)
+                else:
+                    logger.info(f"Contact role {role} not allowed for {self.identity.get('role')}")
 
         return allowed

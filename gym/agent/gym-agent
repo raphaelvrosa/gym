@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3.7
 # coding=utf-8
 
 import sys
@@ -9,18 +9,10 @@ from gym.agent.agent import Agent
 
 class GymAgent(App):
     def __init__(self):
-        App.__init__(self)
-    
-    def run(self, argv):
-        ack = self.cfg.parse(argv)
-        if ack:
-            info = self.cfg.get()
-            info["role"] = "agent"
-            app_cls = Agent
-            self.init(app_cls)
-        else:
-            print(f'Could not start {self.__class__.__name__}')
-            return -1
+        App.__init__(self,
+            app_cls = Agent,
+            app_role = "agent"
+        )
 
 
 if __name__ == '__main__':

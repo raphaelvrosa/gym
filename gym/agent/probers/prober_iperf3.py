@@ -28,8 +28,7 @@ class ProberIperf3(Prober):
         self._command = 'iperf3'
         self._server = False
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = []
         stop = False
         timeout = 0
@@ -72,7 +71,13 @@ class ProberIperf3(Prober):
             
         opts.extend(['-f','m'])
         opts.append('-J')
-        return opts, stop, timeout
+        
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
 
     def parser(self, out):
         _eval = []

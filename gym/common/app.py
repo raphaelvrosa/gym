@@ -11,47 +11,55 @@ logger = logging.getLogger(__name__)
 
 
 class App:
-    def __init__(self):
+    def __init__(self, app_cls, app_role):
         self.cfg = Config()
+        self.app_cls = app_cls
+        self.app_role = app_role
 
     def logs(self):
-        prefix = self.__class__.__name__
         info = self.cfg.get()
-        filename = "/tmp/" + prefix + str(info.get("uuid")) + ".log"
+        filename = "".join([
+            "/tmp/",
+            self.__class__.__name__,
+            "-",
+            info.get("uuid"),
+            ".log"])
+
         Logs(filename, debug=info.get("debug"))
 
-    async def main(self, app_cls, app_args):
-        address = app_args.get("address")
-        server = Server([app_cls(app_args)])
-
-        host, port = address.split(":")
-        logger.debug(f"Starting server on host {host} : port {port}")
-
-        with graceful_exit([server]):
-            await server.start(host, port)
-            print(f"Serving on {host}:{port}")
-            await server.wait_closed()
-
-    def init(self, app_cls):
-        self.logs()
+    async def main(self):
         app_args = self.cfg.get()
+        address = app_args.get("address")
+        host, port = address.split(":")
+        logger.debug(f"App serving on host {host} - port {port}")
+
+        if self.app_cls and self.app_role:
+            app_args["role"] = self.app_role
+
+            server = Server([self.app_cls(app_args)])
+            with graceful_exit([server]):
+                await server.start(host, port)
+                await server.wait_closed()
+
+        else:
+            logger.info(f"Neither app_cls or app_role were defined"
+                        f"{self.app_cls} and/or {self.app_role}")
+
+    def init(self):
+        self.logs()
 
         try:
-            asyncio.run(self.main(app_cls, app_args))
+            asyncio.run(self.main())
         except Exception as excpt:
             logger.info(f"Could not init app - exception: {excpt}")
-
         finally:
             logger.info("App shutdown complete")
 
-    async def shutdown(self):
-        logger.info("Cleaning up")
-        loop = asyncio.get_event_loop()
+    def run(self, argv):
+        ack = self.cfg.parse(argv)
 
-        tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
-
-        [task.cancel() for task in tasks]
-        logger.info(f"Cancelling {len(tasks)} tasks")
-        await asyncio.gather(*tasks, return_exceptions=True)
-        loop.stop()
-        loop.close()
+        if ack:
+            self.init()
+        else:
+            print(f'App {self.__class__.__name__} finished')
+            return -1

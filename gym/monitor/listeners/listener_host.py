@@ -17,10 +17,37 @@ class ListenerHost(Listener):
         'duration': 'duration',
     }
 
-    METRICS = {0: 'cpu_percent', 1: 'user_time', 2: 'nice_time', 3: 'system_time', 4: 'idle_time', 5: 'iowait_time', 6: 'irq_time', 7: 'softirq_time', 8: 'steal_time', 9: 'guest_time', 10: 'guest_nice_time', 11: 'mem_percent', 12: 'total_mem', 13: 'available_mem', 14: 'used_mem', 15: 'free_mem', 16: 'active_mem', 17: 'inactive_mem', 18: 'buffers_mem', 19: 'cached_mem', 20: 'shared_mem', 21: 'slab_mem', 22: 'read_count', 23: 'read_bytes', 24: 'write_count', 25: 'write_bytes'}
+    METRICS = {
+        0: 'cpu_percent',
+        1: 'user_time',
+        2: 'nice_time',
+        3: 'system_time',
+        4: 'idle_time',
+        5: 'iowait_time',
+        6: 'irq_time',
+        7: 'softirq_time',
+        8: 'steal_time',
+        9: 'guest_time',
+        10: 'guest_nice_time',
+        11: 'mem_percent',
+        12: 'total_mem',
+        13: 'available_mem',
+        14: 'used_mem',
+        15: 'free_mem',
+        16: 'active_mem',
+        17: 'inactive_mem',
+        18: 'buffers_mem',
+        19: 'cached_mem',
+        20: 'shared_mem',
+        21: 'slab_mem',
+        22: 'read_count',
+        23: 'read_bytes',
+        24: 'write_count',
+        25: 'write_bytes'
+    }
 
     def __init__(self):
-        Listener.__init__(self, id=LISTENER_HOST, name='Host',
+        Listener.__init__(self, id=LISTENER_HOST, name='host',
                           parameters=ListenerHost.PARAMETERS,
                           metrics=ListenerHost.METRICS)
         self._first = True
@@ -151,8 +178,7 @@ class ListenerHost(Listener):
         resources.update(net)
         return resources
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = {}
         stop = False
         timeout = 0
@@ -162,7 +188,13 @@ class ListenerHost(Listener):
             if k == 'duration':
                 timeout = v
             opts[k] = v
-        return opts, stop, timeout
+        
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
 
     def monitor(self, opts):
         results = []
@@ -177,7 +209,6 @@ class ListenerHost(Listener):
             return results
 
         past = datetime.now()
-        # node_info = self._get_node_info()
         measurement = {}
         measurement["time"] = 0.0
         while True:
@@ -188,6 +219,7 @@ class ListenerHost(Listener):
             else:
                 tm = time.time()
                 measurement = self._get_node_stats(tm, measurement)
+                measurement["time"] = tm
                 current = datetime.now()
                 self._first = False
                 results.append(measurement)

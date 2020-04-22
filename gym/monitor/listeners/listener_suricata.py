@@ -262,7 +262,7 @@ class ListenerSuricata(Listener):
     }
 
     def __init__(self):
-        Listener.__init__(self, id=LISTENER_SURICATA, name='Suricata',
+        Listener.__init__(self, id=LISTENER_SURICATA, name='suricata',
                           parameters=ListenerSuricata.PARAMETERS,
                           metrics=ListenerSuricata.METRICS)
         self._command = ''
@@ -294,8 +294,7 @@ class ListenerSuricata(Listener):
         }
         stats_diffs.update(stats_diffs_extra)
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = {}
         stop = False
         timeout = 0
@@ -305,7 +304,13 @@ class ListenerSuricata(Listener):
             if k == 'duration':
                 timeout = v
             opts[k] = v
-        return opts, stop, timeout
+
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
 
     def stats_diff(self, interface, duration):
         stats_before = self._stats(interface)

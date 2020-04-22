@@ -15,7 +15,8 @@ class Logs:
                 'disable_existing_loggers': False,
                 'formatters': {
                     'strict': {
-                        'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+                        'format':   '%(asctime)s [%(levelname)s] '
+                                    '%(name)s: %(message)s'
                     },
                     'standard': {
                         'format': '%(asctime)s [%(levelname)s]: %(message)s'
@@ -23,8 +24,8 @@ class Logs:
                 },
                 'handlers': {
                     'default': {
-                        'level':op_mode,
-                        'class':'logging.StreamHandler',
+                        'level': op_mode,
+                        'class': 'logging.StreamHandler',
                         "formatter": "standard",
                     },
                     "info_file_handler": {
@@ -45,3 +46,5 @@ class Logs:
                     }
                 }
             })
+        logger.info(f"Starting logs in {op_mode} mode")
+        logger.info(f"Logging DEBUG mode into file {filename}")

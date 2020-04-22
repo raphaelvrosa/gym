@@ -38,8 +38,7 @@ class ProberPktgen(Prober):
             os.path.dirname(__file__), self._path))
         return _filepath
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = []
         stop = False
         timeout = 0
@@ -48,19 +47,25 @@ class ProberPktgen(Prober):
                 timeout = v
                 stop = True
             opts.extend([k,v])
-        return opts, stop, timeout
+        
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings     
 
     def parser(self, out):
-        eval = {}
+        _eval = {}
         try:
-            eval = json.loads(out)
+            _eval = json.loads(out)
         except ValueError:
             logger.debug('pktgen json output could not be decoded')
-            eval = {}
+            _eval = {}
         else:
             pass
         finally:
-            return eval
+            return _eval
 
 
 if __name__ == '__main__':

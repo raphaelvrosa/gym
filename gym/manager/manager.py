@@ -7,9 +7,9 @@ from gym.common.protobuf.gym_grpc import ManagerBase
 logger = logging.getLogger(__name__)
 
 
-class Manager(ManagerBase):
-    
+class Manager(ManagerBase):   
     def __init__(self, info):
+        logger.info(f"Manager starting - uuid {info.get('uuid')}")
         self.core = ManagerCore(info)
 
     async def Greet(self, stream):

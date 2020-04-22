@@ -1,29 +1,27 @@
 import os
 import asyncio
 import logging
-from datetime import datetime
 
 from gym.common.core import WorkerCore
 from gym.common.protobuf.gym_grpc import AgentBase
 from gym.common.protobuf.gym_pb2 import Instruction, Info
 
 
-
 logger = logging.getLogger(__name__)
 
 
 class Agent(AgentBase):
-
     def __init__(self, info):
+        logger.info(f"Agent starting - uuid {info.get('uuid')}")
+        info['folder'] = self._folder()
         self.core = WorkerCore(info)
-        asyncio.create_task(self.load())
 
-    async def load(self):
+    def _folder(self):
         folder = os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
             'probers'
         )
-        await self.core.load(folder, "probers")
+        return folder
 
     async def Greet(self, stream):
         request: Info = await stream.recv_message()

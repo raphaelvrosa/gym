@@ -23,7 +23,7 @@ class ListenerProcess(Listener):
     METRICS = {0: 'cpu_num', 1: 'cpu_percent', 2: 'user_time', 3: 'system_time', 4: 'num_threads', 5: 'mem_percent', 6: 'read_count', 7: 'read_bytes', 8: 'write_count', 9: 'write_bytes', 10: 'read_chars', 11: 'write_chars', 12: 'time'}
 
     def __init__(self):
-        Listener.__init__(self, id=LISTENER_PROCESS, name='Host',
+        Listener.__init__(self, id=LISTENER_PROCESS, name='process',
                           parameters=ListenerProcess.PARAMETERS,
                           metrics=ListenerProcess.METRICS)
         self._first = True
@@ -142,8 +142,7 @@ class ListenerProcess(Listener):
         # resources.update(net)
         return resources
 
-    def options(self, opts):
-        options = self.serialize(opts)
+    def options(self, options):
         opts = {}
         stop = False
         timeout = 0
@@ -153,8 +152,14 @@ class ListenerProcess(Listener):
             if k == 'duration':
                 timeout = v
             opts[k] = v
-        return opts, stop, timeout
 
+        settings = {
+            "opts": opts,
+            "stop": stop,
+            "timeout": timeout
+        }
+        return settings
+        
     def get_pid(self, name):
         pidlist = []
         try:
@@ -172,6 +177,7 @@ class ListenerProcess(Listener):
         results = []
         interval = 1
         pid = None
+
         if 'interval' in opts:
             interval = float(opts['interval'])
 
@@ -191,6 +197,7 @@ class ListenerProcess(Listener):
         if not pid:
             logger.debug("pid not found")
             return results
+
         if not ps.pid_exists(pid):
             return results
         
@@ -199,6 +206,7 @@ class ListenerProcess(Listener):
         measurement = {}
         measurement["time"] = 0.0
         past = datetime.now()
+
         while True:
             current = datetime.now()
             

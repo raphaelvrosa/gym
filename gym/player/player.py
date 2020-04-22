@@ -10,13 +10,13 @@ logger = logging.getLogger(__name__)
 
 class Player(PlayerBase):
     def __init__(self, info):
+        logger.info(f"Player starting - uuid {info.get('uuid')}")
         self.core = PlayerCore(info)
 
     async def Greet(self, stream):
         request = await stream.recv_message()
         reply = await self.core.info(request)
         await stream.send_message(reply)
-
 
     async def CallLayout(self, stream):
         request = await stream.recv_message()

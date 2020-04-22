@@ -1,6 +1,6 @@
 import logging
 import argparse
-import yaml
+
 
 logger = logging.getLogger(__name__)
 
@@ -12,74 +12,128 @@ class Config:
     def get(self):
         return self._info
 
-    def load(self, filename):
-        data = {}
-        with open(filename, 'r') as f:
-            data = yaml.load(f, Loader=yaml.SafeLoader)
-        return data
+    def check_address_fmt(self, address):
+        ack = True
 
-    def parse(self, argv=None):
-        parser = argparse.ArgumentParser(
-            description='Gym App')
+        try:
+            ip, port = address.split(":")
+        except ValueError as e:
+            print(f"Address must contain ip:port format")
+            print(f"Exception checking address format {e}")
+            ack = False
+        else:
+            if not ip or not port:
+                print(f"Address must contain ip and port")
+                ack = False
 
-        parser.add_argument('--uuid',
-                            type=str,
-                            help='Define the app unique id (default: None)')
+        finally:
+            return ack
 
-        parser.add_argument('--address',
-                            type=str,
-                            help='Define the app address (host:port) (default: None)')
+    def check_contact_fmt(self, contacts):
+        acks = []
+        roles = ["agent", "monitor", "manager", "player", "infra"]
 
-        parser.add_argument('--contacts',
-                            nargs='+',
-                            help='Define the app contacts - role/address (e.g., agent/localhost:18080) (default: [])')
+        for contact in contacts:
+            ack = True
 
-        parser.add_argument('--debug',
-                            action='store_true',
-                            help='Define the app logging mode (default: False)')
+            try:
+                role, address = contact.split("/")
+                ack = self.check_address_fmt(address)
 
-        parser.add_argument('--cfg',
-                            type=str,
-                            help='Define the yaml cfg file (uuid + address) (default: None)')
+            except ValueError as e:
+                print(f"Contact {contact} must contain role/ip:port format")
+                print(f"Exception checking contact {e}")
 
-        self.cfg, _ = parser.parse_known_args(argv)
-        
-        info = self.check()
-        if info:
-            self._info = info
+            finally:
+                if role in roles and ack:
+                    acks.append(True)
+                else:
+                    print(f"Check if contact {contact} role in {roles}")
+                    acks.append(False)
+
+        if all(acks):
             return True
-        
-        return False
+        else:
+            print(f"Not all contacts in correct format (e.g., role/ip:port)")
+            return False
 
-    def cfg_args(self):
-        cfgFile = self.cfg.cfg
-        if cfgFile:
-            cfg_data = self.load(cfgFile)
-            return cfg_data
-        return None
-            
+    def check_cfg(self):
+        address_ok = self.check_address_fmt(self.cfg.address)
+
+        contacts_ok = True
+        if self.cfg.contacts:
+            contacts_ok = self.check_contact_fmt(self.cfg.contacts)
+
+        ack = address_ok and contacts_ok
+        return ack
+
     def check(self):
         _contacts = None
 
-        if self.cfg.cfg:
-            cfg_data = self.cfg_args()
-            _id = cfg_data.get('uuid', None)
-            _address = cfg_data.get('address', None)
-            _contacts = cfg_data.get('contacts', None)
-        else:
-            _id, _address = self.cfg.uuid, self.cfg.address
-            _contacts = self.cfg.contacts
+        _id, _address = self.cfg.uuid, self.cfg.address
+        _contacts = self.cfg.contacts
 
         if _id and _address:
-            logger.info("Init cfg: id %s - address %s", _id, _address)
-            info = {
-                "uuid": _id,
-                "address": _address,
-                "contacts": _contacts,
-                "debug": self.cfg.debug
-            }
-            print(f'Argv: {info}')
-            return info
+            if self.check_cfg():
+                info = {
+                    "uuid": _id,
+                    "address": _address,
+                    "contacts": _contacts,
+                    "debug": self.cfg.debug,
+                }
+                print(f"App cfg args OK: id {_id} - address {_address}")
+                return info
+
+            else:
+                return None
         else:
-            print("Init cfg NOT provided - both must exist: uuid and address (provided values: %s, %s)" % (_id, _address))
+            print(
+                f"App cfg args not provided - both must exist:"
+                f"uuid and address (provided values: {_id} and {_address})"
+            )
             return None
+
+    def parse(self, argv=None):
+        """Parses all the initial configuration parameters of all gym apps
+
+        Keyword Arguments:
+            argv {list} -- List of arguments initially passed by the App (default: {None})
+
+        Returns:
+            bool -- If all the mandatory parameters (uuid and address) were in argv
+        """
+
+        print(f"Initializing Gym App - Parsing Argv")
+        parser = argparse.ArgumentParser(description="Gym App")
+
+        parser.add_argument(
+            "--uuid", type=str, help="Define the app unique id (default: None)"
+        )
+
+        parser.add_argument(
+            "--address",
+            type=str,
+            help="Define the app address (host:port) (default: None)",
+        )
+
+        parser.add_argument(
+            "--contacts",
+            nargs="+",
+            help="Define the app contacts - role/address "
+            "(e.g., agent/localhost:18080) (default: [])",
+        )
+
+        parser.add_argument(
+            "--debug",
+            action="store_true",
+            help="Define the app logging mode (default: False)",
+        )
+
+        self.cfg, _ = parser.parse_known_args(argv)
+        info = self.check()
+
+        if info:
+            self._info = info
+            return True
+
+        return False
