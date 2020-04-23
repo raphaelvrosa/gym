@@ -43,6 +43,7 @@ class Core:
     async def _info(self, stub, contacts=[]):
         profile = self.status.profile()
         info = json_format.ParseDict(profile, Info())
+        
         if contacts:
             for contact in contacts:
                 info.contacts.append(contact)
@@ -89,14 +90,7 @@ class Core:
             info = await self._info(stub, contacts)
 
             if info:
-                logger.info(f"Adding contact")
-                self.status.info(info)
-
-                logger.info("Updating contact info in identity")
-                self.status.update_status([role])
-                # if ack_new_contact:
-                #     logger.info("Updating contact info")
-                #     self.status.update_status([role])
+                self.status.add_peer(info)
             else:
                 logger.info(f"Could not greet contact at {host}:{port}")
 
@@ -105,7 +99,8 @@ class Core:
     async def greet(self, info, startup=False):
         await asyncio.sleep(0.5)
         
-        allowed_contacts = self.status.allows(info.get("contacts"))
+        contacts = info.get("contacts")
+        allowed_contacts = self.status.allows(contacts)
         
         if allowed_contacts:
             logger.info(f"Greeting contacts: {allowed_contacts}")
@@ -123,20 +118,19 @@ class Core:
 
     async def info(self, message):
         logger.info("Received Info")
+        logger.debug(f"{message}")
         info = json_format.MessageToDict(message, preserving_proto_field_name=True)
 
         await self.greet(info)
 
-        ack = self.status.info(info)
+        self.status.add_peer(info)
         reply = Info()
-
-        if ack:
-            role = info.get("role")
-            self.status.update_status([role])
-
         profile = self.status.profile()
         reply = json_format.ParseDict(profile, Info())
+        
         logger.info("Replying Info")
+        logger.debug(f"{reply}")
+
         return reply
 
 
@@ -235,6 +229,31 @@ class ManagerCore(Core):
     def __init__(self, info):
         Core.__init__(self, info)
 
+    def actions(self, instruction, req_tools):
+        logger.info(f"Building actions")
+        logger.debug(f"Tools: {req_tools}")
+        
+        action_ids = 1
+        
+        for tool in req_tools:
+            action = instruction.actions.get_or_create(action_ids)
+            action.id = tool.id
+            
+            for k in tool.parameters:
+                action.args[k] = tool.parameters[k]
+
+            action_ids += 1
+
+    def instruction(self, req_peer, tools_type):
+        instruction = None
+
+        if hasattr(req_peer, tools_type):           
+            req_tools = getattr(req_peer, tools_type)
+            instruction = Instruction()
+            self.actions(instruction, req_tools)
+        
+        return instruction
+
     def check_uuids(self, locals, requested):
         logger.debug("Verifying if requested workers (agents/monitors) "
                      "fit available components")
@@ -244,57 +263,62 @@ class ManagerCore(Core):
 
         for req_id in req_ids:
             if req_id not in local_ids:
-                logger.debug(
-                    f"Component ID requested {req_id} not existent {local_ids}"
-                )
+                logger.debug(f"Component requested uuid {req_id}"
+                             f" not existent/available uuids {local_ids}")
                 return False
         
-        logger.debug("All requested match locals")
+        logger.debug("All requested components match available uuids")
         return True
 
     def instructions(self, locals, requested, role):
         logger.info(f"Building instructions for {role}")
         instructions = {}
+        all_instructions_ok = False
 
         if role == "agents":
             tools_type = "probers"
         elif role == "monitors":
             tools_type = "listeners"
         else:
+            logger.info(f"Instructions not built - "
+                        f"Unexistent components available for role {role}")
             return instructions
 
         if self.check_uuids(locals, requested):
-            for req in requested:
+            instructions_built = {}
 
-                req_uuid = req.uuid
-                peer = locals.get(req_uuid)
+            for req_peer in requested:
+                instruction = self.instruction(req_peer, tools_type)
+                
+                req_uuid = getattr(req_peer, 'uuid')
 
-                if peer:
-                    instruction = Instruction()
+                if instruction:
+                    instructions_built[req_uuid] = True
+                    instructions[req_uuid] = instruction
+                    logger.info(f"Instruction built for {role} uuid {req_uuid}")
 
-                if hasattr(req, tools_type):
-                    req_tools = getattr(req, tools_type)
-
-                    action_ids = 0
-                    for tool in req_tools:
-                        action = instruction.actions.get_or_create(action_ids)
-                        action.id = tool.id
-                        for k in tool.parameters:
-                            action.args[k] = tool.parameters[k]
-
-                        action_ids += 1
-
-                instructions[peer.get("uuid")] = instruction
-
-            logger.info(f"Instructions built: {instructions}")
+                else:
+                    instructions_built[req_uuid] = False
+                    logger.info(f"Instruction not built for {role} uuid {req_uuid} - "
+                                f"Could not get tools type {tools_type}")
+           
+            logger.debug(f"Status of instructions: {instructions_built}")
+            all_instructions_ok = all(instructions_built.values())
+            
+            if all_instructions_ok:
+                logger.info(f"All instructions built for {role}")
+            else:
+                logger.info(f"Not all instructions built for {role}")
 
         else:
-            logger.debug("All requested agents/monitors do not exist and/or match locals")
-            logger.info("Could not build instructions")
+            logger.debug("All requested agents/monitors do not exist and/or not match locals")
+            logger.info(f"Could not build instructions for {role}")
 
-        return instructions
+        return instructions, all_instructions_ok
 
     async def callPeer(self, role, address, instruction):
+        reply = Snapshot(id=instruction.id)
+        
         host, port = address.split(":")
         channel = Channel(host, port)
 
@@ -304,24 +328,36 @@ class ManagerCore(Core):
             stub = MonitorStub(channel)
         else:
             stub = None
-            logger.info(f"Could not contact role {role} - no Stub class")
+            logger.info(f"Could not contact role {role} - "
+                        f"no stub/client available")
+            raise(Exception(f"No stub/client available for {role}"))
 
-        if stub:
+        try:
             reply = await stub.CallInstruction(instruction)
-        else:
-            reply = Snapshot(id=instruction.id)
 
+        except GRPCError as e:
+            logger.info(f"Error in instruction call at {address}")
+            logger.debug(f"Exception: {e}")
+            raise(e)
+                    
+        except OSError as e:
+            logger.info(f"Could not open channel for instruction call at {address}")
+            logger.debug(f"Exception: {e}")
+            raise(e)
+                    
         channel.close()
         return reply
 
     async def callInstructions(self, instructions, peers):
+        logger.info(f"Calling instructions")
+        snapshots = []
         coros = []
 
         for uuid, instruction in instructions.items():
             peer = peers.get(uuid)
             role = peer.get("role")
             address = peer.get("address")
-            logger.info(f"Calling instruction on: {role} at {address}")
+            logger.info(f"Scheduled instruction call on: {role} uuid {uuid} at {address}")
 
             aw = self.callPeer(role, address, instruction)
             coros.append(aw)
@@ -329,44 +365,60 @@ class ManagerCore(Core):
         snaps = await asyncio.gather(*coros, return_exceptions=True)
 
         peer_uuids = list(instructions.keys())
-        valid_snaps = []
-        for snap in snaps:
-            if isinstance(snap, Exception):
-                snap_index = snaps.index(snap)
-                uuid = peer_uuids[snap_index]
-                instruction = instructions[uuid]
-                logger.info(
-                    f"Snapshot missing from peer {uuid} in instruction {instruction}"
-                )
-                logger.debug(f"Snapshot exception: {snap}")
-            else:
-                valid_snaps.append(snap)
+        
 
-        return valid_snaps
+        logger.info(f"Validating snapshots")
+        
+        for snap in snaps:
+            snap_index = snaps.index(snap)
+            uuid = peer_uuids[snap_index]
+                
+            if isinstance(snap, Exception):
+                instruction = instructions[uuid]
+                logger.info(f"Snapshot fail from uuid {uuid}")
+                logger.debug(f"Instruction: {instruction}")
+                logger.debug(f"Exception: {snap}")
+            else:
+                logger.info(f"Snapshot ok from uuid {uuid}")
+                snapshots.append(snap)
+
+        return snapshots
 
     async def trials(self, task, instructions, peers):
         snapshots = []
         trials = task.trials
-        instruction_ids = 1000
+        _ids = 1001
+
+        logger.info(f"Executing trials {trials} for task {task.id}")
 
         for trial in range(trials):
-            logger.info(f"Running trial: {trial} of total {trials}")
+            logger.info(f"Trial: {trial} of total {trials}")
 
+            instruction_ids = []
             for intruction in instructions.values():
-                intruction.id = instruction_ids
+                intruction.id = _ids
                 intruction.trial = trial
-                instruction_ids += 1
+                instruction_ids.append(_ids)
+                _ids += 1
+                
+            trial_snapshots = await self.callInstructions(instructions, peers)
+            
+            snap_ids = [snap.id for snap in trial_snapshots]
+            all_snaps_ok = all([True if inst_id in snap_ids else False
+                                for inst_id in instruction_ids])
 
-            snaps = await self.callInstructions(instructions, peers)
-            snapshots.extend(snaps)
+            if all_snaps_ok:
+                logger.info(f"All instructions successfull in trial {trial}")
+            else:
+                logger.info(f"Failed instructions in trial {trial}")
 
+            snapshots.extend(trial_snapshots)
+
+        logger.info(f"Finished trials: {trials}")
         return snapshots
 
-    def report(self, task, snapshots):
-        logger.info(f"Building report for task {task.id} in test {task.test}")
-
-        report = Report(id=task.id, test=task.test)
-        report.timestamp.FromDatetime(datetime.now())
+    def report(self, report, snapshots):
+        logger.info(f"Building report {report.id} in test {report.test}")
 
         for snap in snapshots:
             report_snap = report.snapshots.get_or_create(snap.id)
@@ -375,26 +427,30 @@ class ManagerCore(Core):
         return report
 
     async def task(self, task):
-        logger.info("Called Task")
-        logger.info(
-            f"Message: {json_format.MessageToDict(task, preserving_proto_field_name=True)}"
-        )
-
-        peers = {}
-        agents_peers = self.status.get_peers("role", "agent", all=True)
-        monitors_peers = self.status.get_peers("role", "monitor", all=True)
-        peers.update(agents_peers)
-        peers.update(monitors_peers)
-
-        instructions = {}
-        instructions.update(self.instructions(agents_peers, task.agents, "agents"))
-        instructions.update(
-            self.instructions(monitors_peers, task.monitors, "monitors")
-        )
-
-        snapshots = await self.trials(task, instructions, peers)
-
-        report = self.report(task, snapshots)
+        logger.info("Received Task")
+        logger.debug(f"{task}")
+        
+        report = Report(id=task.id, test=task.test)
+        
+        agents_peers = self.status.get_peers("role", "agent", alls=True)
+        monitors_peers = self.status.get_peers("role", "monitor", alls=True)
+        peers = {**agents_peers, **monitors_peers}
+        
+        agents_instructions, ai_ok = self.instructions(agents_peers, task.agents, "agents")
+        monitors_instructions, mi_ok = self.instructions(monitors_peers, task.monitors, "monitors")
+        
+        if ai_ok and mi_ok:
+            instructions = {**agents_instructions, **monitors_instructions}           
+            snapshots = await self.trials(task, instructions, peers)
+            report = self.report(report, snapshots)
+        else:
+            logger.info(f"Test not executed - instructions not ok for agents {ai_ok} and/or monitors {mi_ok}")
+            logger.info(f"Could not build report for task {task.id} in test {task.test}")           
+            
+        logger.info("Replying Report")
+        report.timestamp.FromDatetime(datetime.now())
+        logger.debug(f"{report}")
+       
         return report
 
 
@@ -531,7 +587,9 @@ class PlayerCore(Core):
         return vnfpp
 
     async def layout(self, message):
-        logger.info("Received Layout Request")
+        logger.info("Received Layout")
+        logger.debug(f"{message}")
+
         result = Result(id=message.id)
 
         vnfbd = VNFBD()
@@ -549,6 +607,7 @@ class PlayerCore(Core):
         else:
             logger.info("Could not parse vnfbd protobuf message")
 
-        logger.info("Replying Result to Layout Request")
+        logger.info("Replying Result")
         result.timestamp.FromDatetime(datetime.now())
+        
         return result

@@ -159,20 +159,24 @@ class Peers:
 
     def add(self, info):
         uuid = info.get("uuid")
+        address = info.get("address")
+        peer_key = (uuid,address)
+
+        logger.info(f"Adding peer (uuid,address) {peer_key}")
         
-        if uuid not in self.peers:
+        if peer_key not in self.peers:
             peer = Identity(info)
 
             if peer.validate(self.allowed_roles):
-                self.peers[uuid] = peer
+                self.peers[peer_key] = peer
                 logger.info(f'Peer added: uuid {uuid} role {peer.get("role")}')
                 return True
             else:
                 logger.info(f'Peer not added: uuid {uuid} role {peer.get("role")}')
 
         else:
-            logger.info(f'Peer not added: already existing uuid {uuid}')
-            peer = self.peers[uuid]
+            logger.info(f'Peer not added: already existing peer (uuid,address) {peer_key}')
+            peer = self.peers[peer_key]
             peer.update(info)
             logger.info(f'Peer existent info updated: uuid {uuid} role {peer.get("role")}')
 
@@ -237,10 +241,6 @@ class Status:
         profile = self.identity.profile(filter_fields)
         return profile
 
-    def info(self, info):
-        ack = self.peers.add(info)
-        return ack
-
     def update(self, field, values):
         info  = {
             field: values,
@@ -280,6 +280,7 @@ class Status:
             self.update("apparatus", apparatus)
 
     def update_status(self, roles):
+        logger.info(f"Updating status with peer roles {roles}")
         feats = {}
                 
         for role in roles:
@@ -295,12 +296,22 @@ class Status:
         if feats:
             self.update_identity(feats)
 
+    def add_peer(self, info):
+        ack = self.peers.add(info)
+
+        if ack:
+            role = info.get('role')
+            self.update_status([role])           
+
     def get_peers(self, field, types, alls):
         info = {}
+        logger.info(f"Get all ({alls}) peers by {field} with value {types}")
         peers = self.peers.get_by(field, types, alls=alls)
+        
         for peer in peers:
             uuid = peer.get("uuid")
             info[uuid] = peer        
+        
         return info
 
     def allows(self, contacts):
