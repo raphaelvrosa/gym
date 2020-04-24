@@ -20,10 +20,7 @@ logger = logging.getLogger(__name__)
 class Inputs:
     def __init__(self):
         self._data = {}
-        self._mix_inputs = {}
-
-    def multiplexed(self):
-        return self._mix_inputs
+        self._mux_inputs = []
 
     def has_list_value(self, dict_items):
         fields_list = [ field for field,value in dict_items.items() if type(value) is list ]
@@ -71,8 +68,6 @@ class Inputs:
 
     def fill_unique(self, lists_fields, unique_lists):
         unique_inputs = []
-        
-        # data_lists_keys = list(data_lists.keys())
 
         for unique_list in unique_lists:
             unique_input = copy.deepcopy(self._data)
@@ -86,24 +81,21 @@ class Inputs:
 
         return unique_inputs
 
-    def multiplex(self):
+    def multiplex(self, data):
+        logger.info("Multiplexing inputs")
         unique_inputs = []
+        
+        self._data = data
         lists, lists_fields = self.lists()
         
         if lists:
             unique_lists = list(itertools.product(*lists))
             unique_inputs = self.fill_unique(lists_fields, unique_lists)
+            self._mux_inputs = unique_inputs
         
+        logger.info(f"Inputs multiplexed: total {len(unique_inputs)}")
         return unique_inputs   
 
-    def init(self, data):
-        self._data = data
-
-        if self._data:
-            self._mix_inputs = self.multiplex()
-        
-        logger.info(f"Inputs multiplexed: total {len(self._mix_inputs)}")
-        
 
 class Proceedings():
 
@@ -204,7 +196,7 @@ class Proceedings():
         availables = apparatus.get(role)
         tools_type = 'probers' if role == 'agents' else 'listeners'
         
-        logger.debug(f"Checking components")
+        logger.info(f"Checking components")
         logger.debug(f"Checking: proceedings {requisites}")
         logger.debug(f"Checking: apparatus {availables}")
 
@@ -234,10 +226,10 @@ class Proceedings():
         req_choices = selected_ids.keys()
 
         if all([True if req.get("id") in req_choices else False for req in requisites.values()]):
-            logger.debug("All components, tools, and params - successfully selected")
+            logger.info("All components, tools, and params - successfully selected")
             return selected
             
-        logger.debug("NOT all components, tools, and params - selected")
+        logger.info("Not all components, tools, and params - selected")
         return {}
 
     def satisfy(self, apparatus, proceedings):
@@ -250,6 +242,7 @@ class Proceedings():
             
             if requires_agents:
                 agents = self._check_components(proceedings, apparatus, 'agents')
+                
                 if agents:
                     logger.info(f"Proceedings for agents satisfied")
                     structure['agents'] = agents
@@ -259,6 +252,7 @@ class Proceedings():
             
             if requires_monitors:
                 monitors = self._check_components(proceedings, apparatus, 'monitors')
+                
                 if monitors:
                     logger.info(f"Proceedings for monitors satisfied")
                     structure['monitors'] = monitors
@@ -267,24 +261,22 @@ class Proceedings():
                     return {}
 
         else:
-            logger.info(f"Not enough apparatus for: agents {ack_agents} and/or monitors {ack_monitors}")
+            logger.info(f"No available apparatus for: agents {ack_agents} and/or monitors {ack_monitors}")
 
         return structure
 
 
 class VNFBD():
     def __init__(self, data=None, inputs=None):
+        self._utils = Utils()
+        self._inputs = Inputs()
+        self._proceedings = Proceedings()
         self._data = data
         self._inputs_data = inputs
         self._template = None
         self._yang = vnf_bd.vnf_bd(path_helper=YANGPathHelper())
         self._protobuf = VnfBd()
-        self.utils = Utils()
-        self._inputs = Inputs()
-        self._proceedings = Proceedings()
-        self.validate(self._data)
-        self._inputs.init(self._inputs_data)       
-
+        
     def parse_bytes(self, msg):
         msg_dict = {}
 
@@ -303,58 +295,13 @@ class VNFBD():
             
         return msg_bytes
 
-    def init(self, inputs, template, model):
-        if template:
-            template_dict = self.parse_bytes(template)
-            self.template(template_dict)
-    
-        if inputs:
-            inputs_dict = self.parse_bytes(inputs)
-            self.inputs(inputs_dict)
-
-        ok = self.from_protobuf(model)
-        return ok
-
-    def template(self, template):
-        self._template = template
-
-    def inputs(self, inputs):
-        self._inputs_data = inputs
-        self._inputs.init(self._inputs_data)
-
-    def validate(self, data):
-        ack = False
-        if data:
-            ack = self.utils.validate(data, vnf_bd, "vnf-bd")
-            if ack:
-                logger.info("vnf-bd model valid")                
-            else:
-                logger.info("vnf-bd model not valid")
-        return ack
-   
-    def parse(self, data):
-        self._yang = self.utils.parse(data, vnf_bd, "vnf-bd")
-
     def load(self, filepath, yang=True):
-        self._data = self.utils.data(filepath, is_json=True)
+        self._data = self._utils.data(filepath, is_json=True)
         if yang:
-            self.utils.load(filepath, self._yang, YANGPathHelper(), is_json=True)
+            self._utils.load(filepath, self._yang, YANGPathHelper(), is_json=True)
                 
     def save(self, filepath):
-        self.utils.save(filepath, self._yang)
-
-    def from_protobuf(self, msg):
-        if isinstance(msg, VnfBd):
-            self._protobuf = msg
-            self._data = json_format.MessageToDict(self._protobuf, preserving_proto_field_name=True)
-            
-            ack = self.validate(self._data)
-                
-            self.parse(self._data)
-            return True
-        else:
-            logger.info("vnf-bd message not instance of vnfbd protobuf")
-        return False
+        self._utils.save(filepath, self._yang)
 
     def protobuf(self):
         self._protobuf = VnfBd()
@@ -362,48 +309,46 @@ class VNFBD():
         return self._protobuf
 
     def yang(self):
+        self.parse(self._data)
         return self._yang
 
     def json(self):
-        yang_json = self.utils.serialise(self._yang)
+        yang_json = self._utils.serialise(self._yang)
         return yang_json
-
-    def satisfy(self, apparatus):
-        proceedings = self._data.get("proceedings")
-        task_structure = self._proceedings.satisfy(apparatus, proceedings)
-        if task_structure:
-            return True
-        else:
-            return False
 
     def multiplex(self, data_template):
         rendered_mux_inputs = []
-        mux_inputs = self._inputs.multiplexed()
-
+        mux_inputs = self._inputs.multiplex(self._inputs_data)
+        
         if mux_inputs:
             logger.debug(f"Rendering mux inputs - total: {len(mux_inputs)}")
             for inputs in mux_inputs:
-                rendered_data = self.utils.render(data_template, inputs)
+                rendered_data = self._utils.render(data_template, inputs)
                 rendered_mux_inputs.append(rendered_data)
         else:
-            logger.debug(f"Rendering single inputs")
-            rendered_data = self.utils.render(data_template, self._inputs_data)
+            logger.debug(f"Rendering unique inputs")
+            rendered_data = self._utils.render(data_template, self._inputs_data)
             rendered_mux_inputs.append(rendered_data)
 
-        logger.info(f"vnfbd multiplexed in: {len(rendered_mux_inputs)} structures")
+        logger.info(f"vnfbd rendered in: {len(rendered_mux_inputs)} templates")
         logger.debug(f"{rendered_mux_inputs}")
         return rendered_mux_inputs
 
     def instances(self):
+        logger.info("Creating vnf-bd instances")
+        
         if self._template:
             templates = self.multiplex(self._template)
         else:
             templates = self.multiplex(self._data)
 
-        for template in templates:
-            yield VNFBD(data=template)
+        for template in templates:           
+            valid_template = self.validate(template)
+            
+            if valid_template:       
+                yield VNFBD(data=template)
 
-    def task(self, apparatus):
+    def build_task(self, apparatus):
         proceedings = self._data.get("proceedings")
         task = self._proceedings.satisfy(apparatus, proceedings)
         return task
@@ -432,6 +377,8 @@ class VNFBD():
         return trials
 
     def contacts(self, info):
+        logger.info(f"Parsing vnf-bd scenario contacts info")
+
         nodes = self._data.get("scenario").get("nodes")
         default_ports = {
             "agent": ":50055",
@@ -453,17 +400,76 @@ class VNFBD():
             if role == "manager":
                 managers.append(node.get("id"))
         
-        for host,info in info.items():
+        for host, host_info in info.items():
             if host in agents:
-                contact = "agent/" + info.get("ip") + default_ports.get("agent")
+                contact = "agent/" + host_info.get("ip") + default_ports.get("agent")
                 contacts.append(contact)
 
             if host in monitors:
-                contact = "monitor/" + info.get("ip") + default_ports.get("monitor")
+                contact = "monitor/" + host_info.get("ip") + default_ports.get("monitor")
                 contacts.append(contact)
 
             if host in managers:
-                contact = "manager/" + info.get("ip") + default_ports.get("manager")
+                contact = "manager/" + host_info.get("ip") + default_ports.get("manager")
                 contacts.append(contact)
 
         return contacts
+
+    def parse(self, data):
+        self._yang = self._utils.parse(data, vnf_bd, "vnf-bd")
+
+    def validate(self, data):
+        ack = False
+        
+        if data:
+            ack = self._utils.validate(data, vnf_bd, "vnf-bd")
+        
+            if ack:
+                logger.info("Check vnf-bd model: valid")
+            else:
+                logger.info("Check vnf-bd model: not valid")
+        
+        return ack
+
+    def from_protobuf(self, msg):
+        if isinstance(msg, VnfBd):
+            logger.info("Set vnf-bd protobuf")
+
+            self._protobuf = msg
+            
+            self._data = json_format.MessageToDict(
+                self._protobuf,
+                preserving_proto_field_name=True
+            )
+            
+            return True
+        
+        else:
+            logger.info("vnf-bd message not instance of vnfbd protobuf")
+            return False
+
+    def inputs(self, inputs):
+        if inputs:
+            logger.info("Set vnf-bd inputs")
+            inputs_dict = self.parse_bytes(inputs)
+            self._inputs_data = inputs_dict           
+
+    def template(self, template):       
+        if template:
+            logger.info("Set vnf-bd template")
+            template_dict = self.parse_bytes(template)
+            self._template = template_dict
+
+    def init(self, inputs, template, model):
+        logger.info("Init vnf-bd")
+        
+        if self.from_protobuf(model):
+            if self.validate(self._data):
+        
+                self.parse(self._data)
+                self.template(template)
+                self.inputs(inputs)
+                
+                return True
+                
+        return False

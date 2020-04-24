@@ -12,8 +12,8 @@ from grpclib.client import Channel
 from gym.common.protobuf.gym_grpc import PlayerStub
 from gym.common.protobuf.gym_pb2 import Info, Layout
 
-from gym.common.yang.vnfbd import VNFBD
-from gym.common.yang.vnfpp import VNFPP
+from gym.common.vnfbd import VNFBD
+from gym.common.vnfpp import VNFPP
 
 
 logger = logging.getLogger(__name__)

@@ -28,8 +28,8 @@ from gym.common.protobuf.gym_pb2 import (
     Deploy,
 )
 
-from gym.common.yang.vnfbd import VNFBD
-from gym.common.yang.vnfpp import VNFPP
+from gym.common.vnfbd import VNFBD
+from gym.common.vnfpp import VNFPP
 
 
 logger = logging.getLogger(__name__)
@@ -459,7 +459,7 @@ class PlayerCore(Core):
         Core.__init__(self, info)
 
     async def updateGreetings(self, info_str, vnfbd):
-        logger.info(f"Updating greetings")
+        logger.info(f"Greetings to deployed scenario contacts")
         info = json.loads(info_str)
 
         if info:
@@ -467,7 +467,7 @@ class PlayerCore(Core):
         else:
             contacts = []
 
-        logger.info(f"Contacts: {contacts}")
+        logger.debug(f"Contacts: {contacts}")
 
         if contacts:
             greet_info = {
@@ -476,12 +476,18 @@ class PlayerCore(Core):
             }
             await self.greet(greet_info)
         else:
-            logger.info(f"No contacts for greetings in info: {info}")
+            logger.info(f"No contacts for greetings in scenario deployed")
+            logger.debug(f"{info}")
 
     async def callScenario(self, command, test, vnfbd):
-        logger.info(f"Deploying Test Scenario - {command}")
+        logger.info(f"Calling test {test} scenario - {command}")
 
         environment = vnfbd.environment()
+        environment = vnfbd.environment()
+        env_plugin = environment.get("plugin")
+        env_params = env_plugin.get("parameters")
+        address = env_params.get("address").get("value")
+        host, port = address.split(":")
 
         deploy_dict = {
             "id": test,
@@ -491,99 +497,164 @@ class PlayerCore(Core):
         }
         deploy = json_format.ParseDict(deploy_dict, Deploy())
 
-        environment = vnfbd.environment()
-        env_plugin = environment.get("plugin")
-        env_params = env_plugin.get("parameters")
-        address = env_params.get("address").get("value")
-        host, port = address.split(":")
+        try:
+            channel = Channel(host, port)
+            stub = InfraStub(channel)
+            built = await stub.Run(deploy)
 
-        channel = Channel(host, port)
-        stub = InfraStub(channel)
-        built = await stub.Run(deploy)
-
-        if built.error:
+        except GRPCError as e:
+            logger.info(f"Error in scenario deployment")
+            logger.debug(f"{e}")
             ack = False
-            logger.info(f"Scenario not deployed error: {built.error}")
+
+        except OSError as e:
+            logger.info(f"Error in channel for scenario deployment")
+            logger.debug(f"{e}")
+            ack = False
+
         else:
-            ack = True
-            logger.info(f"Scenario deployed: {built.ack}")
+            if built.error:
+                ack = False
+                logger.info(f"Scenario deployed error: {built.error}")
+            else:
+                ack = True
+                logger.info(f"Scenario deployed: {built.ack}")
 
-            info = built.info
-            info = info.decode("utf-8")
-            await self.updateGreetings(info, vnfbd)
-
-        channel.close()
+                info = built.info
+                info = info.decode("utf-8")
+                await self.updateGreetings(info, vnfbd)
+        finally:
+            channel.close()
+        
         return ack
 
     async def callTask(self, uuid, task):
-        logger.info("Calling Test Task")
-
-        peers = self.status.get_peers("role", "manager", all=True)
+        logger.info(f"Calling test task at manager uuid {uuid}")
+        
+        peers = self.status.get_peers("role", "manager", alls=True)
         peer = peers.get(uuid)
         address = peer.get("address")
         host, port = address.split(":")
         channel = Channel(host, port)
-        stub = ManagerStub(channel)
-        report = await stub.CallTask(task)
+        
+        try:
+            stub = ManagerStub(channel)
+            report_msg = await stub.CallTask(task)
+
+        except GRPCError as e:
+            logger.info(f"Error in task call")
+            logger.debug(f"{e}")
+            report = {}
+
+        except OSError as e:
+            logger.info(f"Error in channel for task call")
+            logger.debug(f"{e}")
+            report = {}
+
+        else:
+            report = json_format.MessageToDict(
+                report_msg, preserving_proto_field_name=True
+            )
+       
         channel.close()
         return report
 
-    def task(self, vnfbd):
-        logger.info("Building vnfbd task template")
-        templates = {}
-        managers_peers = self.status.get_peers("role", "manager", all=True)
+    def task_template(self, vnfbd):
+        logger.info("Building vnfbd task templates")
+        uuid, task_template = None, None       
+        managers_peers = self.status.get_peers("role", "manager", alls=True)
 
-        for uuid, manager in managers_peers.items():
+        for manager_uuid, manager in managers_peers.items():
             apparatus = manager.get("apparatus")
+            vnfbd_task_template = vnfbd.build_task(apparatus)
+            
+            if vnfbd_task_template:
+                logger.info(f"Instance of vnf-bd satisfied by manager uuid {uuid} apparatus")               
+                return manager_uuid, vnfbd_task_template
 
-            if vnfbd.satisfy(apparatus):
-                task_template = vnfbd.task(apparatus)
-                templates[uuid] = task_template
+        logger.info(f"Instance of vnf-bd not satisfied")
+        return uuid, task_template
 
-        return templates
+    async def task(self, test, trials, vnfbd):       
+        uuid, task_template = self.task_template(vnfbd)
+        
+        if uuid and task_template:
+            logger.info(f"Building task for test {test} with {trials} trials")
+            logger.debug(f"Creating task from template: {task_template}")
 
-    async def tests(self, vnfbd):
-        logger.info("Running Tests")
-        vnfpp = VNFPP()
+            task = Task(id=test, test=test, trials=trials)
+            json_format.ParseDict(task_template, task)
+            report = await self.callTask(uuid, task)                       
+        
+        else:
+            logger.info(f"Failed to build task for test {test} - no manager apparatus available")
+            report = {}
 
-        tests = vnfbd.tests()
-        trials = vnfbd.trials()
+        return report
+
+    async def scenario(self, test, vnfbd_instance, previous_deployment):
+        if previous_deployment:
+            ok = await self.callScenario("stop", test, vnfbd_instance)
+            logger.info(f"Stopped previous test {test} deployment scenario: {ok}")
+        
+        if vnfbd_instance.deploy():
+            vnfbd_deployed = await self.callScenario("start", test, vnfbd_instance)
+            logger.info(f"Started test {test} deployment scenario: {vnfbd_deployed}")
+        else:
+            vnfbd_deployed = True
+        
+        return vnfbd_deployed
+
+    async def tests(self, vnfbd_instance):
+        logger.info("Starting vnf-bd instance tests")
+
+        tests = vnfbd_instance.tests()
+        trials = vnfbd_instance.tests()
+        reports_ok = {}
+        reports = []
+        vnfbd_deployed = False
 
         for test in range(tests):
+            logger.info(f"Starting test {test} out of {tests} in total")
+            reports_ok[test] = False
 
-            task_ids = 9000
-            for vnfbd_instance in vnfbd.instances():
-
-                if vnfbd_instance.deploy():
-                    command = "start"
-                    ack = await self.callScenario(command, test, vnfbd_instance)
+            vnfbd_deployed = await self.scenario(test, vnfbd_instance, vnfbd_deployed)
+            if vnfbd_deployed:
+                
+                report = await self.task(test, trials, vnfbd_instance)
+                if report:
+                    logger.info(f"Received report in test {test}")
+                    reports.append(report)
+                    reports_ok[test] = True                    
                 else:
-                    ack = True
+                    logger.info(f"Failed report in test {test}")
 
-                if ack:
-                    task_templates = self.task(vnfbd_instance)
+            else:
+                logger.info(f"Deployment of vnf-bd instance failed in test {test}")
+            
+        logger.debug(f"Status tests reports: {reports_ok}")
+        if all(reports_ok.values()):
+            all_reports_ok = True
+        else:
+            all_reports_ok = False
+            
+        logger.info(f"Ending vnf-bd instance tests - all reports ok: {all_reports_ok}")       
+        return reports, all_reports_ok
 
-                    for uuid, template in task_templates.items():
-                        logger.debug(f"Creating task from template: {template}")
+    async def vnfbd(self, vnfbd):
+        logger.info("Starting vnf-bd execution")
+        all_reports = []       
+        vnfpp = VNFPP()
 
-                        task = Task(id=task_ids, test=test, trials=trials)
-                        logger.info(
-                            f"Task {task_ids} for test {test} with {trials} trials"
-                        )
-                        json_format.ParseDict(template, task)
+        for vnfbd_instance in vnfbd.instances():
+            reports, ack = self.tests(vnfbd_instance)
+            all_reports.extend(reports)
 
-                        report = await self.callTask(uuid, task)
-                        report_dict = json_format.MessageToDict(
-                            report, preserving_proto_field_name=True
-                        )
-                        logger.info("Received Task Report")
-                        vnfpp.add_report(report_dict)
-                        task_ids += 1
-
-        logger.info("Finishing Tests")
-        if vnfbd.deploy():
-            ack = await self.callScenario("stop", 0, vnfbd)
-
+            if not ack:
+                logger.info(f"Error in vnf-bd instance - missing reports")
+            
+        vnfpp.load_reports(all_reports)
+        logger.info("Finishing vnf-bd execution")
         return vnfpp
 
     async def layout(self, message):
@@ -591,23 +662,26 @@ class PlayerCore(Core):
         logger.debug(f"{message}")
 
         result = Result(id=message.id)
-
-        vnfbd = VNFBD()
+        result.timestamp.FromDatetime(datetime.now())
 
         inputs = message.inputs
         template = message.template
         vnfbd_model = message.vnfbd
 
-        ok = vnfbd.init(inputs, template, vnfbd_model)
+        vnfbd = VNFBD()
+        init_ok = vnfbd.init(inputs, template, vnfbd_model)
 
-        if ok:
-            vnfpp = await self.tests(vnfbd)
+        if init_ok:
+            logger.info("Init vnfbd successful")
+
+            vnfpp = await self.vnfbd(vnfbd)
             vnfpp_msg = vnfpp.protobuf()
             result.vnfpp.CopyFrom(vnfpp_msg)
+            result.timestamp.FromDatetime(datetime.now())
+        
         else:
-            logger.info("Could not parse vnfbd protobuf message")
+            logger.info("Could not init vnfbd - empty result")
 
         logger.info("Replying Result")
-        result.timestamp.FromDatetime(datetime.now())
-        
+        logger.debug(f"{result}")
         return result
