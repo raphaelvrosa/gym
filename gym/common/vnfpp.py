@@ -20,6 +20,10 @@ class VNFPP():
         self._protobuf = VnfPp()
         self.utils = Utils()
 
+    def load_info(self, vnfbd):
+        logger.info("Loading vnf-pp info from vnf-bd")
+        pass
+
     def load_reports(self, reports):
         logger.info("Loading vnf-pp reports")
         for report in reports:

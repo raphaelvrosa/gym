@@ -58,6 +58,13 @@ class Config:
             return False
 
     def check_cfg(self):
+        """Checks if config parameters were passed in correct format
+        i.e., check if address is in host:port valid formats
+        i.e., check if contacts contain role/host:port format
+
+        Returns:
+            bool -- If config parameters are correct or not
+        """
         address_ok = self.check_address_fmt(self.cfg.address)
 
         contacts_ok = True
@@ -94,7 +101,8 @@ class Config:
             return None
 
     def parse(self, argv=None):
-        """Parses all the initial configuration parameters of all gym apps
+        """Parses all the initial configuration parameters of any gym app
+        Checks if mandatory app parameters (uuid and address) were provided correctly
 
         Keyword Arguments:
             argv {list} -- List of arguments initially passed by the App (default: {None})

@@ -1,4 +1,10 @@
 """Identifies all the unique ids of each tool (prober and listener)
+To be used by each tool initialization, 
+So check gym/agent/probers/prober_*.py and check the __init__(id=)
+
+IMPORTANT:
+These IDs must be used when composing VNF-BD source files, referencing
+them in proceedings for agents/monitors tools
 """
 
 # PROBER IDS

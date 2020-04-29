@@ -158,27 +158,10 @@ case "$COMMAND" in
         sleep 2
         echo_bold "-> Running Examples - Deploying Layout and waiting for Result"
        
-        examples="/usr/bin/python3 ./examples.py --test ${TEST}"
-        nohup ${examples} > logs/examples.log 2>&1 &
-        WEBPID=$!
-        echo_bold "Examples python pid $WEBPID"
-        
-        ack=true
-        while $ack; do
-            sleep 2
-            if [ -f ./vnf-br.json ]; then
-                echo_bold "Received Player Reply"
-                ack=false
+        examples="/usr/bin/python3.7 ./examples.py --test ${TEST}"
+        exec ${examples}
 
-                if [ -n "$WEBPID" ]
-                then
-                    echo_bold "Killing examples pid $WEBPID"
-                    kill -9 $WEBPID &> /dev/null
-                fi
-            fi
-        done
-
-        echo_bold "-> Test Finished - Check the Output: vnf-br.json"
+        echo_bold "-> Check the logs at: ./logs/*.log"
         echo_bold "-> Run the stop option to clean the test results/logs"
         ;;
 

@@ -339,16 +339,12 @@ class Tools:
         
         Arguments:
             config {dict} -- Contains all the parameters needed to list and execute the files
-        
-        Returns:
-            bool -- If all the config parameters were present or not in config
+            If all the config parameters were present in config, it loads those items in self._cfg
         """
         keys = ["folder", "prefix", "suffix", "full_path"]
         if all([True if k in config else False for k in keys]):
             self._cfg = {k:v for k,v in config.items() if k in keys}
-            return True
-        return False
-
+            
     async def load(self, config):
         """Uses parameters configured in self.cfg() to load the tools into:
         - self._files (dict of tools file paths listed by Loader indexed by tool id)
@@ -380,6 +376,7 @@ class Tools:
         logger.info(f"Tools loaded: {tools_names}")
 
         logger.debug(f"Tools full info: {self._info}")
+    
 
     def info(self):
         """Gets the information of tools after listed and loaded
@@ -589,8 +586,8 @@ if __name__ == "__main__":
         "suffix": "py",
         "full_path": True,
     }
-    if tools.cfg(tools_cfg):
-        asyncio.run(tools.load())
+    
+    asyncio.run(tools.load(tools_cfg))
 
     actions = {
         1: {

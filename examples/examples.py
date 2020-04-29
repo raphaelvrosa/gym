@@ -71,6 +71,8 @@ class Examples:
             test_id = int(self.cfg.test)
             if test_id in tests_ids:
                 self.info = TESTS.get(self.cfg.test)
+                logger.info(f"Calling: example {self.cfg.test}")
+                logger.info(f"{self.info}")
                 return True   
             else:
                 logger.info(f"Requested test id {test_id} not in available test set {tests_ids}")
