@@ -8,7 +8,13 @@ logger = logging.getLogger(__name__)
 
 
 class Listener(Tool):
-    
+    """A Listener is a Tool that must implement a 
+    listen function.
+
+    Arguments:
+        Tool {class} -- Establishes the core behavior of a Listener that 
+        is defined by the Tool.main function
+    """
     def __init__(self, id, name, parameters, metrics):
         Tool.__init__(self, id, name, parameters, metrics)
         self._type = "listener"
@@ -44,9 +50,7 @@ class Listener(Tool):
         else:
             opts_list = [k for j in opts.items() for k in j]
             self._call = self.__class__.__name__ + " " + " ".join(opts_list)
-            ret = 0
-            err = None
-            out = self.monitor(opts)
+            ret, out, err = self.monitor(opts)
 
         if ret == 0:
             results = out
