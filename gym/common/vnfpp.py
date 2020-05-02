@@ -73,8 +73,10 @@ class VNFPP():
             )
             
             ack = self.validate(self._data)
-            self.parse(self._data)
-            return True
-        else:
-            logger.info("vnf-pp message not instance of vnfpp protobuf")
-            return False
+            
+            if ack:
+                self.parse(self._data)
+                return True
+        
+        logger.info("vnf-pp message not instance of vnfpp protobuf")
+        return False

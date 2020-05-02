@@ -23,17 +23,19 @@ class Inputs:
         self._mux_inputs = []
 
     def has_list_value(self, dict_items):
-        fields_list = [ field for field,value in dict_items.items() if type(value) is list ]
+        fields_list = [
+            field for field, value in dict_items.items() if type(value) is list
+        ]
         return fields_list
 
     def has_dict_value(self, inputs):
-        fields_dict = [ field for field,value in inputs.items() if type(value) is dict ]
+        fields_dict = [field for field, value in inputs.items() if type(value) is dict]
         return fields_dict
 
     def parse_dicts(self):
         fields_list = {}
         fields_dict = self.has_dict_value(self._data)
-        
+
         for field in fields_dict:
             value = self._data.get(field)
 
@@ -41,14 +43,11 @@ class Inputs:
             max = value.get("max", None)
             step = value.get("step", None)
 
-            if min is not None and \
-                max is not None and \
-                step is not None:
-                
-                
+            if min is not None and max is not None and step is not None:
+
                 value_list = list(arange(min, max, step))
                 fields_list[field] = value_list
-        
+
         return fields_list
 
     def lists(self):
@@ -74,9 +73,9 @@ class Inputs:
 
             for field_index in range(len(lists_fields)):
                 field = lists_fields[field_index]
-                value = unique_list[field_index] 
+                value = unique_list[field_index]
                 unique_input[field] = value
-        
+
             unique_inputs.append(unique_input)
 
         return unique_inputs
@@ -84,189 +83,223 @@ class Inputs:
     def multiplex(self, data):
         logger.info("Multiplexing inputs")
         unique_inputs = []
-        
+
         self._data = data
         lists, lists_fields = self.lists()
-        
+
         if lists:
             unique_lists = list(itertools.product(*lists))
             unique_inputs = self.fill_unique(lists_fields, unique_lists)
             self._mux_inputs = unique_inputs
-        
+
         logger.info(f"Inputs multiplexed: total {len(unique_inputs)}")
-        return unique_inputs   
+        return unique_inputs
 
 
-class Proceedings():
-
-    def check_numbers(self, proceedings, apparatus, role):
-        available = apparatus.get(role, [])
-        required = proceedings.get(role, [])
-       
-        logger.info(f"Veryfing {role}: \
-                    apparatus/available {len(available)} and \
-                    proceedings/required {len(required)}")
-        
-        if required:
-            req = True
-            if len(required) <= len(available):
-                ack = True
-            else:
-                ack = False    
-        else:
-            req = False
-            ack = True
-        
-        return (req, ack)
-                
+class Proceedings:
     def parse_req_tool_params(self, req_params_ls):
-        req_params = { param.get("input"):param.get("value") for param in req_params_ls.values()}
+        req_params = {
+            param.get("input"): param.get("value") for param in req_params_ls.values()
+        }
+
         return req_params
 
-    def _check_tools(self, req_tools, disp_tools):
-        avail_tools = dict( [ (available.get('id'), available)  
-                                for available in disp_tools] )
+    def params(self, req_tool, aval_tool):
+        ack_req_tool_set = []
 
-        if all([True if tool.get("id") in avail_tools.keys() else False
-                for tool in req_tools.values()]):
-            
-            ack_req_tools = []
-            ack_req_tool_ids = []
-            
-            for req_tool in req_tools.values():
-                aval_tool = avail_tools.get(req_tool.get("id"))
-                aval_params = aval_tool.get("parameters")
-                req_params_ls = req_tool.get("parameters")
-                
-                req_params = self.parse_req_tool_params(req_params_ls)
+        aval_params = aval_tool.get("parameters")
+        req_params_ls = req_tool.get("parameters")
 
-                if all([True if param in aval_params else False for param in req_params.keys()]):            
-                    ack_req_tool = {
-                        "id":req_tool.get("id"),
-                        "name": req_tool.get("name", ""),
-                        "parameters": req_params,
-                    }
-                    
-                    ack_req_tool_set = [ack_req_tool]
-                    req_tool_instances = req_tool.get("instances", 1)
-                    if req_tool_instances:
-                        ack_req_tool_set = ack_req_tool_set*len(range(int(req_tool_instances)))
+        req_params = self.parse_req_tool_params(req_params_ls)
 
-                    ack_req_tools.extend(ack_req_tool_set)
-                    ack_req_tool_ids.append(req_tool.get("id"))
-                else:
-                    logger.debug(f"Not all params of tools required {req_params} match with available {aval_params}")
-            
-            if all([True if tool.get("id") in ack_req_tool_ids else False for tool in req_tools.values()]):
-                return ack_req_tools
-            else:
-                logger.debug(f"Not all tools required {list(req_tools)} were selected {ack_req_tool_ids}")
-                return {}
+        if all(
+            [True if param in aval_params else False for param in req_params.keys()]
+        ):
+            ack_req_tool = {
+                "id": req_tool.get("id"),
+                "name": req_tool.get("name", ""),
+                "parameters": req_params,
+            }
+            req_tool_instances = req_tool.get("instances", 1)
+            ack_req_tool_set = [ack_req_tool] * len(
+                range(int(req_tool_instances))
+            )
+
         else:
-            logger.debug(f"Not all ids of tools required {list(req_tools.keys())} match with available {list(avail_tools.keys())}")
-            return {}
+            logger.debug(
+                f"Not all params of tools required {req_params} match with available {aval_params}"
+            )
 
-    def _satisfy_tools(self, req_id, aval_id, required, available, selected, selected_ids, tools_type):
-        if req_id not in selected_ids and aval_id not in selected_ids.values():
-            req_tools = required.get(tools_type)
-            avail_tools = available.get("artifacts").get(tools_type)
+        return ack_req_tool_set
 
-            ack_req_tools = self._check_tools(req_tools, avail_tools)
-        
-            if ack_req_tools:
-                selected_component = {
-                    "uuid": aval_id,
-                    tools_type: ack_req_tools
-                }               
-                selected.append(selected_component)
-                selected_ids[req_id] = aval_id
-                logger.debug(f"Satisfied {tools_type} for required {req_id} in available {aval_id} ")
-                return True
-            
-            else:
-                logger.debug(f"Not satisfied {tools_type} for required {req_id} in available {aval_id} ")
-                return False
-        
-        return False
+    def tools(self, req_tools, disp_tools):
+        tools_ok = {}
+        tool_set = []
 
-    def _check_components(self, proceedings, apparatus, role):
-        selected_ids = {}
+        avail_tools = dict(
+            [(available.get("id"), available) for available in disp_tools]
+        )
+
+        for req_tool_id, req_tool in req_tools.items():
+            tools_ok[req_tool_id] = False
+            aval_tool = avail_tools.get(req_tool_id)
+
+            if aval_tool:
+                tool_set_ok = self.params(req_tool, aval_tool)
+
+                if tool_set_ok:
+                    tool_set.extend(tool_set_ok)
+                    tools_ok[req_tool_id] = True
+
+        if all(tools_ok.values()):
+            logger.debug(f"All tools satisfied")
+            return tool_set
+        else:
+            logger.debug(f"Not all tools satisfied: status {tools_ok}")
+            return []
+
+    def embed(self, required, available, tools_type):
+        if available:
+            logger.info(f"Checking toolset for {required.get('uuid')}")
+            required_tools = required.get(tools_type)
+            available_tools = available.get("artifacts").get(tools_type)
+            tool_set = self.tools(required_tools, available_tools)
+
+            if tool_set:
+                component = {"uuid": required.get("uuid"), tools_type: tool_set}
+                return component
+
+        logger.info(f"No toolset available for {required.get('uuid')}")
+        return {}
+
+    def orchestrate(self, role, requisites_ids, availables_ids):
         selected = []
+        tools_ok = {}
+
+        tools_type = "probers" if role == "agents" else "listeners"
+
+        for req_uuid, required in requisites_ids.items():
+            available = availables_ids.get(req_uuid, {})
+            component = self.embed(required, available, tools_type)
+            selected.append(component)
+
+            if component:
+                tools_ok[req_uuid] = True
+                logger.info(
+                    f"Satisfied {role}/{tools_type} for required/available {req_uuid}/{req_uuid}"
+                )
+            else:
+                tools_ok[req_uuid] = False
+                logger.info(
+                    f"Not satisfied {role}/{tools_type} for required/available {req_uuid}/{req_uuid}"
+                )
+
+        all_tools_ok = all(tools_ok.values())
+
+        if all_tools_ok:
+            logger.info(
+                f"All components/tools selected for {role} - status: {tools_ok}"
+            )
+            return selected
+        else:
+            logger.info(
+                f"Not all components/tools selected for {role} - status: {tools_ok}"
+            )
+            return []
+
+    def index_by_uuid(self, components):
+        indexed = {}
+        for component in components:
+            uuid = component.get("uuid")
+            indexed[uuid] = component
+        return indexed
+
+    def components(self, proceedings, apparatus, role):
+        logger.debug(f"Building {role} components")
+
         requisites = proceedings.get(role)
         availables = apparatus.get(role)
-        tools_type = 'probers' if role == 'agents' else 'listeners'
-        
-        logger.info(f"Checking components")
-        logger.debug(f"Checking: proceedings {requisites}")
-        logger.debug(f"Checking: apparatus {availables}")
 
-        logger.debug(f'Check {role} components and its {tools_type}')
+        logger.debug(f"Proceedings: {requisites}")
+        logger.debug(f"Apparatus: {availables}")
 
-        availables_ids = dict( [ (available.get('uuid'), available)  
-                                            for available in availables ] )
-        
-        for required in requisites.values():
-            req_id = required.get("id")
-            
-            if req_id in availables_ids:
-                available = availables_ids.get(req_id)
-                aval_id = req_id
-                ack = self._satisfy_tools(req_id, aval_id, required, available, selected, selected_ids, tools_type)
+        availables_ids = self.index_by_uuid(availables)
+        requisites_ids = self.index_by_uuid(requisites.values())
 
-            else:
-                for available in availables:
-                    aval_id = available.get("uuid")
+        selected = self.orchestrate(role, requisites_ids, availables_ids)
+        selected_uuids = [component.get("uuid") for component in selected]
+        requisites_ok = [
+            True if req_uuid in selected_uuids else False for req_uuid in requisites_ids
+        ]
 
-                    ack = self._satisfy_tools(req_id, aval_id, required, available, selected, selected_ids, tools_type)
-                    if ack:
-                        break
-                    else:
-                        pass
-
-        req_choices = selected_ids.keys()
-
-        if all([True if req.get("id") in req_choices else False for req in requisites.values()]):
-            logger.info("All components, tools, and params - successfully selected")
+        if all(requisites_ok):
+            logger.info(f"All components selected for {role}")
             return selected
-            
-        logger.info("Not all components, tools, and params - selected")
-        return {}
+        else:
+            logger.info(
+                f"Not all components/tools selected for {role} - check if the proceedings uuid match the available ones"
+            )
+            logger.debug(f"Available uuids: {availables_ids.keys()}")
+            logger.debug(f"Required uuids: {requisites_ids.keys()}")
+            return []
+
+    def build(self, ok, role, proceedings, apparatus):
+        if ok:
+            role_components = self.components(proceedings, apparatus, role)
+        else:
+            role_components = []
+            logger.info(
+                f"Failed to build components, no available apparatus for: {role}"
+            )
+
+        return role_components
+
+    def verify(self, proceedings, apparatus, role):
+        available = apparatus.get(role, [])
+        required = proceedings.get(role, [])
+
+        logger.info(
+            f"Veryfing {role}: "
+            f"apparatus/available {len(available)} and "
+            f"proceedings/required {len(required)}"
+        )
+
+        req = True if required else False
+        ack = True if len(required) <= len(available) else False
+
+        return (req, ack)
 
     def satisfy(self, apparatus, proceedings):
         structure = {}
+        roles_status = {}
+        roles = ["agents", "monitors"]
 
-        requires_agents, ack_agents = self.check_numbers(proceedings, apparatus, role="agents")
-        requires_monitors, ack_monitors = self.check_numbers(proceedings, apparatus, role="monitors")
-        
-        if ack_agents and ack_monitors:
-            
-            if requires_agents:
-                agents = self._check_components(proceedings, apparatus, 'agents')
-                
-                if agents:
-                    logger.info(f"Proceedings for agents satisfied")
-                    structure['agents'] = agents
-                else:
-                    logger.info(f"Proceedings for agents not satisfied")
-                    return {}
-            
-            if requires_monitors:
-                monitors = self._check_components(proceedings, apparatus, 'monitors')
-                
-                if monitors:
-                    logger.info(f"Proceedings for monitors satisfied")
-                    structure['monitors'] = monitors
-                else:
-                    logger.info(f"Proceedings for monitors not satisfied")
-                    return {}
+        for role in roles:
+            role_status = True
 
+            role_required, role_ok = self.verify(proceedings, apparatus, role=role)
+
+            if role_required:
+                role_components = self.build(role_ok, role, proceedings, apparatus)
+                structure[role] = role_components
+
+                if not role_components:
+                    role_status = False
+
+            roles_status[role] = role_status
+
+        if all(roles_status.values()):
+            logger.info("All apparatus roles were satisfied for required proceedings")
+            return structure
         else:
-            logger.info(f"No available apparatus for: agents {ack_agents} and/or monitors {ack_monitors}")
+            logger.info(
+                "Not all apparatus roles were satisfied for required proceedings"
+            )
+            logger.debug(f"{roles_status}")
+            return {}
 
-        return structure
 
-
-class VNFBD():
+class VNFBD:
     def __init__(self, data=None, inputs=None):
         self._utils = Utils()
         self._inputs = Inputs()
@@ -276,30 +309,30 @@ class VNFBD():
         self._template = None
         self._yang = vnf_bd.vnf_bd(path_helper=YANGPathHelper())
         self._protobuf = VnfBd()
-        
+
     def parse_bytes(self, msg):
         msg_dict = {}
 
         if type(msg) is bytes:
-            msg_str = msg.decode('utf32')
+            msg_str = msg.decode("utf32")
             msg_dict = json.loads(msg_str)
-        
+
         return msg_dict
 
     def serialize_bytes(self, msg):
-        msg_bytes = b''
+        msg_bytes = b""
 
         if type(msg) is dict:
             msg_str = json.dumps(msg)
-            msg_bytes = msg_str.encode('utf32')
-            
+            msg_bytes = msg_str.encode("utf32")
+
         return msg_bytes
 
     def load(self, filepath, yang=True):
         self._data = self._utils.data(filepath, is_json=True)
         if yang:
             self._utils.load(filepath, self._yang, YANGPathHelper(), is_json=True)
-                
+
     def save(self, filepath):
         self._utils.save(filepath, self._yang)
 
@@ -319,7 +352,7 @@ class VNFBD():
     def multiplex(self, data_template):
         rendered_mux_inputs = []
         mux_inputs = self._inputs.multiplex(self._inputs_data)
-        
+
         if mux_inputs:
             logger.debug(f"Rendering mux inputs - total: {len(mux_inputs)}")
             for inputs in mux_inputs:
@@ -336,16 +369,16 @@ class VNFBD():
 
     def instances(self):
         logger.info("Creating vnf-bd instances")
-        
+
         if self._template:
             templates = self.multiplex(self._template)
         else:
             templates = self.multiplex(self._data)
 
-        for template in templates:           
+        for template in templates:
             valid_template = self.validate(template)
-            
-            if valid_template:       
+
+            if valid_template:
                 yield VNFBD(data=template)
 
     def build_task(self, apparatus):
@@ -376,42 +409,64 @@ class VNFBD():
         trials = experiments.get("trials", 1)
         return trials
 
-    def contacts(self, info):
-        logger.info(f"Parsing vnf-bd scenario contacts info")
-
-        nodes = self._data.get("scenario").get("nodes")
-        default_ports = {
-            "agent": ":50055",
-            "monitor": ":50056",
-            "manager": ":50057"
-        }
+    def parse_contacts(self, info, select_contacts):
         contacts = []
 
-        agents = []
-        monitors = []
-        managers = []
+        default_ports = {"agent": ":50055", "monitor": ":50056", "manager": ":50057"}
+        agents = select_contacts.get("agents")
+        monitors = select_contacts.get("monitors")
+        managers = select_contacts.get("managers")
 
-        for node in nodes.values():
-            role = node.get("role")
-            if role == "agent":
-                agents.append(node.get("id"))
-            if role == "monitor":
-                monitors.append(node.get("id"))
-            if role == "manager":
-                managers.append(node.get("id"))
-        
         for host, host_info in info.items():
             if host in agents:
                 contact = "agent/" + host_info.get("ip") + default_ports.get("agent")
                 contacts.append(contact)
 
             if host in monitors:
-                contact = "monitor/" + host_info.get("ip") + default_ports.get("monitor")
+                contact = (
+                    "monitor/" + host_info.get("ip") + default_ports.get("monitor")
+                )
                 contacts.append(contact)
 
             if host in managers:
-                contact = "manager/" + host_info.get("ip") + default_ports.get("manager")
+                contact = (
+                    "manager/" + host_info.get("ip") + default_ports.get("manager")
+                )
                 contacts.append(contact)
+
+        return contacts
+
+    def select_contacts(self, nodes):
+        agents = []
+        monitors = []
+        managers = []
+
+        for node in nodes.values():
+            role = node.get("role")
+            node_id = node.get("id")
+
+            if role == "agent":
+                agents.append()
+            if role == "monitor":
+                monitors.append(node_id)
+            if role == "manager":
+                managers.append(node_id)
+
+        selected = {
+            "agents": agents,
+            "monitors": monitors,
+            "managers": managers,
+        }
+
+        return selected
+
+    def contacts(self, info):
+        logger.info(f"Parsing vnf-bd scenario contacts info")
+
+        nodes = self._data.get("scenario").get("nodes")
+
+        selected_contacts = self.select_contacts(nodes)
+        contacts = self.parse_contacts(info, selected_contacts)
 
         return contacts
 
@@ -420,15 +475,15 @@ class VNFBD():
 
     def validate(self, data):
         ack = False
-        
+
         if data:
             ack = self._utils.validate(data, vnf_bd, "vnf-bd")
-        
+
             if ack:
                 logger.info("Check vnf-bd model: valid")
             else:
                 logger.info("Check vnf-bd model: not valid")
-        
+
         return ack
 
     def from_protobuf(self, msg):
@@ -436,14 +491,13 @@ class VNFBD():
             logger.info("Set vnf-bd protobuf")
 
             self._protobuf = msg
-            
+
             self._data = json_format.MessageToDict(
-                self._protobuf,
-                preserving_proto_field_name=True
+                self._protobuf, preserving_proto_field_name=True
             )
-            
+
             return True
-        
+
         else:
             logger.info("vnf-bd message not instance of vnfbd protobuf")
             return False
@@ -452,24 +506,42 @@ class VNFBD():
         if inputs:
             logger.info("Set vnf-bd inputs")
             inputs_dict = self.parse_bytes(inputs)
-            self._inputs_data = inputs_dict           
+            self._inputs_data = inputs_dict
 
-    def template(self, template):       
+    def template(self, template):
         if template:
             logger.info("Set vnf-bd template")
             template_dict = self.parse_bytes(template)
             self._template = template_dict
 
     def init(self, inputs, template, model):
+        """Inits the VNF-BD
+        validating its content and parsing it
+        into a yang model
+        Also parses the inputs and template
+
+        Arguments:
+            inputs {bytes} -- The possible inputs that
+            can be used to be multiplexed and rendered
+            into multiple templates
+            template {bytes} -- A vnf-bd template, in the
+            same format as the vnf-bd model, but containing 
+            input fields that can be rendered by inputs.
+            model {VNF-BD} -- A gRPC message of type VNF-BD
+
+        Returns:
+            bool -- If the model was validated and 
+            parsed correctly
+        """
         logger.info("Init vnf-bd")
-        
+
         if self.from_protobuf(model):
             if self.validate(self._data):
-        
+
                 self.parse(self._data)
                 self.template(template)
                 self.inputs(inputs)
-                
+
                 return True
-                
+
         return False
