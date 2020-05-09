@@ -78,7 +78,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        "implementation": [
+                            "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        ]
                     }
                 }
             },
@@ -128,7 +130,9 @@
                                 "value": ""
                             }
                         },                            
-                        "implementation": "./start.sh {configuration}"
+                        "implementation": [
+                            "./start.sh {configuration}"
+                        ]
                     }
                 }
             },
@@ -177,7 +181,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        "implementation": [
+                            "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                        ]
                     }
                 }
             },
@@ -210,7 +216,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-monitor --uuid {host_id} --address {host_ip}:50056"
+                        "implementation": [
+                            "gym-monitor --uuid {host_id} --address {host_ip}:50056  > gym-monitor.log 2>&1 &"
+                        ]
                     }
                 }
             },
@@ -243,7 +251,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-monitor --uuid {host_id} --address {host_ip}:50057"
+                        "implementation": [
+                            "gym-monitor --uuid {host_id} --address {host_ip}:50057  > gym-monitor.log 2>&1 &"
+                        ]
                     }
                 }
             },
@@ -285,7 +295,9 @@
                                 "value": "get_attrib:ip"
                             }
                         },
-                        "implementation": "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                        "implementation": [
+                            "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                        ]
                     }
                 }
             }
@@ -323,12 +335,8 @@
         },
         "agents": {
             "1": {
-                "id": "1",
+                "uuid": "1",
                 "name": "",
-                "host": {
-                    "setting": "internal",
-                    "node": "d1"
-                },
                 "probers": {
                     "1": {
                         "id": 6,
@@ -370,12 +378,8 @@
         },
         "monitors": {
             "2": {
-                "id": "2",
+                "uuid": "2",
                 "name": "",
-                "host": {
-                    "setting": "external",
-                    "node": "d2"
-                },
                 "listeners": {
                     "1": {
                         "id": 11,
@@ -399,12 +403,8 @@
                 }
             },
             "3": {
-                "id": "3",
+                "uuid": "3",
                 "name": "",
-                "host": {
-                    "setting": "internal",
-                    "node": "d2"
-                },
                 "listeners": {
                     "1": {
                         "id": 14,
@@ -419,6 +419,11 @@
                                 "input": "duration",
                                 "value": ""
                             }
+                        },
+                        "sched": {
+                            "from": 1,
+                            "until": 10,
+                            "repeat": 3
                         }
                     }
                 }

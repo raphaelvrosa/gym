@@ -5,8 +5,8 @@
     "author": "VNF Developer",
     "description": "Tests Suricata container VNF",
     "experiments": {
-        "trials": "{{ settings_trials }}",
-        "tests": "{{ settings_tests }}"
+        "trials": "{{ settings_trials | int }}",
+        "tests": "{{ settings_tests | int }}"
     },
     "environment": {
         "name": "Execution-Environment",
@@ -264,12 +264,8 @@
     "proceedings": {
         "agents": {
             "agent-1": {
-                "id": "agent-1",
+                "uuid": "agent-1",
                 "name": "",
-                "host": {
-                    "setting": "",
-                    "node": ""
-                },
                 "probers": {
                     "2": {
                         "id": 2,
@@ -328,7 +324,7 @@
                 }
             },
             "agent-2": {
-                "id": "agent-2",
+                "uuid": "agent-2",
                 "name": "",
                 "host": {
                     "setting": "",

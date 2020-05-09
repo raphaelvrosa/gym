@@ -222,7 +222,7 @@ class Handler:
         loop = asyncio.get_event_loop()
         results = []
 
-        begin = sched.get("when", 0)
+        begin = sched.get("from", 0)
         finish = sched.get("until", 0)
         duration = sched.get("duration", 0)
         repeat = sched.get("repeat", 0)
@@ -405,7 +405,7 @@ class Tools:
                     'target': '8.8.8.8',
                 },
                 'sched': { -> parameters to schedule the call of the tool
-                    "when": 0,
+                    "from": 0,
                     "until": 14,
                     "duration": 0,
                     "interval": 2,
@@ -525,9 +525,9 @@ class Tools:
             results {dict} -- Set of calls results indexed by call unique identifier
         
         Returns:
-            dict -- Set of outputs of calls that were successfully executed
+            list -- Set of outputs of calls that were successfully executed
         """
-        outputs = {}
+        outputs = []
 
         for uid, result_list in results.items():
             outs = []
@@ -539,9 +539,8 @@ class Tools:
                 else:
                     logger.info(f"Call {uid} successfully executed")
                     outs.append(out)
-                    
 
-            outputs[uid] = outs
+            outputs.extend(outs)
 
         return outputs
 
@@ -563,61 +562,3 @@ class Tools:
         logger.info(f"Finished handling instruction actions")
         logger.debug(f"{outputs}")
         return outputs
-
-
-if __name__ == "__main__":
-    """Runs example of tools handler on probers
-    Interacts with ping prober ("id":2 in each action)
-    Realizes two actions, each with its own sched parameters
-    
-    # TODO: Code detailed example in test cases (unit + integration)
-    """
-
-    logging.basicConfig(level=logging.DEBUG)
-
-    folder_path = os.path.join(
-        os.path.dirname(__file__),
-        "../agent/probers")
-
-    tools = Tools()
-    tools_cfg = {
-        "folder": folder_path,
-        "prefix": "prober_",
-        "suffix": "py",
-        "full_path": True,
-    }
-    
-    asyncio.run(tools.load(tools_cfg))
-
-    actions = {
-        1: {
-            "id": 2,
-            "args": {
-                "packets": 4,
-                "target": "8.8.8.8",
-            },
-            'sched': {
-                "when": 0,
-                "until": 14,
-                "duration": 0,
-                "interval": 2,
-                "repeat": 2
-            },
-        },
-        2: {
-            'id': 2,
-            'args': {
-                'packets': 7,
-                'target': '1.1.1.1',
-            },
-            'sched': {
-                "when": 5,
-                "until": 10,
-                "duration": 10,
-                "interval": 0,
-                "repeat": 0
-            }
-        }
-    }
-
-    asyncio.run(tools.handle(actions))

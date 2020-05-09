@@ -352,26 +352,27 @@ class Tool:
             takes precedence over the other parameters when 
             the tool is called.
         """
-        # args_filter = {
-        #     key: value 
-        #     for (key, value) in args.items()
-        #     if value
-        # }
+        args_filter = {
+            key: value 
+            for (key, value) in args.items()
+            if value
+        }
 
         options = {
             self.parameters[k]: v
-            for k, v in args.items()
+            for k, v in args_filter.items()
             if k in self.parameters
         }
 
         default = {
             k: v
-            for k, v in args.items()
+            for k, v in args_filter.items()
             if k in self._default
         }
 
-        if not options or not default:
-            default = {"info": "info"}
+        if not options:
+            if not default:
+                default = {"info": "info"}
 
         return options, default
 

@@ -14,3 +14,8 @@ work being executed. Jobs will allow management interfaces (gRPC services) to re
 the errors. For instance, when an Agent cannot handle an Instruction because of having already a running job, it must
 return an empty Snapshot with an Error message containing a proper message (e.g., Busy! Try again later.)
 
+* Make tools be checked and installed: Before each trial/test manager must check the agents/monitors if their
+tools are working correctly, so each tool must have its ways of checking their operational status (minimum unit test).
+For instance, a ping must ping localhost and check the result metrics, or it must check that the ping tool is installed, 
+and contains the proper permissions to be used/called. If the tool is not installed the tool might contain the scripts
+that perform the installation of the tool. 

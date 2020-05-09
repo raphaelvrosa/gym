@@ -379,11 +379,43 @@ module vnf-bd {
             }
             description "List of parameters for tool";
         }
-        description "List of tools used in experiment";
+        
+        container sched {
+            leaf from {
+                type uint32;
+                default 0;
+                description "The initial time (in seconds) of the execution of the tool";
+            }
+
+            leaf until {
+                type uint32;
+                description "The final time (in seconds) of the execution of the tool
+                counting all its periods of repeating instances, duration and interval.";
+            }
+
+            leaf duration {
+                type uint32;
+                description "The total duration (in seconds) of the execution of each instance of the tool";
+            }
+
+            leaf interval {
+                type uint32;
+                description "The interval (in seconds) among the instances of the execution of the tool";
+            }
+
+            leaf repeat {
+                type uint32;
+                description "The amount of times the tool must be executed";
+            }
+
+            description "Scheduling parameters of a tool";
+        }
+
+        description "A tool to be used in an experiment";
     }
 
     grouping component {
-        leaf id {
+        leaf uuid {
             type string;
             description "Unique identifier";
         }
@@ -392,17 +424,6 @@ module vnf-bd {
             description "Name of component";
         }
 
-        container host { 
-            leaf setting {
-                type string;
-                description "Settings for this host";
-            }
-            leaf node {
-                type string;
-                description "Node assigned to this host";
-            }
-            description "Host on which component shall be executed";
-        }
         description "Component mapping for experiment";
     }
 
@@ -443,13 +464,13 @@ module vnf-bd {
         }
 
         list agents {
-            key "id";
+            key "uuid";
             uses agent;
             description "Involved agents";
         }
 
         list monitors {
-            key "id";
+            key "uuid";
             uses monitor;
             description "Involved monitors";
         }

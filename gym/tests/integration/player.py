@@ -10,9 +10,9 @@ from google.protobuf import json_format
 from gym.common.protobuf import gym_grpc
 from gym.common.protobuf import gym_pb2
 
-from gym.common.yang.vnfbd import VNFBD
+from gym.common.vnfbd import VNFBD
 
-
+logger = logging.getLogger(__name__)
 
 async def callScenario(command, test, vnfbd):
     deploy_dict = {
@@ -60,47 +60,47 @@ async def callInfo(stub):
     reply = await stub.Greet(info)
     print(reply)
 
-def filepath(name):
-    filepath = os.path.normpath(os.path.join(
-        os.path.dirname(__file__),
-        "./db/vnf-bds/",
-        name)
-    )
-    return filepath
-
-async def callLayout(stub):
-    pass
-
-def load(filename):
-    try:
-        with open(filename, "+r") as fp:
-            data = json.load(fp)
-            
-    except Exception as e:
-        logger.debug(f"Loading file exception: {e}")
-        data = {}
-    finally:
-        return data
 
 
 def test_vnfbd():
-    vfilename = filepath('vnf-bd-003.json')
-    ifilename = filepath('inputs-vnf-bd-003.json')
-    tfilename = filepath('template-vnf-bd-003.json')
-
-    template = load(tfilename)
-    inputs = load(ifilename)
+    LOCAL_FOLDER = os.path.abspath(os.path.dirname(__file__))
+    FIXTURES = "./fixtures"
+    FIXTURES_FOLDER = os.path.join(LOCAL_FOLDER, FIXTURES)
 
 
+    def parse_filename(filename):
+        filepath = os.path.join(FIXTURES_FOLDER, filename)
+        return filepath
+
+    def load_file(filename):
+        try:
+            filepath = parse_filename(filename)
+            with open(filepath, "+r") as fp:
+                json_dict = json.load(fp)
+        except Exception as e:
+            print(f"Could not load file {filename} - {e}")
+            json_dict = {}
+
+        finally:
+            return json_dict
+
+
+    vnfbd_data = load_file('vnf-bd-003.json')
+    vnfbd_template = load_file('template-vnf-bd-003.json')
+    vnfbd_inputs = load_file('inputs-vnf-bd-003.json')
 
     vnfbd = VNFBD()
-    vnfbd.load(vfilename)
+    vnfbd.load_template(vnfbd_template)
+    vnfbd.load_inputs(vnfbd_inputs)
 
-    vnfbd.inputs(inputs)
+        
+
+    instances = vnfbd.instances()
+
+    assert len(list(instances)) == 6
     
-    templates = vnfbd.multiplex(template)
-
-    print(len(templates))
+    vnfbd = VNFBD()
+    vnfbd.parse(vnfbd_data)
 
 
 async def main():

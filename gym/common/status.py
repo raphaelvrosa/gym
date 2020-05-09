@@ -253,8 +253,11 @@ class Peers:
 
         Returns:
             bool -- True if peer was added, False if it was not added
-            or if it was updated
+            Identity/None -- A peer (Identity instance) 
+            if it was added, otherwise None
         """
+        ack, added_peer = False, None
+
         uuid = info.get("uuid")
         address = info.get("address")
         peer_key = (uuid, address)
@@ -267,7 +270,7 @@ class Peers:
             if peer.validate(self.allowed_roles):
                 self.peers[peer_key] = peer
                 logger.info(f'Peer added: uuid {uuid} role {peer.get("role")}')
-                return True
+                ack, added_peer = True, peer
             else:
                 logger.info(f'Peer not added: uuid {uuid} role {peer.get("role")}')
 
@@ -275,13 +278,26 @@ class Peers:
             logger.info(
                 f"Peer not added: already existing peer (uuid,address) {peer_key}"
             )
+        
+        return ack, added_peer
+
+    def update(self, info):
+        uuid = info.get("uuid")
+        address = info.get("address")
+        peer_key = (uuid, address)
+
+        logger.info(f"Updating peer (uuid,address) {peer_key}")
+
+        if peer_key in self.peers:
             peer = self.peers[peer_key]
             peer.update(info)
             logger.info(
-                f'Peer existent info updated: uuid {uuid} role {peer.get("role")}'
+                f'Peer existent info updated: uuid,address {peer_key} role {peer.get("role")}'
             )
-
-        return False
+        else:
+            logger.info(
+                f'Peer not existent info not updated: uuid,address {peer_key} role {info.get("role")}'
+            )
 
     def clear(self):
         """Clear the peers database
@@ -331,7 +347,7 @@ class Peers:
             [type] -- A list (of peers) | peer | None type
         """
         filtered_peers = [
-            peer for peer in self.peers.items() if peer.get(field) == value
+            peer for peer in self.peers.values() if peer.get(field) == value
         ]
         if alls:
             return filtered_peers
@@ -384,20 +400,23 @@ class Status(Identity):
             have its profile included in the apparatus of the 
             Status Identity
         """
-        role = self.role
-        if role == "player" or role == "manager":
-            
-            peer_role = peer.get("role")
-            peers = [peer.profile() for peer in self.peers.get_by("role", peer_role, alls=True)]
-            
-            apparatus_roles = peer_role + "s"
-            apparatus = {
-                apparatus_roles: peers
-            }
-            
-            logger.info(f"Updating identity apparatus")
-            logger.debug(f"{apparatus}")
-            self.set("apparatus", apparatus)
+        peer_role = peer.get("role")
+        apparatus_roles = peer_role + "s"
+        allowed_apparatus_roles = ["agents", "monitors", "managers"]
+        
+        if apparatus_roles in allowed_apparatus_roles:
+            role = self.role
+        
+            if role == "player" or role == "manager":
+                peers = [peer.profile() for peer in self.peers.get_by("role", peer_role, alls=True)]
+        
+                apparatus = {
+                    apparatus_roles: peers
+                }
+                
+                logger.info(f"Updating identity apparatus")
+                logger.debug(f"{apparatus}")
+                self.set("apparatus", apparatus)
 
     def add_peer(self, info):
         """Adds a peer Identity using info
@@ -406,12 +425,17 @@ class Status(Identity):
         Arguments:
             info {dict} -- Set of fields/values that
             build a valid Identity
+        
+        Returns:
+            bool -- True if peer was added, False otherwise
         """
-        ack = self.peers.add(info)
+        ack, peer = self.peers.add(info)
 
         if ack:
-            role = info.get("role")
-            self.update_apparatus([role])
+            self.update_apparatus(peer)
+            return True
+
+        return False
 
     def get_peers(self, field, value):
         """Gets all the peers that contain

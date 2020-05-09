@@ -335,12 +335,8 @@
         },
         "agents": {
             "1": {
-                "id": "1",
+                "uuid": "1",
                 "name": "",
-                "host": {
-                    "setting": "internal",
-                    "node": "d1"
-                },
                 "probers": {
                     "1": {
                         "id": 6,
@@ -382,12 +378,8 @@
         },
         "monitors": {
             "2": {
-                "id": "2",
+                "uuid": "2",
                 "name": "",
-                "host": {
-                    "setting": "external",
-                    "node": "d2"
-                },
                 "listeners": {
                     "1": {
                         "id": 11,
@@ -411,12 +403,8 @@
                 }
             },
             "3": {
-                "id": "3",
+                "uuid": "3",
                 "name": "",
-                "host": {
-                    "setting": "internal",
-                    "node": "d2"
-                },
                 "listeners": {
                     "1": {
                         "id": 14,

@@ -72,9 +72,18 @@ message Info {
     repeated string contacts = 8;
 }
 
+message Sched {
+    uint32 from = 1;
+    uint32 until = 2;
+    uint32 duration = 3;
+    uint32 interval = 4;
+    uint32 repeat = 5;
+}
+
 message Action {
     int32 id = 1;
     map<string, string> args = 2;
+    Sched sched = 3;
 }
 
 message Instruction {
@@ -123,7 +132,7 @@ message Snapshot {
     int32 id = 1;
     int32 trial = 2;
     Origin origin = 3;
-    map<int32, Evaluation> evaluations = 4;
+    repeated Evaluation evaluations = 4;
     google.protobuf.Timestamp timestamp = 5;
 }
 
@@ -132,6 +141,7 @@ message Tool {
     string name = 2;
     map<string, string> parameters = 3;
     map<string, string> metrics = 4;
+    Sched sched = 5;
 }
 
 message Task {

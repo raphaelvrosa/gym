@@ -1273,7 +1273,7 @@ enumeration
                                 onclick="toggleRows(this);return false"
                                 class="folder">&nbsp;
                              </a>
-                             <abbr title="Involved agents">agents[id]</abbr>
+                             <abbr title="Involved agents">agents[uuid]</abbr>
                           </div>
                        </td> 
 <td nowrap>list</td>
@@ -1287,7 +1287,7 @@ enumeration
                        <td nowrap>
                           <div id=9999 class=tier4>
                              <a class="leaf">&nbsp;</a>
-                             <abbr title="Unique identifier">  id </abbr>
+                             <abbr title="Unique identifier">  uuid </abbr>
                           </div>
                        </td>
                        <td>leaf</td>
@@ -1296,7 +1296,7 @@ enumeration
                        <td nowrap>config</td>
                        <td></td>
                        <td>current</td>
-                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:id</td</tr> 
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:uuid</td</tr> 
 <tr id="1-10-16-24" class="a">
                        <td nowrap>
                           <div id=9999 class=tier4>
@@ -1318,51 +1318,6 @@ enumeration
                                 onclick="toggleRows(this);return false"
                                 class="folder">&nbsp;
                              </a>
-                             <abbr title="Host on which component shall be executed">host</abbr>
-                          </div>
-                       </td> 
-<td nowrap>container</td>
-                    <td nowrap></td>
-                    <td nowrap>config</td>
-                    <td></td>
-                    <td>current</td>
-                    <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:host</td>
-                    </tr> 
-<tr id="1-10-16-25-17" class="a">
-                       <td nowrap>
-                          <div id=9999 class=tier5>
-                             <a class="leaf">&nbsp;</a>
-                             <abbr title="Settings for this host"> <em> setting </em></abbr>
-                          </div>
-                       </td>
-                       <td>leaf</td>
-                       <td nowrap><abbr title="string
-">string</abbr></td>
-                       <td nowrap>config</td>
-                       <td>?</td>
-                       <td>current</td>
-                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:host/vnf-bd:setting</td</tr> 
-<tr id="1-10-16-25-18" class="a">
-                       <td nowrap>
-                          <div id=9999 class=tier5>
-                             <a class="leaf">&nbsp;</a>
-                             <abbr title="Node assigned to this host"> <em> node </em></abbr>
-                          </div>
-                       </td>
-                       <td>leaf</td>
-                       <td nowrap><abbr title="string
-">string</abbr></td>
-                       <td nowrap>config</td>
-                       <td>?</td>
-                       <td>current</td>
-                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:host/vnf-bd:node</td</tr> 
-<tr id="1-10-16-26" class="a">
-                       <td nowrap id="p4000">
-                          <div id="p5000" class="tier4">
-                             <a href="#" id="p6000"
-                                onclick="toggleRows(this);return false"
-                                class="folder">&nbsp;
-                             </a>
                              <abbr title="Probers in experiment">probers[id]</abbr>
                           </div>
                        </td> 
@@ -1373,7 +1328,7 @@ enumeration
                     <td>current</td>
                     <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers</td>
                     </tr> 
-<tr id="1-10-16-26-19" class="a">
+<tr id="1-10-16-25-17" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -1387,7 +1342,7 @@ enumeration
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:id</td</tr> 
-<tr id="1-10-16-26-20" class="a">
+<tr id="1-10-16-25-18" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -1401,7 +1356,7 @@ enumeration
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:instances</td</tr> 
-<tr id="1-10-16-26-21" class="a">
+<tr id="1-10-16-25-19" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -1415,7 +1370,7 @@ enumeration
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:name</td</tr> 
-<tr id="1-10-16-26-22" class="a">
+<tr id="1-10-16-25-20" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier5">
                              <a href="#" id="p6000"
@@ -1432,7 +1387,7 @@ enumeration
                     <td>current</td>
                     <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:parameters</td>
                     </tr> 
-<tr id="1-10-16-26-22-11" class="a">
+<tr id="1-10-16-25-20-11" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -1446,7 +1401,7 @@ enumeration
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:parameters/vnf-bd:input</td</tr> 
-<tr id="1-10-16-26-22-12" class="a">
+<tr id="1-10-16-25-20-12" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -1460,6 +1415,94 @@ enumeration
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:parameters/vnf-bd:value</td</tr> 
+<tr id="1-10-16-25-21" class="a">
+                       <td nowrap id="p4000">
+                          <div id="p5000" class="tier5">
+                             <a href="#" id="p6000"
+                                onclick="toggleRows(this);return false"
+                                class="folder">&nbsp;
+                             </a>
+                             <abbr title="Scheduling parameters of a tool">sched</abbr>
+                          </div>
+                       </td> 
+<td nowrap>container</td>
+                    <td nowrap></td>
+                    <td nowrap>config</td>
+                    <td></td>
+                    <td>current</td>
+                    <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:sched</td>
+                    </tr> 
+<tr id="1-10-16-25-21-13" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The initial time (in seconds) of the execution of the tool"> <em> from </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:sched/vnf-bd:from</td</tr> 
+<tr id="1-10-16-25-21-14" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The final time (in seconds) of the execution of the tool
+counting all its periods of repeating instances, duration and interval."> <em> until </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:sched/vnf-bd:until</td</tr> 
+<tr id="1-10-16-25-21-15" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The total duration (in seconds) of the execution of each instance of the tool"> <em> duration </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:sched/vnf-bd:duration</td</tr> 
+<tr id="1-10-16-25-21-16" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The interval (in seconds) among the instances of the execution of the tool"> <em> interval </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:sched/vnf-bd:interval</td</tr> 
+<tr id="1-10-16-25-21-17" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The amount of times the tool must be executed"> <em> repeat </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:agents/vnf-bd:probers/vnf-bd:sched/vnf-bd:repeat</td</tr> 
 <tr id="1-10-17" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier3">
@@ -1467,7 +1510,7 @@ enumeration
                                 onclick="toggleRows(this);return false"
                                 class="folder">&nbsp;
                              </a>
-                             <abbr title="Involved monitors">monitors[id]</abbr>
+                             <abbr title="Involved monitors">monitors[uuid]</abbr>
                           </div>
                        </td> 
 <td nowrap>list</td>
@@ -1477,11 +1520,11 @@ enumeration
                     <td>current</td>
                     <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors</td>
                     </tr> 
-<tr id="1-10-17-27" class="a">
+<tr id="1-10-17-26" class="a">
                        <td nowrap>
                           <div id=9999 class=tier4>
                              <a class="leaf">&nbsp;</a>
-                             <abbr title="Unique identifier">  id </abbr>
+                             <abbr title="Unique identifier">  uuid </abbr>
                           </div>
                        </td>
                        <td>leaf</td>
@@ -1490,8 +1533,8 @@ enumeration
                        <td nowrap>config</td>
                        <td></td>
                        <td>current</td>
-                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:id</td</tr> 
-<tr id="1-10-17-28" class="a">
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:uuid</td</tr> 
+<tr id="1-10-17-27" class="a">
                        <td nowrap>
                           <div id=9999 class=tier4>
                              <a class="leaf">&nbsp;</a>
@@ -1505,52 +1548,7 @@ enumeration
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:name</td</tr> 
-<tr id="1-10-17-29" class="a">
-                       <td nowrap id="p4000">
-                          <div id="p5000" class="tier4">
-                             <a href="#" id="p6000"
-                                onclick="toggleRows(this);return false"
-                                class="folder">&nbsp;
-                             </a>
-                             <abbr title="Host on which component shall be executed">host</abbr>
-                          </div>
-                       </td> 
-<td nowrap>container</td>
-                    <td nowrap></td>
-                    <td nowrap>config</td>
-                    <td></td>
-                    <td>current</td>
-                    <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:host</td>
-                    </tr> 
-<tr id="1-10-17-29-23" class="a">
-                       <td nowrap>
-                          <div id=9999 class=tier5>
-                             <a class="leaf">&nbsp;</a>
-                             <abbr title="Settings for this host"> <em> setting </em></abbr>
-                          </div>
-                       </td>
-                       <td>leaf</td>
-                       <td nowrap><abbr title="string
-">string</abbr></td>
-                       <td nowrap>config</td>
-                       <td>?</td>
-                       <td>current</td>
-                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:host/vnf-bd:setting</td</tr> 
-<tr id="1-10-17-29-24" class="a">
-                       <td nowrap>
-                          <div id=9999 class=tier5>
-                             <a class="leaf">&nbsp;</a>
-                             <abbr title="Node assigned to this host"> <em> node </em></abbr>
-                          </div>
-                       </td>
-                       <td>leaf</td>
-                       <td nowrap><abbr title="string
-">string</abbr></td>
-                       <td nowrap>config</td>
-                       <td>?</td>
-                       <td>current</td>
-                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:host/vnf-bd:node</td</tr> 
-<tr id="1-10-17-30" class="a">
+<tr id="1-10-17-28" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier4">
                              <a href="#" id="p6000"
@@ -1567,7 +1565,7 @@ enumeration
                     <td>current</td>
                     <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners</td>
                     </tr> 
-<tr id="1-10-17-30-25" class="a">
+<tr id="1-10-17-28-22" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -1581,7 +1579,7 @@ enumeration
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:id</td</tr> 
-<tr id="1-10-17-30-26" class="a">
+<tr id="1-10-17-28-23" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -1595,7 +1593,7 @@ enumeration
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:instances</td</tr> 
-<tr id="1-10-17-30-27" class="a">
+<tr id="1-10-17-28-24" class="a">
                        <td nowrap>
                           <div id=9999 class=tier5>
                              <a class="leaf">&nbsp;</a>
@@ -1609,7 +1607,7 @@ enumeration
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:name</td</tr> 
-<tr id="1-10-17-30-28" class="a">
+<tr id="1-10-17-28-25" class="a">
                        <td nowrap id="p4000">
                           <div id="p5000" class="tier5">
                              <a href="#" id="p6000"
@@ -1626,7 +1624,7 @@ enumeration
                     <td>current</td>
                     <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:parameters</td>
                     </tr> 
-<tr id="1-10-17-30-28-13" class="a">
+<tr id="1-10-17-28-25-18" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -1640,7 +1638,7 @@ enumeration
                        <td></td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:parameters/vnf-bd:input</td</tr> 
-<tr id="1-10-17-30-28-14" class="a">
+<tr id="1-10-17-28-25-19" class="a">
                        <td nowrap>
                           <div id=9999 class=tier6>
                              <a class="leaf">&nbsp;</a>
@@ -1654,6 +1652,94 @@ enumeration
                        <td>?</td>
                        <td>current</td>
                        <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:parameters/vnf-bd:value</td</tr> 
+<tr id="1-10-17-28-26" class="a">
+                       <td nowrap id="p4000">
+                          <div id="p5000" class="tier5">
+                             <a href="#" id="p6000"
+                                onclick="toggleRows(this);return false"
+                                class="folder">&nbsp;
+                             </a>
+                             <abbr title="Scheduling parameters of a tool">sched</abbr>
+                          </div>
+                       </td> 
+<td nowrap>container</td>
+                    <td nowrap></td>
+                    <td nowrap>config</td>
+                    <td></td>
+                    <td>current</td>
+                    <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:sched</td>
+                    </tr> 
+<tr id="1-10-17-28-26-20" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The initial time (in seconds) of the execution of the tool"> <em> from </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:sched/vnf-bd:from</td</tr> 
+<tr id="1-10-17-28-26-21" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The final time (in seconds) of the execution of the tool
+counting all its periods of repeating instances, duration and interval."> <em> until </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:sched/vnf-bd:until</td</tr> 
+<tr id="1-10-17-28-26-22" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The total duration (in seconds) of the execution of each instance of the tool"> <em> duration </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:sched/vnf-bd:duration</td</tr> 
+<tr id="1-10-17-28-26-23" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The interval (in seconds) among the instances of the execution of the tool"> <em> interval </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:sched/vnf-bd:interval</td</tr> 
+<tr id="1-10-17-28-26-24" class="a">
+                       <td nowrap>
+                          <div id=9999 class=tier6>
+                             <a class="leaf">&nbsp;</a>
+                             <abbr title="The amount of times the tool must be executed"> <em> repeat </em></abbr>
+                          </div>
+                       </td>
+                       <td>leaf</td>
+                       <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                       <td nowrap>config</td>
+                       <td>?</td>
+                       <td>current</td>
+                       <td nowrap>/vnf-bd:proceedings/vnf-bd:monitors/vnf-bd:listeners/vnf-bd:sched/vnf-bd:repeat</td</tr> 
 
 </table>
 </div>

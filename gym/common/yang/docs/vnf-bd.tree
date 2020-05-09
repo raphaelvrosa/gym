@@ -72,29 +72,35 @@ module: vnf-bd
      +--rw attributes* [name]
      |  +--rw name     string
      |  +--rw value?   string
-     +--rw agents* [id]
-     |  +--rw id         string
+     +--rw agents* [uuid]
+     |  +--rw uuid       string
      |  +--rw name?      string
-     |  +--rw host
-     |  |  +--rw setting?   string
-     |  |  +--rw node?      string
      |  +--rw probers* [id]
      |     +--rw id            uint32
      |     +--rw instances?    uint32
      |     +--rw name?         string
      |     +--rw parameters* [input]
-     |        +--rw input    string
-     |        +--rw value?   string
-     +--rw monitors* [id]
-        +--rw id           string
+     |     |  +--rw input    string
+     |     |  +--rw value?   string
+     |     +--rw sched
+     |        +--rw from?       uint32
+     |        +--rw until?      uint32
+     |        +--rw duration?   uint32
+     |        +--rw interval?   uint32
+     |        +--rw repeat?     uint32
+     +--rw monitors* [uuid]
+        +--rw uuid         string
         +--rw name?        string
-        +--rw host
-        |  +--rw setting?   string
-        |  +--rw node?      string
         +--rw listeners* [id]
            +--rw id            uint32
            +--rw instances?    uint32
            +--rw name?         string
            +--rw parameters* [input]
-              +--rw input    string
-              +--rw value?   string
+           |  +--rw input    string
+           |  +--rw value?   string
+           +--rw sched
+              +--rw from?       uint32
+              +--rw until?      uint32
+              +--rw duration?   uint32
+              +--rw interval?   uint32
+              +--rw repeat?     uint32

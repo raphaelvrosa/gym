@@ -5,8 +5,8 @@
     "author": "VNF Developer",
     "description": "Tests Suricata container VNF",
     "experiments": {
-        "trials": "{{ settings_trials }}",
-        "tests": "{{ settings_tests }}"
+        "trials": "{{ settings_trials | int }}",
+        "tests": "{{ settings_tests | int }}"
     },
     "environment": {
         "name": "Execution-Environment",
@@ -92,12 +92,12 @@
                 "role": "sut",
                 "resources": {
                     "cpu": {
-                        "vcpus": "{{ sut_resources_vcpus }}",
-                        "cpu_bw": "{{ sut_resources_cpubw }}",
+                        "vcpus": "{{ sut_resources_vcpus | int }}",
+                        "cpu_bw": "{{ sut_resources_cpubw | int }}",
                         "pinning": ""
                     },
                     "memory": {
-                        "size": "{{ sut_resources_memory_size }}",
+                        "size": "{{ sut_resources_memory_size | int }}",
                         "unit": "MB"
                     },
                     "storage": {
@@ -335,12 +335,8 @@
         },
         "agents": {
             "1": {
-                "id": "1",
+                "uuid": "1",
                 "name": "",
-                "host": {
-                    "setting": "internal",
-                    "node": "d1"
-                },
                 "probers": {
                     "1": {
                         "id": 6,
@@ -382,12 +378,8 @@
         },
         "monitors": {
             "2": {
-                "id": "2",
+                "uuid": "2",
                 "name": "",
-                "host": {
-                    "setting": "external",
-                    "node": "d2"
-                },
                 "listeners": {
                     "1": {
                         "id": 11,
@@ -411,12 +403,8 @@
                 }
             },
             "3": {
-                "id": "3",
+                "uuid": "3",
                 "name": "",
-                "host": {
-                    "setting": "internal",
-                    "node": "d2"
-                },
                 "listeners": {
                     "1": {
                         "id": 14,

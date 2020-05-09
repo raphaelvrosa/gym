@@ -107,14 +107,13 @@ class Core:
         }
         
         channel = Channel(host, port)
-        
         stub_class = stubs.get(role, None)
        
         if stub_class:
             logger.info(f"Contacting {role} at {host}:{port}")
             stub = stub_class(channel)
-            
             info = await self._reach(stub, contacts)
+
             if info:
                 self.status.add_peer(info)
             else:
@@ -317,6 +316,8 @@ class WorkerCore(Core):
             a timestamp, the origin of the snapshot, and its
             evaluations.
         """
+        logger.info("Creating Snapshot")
+        
         snapshot = Snapshot(
             id=instruction.get("id"),
             trial=instruction.get("trial")
@@ -369,7 +370,7 @@ class ManagerCore(Core):
 
         Arguments:
             instruction {Instruction} -- A gRPC message Instruction
-            req_tools {list} -- List of tools (id and parameters)
+            req_tools {list} -- List of tools (id, parameters, sched)
         """
         logger.info(f"Building actions")
         logger.debug(f"Tools: {req_tools}")
@@ -382,6 +383,9 @@ class ManagerCore(Core):
 
             for k in tool.parameters:
                 action.args[k] = tool.parameters[k]
+
+            for s in tool.sched:
+                action.sched[s] = tool.sched[s]
 
             action_ids += 1
 
@@ -1041,7 +1045,7 @@ class PlayerCore(Core):
         all_reports = []
 
         for vnfbd_instance in vnfbd.instances():
-            reports, ack = self.tests(vnfbd_instance)
+            reports, ack = await self.tests(vnfbd_instance)
             all_reports.extend(reports)
 
             if not ack:

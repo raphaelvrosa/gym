@@ -142,27 +142,31 @@ message VnfBd {
 
     message Agent {
       
-      message Host {
-        string node = 1;
-        string setting = 2;
-      }
-
       message Prober {
+        
         message Parameter {
           string input = 1;
           string value = 2;
         }  
 
+        message Sched {
+          uint32 from = 1;
+          uint32 until = 2;
+          uint32 duration = 3;
+          uint32 interval = 4;
+          uint32 repeat = 5;
+        }
+
         uint32 id = 1;
         uint64 instances = 2;
         string name = 3;
         map<string,Parameter> parameters = 4;
+        Sched sched = 5;
       }
 
-      string id = 1;
+      string uuid = 1;
       string name = 2;
-      Host host = 3;      
-      map<string,Prober> probers = 4;
+      map<string,Prober> probers = 3;
     }
 
     message Monitor {
@@ -177,17 +181,25 @@ message VnfBd {
           string input = 1;
           string value = 2;
         }   
+
+        message Sched {
+          uint32 from = 1;
+          uint32 until = 2;
+          uint32 duration = 3;
+          uint32 interval = 4;
+          uint32 repeat = 5;
+        }
         
         uint32 id = 1;
         uint64 instances = 2;
         string name = 3;
         map<string,Parameter> parameters = 4;
+        Sched sched = 5;
       }
       
-      string id = 1;
+      string uuid = 1;
       string name = 2;
-      Host host = 3;
-      map<string,Listener> listeners = 4;
+      map<string,Listener> listeners = 3;
     }
         
     map<string,Attribute> attributes = 1;

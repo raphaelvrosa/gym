@@ -122,13 +122,16 @@ class "parameters" as vnf_bd_I_tool_I_parameters << (L, #FF7700) list>>
 vnf_bd_I_tool_grouping *-- "0..N" vnf_bd_I_tool_I_parameters 
 vnf_bd_I_tool_I_parameters : +input : string  {key} 
 vnf_bd_I_tool_I_parameters : value : string  
+class "sched" as  vnf_bd_I_tool_I_sched <<container>> 
+vnf_bd_I_tool_grouping *-- "1" vnf_bd_I_tool_I_sched 
+vnf_bd_I_tool_I_sched : from : uint32   = 0 
+vnf_bd_I_tool_I_sched : until : uint32  
+vnf_bd_I_tool_I_sched : duration : uint32  
+vnf_bd_I_tool_I_sched : interval : uint32  
+vnf_bd_I_tool_I_sched : repeat : uint32  
 class "component" as vnf_bd_I_component_grouping <<(G,Lime) grouping>> 
-vnf_bd_I_component_grouping : id : string  
+vnf_bd_I_component_grouping : uuid : string  
 vnf_bd_I_component_grouping : name : string  
-class "host" as  vnf_bd_I_component_I_host <<container>> 
-vnf_bd_I_component_grouping *-- "1" vnf_bd_I_component_I_host 
-vnf_bd_I_component_I_host : setting : string  
-vnf_bd_I_component_I_host : node : string  
 class "agent" as vnf_bd_I_agent_grouping <<(G,Lime) grouping>> 
 vnf_bd_I_agent_grouping : component {uses} 
 class "probers" as vnf_bd_I_agent_I_probers << (L, #FF7700) list>> 
@@ -178,6 +181,6 @@ vnf_bd_I_vnf_bd_I_targets --> vnf_bd_I_targets_grouping : uses
 vnf_bd_I_vnf_bd_I_scenario --> vnf_bd_I_scenario_grouping : uses 
 vnf_bd_I_vnf_bd_I_proceedings --> vnf_bd_I_proceedings_grouping : uses 
 center footer
- <size:20> UML Generated : 2020-03-27 14:02 </size>
+ <size:20> UML Generated : 2020-05-08 16:05 </size>
  endfooter 
 @enduml 

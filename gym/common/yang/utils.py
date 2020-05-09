@@ -62,8 +62,14 @@ class Utils:
                     overwrite=True)
             
     def parse(self, data, model, model_name):
-        model = pbJ.loads(data, model, model_name)
-        return model
+        try:
+            model = pbJ.loads(data, model, model_name)
+        except Exception as e:
+            logger.info(f"Could not parse model data")
+            logger.debug(f"Invalid model - Exception: {e}")
+            model = {}
+        finally:
+            return model
         
     def serialise(self, cls_instance):
         data_json = pbJ.dumps(
