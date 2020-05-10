@@ -100,7 +100,8 @@ class ListenerNet(Listener):
             self.process_diffs(stats_diff, duration)
             results = stats_diff
 
-        return results
+        ret, out, err = 0, results, None
+        return ret, out, err
 
     def parser(self, out):
         metrics = []

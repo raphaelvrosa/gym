@@ -177,7 +177,7 @@ class Core:
             information of this peer to be sent to the other peer.
         """
         logger.info("Received Info")
-        logger.debug(f"{message}")
+        logger.debug(f"{json_format.MessageToJson(message)}")
         info = json_format.MessageToDict(message, preserving_proto_field_name=True)
 
         await self.greet(info)
@@ -188,7 +188,7 @@ class Core:
         reply = json_format.ParseDict(profile, Info())
 
         logger.info("Replying Info")
-        logger.debug(f"{reply}")
+        logger.debug(f"{json_format.MessageToJson(reply)}")
 
         return reply
 
@@ -345,7 +345,7 @@ class WorkerCore(Core):
             Snapshot -- A Snapshot gRPC message
         """
         logger.info("Received Instruction")
-        logger.debug(f"{message}")
+        logger.debug(f"{json_format.MessageToJson(message)}")
 
         instruction = json_format.MessageToDict(
             message, preserving_proto_field_name=True
@@ -356,7 +356,7 @@ class WorkerCore(Core):
         snapshot = self.snapshot(instruction, results)
 
         logger.info(f"Replying Snapshot")
-        logger.debug(f"{snapshot}")
+        logger.debug(f"{json_format.MessageToJson(snapshot)}")
         return snapshot
 
 
@@ -384,8 +384,8 @@ class ManagerCore(Core):
             for k in tool.parameters:
                 action.args[k] = tool.parameters[k]
 
-            for s in tool.sched:
-                action.sched[s] = tool.sched[s]
+            
+            action.sched.CopyFrom(tool.sched)
 
             action_ids += 1
 
@@ -517,7 +517,7 @@ class ManagerCore(Core):
         instructions, all_instructions_ok = {}, False
 
         tools_name = {
-            "agents": "prober",
+            "agents": "probers",
             "monitors": "listeners"
         }
         tools_type = tools_name.get(role, None)
@@ -654,12 +654,15 @@ class ManagerCore(Core):
         in the selected peers
 
         Arguments:
-            trials {[type]} -- [description]
-            instructions {[type]} -- [description]
-            peers {[type]} -- [description]
+            trials {int} -- Amount of trials to be run
+            instructions {dict} -- Set of instructions to be
+            sent for each peer, indexed by the peer uuid
+            peers {dict} -- Set of peers identities indexed
+            by uuid, to which the instructions are sent
 
         Returns:
-            [type] -- [description]
+            list -- Set of snapshots obtained from running
+            each trial, and its instructions
         """
         snapshots = []
         
@@ -706,7 +709,7 @@ class ManagerCore(Core):
             Snaphot -- A gRPC message type Snapshot
         """
         logger.info("Received Task")
-        logger.debug(f"{task}")
+        logger.debug(f"{json_format.MessageToJson(task)}")
 
         report = Report(id=task.id, test=task.test)
 
@@ -721,10 +724,11 @@ class ManagerCore(Core):
         )
 
         if ai_ok and mi_ok:
-            logger.info(f"Executing trials for task {task.id}")
+            trials = task.trials
+            logger.info(f"Executing trials for task {task.id} - trials {trials}")
             peers = {**agents_peers, **monitors_peers}
             instructions = {**agents_instructions, **monitors_instructions}
-            snapshots = await self.trials(task, instructions, peers)
+            snapshots = await self.trials(trials, instructions, peers)
             self.report(report, snapshots)
         else:
             logger.info(
@@ -736,8 +740,7 @@ class ManagerCore(Core):
 
         logger.info("Replying Report")
         report.timestamp.FromDatetime(datetime.now())
-        logger.debug(f"{report}")
-
+        logger.debug(f"{json_format.MessageToJson(report)}")
         return report
 
 
@@ -1095,7 +1098,7 @@ class PlayerCore(Core):
             execution of the Layout VNF-BD
         """
         logger.info("Received Layout")
-        logger.debug(f"{message}")
+        logger.debug(f"{json_format.MessageToJson(message)}")
 
         result = Result(id=message.id)
         result.timestamp.FromDatetime(datetime.now())
@@ -1120,5 +1123,5 @@ class PlayerCore(Core):
             logger.info("Could not init vnfbd - empty result")
 
         logger.info("Replying Result")
-        logger.debug(f"{result}")
+        logger.debug(f"{json_format.MessageToJson(result)}")
         return result

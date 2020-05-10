@@ -100,11 +100,37 @@ class TestAgent(unittest.TestCase):
 
 
     def test_instruction(self):
+                
+        # {'id': 1, 'trial': 1, 'origin': {'id': 'agent-test', 'role': 'agent'}, 'evaluations': [{'id': 10, 'metrics': {'rtt_min': {'name': 'rtt_min', 'type': 'float', 'unit': 'ms', 'scalar': 125.748}, 'rtt_avg': {'name': 'rtt_avg', 'type': 'float', 'unit': 'ms', 'scalar': 126.136}, 'rtt_max': {'name': 'rtt_max', 'type': 'float', 'unit': 'ms', 'scalar': 126.775}, 'rtt_mdev': {'name': 'rtt_mdev', 'type': 'float', 'unit': 'ms', 'scalar': 0.454}, 'frame_loss': {'name': 'frame_loss', 'type': 'float', 'unit': '%', 'scalar': 0.0}}}, {'id': 11, 'metrics': {'rtt_min': {'name': 'rtt_min', 'type': 'float', 'unit': 'ms', 'scalar': 12.685}, 'rtt_avg': {'name': 'rtt_avg', 'type': 'float', 'unit': 'ms', 'scalar': 13.133}, 'rtt_max': {'name': 'rtt_max', 'type': 'float', 'unit': 'ms', 'scalar': 13.582}, 'rtt_mdev': {'name': 'rtt_mdev', 'type': 'float', 'unit': 'ms', 'scalar': 0.448}, 'frame_loss': {'name': 'frame_loss', 'type': 'float', 'unit': '%', 'scalar': 0.0}}}], 'timestamp': '2020-05-10T08:43:27.847306Z'}
+
         instruction_reply = asyncio.run(self.run_instruction())
-
         
+        origin = instruction_reply.get("origin")
+        assert origin.get('id') == "agent-test"
+        assert origin.get('role') == "agent"
 
+        evals = instruction_reply.get("evaluations")
+        assert type(evals) is list
+        
+        expected_metrics = {
+            'rtt_min': 'min round-trip-time',
+            'rtt_avg': 'avg round-trip-time',
+            'rtt_max': 'max round-trip-time',
+            'rtt_mdev': 'std dev round-trip-time',
+            'frame_loss': 'frame loss ratio',
+        }
+
+        eval_0 = evals[0]
+        eval_metrics = eval_0.get("metrics")
+
+        metrics_ok = [True if m in expected_metrics.keys() else False
+                     for m in eval_metrics]
+        
+        assert all(metrics_ok) == True
 
 
 if __name__ == "__main__":
     unittest.main()
+    
+    # t = TestAgent()
+    # t.test_instruction()

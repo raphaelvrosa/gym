@@ -224,7 +224,9 @@ class ListenerHost(Listener):
                 self._first = False
                 results.append(measurement)
                 time.sleep(interval)
-        return results
+        
+        ret, out, err = 0, results, None
+        return ret, out, err
 
     def parser(self, out):
         metrics = []

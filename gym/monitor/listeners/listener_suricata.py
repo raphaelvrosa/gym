@@ -342,7 +342,9 @@ class ListenerSuricata(Listener):
             eve_status = self._suricata_stats.final_status()
             stats_diff.update(eve_status)
             results.update(stats_diff)
-        return results
+
+        ret, out, err = 0, results, None
+        return ret, out, err
 
     def parser(self, out):
         metrics = []
