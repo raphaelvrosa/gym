@@ -119,8 +119,9 @@ message Evaluation {
 
     int32 id = 1;
     Source source = 2;
-    map<string, Metric> metrics = 3;
+    repeated Metric metrics = 3;
     Timestamp timestamp = 4;
+    string error = 5;
 }
 
 message Snapshot {
@@ -134,6 +135,7 @@ message Snapshot {
     Origin origin = 3;
     repeated Evaluation evaluations = 4;
     google.protobuf.Timestamp timestamp = 5;
+    string error = 6;
 }
 
 message Tool {
@@ -168,6 +170,7 @@ message Report {
     int32 test = 2;
     map<int32, Snapshot> snapshots = 3;
     google.protobuf.Timestamp timestamp = 4;
+    string error = 5;
 }
 
 message Layout {

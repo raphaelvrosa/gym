@@ -1,0 +1,118 @@
+{
+    "id": "000",
+    "name": "vnf-bd-000",
+    "version": "0.1",
+    "author": "Raphael Vicente Rosa",
+    "description": "Realizes the test of two agents ping on localhost",
+    "experiments": {
+        "trials": 1,
+        "tests": 1
+    },
+    "environment": {
+        "name": "localhost",
+        "description": "Establishes scenario in host with processes",
+        "deploy": false,
+        "plugin": {}
+    },
+    "targets": {
+        "None": {
+            "id": "None",
+            "name": "localhost",
+            "version": "",
+            "author": "",
+            "description": "host machine"
+        }
+    },
+    "scenario": {
+        "nodes": {
+            "agent-1": {
+                "id": "agent-test",
+                "type": "",
+                "image": "",
+                "format": "",
+                "role": "agent",
+                "resources": {},
+                "connection_points": {},
+                "relationships": {},
+                "lifecycle": {}
+            },
+            "monitor-test": {
+                "id": "monitor-test",
+                "type": "",
+                "image": "",
+                "format": "",
+                "role": "monitor",
+                "resources": {},
+                "connection_points": {},
+                "relationships": {},
+                "lifecycle": {}
+            },
+            "manager": {
+                "id": "manager-test",
+                "type": "",
+                "image": "",
+                "format": "",
+                "role": "manager",
+                "resources": {},
+                "connection_points": {},
+                "relationships": {},
+                "lifecycle": {}
+            }
+        },
+        "links": {},
+        "policies": {}
+    },
+    "proceedings": {
+        "attributes": {},
+        "agents": {
+            "agent-test": {
+                "uuid": "agent-test",
+                "name": "",
+                "probers": {
+                    "2": {
+                        "id": 2,
+                        "instances": 1,
+                        "name": "",
+                        "parameters": {
+                            "interval": {
+                                "input": "interval",
+                                "value": "1"
+                            },
+                            "packets": {
+                                "input": "packets",
+                                "value": "3"
+                            },
+                            "target": {
+                                "input": "target",
+                                "value": "127.0.0.1"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "monitors": {
+            "monitor-test": {
+                "uuid": "monitor-test",
+                "name": "",
+                "listeners": {
+                    "10": {
+                        "id": 10,
+                        "instances": 1,
+                        "name": "host",
+                        "parameters": {
+                            "interval": {
+                                "input": "interval",
+                                "value": "1"
+                            },
+                            "duration": {
+                                "input": "duration",
+                                "value": "3"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

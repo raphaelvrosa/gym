@@ -3,7 +3,7 @@ import os
 import json
 import yaml
 import logging
-import psutil        
+import psutil
 import subprocess
 import time
 
@@ -16,7 +16,7 @@ from mininet import clean
 
 LOG = logging.getLogger(__name__)
 
-setLogLevel('info')
+setLogLevel("info")
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("docker").setLevel(logging.WARNING)
@@ -38,55 +38,56 @@ class Environment:
 
     def _create_network(self):
         self.net = Containernet(controller=Controller)
-        self.net.addController('c0')
+        self.net.addController("c0")
         LOG.info("Created network: %r" % self.net)
 
     def _add_container(self, node):
-        
         def calculate_cpu_cfs_values(cpu_resources):
             vcpus = int(cpu_resources.get("vcpus", 1))
             cpu_bw = float(cpu_resources.get("cpu_bw", 1.0))
 
-            cpu_bw_p = 100000*vcpus
-            cpu_bw_q = int(cpu_bw_p*cpu_bw)
+            cpu_bw_p = 100000 * vcpus
+            cpu_bw_q = int(cpu_bw_p * cpu_bw)
             return cpu_bw_p, cpu_bw_q
 
         resources = node.get("resources")
         cpu_resources = resources.get("cpu")
-        
+
         cpu_bw_p, cpu_bw_q = calculate_cpu_cfs_values(cpu_resources)
         cpu_cores = cpu_resources.get("pinning", "")
 
         memory = resources.get("memory")
         volumes = resources.get("storage").get("volumes", [])
         if volumes:
-            volumes = volumes.split(',')
+            volumes = volumes.split(",")
 
         mng_ip = node.get("mng_intf", None)
 
-        container = self.net.addDocker(node.get("id"),
-           ip=mng_ip,
-           dimage=node.get("image"),
-           volumes=volumes,
-           cpu_period=cpu_bw_p,
-           cpu_quota=cpu_bw_q,
-           cpuset_cpus=str(cpu_cores),
-           mem_limit=str(memory.get("size", 1024)) + "m",
-           memswap_limit=0)
-        
+        container = self.net.addDocker(
+            node.get("id"),
+            ip=mng_ip,
+            dimage=node.get("image"),
+            volumes=volumes,
+            cpu_period=cpu_bw_p,
+            cpu_quota=cpu_bw_q,
+            cpuset_cpus=str(cpu_cores),
+            mem_limit=str(memory.get("size", 1024)) + "m",
+            memswap_limit=0,
+        )
+
         LOG.debug("Added container: %s", node.get("id"))
         return container
-    
+
     def _add_nodes(self):
         nodes = self.topo.get("nodes")
 
         for node_id, node in nodes.items():
             format = node.get("format")
-            
+
             if format == "docker":
                 added_node = self._add_container(node)
                 self.nodes[node_id] = added_node
-            
+
             elif format == "process":
                 node_rels = node.get("relationships")
                 if node_rels:
@@ -98,27 +99,43 @@ class Environment:
 
     def _add_switches(self):
         switches = self.topo.get("switches")
-        
+
         for sw_name in switches:
             s = self.net.addSwitch(sw_name)
             self.switches[sw_name] = s
 
     def add_link_sw(self, sw, dst, intf_dst, params_dst):
-        link_status = self.net.addLink(sw, dst,
-                                       intfName2=intf_dst, params2=params_dst)
-        LOG.debug("Added link src %s, dst %s, intf_dst %s, params_dst %s", sw, dst, intf_dst, params_dst)
+        link_status = self.net.addLink(sw, dst, intfName2=intf_dst, params2=params_dst)
+        LOG.debug(
+            "Added link src %s, dst %s, intf_dst %s, params_dst %s",
+            sw,
+            dst,
+            intf_dst,
+            params_dst,
+        )
         return link_status
 
     def add_link_direct(self, src, dst, intf_src, intf_dst, params_src, params_dst):
-        link_status = self.net.addLink(src, dst,
-                                        intfName1=intf_src, intfName2=intf_dst,
-                                        params1=params_src, params2=params_dst)
-        LOG.debug("Added link src %s - dst %s, intf_src %s - intf_dst %s", src, dst, intf_src, intf_dst)                                                                            
+        link_status = self.net.addLink(
+            src,
+            dst,
+            intfName1=intf_src,
+            intfName2=intf_dst,
+            params1=params_src,
+            params2=params_dst,
+        )
+        LOG.debug(
+            "Added link src %s - dst %s, intf_src %s - intf_dst %s",
+            src,
+            dst,
+            intf_src,
+            intf_dst,
+        )
         return link_status
 
     def _add_links(self):
         links = self.topo.get("links")
-    
+
         for link_id, link in links.items():
             link_type = link.get("type")
             if link_type == "E-LAN":
@@ -152,11 +169,13 @@ class Environment:
                 intf_dst = link.get("intf_dst")
                 params_src = link.get("params_src", None)
                 params_dst = link.get("params_dst", None)
-                src_node = self. nodes.get(src)
+                src_node = self.nodes.get(src)
                 dst_node = self.nodes.get(dst)
-                stats = self.add_link_direct(src_node, dst_node, intf_src, intf_dst, params_src, params_dst)
+                stats = self.add_link_direct(
+                    src_node, dst_node, intf_src, intf_dst, params_src, params_dst
+                )
                 LOG.info("Link %s added, type %s, status %s", link_id, link_type, stats)
-            
+
             else:
                 LOG.info("Link %s not added, unknown type %s", link_id, link_type)
 
@@ -168,7 +187,7 @@ class Environment:
     def _config_sw_flow(self, sw_id, params):
         LOG.info("_config_sw_flow %s", params)
         cmd = "add-flow in_port={src},actions=output:{dst}".format(**params)
-        cmd_args = cmd.split(' ')
+        cmd_args = cmd.split(" ")
         sw = self.switches.get(sw_id)
         ack = sw.dpctl(*cmd_args)
         LOG.info("Config switch flow dpctl output %s", ack)
@@ -176,9 +195,9 @@ class Environment:
     def _get_sw_port(self, sw, port_name):
         cmd = "find interface name={0}"
         cmd = cmd.format(port_name)
-        cmd_args = cmd.split(' ')
+        cmd_args = cmd.split(" ")
         stats_port = sw.vsctl(*cmd_args)
-        regex='ofport\s+:\s+([0-9]+)'
+        regex = "ofport\s+:\s+([0-9]+)"
         of_ports = re.findall(regex, stats_port)
         of_port = of_ports.pop()
         return of_port
@@ -187,7 +206,7 @@ class Environment:
         maps = []
         sw = self.switches.get(sw_id)
         sw_links = switch_links.get(sw_id)
-        default = {'src': None, 'dst': None}
+        default = {"src": None, "dst": None}
 
         for stats in adjs:
             sw_port = stats.intf1.name
@@ -197,9 +216,9 @@ class Environment:
                 src = sw_link.get("src")
                 dst = sw_link.get("dst")
                 if host_port == src:
-                    default['src'] = port_num
+                    default["src"] = port_num
                 if host_port == dst:
-                    default['dst'] = port_num
+                    default["dst"] = port_num
         maps.append(default)
         return maps
 
@@ -208,46 +227,48 @@ class Environment:
 
         if self.config_sw_links:
             LOG.info("Configuring switches flow entries")
-            for sw_id,adjs in self.config_sw_links.items():
-                map_sw_ports = self._config_map_ports_sw(switch_links, sw_id,adjs)
+            for sw_id, adjs in self.config_sw_links.items():
+                map_sw_ports = self._config_map_ports_sw(switch_links, sw_id, adjs)
                 for map_ports in map_sw_ports:
                     self._config_sw_flow(sw_id, map_ports)
 
     def get_host_ip(self):
         intf = "docker0"
-        intfs =  psutil.net_if_addrs()
+        intfs = psutil.net_if_addrs()
         intf_info = intfs.get(intf, None)
         if intf_info:
             for address in intf_info:
                 if address.family == 2:
                     host_address = address.address
                     return host_address
-        return None        
+        return None
 
     def get_host_ips(self, host):
-        intf = 'eth0'
-        config = host.cmd( 'ifconfig %s 2>/dev/null' % intf)
+        intf = "eth0"
+        config = host.cmd("ifconfig %s 2>/dev/null" % intf)
         # LOG.info("get host %s config ips %s", host, config)
         if not config:
-            LOG.info('Error: %s does not exist!\n', intf)
-        ips = re.findall( r'\d+\.\d+\.\d+\.\d+', config )
+            LOG.info("Error: %s does not exist!\n", intf)
+        ips = re.findall(r"\d+\.\d+\.\d+\.\d+", config)
         if ips:
             # LOG.info("host intf ips %s", ips)
-            ips_dict = {'ip': ips[0], 'broadcast': ips[1], 'mask': ips[2]}
+            ips_dict = {"ip": ips[0], "broadcast": ips[1], "mask": ips[2]}
             return ips_dict
         return None
-        
+
     def _format_workflow(self, workflow, node_info):
         implementations = workflow.get("implementation")
         parameters = workflow.get("parameters")
         fmt_kwargs = {}
-        
+
         entrypoints = []
 
         if parameters:
-            kwargs = { param.get("input"):param.get("value") for param in parameters.values() }
-            
-            for k,v in kwargs.items():
+            kwargs = {
+                param.get("input"): param.get("value") for param in parameters.values()
+            }
+
+            for k, v in kwargs.items():
                 args = v.split(":")
                 call = args[0]
                 if call == "get_attrib":
@@ -261,39 +282,44 @@ class Environment:
                 entrypoints.append(entrypoint)
         else:
             entrypoints = implementations
-            
-        return entrypoint
-    
+
+        return entrypoints
+
     def _new_process(self, entrypoint):
         p = None
         LOG.info("Creating new host process: %s", entrypoint)
         try:
             args = entrypoint.split(" ")
-            p = subprocess.Popen(args,
+            p = subprocess.Popen(
+                args,
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                )            
+            )
         except OSError as e:
-            LOG.info('ERROR: process could not be started %s', e)
+            LOG.info("ERROR: process could not be started %s", e)
         else:
-            LOG.info('Process started: pid %s', p.pid)
-        finally:    
+            LOG.info("Process started: pid %s", p.pid)
+        finally:
             return p
 
     def _start_lifecycle(self):
         nodes_topo = self.topo.get("nodes")
-                
+
         for node_id, node in nodes_topo.items():
             format = node.get("format")
-            workflows = node.get("lifecycle")                
-            start_workflows = [ workflow for workflow in workflows.values() if workflow.get("workflow") == "start" ]    
+            workflows = node.get("lifecycle")
+            start_workflows = [
+                workflow
+                for workflow in workflows.values()
+                if workflow.get("workflow") == "start"
+            ]
 
-            if format == "docker": 
-                
+            if format == "docker":
+
                 for workflow in start_workflows:
                     node_instance = self.nodes.get(node_id)
- 
+
                     if node_instance:
                         node_info = self.get_host_ips(node_instance)
                         self.nodes_info[node_id] = node_info
@@ -302,18 +328,23 @@ class Environment:
                         if entrypoints:
                             for entrypoint in entrypoints:
                                 node_instance.cmd(entrypoint)
-                                LOG.debug("Node %s, format %s, workflow start %s ", node_id, format, entrypoint)
+                                LOG.debug(
+                                    "Node %s, format %s, workflow start %s ",
+                                    node_id,
+                                    format,
+                                    entrypoint,
+                                )
 
             elif format == "process":
                 node_rels = node.get("relationships")
-                
+
                 for rel in node_rels.values():
                     relationship = rel.get("type")
                     target = rel.get("target")
 
                     if relationship == "HostedOn":
                         node_instance = self.nodes.get(target)
-                        
+
                         if node_instance:
                             for workflow in start_workflows:
                                 node_info = self.get_host_ips(node_instance)
@@ -323,25 +354,37 @@ class Environment:
                                 if entrypoints:
                                     for entrypoint in entrypoints:
                                         node_instance.cmd(entrypoint)
-                                        LOG.debug("Node %s, format %s, relationship %s, target %s, workflow start %s ",
-                                                    node_id, format, relationship, target, entrypoint)
+                                        LOG.debug(
+                                            "Node %s, format %s, relationship %s, target %s, workflow start %s ",
+                                            node_id,
+                                            format,
+                                            relationship,
+                                            target,
+                                            entrypoint,
+                                        )
 
                     if relationship == "AttachesTo":
                         node_ip = self.get_host_ip()
-                        node_info = {'ip': node_ip}
+                        node_info = {"ip": node_ip}
                         self.nodes_info[node_id] = node_info
 
                         for workflow in start_workflows:
                             entrypoints = self._format_workflow(workflow, node_info)
-                            
+
                             if entrypoints:
                                 for entrypoint in entrypoints:
                                     node_instance = self._new_process(entrypoint)
                                     self.nodes[node_id] = node_instance
                                     target_id = "host-" + target
-                                    LOG.debug("Node %s, format %s, relationship %s, target %s, workflow start %s ",
-                                                node_id, format, relationship, target_id, entrypoint)
-        
+                                    LOG.debug(
+                                        "Node %s, format %s, relationship %s, target %s, workflow start %s ",
+                                        node_id,
+                                        format,
+                                        relationship,
+                                        target_id,
+                                        entrypoint,
+                                    )
+
         time.sleep(TRIGGER_DELAY)
 
     def parse_info(self, elements, specie):
@@ -351,7 +394,9 @@ class Environment:
             for host in elements:
                 info = {
                     "name": host.name,
-                    "intfs":  dict( [(intf.name,port) for (intf,port) in host.ports.items()] ), 
+                    "intfs": dict(
+                        [(intf.name, port) for (intf, port) in host.ports.items()]
+                    ),
                 }
                 full_info["hosts"][host.name] = info
 
@@ -361,7 +406,9 @@ class Environment:
                 info = {
                     "name": sw.name,
                     "dpid": sw.dpid,
-                    "intfs":  dict( [(intf.name,port) for (intf,port) in sw.ports.items()] ), 
+                    "intfs": dict(
+                        [(intf.name, port) for (intf, port) in sw.ports.items()]
+                    ),
                 }
                 full_info["switches"][sw.name] = info
 
@@ -399,7 +446,7 @@ class Environment:
         LOG.info("Experiment running")
         self.net_topo_info()
         # if cli_mode:  # interactive mode vs. experiment mode
-            # CLI(self.net)
+        # CLI(self.net)
         return True, self.nodes_info
 
     def _stop_network(self):
@@ -410,13 +457,13 @@ class Environment:
     def _stop_processes(self):
         LOG.info("stopping processes")
         nodes_topo = self.topo.get("nodes")
-        
+
         for node_id in self.nodes:
             node_req = nodes_topo.get(node_id, None)
-        
+
             if node_req:
                 format = node_req.get("format")
-                
+
                 if format == "process":
                     node_rels = node_req.get("relationships")
 
@@ -424,15 +471,20 @@ class Environment:
                         relationship = rel.get("type")
                         target = rel.get("target")
 
-                        if relationship == "AttachesTo":                    
+                        if relationship == "AttachesTo":
                             node_process = self.nodes[node_id]
-                        
+
                             if node_process.poll() is None:
                                 # os.killpg( node_process.pid, signal.SIGHUP )
                                 node_process.terminate()
                                 node_process.wait()
 
-                            LOG.info('Node %s process %s stopped return code %s', node_id, node_process.pid, node_process.returncode)
+                            LOG.info(
+                                "Node %s process %s stopped return code %s",
+                                node_id,
+                                node_process.pid,
+                                node_process.returncode,
+                            )
                             node_process = None
                             self.nodes[node_id] = None
 

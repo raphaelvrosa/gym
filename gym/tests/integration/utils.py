@@ -9,7 +9,6 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 
-
 def _parse(out, err):
     """Parses the process output
 
@@ -25,7 +24,8 @@ def _parse(out, err):
     error = err.decode("UTF-8")
     return output, error
 
-def start_process(args):
+
+def start_process(args, shell=False):
     """Run a process using the provided args
     if stop is true it waits the timeout specified
     before stopping the process, otherwise waits till
@@ -38,21 +38,23 @@ def start_process(args):
         process/None -- A process instance if executed correctly,
         or None otherwise
     """
-    
+
     try:
         p = subprocess.Popen(
             args,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            shell=shell,
         )
         process = p
 
     except OSError:
         process = None
     finally:
-        
+
         return process
+
 
 def stop_process(p):
     """Stops the running process
@@ -65,12 +67,12 @@ def stop_process(p):
         correctly or not
     """
     if p:
+        pid = p.pid
         p.kill()
-        # out, err = p.communicate()
-        # out, err = self._parse(out, err)
-        # code = p.returncode          
-        
+        out, err = p.communicate()
+        code = p.returncode
+        logger.debug(f"Process {pid} stopped - return code {code}")
+        # logger.debug(f"Process {pid} stopped - out {out}, err {err}")
         return True
     return False
-
 

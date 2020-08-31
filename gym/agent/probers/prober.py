@@ -15,25 +15,17 @@ class Prober(Tool):
         Tool {class} -- Establishes the core behavior of a Prober that 
         is defined by the Tool.main function
     """
+
     def __init__(self, id, name, parameters, metrics):
         Tool.__init__(self, id, name, parameters, metrics)
         self._type = "prober"
-       
+
     def probe(self, settings):
-        opts = settings.get("opts") 
-        stop = settings.get("stop") 
-        timeout = settings.get("timeout") 
-        
+        opts = settings.get("opts")
+        timeout = settings.get("timeout", None)
+
         cmd = [self._command, *opts]
         self._call = " ".join(cmd)
 
-        ret, output, error = self._processor.start_process(cmd, stop, timeout)
-
-        if ret == 0:
-            results = output
-        elif stop and ret == -9:
-            results = output
-        else:
-            results = {"error": error}
-
+        results = self._processor.start_process(self._call, timeout)
         return results

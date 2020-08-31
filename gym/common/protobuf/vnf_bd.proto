@@ -166,7 +166,7 @@ message VnfBd {
 
       string uuid = 1;
       string name = 2;
-      map<string,Prober> probers = 3;
+      map<uint32,Prober> probers = 3;
     }
 
     message Monitor {
@@ -199,7 +199,7 @@ message VnfBd {
       
       string uuid = 1;
       string name = 2;
-      map<string,Listener> listeners = 3;
+      map<uint32,Listener> listeners = 3;
     }
         
     map<string,Attribute> attributes = 1;

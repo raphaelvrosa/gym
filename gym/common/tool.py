@@ -13,89 +13,48 @@ class Processor:
     def __init__(self):
         self._process = None
 
-    def _parse(self, out, err):
-        """Parses the process output
-
-        Arguments:
-            out {bytes} -- The stdout of the process
-            err {bytes} -- The stderr of the process
-
-        Returns:
-            tuple -- (string, string) Both process out and err 
-            in string format (utf-8)
-        """
-        output = out.decode("UTF-8")
-        error = err.decode("UTF-8")
-        return output, error
-
-    def start_process(self, args, stop=False, timeout=60):
+    def start_process(self, args, timeout=None):
         """Run a process using the provided args
         if stop is true it waits the timeout specified
         before stopping the process, otherwise waits till
         the process stops
 
         Arguments:
-            args {list} -- A process command to be called
+            args {str} -- A process command to be called via shell
 
         Keyword Arguments:
-            stop {boll} -- If the process needs to be stopped (true)
-            or will stop by itself (false) (default: {False})
             timeout {int} -- The time in seconds to wait before
-            stopping the process, in case stop is true (default: {60})
+            stopping the process.
 
         Returns:
-            tuple -- (int, string, string) The return code of the 
+            dict -- (int, string, string) The return code of the 
             process, its stdout and its stderr (both formated in json)
         """
-        code, out, err = 0, {}, {}
+
+        code, out, err = 0, "", ""
+        logger.info(f"Running local process {args} - timeout {timeout}")
 
         try:
-            p = subprocess.Popen(
-                args,
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+            result = subprocess.run(
+                args, check=False, shell=True, capture_output=True, timeout=timeout,
             )
-            self._process = p
+            logger.info(f"Process {result}")
 
-            if stop:
-                if self.stop_process(timeout):
-                    out, err = p.communicate()
-                    out, err = self._parse(out, err)
-                    code = p.returncode
-                else:
-                    code = -1
+            code = result.returncode
+            out = result.stdout.decode("utf-8")
+            err = result.stderr.decode("utf-8")
 
-            else:
-                out, err = p.communicate()
-                out, err = self._parse(out, err)
-                code = p.returncode
-
-        except OSError as e:
+        except Exception as e:
             code = -1
             err = e
         finally:
-            self._process = None
-            return code, out, err
-
-    def stop_process(self, timeout):
-        """Waits a specific timeout in seconds
-        before stopping the running process
-
-        Arguments:
-            timeout {int} -- Seconds of time
-            to sleep before stopping the running
-            process
-
-        Returns:
-            bool -- If the process was stopped 
-            correctly or not
-        """
-        if self._process:
-            time.sleep(timeout)
-            self._process.kill()
-            return True
-        return False
+            results = {
+                "code": code,
+                "out": out,
+                "err": err,
+            }
+            logger.info(f"Process status {results}")
+            return results
 
 
 class Parser:
@@ -156,7 +115,7 @@ class Tool:
         self._tstart = None
         self._tstop = None
         self._default = Tool.DEFAULT_PARAMS
-        self._parser = Parser()
+        self._argparser = Parser()
         self._processor = Processor()
 
     def parser(self, results):
@@ -170,7 +129,17 @@ class Tool:
         Raises:
             NotImplementedError: If the tool does not implement this
         """
-        raise NotImplementedError
+        raise NotImplementedError("Method parser not implemented for tool")
+
+    def format(self, results):
+        metrics, error = [], ""
+
+        try:
+            metrics, error = self.parser(results)
+        except Exception as e:
+            error = repr(e)
+        finally:
+            return metrics, error
 
     def info(self):
         """A default call used to extract
@@ -219,18 +188,21 @@ class Tool:
         }
         return ts
 
-    def output(self, metrics):
+    def output(self, results):
         """Format the output metrics into a dict
         containing the needed info for a snapshot
 
         Arguments:
-            metrics {list} -- Set of metrics output
-            of a tool execution (probe/listen)
+            results {tuple} (metrics {list}, error {str}) -- Set of metrics output
+            of a tool execution (probe/listen), and the error (if existent)
 
         Returns:
             dict -- Formated output fo the tool call
         """
+
+        (metrics, error) = results
         output = {
+            "error": error,
             "metrics": metrics,
             "timestamp": self.timestamp(),
             "source": self.source(),
@@ -249,7 +221,7 @@ class Tool:
             NotImplementedError: Every prober
             must implement this
         """
-        raise NotImplementedError
+        raise NotImplementedError("Method probe must be implemented in Prober")
 
     def listen(self, settings):
         """A listener must implement this
@@ -263,7 +235,7 @@ class Tool:
             NotImplementedError: Every listener
             must implement this
         """
-        raise NotImplementedError
+        raise NotImplementedError("Method listen must be implemented in Listener")
 
     def run(self, settings):
         """Executes the tool call
@@ -283,12 +255,18 @@ class Tool:
         """
         self._tstart = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
-        if self._type == "prober":
-            results = self.probe(settings)
-        elif self._type == "listener":
-            results = self.listen(settings)
+        try:
+            if self._type == "prober":
+                results = self.probe(settings)
+            if self._type == "listener":
+                results = self.listen(settings)
+
+        except Exception as e:
+            logger.info(f"Run tool exception - {repr(e)}")
+            results = {"err": repr(e)}
+
         else:
-            results = {}
+            logger.info(f"Run tool successful")
 
         self._tstop = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
@@ -321,18 +299,16 @@ class Tool:
             options called
         """
         output = {}
-        
-        default_functions = {
-            "info": self.info
-        }
+
+        default_functions = {"info": self.info}
 
         for function_name in default:
             default_call = default_functions.get(function_name, {})
 
             if default_call:
-                call_output = default_call()                
+                call_output = default_call()
                 output.update(call_output)
-            
+
         return output
 
     def serialize(self, args):
@@ -352,11 +328,7 @@ class Tool:
             takes precedence over the other parameters when 
             the tool is called.
         """
-        args_filter = {
-            key: value 
-            for (key, value) in args.items()
-            if value
-        }
+        args_filter = {key: value for (key, value) in args.items() if value}
 
         options = {
             self.parameters[k]: v
@@ -364,11 +336,7 @@ class Tool:
             if k in self.parameters
         }
 
-        default = {
-            k: v
-            for k, v in args_filter.items()
-            if k in self._default
-        }
+        default = {k: v for k, v in args_filter.items() if k in self._default}
 
         if not options:
             if not default:
@@ -385,11 +353,8 @@ class Tool:
             dict -- The parsed args according to the parser
             set parameters and default arguments
         """
-        args = self._parser.parse(
-            params=self.parameters,
-            default=self._default
-        )
-        
+        args = self._argparser.parse(params=self.parameters, default=self._default)
+
         return args
 
     def main(self):
@@ -410,8 +375,8 @@ class Tool:
         else:
             settings = self.options(options)
             results = self.run(settings)
-            metrics = self.parser(results)
-            output = self.output(metrics)
+            formated = self.format(results)
+            output = self.output(formated)
 
         json_output = json.dumps(output, sort_keys=True, indent=4)
         return json_output

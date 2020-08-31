@@ -1,4 +1,5 @@
 import logging
+
 logger = logging.getLogger(__name__)
 
 import psutil as ps
@@ -13,74 +14,109 @@ from datetime import datetime
 
 class ListenerHost(Listener):
     PARAMETERS = {
-        'interval': 'interval',
-        'duration': 'duration',
+        "interval": "interval",
+        "duration": "duration",
     }
 
     METRICS = {
-        0: 'cpu_percent',
-        1: 'user_time',
-        2: 'nice_time',
-        3: 'system_time',
-        4: 'idle_time',
-        5: 'iowait_time',
-        6: 'irq_time',
-        7: 'softirq_time',
-        8: 'steal_time',
-        9: 'guest_time',
-        10: 'guest_nice_time',
-        11: 'mem_percent',
-        12: 'total_mem',
-        13: 'available_mem',
-        14: 'used_mem',
-        15: 'free_mem',
-        16: 'active_mem',
-        17: 'inactive_mem',
-        18: 'buffers_mem',
-        19: 'cached_mem',
-        20: 'shared_mem',
-        21: 'slab_mem',
-        22: 'read_count',
-        23: 'read_bytes',
-        24: 'write_count',
-        25: 'write_bytes'
+        0: "cpu_percent",
+        1: "user_time",
+        2: "nice_time",
+        3: "system_time",
+        4: "idle_time",
+        5: "iowait_time",
+        6: "irq_time",
+        7: "softirq_time",
+        8: "steal_time",
+        9: "guest_time",
+        10: "guest_nice_time",
+        11: "mem_percent",
+        12: "total_mem",
+        13: "available_mem",
+        14: "used_mem",
+        15: "free_mem",
+        16: "active_mem",
+        17: "inactive_mem",
+        18: "buffers_mem",
+        19: "cached_mem",
+        20: "shared_mem",
+        21: "slab_mem",
+        22: "read_count",
+        23: "read_bytes",
+        24: "write_count",
+        25: "write_bytes",
     }
 
     def __init__(self):
-        Listener.__init__(self, id=LISTENER_HOST, name='host',
-                          parameters=ListenerHost.PARAMETERS,
-                          metrics=ListenerHost.METRICS)
+        Listener.__init__(
+            self,
+            id=LISTENER_HOST,
+            name="host",
+            parameters=ListenerHost.PARAMETERS,
+            metrics=ListenerHost.METRICS,
+        )
         self._first = True
         self._command = None
 
     def _get_node_info(self):
         info = {}
         system, node, release, version, machine, processor = pl.uname()
-        info['system'] = system
-        info['node'] = node
-        info['release'] = release
-        info['version'] = version
-        info['machine'] = machine
-        info['processor'] = processor
+        info["system"] = system
+        info["node"] = node
+        info["release"] = release
+        info["version"] = version
+        info["machine"] = machine
+        info["processor"] = processor
         return info
 
     def _get_node_cpu(self, tm, prev_info):
         cpu_stats = {}
         cpu_stats["cpu_percent"] = ps.cpu_percent(interval=0.5)
 
-        user, nice, system, idle, iowait, irq, softirq, steal, guest, guest_nice = ps.cpu_times()
+        (
+            user,
+            nice,
+            system,
+            idle,
+            iowait,
+            irq,
+            softirq,
+            steal,
+            guest,
+            guest_nice,
+        ) = ps.cpu_times()
 
         if self._first == False:
-            cpu_stats["user_time"] = (user - prev_info["user_time"]) / (tm - prev_info["time"])
-            cpu_stats["nice_time"] = (nice - prev_info["nice_time"]) / (tm - prev_info["time"])
-            cpu_stats["system_time"] = (system - prev_info["system_time"]) / (tm - prev_info["time"])
-            cpu_stats["idle_time"] = (idle - prev_info["idle_time"]) / (tm - prev_info["time"])
-            cpu_stats["iowait_time"] = (iowait - prev_info["iowait_time"]) / (tm - prev_info["time"])
-            cpu_stats["irq_time"] = (irq - prev_info["irq_time"]) / (tm - prev_info["time"])
-            cpu_stats["softirq_time"] = (softirq - prev_info["softirq_time"]) / (tm - prev_info["time"])
-            cpu_stats["steal_time"] = (steal - prev_info["steal_time"]) / (tm - prev_info["time"])
-            cpu_stats["guest_time"] = (guest - prev_info["guest_time"]) / (tm - prev_info["time"])
-            cpu_stats["guest_nice_time"] = (guest_nice - prev_info["guest_nice_time"]) / (tm - prev_info["time"])
+            cpu_stats["user_time"] = (user - prev_info["user_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["nice_time"] = (nice - prev_info["nice_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["system_time"] = (system - prev_info["system_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["idle_time"] = (idle - prev_info["idle_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["iowait_time"] = (iowait - prev_info["iowait_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["irq_time"] = (irq - prev_info["irq_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["softirq_time"] = (softirq - prev_info["softirq_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["steal_time"] = (steal - prev_info["steal_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["guest_time"] = (guest - prev_info["guest_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["guest_nice_time"] = (
+                guest_nice - prev_info["guest_nice_time"]
+            ) / (tm - prev_info["time"])
 
         cpu_stats["user_time"] = user
         cpu_stats["nice_time"] = nice
@@ -109,16 +145,16 @@ class ListenerHost(Listener):
 
         mem_stats["mem_percent"] = vm.percent
 
-        mem_stats["total_mem"] = vm.total / (1024. * 1024.)
-        mem_stats["available_mem"] = vm.available / (1024. * 1024.)
-        mem_stats["used_mem"] = vm.used / (1024. * 1024.)
-        mem_stats["free_mem"] = vm.free / (1024. * 1024.)
-        mem_stats["active_mem"] = vm.active / (1024. * 1024.)
-        mem_stats["inactive_mem"] = vm.inactive / (1024. * 1024.)
-        mem_stats["buffers_mem"] = vm.buffers / (1024. * 1024.)
-        mem_stats["cached_mem"] = vm.cached / (1024. * 1024.)
-        mem_stats["shared_mem"] = vm.shared / (1024. * 1024.)
-        mem_stats["slab_mem"] = vm.slab / (1024. * 1024.)
+        mem_stats["total_mem"] = vm.total / (1024.0 * 1024.0)
+        mem_stats["available_mem"] = vm.available / (1024.0 * 1024.0)
+        mem_stats["used_mem"] = vm.used / (1024.0 * 1024.0)
+        mem_stats["free_mem"] = vm.free / (1024.0 * 1024.0)
+        mem_stats["active_mem"] = vm.active / (1024.0 * 1024.0)
+        mem_stats["inactive_mem"] = vm.inactive / (1024.0 * 1024.0)
+        mem_stats["buffers_mem"] = vm.buffers / (1024.0 * 1024.0)
+        mem_stats["cached_mem"] = vm.cached / (1024.0 * 1024.0)
+        mem_stats["shared_mem"] = vm.shared / (1024.0 * 1024.0)
+        mem_stats["slab_mem"] = vm.slab / (1024.0 * 1024.0)
 
         return mem_stats
         # mem = {}
@@ -132,10 +168,18 @@ class ListenerHost(Listener):
 
         dio = ps.disk_io_counters()
         if self._first == False:
-            disk_stats["read_count"] = (dio.read_count * 1.0 - prev_info["read_count"]) / (tm - prev_info["time"])
-            disk_stats["read_bytes"] = (dio.read_bytes * 1.0 - prev_info["read_bytes"]) / (tm - prev_info["time"])
-            disk_stats["write_count"] = (dio.write_count * 1.0 - prev_info["write_count"]) / (tm - prev_info["time"])
-            disk_stats["write_bytes"] = (dio.write_bytes * 1.0 - prev_info["write_bytes"]) / (tm - prev_info["time"])
+            disk_stats["read_count"] = (
+                dio.read_count * 1.0 - prev_info["read_count"]
+            ) / (tm - prev_info["time"])
+            disk_stats["read_bytes"] = (
+                dio.read_bytes * 1.0 - prev_info["read_bytes"]
+            ) / (tm - prev_info["time"])
+            disk_stats["write_count"] = (
+                dio.write_count * 1.0 - prev_info["write_count"]
+            ) / (tm - prev_info["time"])
+            disk_stats["write_bytes"] = (
+                dio.write_bytes * 1.0 - prev_info["write_bytes"]
+            ) / (tm - prev_info["time"])
 
         disk_stats["read_count"] = dio.read_count * 1.0
         disk_stats["read_bytes"] = dio.read_bytes * 1.0
@@ -180,31 +224,26 @@ class ListenerHost(Listener):
 
     def options(self, options):
         opts = {}
-        stop = False
-        timeout = 0
+        timeout = None
         for k, v in options.items():
-            if k == 'stop':
-                stop = True
-            if k == 'duration':
+            # if k == "stop":
+            #     stop = True
+            if k == "duration":
                 timeout = v
             opts[k] = v
-        
-        settings = {
-            "opts": opts,
-            "stop": stop,
-            "timeout": timeout
-        }
+
+        settings = {"opts": opts, "timeout": timeout}
         return settings
 
     def monitor(self, opts):
         results = []
         interval = 1
         t = 3
-        if 'interval' in opts:
-            interval = float(opts.get('interval', 1))
-        
-        if 'duration' in opts:
-            t = float(opts.get('duration', 0))
+        if "interval" in opts:
+            interval = float(opts.get("interval", 1))
+
+        if "duration" in opts:
+            t = float(opts.get("duration", 0))
         else:
             return results
 
@@ -213,7 +252,7 @@ class ListenerHost(Listener):
         measurement["time"] = 0.0
         while True:
             current = datetime.now()
-            seconds = (current-past).total_seconds()
+            seconds = (current - past).total_seconds()
             if seconds > t:
                 break
             else:
@@ -224,12 +263,22 @@ class ListenerHost(Listener):
                 self._first = False
                 results.append(measurement)
                 time.sleep(interval)
-        
-        ret, out, err = 0, results, None
-        return ret, out, err
 
-    def parser(self, out):
-        metrics = []
+        results = {
+            "code": 0,
+            "out": results,
+            "err": "",
+        }
+        return results
+
+    def parser(self, results):
+        metrics, error = [], ""
+
+        out = results.get("out", [])
+        err = results.get("err", "")
+
+        if err:
+            error = err
 
         if out:
             metric_names = list(out[0].keys())
@@ -237,7 +286,18 @@ class ListenerHost(Listener):
             for name in metric_names:
                 # metric_values = dict([ (out.index(out_value),float(out_value.get(name))) for out_value in out ])
 
-                metric_values = dict([ ( out.index(out_value), {"key":out.index(out_value), "value":float(out_value.get(name))} ) for out_value in out ])
+                metric_values = dict(
+                    [
+                        (
+                            out.index(out_value),
+                            {
+                                "key": out.index(out_value),
+                                "value": float(out_value.get(name)),
+                            },
+                        )
+                        for out_value in out
+                    ]
+                )
 
                 m = {
                     "name": name,
@@ -247,11 +307,11 @@ class ListenerHost(Listener):
                 }
 
                 metrics.append(m)
-        
-        return metrics
+
+        return metrics, error
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # opts = {
     #     'interval':1,
     #     'duration':5,

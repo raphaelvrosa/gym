@@ -6,6 +6,7 @@ import typing
 
 import grpclib.const
 import grpclib.client
+
 if typing.TYPE_CHECKING:
     import grpclib.server
 
@@ -17,24 +18,27 @@ from gym.common.protobuf import gym_pb2
 
 
 class PlayerBase(abc.ABC):
-
     @abc.abstractmethod
-    async def Greet(self, stream: 'grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]') -> None:
+    async def Greet(
+        self, stream: "grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]"
+    ) -> None:
         pass
 
     @abc.abstractmethod
-    async def CallLayout(self, stream: 'grpclib.server.Stream[gym_pb2.Layout, gym_pb2.Result]') -> None:
+    async def CallLayout(
+        self, stream: "grpclib.server.Stream[gym_pb2.Layout, gym_pb2.Result]"
+    ) -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/gym.Player/Greet': grpclib.const.Handler(
+            "/gym.Player/Greet": grpclib.const.Handler(
                 self.Greet,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Info,
                 gym_pb2.Info,
             ),
-            '/gym.Player/CallLayout': grpclib.const.Handler(
+            "/gym.Player/CallLayout": grpclib.const.Handler(
                 self.CallLayout,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Layout,
@@ -44,41 +48,37 @@ class PlayerBase(abc.ABC):
 
 
 class PlayerStub:
-
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel,
-            '/gym.Player/Greet',
-            gym_pb2.Info,
-            gym_pb2.Info,
+            channel, "/gym.Player/Greet", gym_pb2.Info, gym_pb2.Info,
         )
         self.CallLayout = grpclib.client.UnaryUnaryMethod(
-            channel,
-            '/gym.Player/CallLayout',
-            gym_pb2.Layout,
-            gym_pb2.Result,
+            channel, "/gym.Player/CallLayout", gym_pb2.Layout, gym_pb2.Result,
         )
 
 
 class ManagerBase(abc.ABC):
-
     @abc.abstractmethod
-    async def Greet(self, stream: 'grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]') -> None:
+    async def Greet(
+        self, stream: "grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]"
+    ) -> None:
         pass
 
     @abc.abstractmethod
-    async def CallTask(self, stream: 'grpclib.server.Stream[gym_pb2.Task, gym_pb2.Report]') -> None:
+    async def CallTask(
+        self, stream: "grpclib.server.Stream[gym_pb2.Task, gym_pb2.Report]"
+    ) -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/gym.Manager/Greet': grpclib.const.Handler(
+            "/gym.Manager/Greet": grpclib.const.Handler(
                 self.Greet,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Info,
                 gym_pb2.Info,
             ),
-            '/gym.Manager/CallTask': grpclib.const.Handler(
+            "/gym.Manager/CallTask": grpclib.const.Handler(
                 self.CallTask,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Task,
@@ -88,41 +88,37 @@ class ManagerBase(abc.ABC):
 
 
 class ManagerStub:
-
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel,
-            '/gym.Manager/Greet',
-            gym_pb2.Info,
-            gym_pb2.Info,
+            channel, "/gym.Manager/Greet", gym_pb2.Info, gym_pb2.Info,
         )
         self.CallTask = grpclib.client.UnaryUnaryMethod(
-            channel,
-            '/gym.Manager/CallTask',
-            gym_pb2.Task,
-            gym_pb2.Report,
+            channel, "/gym.Manager/CallTask", gym_pb2.Task, gym_pb2.Report,
         )
 
 
 class AgentBase(abc.ABC):
-
     @abc.abstractmethod
-    async def Greet(self, stream: 'grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]') -> None:
+    async def Greet(
+        self, stream: "grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]"
+    ) -> None:
         pass
 
     @abc.abstractmethod
-    async def CallInstruction(self, stream: 'grpclib.server.Stream[gym_pb2.Instruction, gym_pb2.Snapshot]') -> None:
+    async def CallInstruction(
+        self, stream: "grpclib.server.Stream[gym_pb2.Instruction, gym_pb2.Snapshot]"
+    ) -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/gym.Agent/Greet': grpclib.const.Handler(
+            "/gym.Agent/Greet": grpclib.const.Handler(
                 self.Greet,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Info,
                 gym_pb2.Info,
             ),
-            '/gym.Agent/CallInstruction': grpclib.const.Handler(
+            "/gym.Agent/CallInstruction": grpclib.const.Handler(
                 self.CallInstruction,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Instruction,
@@ -132,41 +128,40 @@ class AgentBase(abc.ABC):
 
 
 class AgentStub:
-
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel,
-            '/gym.Agent/Greet',
-            gym_pb2.Info,
-            gym_pb2.Info,
+            channel, "/gym.Agent/Greet", gym_pb2.Info, gym_pb2.Info,
         )
         self.CallInstruction = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/gym.Agent/CallInstruction',
+            "/gym.Agent/CallInstruction",
             gym_pb2.Instruction,
             gym_pb2.Snapshot,
         )
 
 
 class MonitorBase(abc.ABC):
-
     @abc.abstractmethod
-    async def Greet(self, stream: 'grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]') -> None:
+    async def Greet(
+        self, stream: "grpclib.server.Stream[gym_pb2.Info, gym_pb2.Info]"
+    ) -> None:
         pass
 
     @abc.abstractmethod
-    async def CallInstruction(self, stream: 'grpclib.server.Stream[gym_pb2.Instruction, gym_pb2.Snapshot]') -> None:
+    async def CallInstruction(
+        self, stream: "grpclib.server.Stream[gym_pb2.Instruction, gym_pb2.Snapshot]"
+    ) -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/gym.Monitor/Greet': grpclib.const.Handler(
+            "/gym.Monitor/Greet": grpclib.const.Handler(
                 self.Greet,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Info,
                 gym_pb2.Info,
             ),
-            '/gym.Monitor/CallInstruction': grpclib.const.Handler(
+            "/gym.Monitor/CallInstruction": grpclib.const.Handler(
                 self.CallInstruction,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Instruction,
@@ -176,31 +171,28 @@ class MonitorBase(abc.ABC):
 
 
 class MonitorStub:
-
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel,
-            '/gym.Monitor/Greet',
-            gym_pb2.Info,
-            gym_pb2.Info,
+            channel, "/gym.Monitor/Greet", gym_pb2.Info, gym_pb2.Info,
         )
         self.CallInstruction = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/gym.Monitor/CallInstruction',
+            "/gym.Monitor/CallInstruction",
             gym_pb2.Instruction,
             gym_pb2.Snapshot,
         )
 
 
 class InfraBase(abc.ABC):
-
     @abc.abstractmethod
-    async def Run(self, stream: 'grpclib.server.Stream[gym_pb2.Deploy, gym_pb2.Built]') -> None:
+    async def Run(
+        self, stream: "grpclib.server.Stream[gym_pb2.Deploy, gym_pb2.Built]"
+    ) -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/gym.Infra/Run': grpclib.const.Handler(
+            "/gym.Infra/Run": grpclib.const.Handler(
                 self.Run,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 gym_pb2.Deploy,
@@ -210,11 +202,8 @@ class InfraBase(abc.ABC):
 
 
 class InfraStub:
-
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Run = grpclib.client.UnaryUnaryMethod(
-            channel,
-            '/gym.Infra/Run',
-            gym_pb2.Deploy,
-            gym_pb2.Built,
+            channel, "/gym.Infra/Run", gym_pb2.Deploy, gym_pb2.Built,
         )
+

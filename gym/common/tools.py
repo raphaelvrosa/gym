@@ -58,7 +58,7 @@ class Loader:
 
         Returns:
             [list] -- All the file names inside a folder
-        """       
+        """
         logger.debug(
             f"Loading files in folder {folder} - "
             f"prefix {prefix} and suffix {suffix} - full/abs path {full_path}"
@@ -83,7 +83,7 @@ class Handler:
         Returns:
             string -- Attached cmd prefix into the call to run it as python3.7 executable
         """
-        cmd = ["/usr/bin/python3.7"]
+        cmd = ["python3.8"]
 
         if type(call) is list:
             fields = [str(c) for c in call]
@@ -175,7 +175,7 @@ class Handler:
             _, _ = await asyncio.wait({task})
             stop = datetime.now()
             task_duration = (stop - start).total_seconds()
-        
+
         return task_duration
 
     async def _check_task_result(self, uid, task):
@@ -239,7 +239,7 @@ class Handler:
 
             task = loop.create_task(self._call(cmd))
             logger.debug(f"Task {uid} created {task}")
-            
+
             task_duration = await self._check_task(uid, task, duration)
             result = await self._check_task_result(uid, task)
 
@@ -248,11 +248,11 @@ class Handler:
                 results.append(result)
             else:
                 logger.debug(f"Task {uid} result unavailable")
-           
+
             timeout += task_duration + interval
-            if self._check_finish(uid, finish, timeout):            
+            if self._check_finish(uid, finish, timeout):
                 break
-            
+
         return results
 
     async def _build(self, calls):
@@ -343,14 +343,14 @@ class Tools:
         """
         keys = ["folder", "prefix", "suffix", "full_path"]
         if all([True if k in config else False for k in keys]):
-            self._cfg = {k:v for k,v in config.items() if k in keys}
-            
+            self._cfg = {k: v for k, v in config.items() if k in keys}
+
     async def load(self, config):
         """Uses parameters configured in self.cfg() to load the tools into:
         - self._files (dict of tools file paths listed by Loader indexed by tool id)
         - self._info (dict of info of tools extracted with Handler indexed by tool id)
         """
-        
+
         self.cfg(config)
         files = self.loader.files(**self._cfg)
 
@@ -376,7 +376,6 @@ class Tools:
         logger.info(f"Tools loaded: {tools_names}")
 
         logger.debug(f"Tools full info: {self._info}")
-    
 
     def info(self):
         """Gets the information of tools after listed and loaded
@@ -457,7 +456,7 @@ class Tools:
             dict -- Set of metrics (indexed by name) and call unique identifier
         """
         metrics = {}
-        
+
         for metric in out.get("metrics"):
             name = metric.get("name")
             metrics[name] = metric
@@ -489,11 +488,24 @@ class Tools:
             logger.info(f"Could not parse result of call {uid} stdout - exception {e}")
             out = {}
         else:
-            out = self.__extract_metrics(uid, out)
+            # out = self.__extract_metrics(uid, out)
+            out["id"] = uid
             logger.debug(f"Parsed result of call {uid} stdout")
 
         finally:
             return out
+
+    def __parse_stderr(self, uid, stderr):
+        try:
+            err = json.loads(stderr)
+        except Exception as e:
+            logger.info(f"Could not parse stderr of call {uid} - exception {e}")
+            err = {}
+        else:
+            logger.debug(f"Parsed stderr result of call {uid} - stderr {err}")
+            err = {"id": uid, "error": err}
+        finally:
+            return err
 
     def __parse_result(self, uid, result):
         """Parse result of call identified by uid
@@ -508,15 +520,19 @@ class Tools:
             output is None in this case, or correct parsed result of
             result parsing
         """
-        stdout = result.get("stdout")
+        stdout = result.get("stdout", "")
+        stderr = result.get("stderr", "")
+
+        out, err = {}, {}
 
         if stdout:
             out = self.__parse_stdout(uid, stdout)
-            return out, None
+
         else:
-            expt = result.get("stderr")
-            logger.debug(f"Could not run instruction {uid} - exception {expt}")
-            return None, expt
+            err = self.__parse_stderr(uid, stderr)
+            logger.debug(f"Could not run instruction {uid} - error {err}")
+
+        return out, err
 
     def __build_outputs(self, results):
         """Parses all the ouputs of results of list of calls executed
@@ -536,6 +552,7 @@ class Tools:
 
                 if err:
                     logger.info(f"Error in call {uid} executed")
+                    outs.append(err)
                 else:
                     logger.info(f"Call {uid} successfully executed")
                     outs.append(out)
@@ -560,5 +577,5 @@ class Tools:
         results = await self.handler.run(calls)
         outputs = self.__build_outputs(results)
         logger.info(f"Finished handling instruction actions")
-        logger.debug(f"{outputs}")
+        # logger.debug(f"{outputs}")
         return outputs

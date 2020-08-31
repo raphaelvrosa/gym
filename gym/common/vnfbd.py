@@ -105,6 +105,7 @@ class Proceedings:
         return req_params
 
     def params(self, req_tool, aval_tool):
+        logger.info("Evaluating tools parameters")
         ack_req_tool_set = []
 
         aval_params = aval_tool.get("parameters")
@@ -123,9 +124,7 @@ class Proceedings:
                 "sched": req_sched,
             }
             req_tool_instances = req_tool.get("instances", 1)
-            ack_req_tool_set = [ack_req_tool] * len(
-                range(int(req_tool_instances))
-            )
+            ack_req_tool_set = [ack_req_tool] * len(range(int(req_tool_instances)))
 
         else:
             logger.debug(
@@ -135,6 +134,7 @@ class Proceedings:
         return ack_req_tool_set
 
     def tools(self, req_tools, disp_tools):
+        logger.info("Evaluating tools")
         tools_ok = {}
         tool_set = []
 
@@ -142,7 +142,8 @@ class Proceedings:
             [(available.get("id"), available) for available in disp_tools]
         )
 
-        for req_tool_id, req_tool in req_tools.items():
+        for req_tool in req_tools.values():
+            req_tool_id = req_tool.get("id")
             tools_ok[req_tool_id] = False
             aval_tool = avail_tools.get(req_tool_id)
 
@@ -152,12 +153,18 @@ class Proceedings:
                 if tool_set_ok:
                     tool_set.extend(tool_set_ok)
                     tools_ok[req_tool_id] = True
+                else:
+                    logger.debug(f"No params match for tool id {req_tool_id}")
+            else:
+                logger.debug(
+                    f"No available tool id {req_tool_id} in toolset: {avail_tools.keys()}"
+                )
 
         if all(tools_ok.values()):
-            logger.debug(f"All tools satisfied")
+            logger.info(f"All tools satisfied")
             return tool_set
         else:
-            logger.debug(f"Not all tools satisfied: status {tools_ok}")
+            logger.info(f"Not all tools satisfied: status {tools_ok}")
             return []
 
     def embed(self, required, available, tools_type):
@@ -181,7 +188,10 @@ class Proceedings:
         tools_type = "probers" if role == "agents" else "listeners"
 
         for req_uuid, required in requisites_ids.items():
-            available = availables_ids.get(req_uuid, {})
+            available = availables_ids.get(
+                req_uuid, {}
+            )  # TODO: make orch even if req_uuid not in available_ids
+
             component = self.embed(required, available, tools_type)
             selected.append(component)
 
@@ -379,15 +389,19 @@ class VNFBD:
         logger.info("Creating vnf-bd instances")
 
         if self._template:
+            logger.info("Rendering vnf-bd template")
             templates = self.multiplex(self._template)
         else:
-            templates = self.multiplex(self._data)
+            logger.info("No vnf-bd template")
+            templates = [self._data]
 
         for template in templates:
-            valid_template = self.validate(template)
+
+            instance = VNFBD(data=template)
+            valid_template = instance.parse(template)
 
             if valid_template:
-                yield VNFBD(data=template)
+                yield instance
 
     def build_task(self, apparatus):
         proceedings = self._data.get("proceedings")
@@ -408,13 +422,17 @@ class VNFBD:
         return environment
 
     def tests(self):
-        experiments = self._data.get("experiments")
-        tests = experiments.get("tests", 1)
+        # experiments = self._data.get("experiments")
+        # tests = experiments.get("tests", 1)
+        tests_yang = self._yang.experiments.tests.getValue()
+        tests = tests_yang.real
         return tests
 
     def trials(self):
-        experiments = self._data.get("experiments")
-        trials = experiments.get("trials", 1)
+        # experiments = self._data.get("experiments")
+        # trials = experiments.get("trials", 1)
+        trials_yang = self._yang.experiments.trials.getValue()
+        trials = trials_yang.real
         return trials
 
     def parse_contacts(self, info, select_contacts):
@@ -454,7 +472,7 @@ class VNFBD:
             node_id = node.get("id")
 
             if role == "agent":
-                agents.append()
+                agents.append(node_id)
             if role == "monitor":
                 monitors.append(node_id)
             if role == "manager":
@@ -480,20 +498,20 @@ class VNFBD:
 
     def parse(self, data=None):
         data = data if data else self._data
-        
+
         yang_model = self._utils.parse(data, vnf_bd, "vnf-bd")
-        
+
         if yang_model:
             logger.info(f"Parsing YANG model data successful")
             self._yang = yang_model
             return True
-        
+
         logger.info(f"Could not parse YANG model data")
         return False
 
     def validate(self, data):
         yang_model = self._utils.parse(data, vnf_bd, "vnf-bd")
-        
+
         if yang_model:
             ack = True
             logger.info("Check vnf-bd model: valid")
@@ -525,10 +543,10 @@ class VNFBD:
 
             if type(inputs) is bytes:
                 inputs_dict = self.parse_bytes(inputs)
-            
+
             if type(inputs) is dict:
                 inputs_dict = inputs
-            
+
             if inputs_dict:
                 self._inputs_data = inputs_dict
 
@@ -536,15 +554,15 @@ class VNFBD:
         if template:
             template_dict = {}
             logger.info("Set vnf-bd template")
-            
+
             if type(template) is bytes:
                 template_dict = self.parse_bytes(template)
-                
+
             if type(template) is dict:
                 template_dict = template
-            
+
             if template_dict:
-                self._template = template_dict       
+                self._template = template_dict
 
     def init(self, inputs, template, model):
         """Inits the VNF-BD

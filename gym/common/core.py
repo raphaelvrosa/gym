@@ -103,12 +103,12 @@ class Core:
             "agent": AgentStub,
             "monitor": MonitorStub,
             "manager": ManagerStub,
-            "player": PlayerStub
+            "player": PlayerStub,
         }
-        
+
         channel = Channel(host, port)
         stub_class = stubs.get(role, None)
-       
+
         if stub_class:
             logger.info(f"Contacting {role} at {host}:{port}")
             stub = stub_class(channel)
@@ -119,8 +119,7 @@ class Core:
             else:
                 logger.info(f"Could not contact {host}:{port}")
         else:
-            logger.info(f"Could not contact role {role} - "
-                        f"no stub/client available")
+            logger.info(f"Could not contact role {role} - " f"no stub/client available")
 
         channel.close()
 
@@ -317,11 +316,8 @@ class WorkerCore(Core):
             evaluations.
         """
         logger.info("Creating Snapshot")
-        
-        snapshot = Snapshot(
-            id=instruction.get("id"),
-            trial=instruction.get("trial")
-        )
+
+        snapshot = Snapshot(id=instruction.get("id"), trial=instruction.get("trial"))
 
         snap = {
             "origin": self.origin(),
@@ -384,7 +380,6 @@ class ManagerCore(Core):
             for k in tool.parameters:
                 action.args[k] = tool.parameters[k]
 
-            
             action.sched.CopyFrom(tool.sched)
 
             action_ids += 1
@@ -453,7 +448,7 @@ class ManagerCore(Core):
 
         logger.debug(f"Status of instructions per requested uuid: {instructions_built}")
         all_instructions_ok = all(instructions_built.values())
-        
+
         return instructions, all_instructions_ok
 
     def check_uuids(self, locals, requested):
@@ -513,18 +508,17 @@ class ManagerCore(Core):
             if all instructions were built correctly
         """
         logger.info(f"Building instructions for {role}")
-        
+
         instructions, all_instructions_ok = {}, False
 
-        tools_name = {
-            "agents": "probers",
-            "monitors": "listeners"
-        }
+        tools_name = {"agents": "probers", "monitors": "listeners"}
         tools_type = tools_name.get(role, None)
 
         if tools_type:
             if self.check_uuids(locals, requested):
-                instructions, all_instructions_ok = self.build_instructions(requested, tools_type)
+                instructions, all_instructions_ok = self.build_instructions(
+                    requested, tools_type
+                )
 
         if all_instructions_ok:
             logger.info(f"All instructions built for {role}")
@@ -532,8 +526,23 @@ class ManagerCore(Core):
             logger.info(f"Not all instructions built for {role}")
 
         return instructions, all_instructions_ok
-        
+
     async def call_peer(self, role, address, instruction):
+        """Performs the call of a instruction in a agent/monitor
+        peer.
+
+        Arguments:
+            role {string} -- The role of the peer being called
+            (i.e., agent or monitor)
+            address {string} -- The address (ip:port) of the peer
+            being called
+            instruction {Instruction} -- A gRPC message of type Instruction
+            
+        Returns:
+            Snapshot -- A gRPC message of type Snapshot
+            if not exceptions are raised because of grpc error
+            or os error
+        """
         reply = Snapshot(id=instruction.id)
 
         host, port = address.split(":")
@@ -545,8 +554,7 @@ class ManagerCore(Core):
             stub = MonitorStub(channel)
         else:
             stub = None
-            logger.info(f"Could not contact role {role} - " 
-                        f"no stub/client available")
+            logger.info(f"Could not contact role {role} - no stub/client available")
             raise (Exception(f"No stub/client available for {role}"))
 
         try:
@@ -554,12 +562,12 @@ class ManagerCore(Core):
 
         except GRPCError as e:
             logger.info(f"Error in instruction call at {address}")
-            logger.debug(f"Exception: {e}")
+            logger.debug(f"Exception: {repr(e)}")
             raise (e)
 
         except OSError as e:
             logger.info(f"Could not open channel for instruction call at {address}")
-            logger.debug(f"Exception: {e}")
+            logger.debug(f"Exception: {repr(e)}")
             raise (e)
 
         channel.close()
@@ -608,8 +616,13 @@ class ManagerCore(Core):
             if isinstance(snap, Exception):
                 instruction = instructions[uuid]
                 logger.info(f"Snapshot fail from uuid {uuid}")
+                logger.debug(f"Exception: {repr(snap)}")
                 logger.debug(f"Instruction: {instruction}")
-                logger.debug(f"Exception: {snap}")
+
+                snapshot_err = Snapshot(
+                    id=instruction.id, trial=instruction.trial, error=repr(snap)
+                )
+                snapshots.append(snapshot_err)
             else:
                 logger.info(f"Snapshot ok from uuid {uuid}")
                 snapshots.append(snap)
@@ -643,10 +656,11 @@ class ManagerCore(Core):
         trial_snapshots = await self.call_instructions(instructions, peers)
 
         snap_ids = [snap.id for snap in trial_snapshots]
-        snaps_ack = [True if inst_id in snap_ids else False
-                    for inst_id in instruction_ids]
+        snaps_ack = [
+            True if inst_id in snap_ids else False for inst_id in instruction_ids
+        ]
         snaps_status = all(snaps_ack)
-        
+
         return trial_snapshots, snaps_status
 
     async def trials(self, trials, instructions, peers):
@@ -665,10 +679,10 @@ class ManagerCore(Core):
             each trial, and its instructions
         """
         snapshots = []
-        
-        for trial in range(trials):
+
+        for trial in range(trials, trials + 1):
             logger.info(f"Trial: {trial} of total {trials}")
-            
+
             trial_snapshots, snaps_status = await self.trial(trial, instructions, peers)
 
             if snaps_status:
@@ -715,7 +729,7 @@ class ManagerCore(Core):
 
         agents_peers = self.status.get_peers("role", "agent")
         monitors_peers = self.status.get_peers("role", "monitor")
-        
+
         agents_instructions, ai_ok = self.instructions(
             agents_peers, task.agents, "agents"
         )
@@ -863,6 +877,7 @@ class PlayerCore(Core):
             the called Task message
         """
         logger.info(f"Calling test task at manager uuid {uuid}")
+        logger.debug(f"{json_format.MessageToJson(task)}")
 
         peers = self.status.get_peers("role", "manager")
         peer = peers.get(uuid)
@@ -870,26 +885,29 @@ class PlayerCore(Core):
         host, port = address.split(":")
         channel = Channel(host, port)
 
+        report_msg = Report(id=task.id, test=task.test)
+
         try:
             stub = ManagerStub(channel)
             report_msg = await stub.CallTask(task)
 
         except GRPCError as e:
             logger.info(f"Error in task call")
-            logger.debug(f"{e}")
-            report = {}
+            logger.debug(f"{repr(e)}")
+            report_msg = Report(id=task.id, test=task.test, error=repr(e))
 
         except OSError as e:
             logger.info(f"Error in channel for task call")
-            logger.debug(f"{e}")
-            report = {}
+            logger.debug(f"{repr(e)}")
+            report_msg = Report(id=task.id, test=task.test, error=repr(e))
 
         else:
-            report = json_format.MessageToDict(
-                report_msg, preserving_proto_field_name=True
-            )
+            logger.debug(f"Report received")
 
-        channel.close()
+        finally:
+            report = json_format.MessageToDict(report_msg)
+            channel.close()
+
         return report
 
     def task_template(self, vnfbd):
@@ -945,17 +963,24 @@ class PlayerCore(Core):
 
         if uuid and task_template:
             logger.info(f"Building task for test {test} with {trials} trials")
-            logger.debug(f"Creating task from template: {task_template}")
+            # logger.debug(f"Creating task from template: {task_template}")
 
             task = Task(id=test, test=test, trials=trials)
-            json_format.ParseDict(task_template, task)
+
+            logger.debug(f"Parsing task template: {task_template}")
+
+            task = json_format.ParseDict(task_template, task)
             report = await self.call_task(uuid, task)
 
         else:
             logger.info(
                 f"Failed to build task for test {test} - no manager apparatus available"
             )
-            report = {}
+            report = {
+                "id": test,
+                "test": test,
+                "error": f"Failed to build task for test {test} - no manager apparatus available",
+            }
 
         return report
 
@@ -1000,13 +1025,15 @@ class PlayerCore(Core):
         logger.info("Starting vnf-bd instance tests")
 
         tests = vnfbd_instance.tests()
-        trials = vnfbd_instance.tests()
+        trials = vnfbd_instance.trials()
         reports_ok = {}
         reports = []
         vnfbd_deployed = False
 
-        for test in range(tests):
-            logger.info(f"Starting test {test} out of {tests} in total")
+        for test in range(tests, tests + 1):
+            logger.info(
+                f"Starting test {test} out of {tests} in total - trials {trials}"
+            )
             reports_ok[test] = False
 
             vnfbd_deployed = await self.scenario(test, vnfbd_instance, vnfbd_deployed)

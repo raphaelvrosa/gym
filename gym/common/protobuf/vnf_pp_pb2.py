@@ -20,7 +20,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='gym',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x0cvnf_pp.proto\x12\x03gym\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x82\x0b\n\x05VnfPp\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12-\n\ttimestamp\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x07reports\x18\x07 \x03(\x0b\x32\x17.gym.VnfPp.ReportsEntry\x1a\x8c\t\n\x06Report\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04test\x18\x02 \x01(\r\x12\x33\n\tsnapshots\x18\x03 \x03(\x0b\x32 .gym.VnfPp.Report.SnapshotsEntry\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xb5\x07\n\x08Snapshot\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\r\x12\x31\n\x06origin\x18\x03 \x01(\x0b\x32!.gym.VnfPp.Report.Snapshot.Origin\x12@\n\x0b\x65valuations\x18\x04 \x03(\x0b\x32+.gym.VnfPp.Report.Snapshot.EvaluationsEntry\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\xea\x04\n\nEvaluation\x12\n\n\x02id\x18\x01 \x01(\x05\x12<\n\x06source\x18\x02 \x01(\x0b\x32,.gym.VnfPp.Report.Snapshot.Evaluation.Source\x12\x43\n\x07metrics\x18\x03 \x03(\x0b\x32\x32.gym.VnfPp.Report.Snapshot.Evaluation.MetricsEntry\x12\x42\n\ttimestamp\x18\x04 \x01(\x0b\x32/.gym.VnfPp.Report.Snapshot.Evaluation.Timestamp\x1ax\n\x06Metric\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x0c\n\x04unit\x18\x03 \x01(\t\x12\x10\n\x06scalar\x18\x04 \x01(\x01H\x00\x12)\n\x06series\x18\x05 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x42\x07\n\x05value\x1aO\n\x06Source\x12\x0c\n\x04\x63\x61ll\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x0f\n\x07version\x18\x05 \x01(\t\x1a`\n\tTimestamp\x12)\n\x05start\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x04stop\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\\\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12;\n\x05value\x18\x02 \x01(\x0b\x32,.gym.VnfPp.Report.Snapshot.Evaluation.Metric:\x02\x38\x01\x1a\"\n\x06Origin\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x1aY\n\x10\x45valuationsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x34\n\x05value\x18\x02 \x01(\x0b\x32%.gym.VnfPp.Report.Snapshot.Evaluation:\x02\x38\x01\x1aL\n\x0eSnapshotsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.gym.VnfPp.Report.Snapshot:\x02\x38\x01\x1a\x41\n\x0cReportsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.gym.VnfPp.Report:\x02\x38\x01\x62\x06proto3'
+  create_key=_descriptor._internal_create_key,
+  serialized_pb=b'\n\x0cvnf_pp.proto\x12\x03gym\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xce\n\n\x05VnfPp\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12-\n\ttimestamp\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x07reports\x18\x07 \x03(\x0b\x32\x17.gym.VnfPp.ReportsEntry\x1a\xd8\x08\n\x06Report\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04test\x18\x02 \x01(\r\x12\x33\n\tsnapshots\x18\x03 \x03(\x0b\x32 .gym.VnfPp.Report.SnapshotsEntry\x12-\n\ttimestamp\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05\x65rror\x18\x05 \x01(\t\x1a\xf2\x06\n\x08Snapshot\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05trial\x18\x02 \x01(\r\x12\x31\n\x06origin\x18\x03 \x01(\x0b\x32!.gym.VnfPp.Report.Snapshot.Origin\x12:\n\x0b\x65valuations\x18\x04 \x03(\x0b\x32%.gym.VnfPp.Report.Snapshot.Evaluation\x12-\n\ttimestamp\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05\x65rror\x18\x06 \x01(\t\x1a\xf9\x04\n\nEvaluation\x12\n\n\x02id\x18\x01 \x01(\x05\x12<\n\x06source\x18\x02 \x01(\x0b\x32,.gym.VnfPp.Report.Snapshot.Evaluation.Source\x12\x43\n\x07metrics\x18\x03 \x03(\x0b\x32\x32.gym.VnfPp.Report.Snapshot.Evaluation.MetricsEntry\x12\x42\n\ttimestamp\x18\x04 \x01(\x0b\x32/.gym.VnfPp.Report.Snapshot.Evaluation.Timestamp\x12\r\n\x05\x65rror\x18\x05 \x01(\t\x1ax\n\x06Metric\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x0c\n\x04unit\x18\x03 \x01(\t\x12\x10\n\x06scalar\x18\x04 \x01(\x01H\x00\x12)\n\x06series\x18\x05 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x42\x07\n\x05value\x1aO\n\x06Source\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x63\x61ll\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x0f\n\x07version\x18\x05 \x01(\t\x1a`\n\tTimestamp\x12)\n\x05start\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\x04stop\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1a\\\n\x0cMetricsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12;\n\x05value\x18\x02 \x01(\x0b\x32,.gym.VnfPp.Report.Snapshot.Evaluation.Metric:\x02\x38\x01\x1a\"\n\x06Origin\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04role\x18\x02 \x01(\t\x1aL\n\x0eSnapshotsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.gym.VnfPp.Report.Snapshot:\x02\x38\x01\x1a\x41\n\x0cReportsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.gym.VnfPp.Report:\x02\x38\x01\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -33,6 +34,7 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRIC = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='name', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Metric.name', index=0,
@@ -40,35 +42,35 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRIC = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='type', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Metric.type', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='unit', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Metric.unit', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='scalar', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Metric.scalar', index=3,
       number=4, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='series', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Metric.series', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -82,10 +84,12 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRIC = _descriptor.Descriptor(
   oneofs=[
     _descriptor.OneofDescriptor(
       name='value', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Metric.value',
-      index=0, containing_type=None, fields=[]),
+      index=0, containing_type=None,
+      create_key=_descriptor._internal_create_key,
+    fields=[]),
   ],
-  serialized_start=830,
-  serialized_end=950,
+  serialized_start=869,
+  serialized_end=989,
 )
 
 _VNFPP_REPORT_SNAPSHOT_EVALUATION_SOURCE = _descriptor.Descriptor(
@@ -94,42 +98,43 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_SOURCE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='call', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Source.call', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='id', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Source.id', index=1,
-      number=2, type=5, cpp_type=1, label=1,
+      name='id', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Source.id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='call', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Source.call', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='name', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Source.name', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='type', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Source.type', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='version', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Source.version', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -142,8 +147,8 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_SOURCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=952,
-  serialized_end=1031,
+  serialized_start=991,
+  serialized_end=1070,
 )
 
 _VNFPP_REPORT_SNAPSHOT_EVALUATION_TIMESTAMP = _descriptor.Descriptor(
@@ -152,6 +157,7 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_TIMESTAMP = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='start', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Timestamp.start', index=0,
@@ -159,14 +165,14 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_TIMESTAMP = _descriptor.Descriptor(
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='stop', full_name='gym.VnfPp.Report.Snapshot.Evaluation.Timestamp.stop', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -179,8 +185,8 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_TIMESTAMP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1033,
-  serialized_end=1129,
+  serialized_start=1072,
+  serialized_end=1168,
 )
 
 _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRICSENTRY = _descriptor.Descriptor(
@@ -189,6 +195,7 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRICSENTRY = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='key', full_name='gym.VnfPp.Report.Snapshot.Evaluation.MetricsEntry.key', index=0,
@@ -196,14 +203,14 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRICSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='value', full_name='gym.VnfPp.Report.Snapshot.Evaluation.MetricsEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -216,8 +223,8 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRICSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1131,
-  serialized_end=1223,
+  serialized_start=1170,
+  serialized_end=1262,
 )
 
 _VNFPP_REPORT_SNAPSHOT_EVALUATION = _descriptor.Descriptor(
@@ -226,6 +233,7 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='gym.VnfPp.Report.Snapshot.Evaluation.id', index=0,
@@ -233,28 +241,35 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='source', full_name='gym.VnfPp.Report.Snapshot.Evaluation.source', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='metrics', full_name='gym.VnfPp.Report.Snapshot.Evaluation.metrics', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='timestamp', full_name='gym.VnfPp.Report.Snapshot.Evaluation.timestamp', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='gym.VnfPp.Report.Snapshot.Evaluation.error', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -267,8 +282,8 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=605,
-  serialized_end=1223,
+  serialized_start=629,
+  serialized_end=1262,
 )
 
 _VNFPP_REPORT_SNAPSHOT_ORIGIN = _descriptor.Descriptor(
@@ -277,6 +292,7 @@ _VNFPP_REPORT_SNAPSHOT_ORIGIN = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='gym.VnfPp.Report.Snapshot.Origin.id', index=0,
@@ -284,14 +300,14 @@ _VNFPP_REPORT_SNAPSHOT_ORIGIN = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='role', full_name='gym.VnfPp.Report.Snapshot.Origin.role', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -304,45 +320,8 @@ _VNFPP_REPORT_SNAPSHOT_ORIGIN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1225,
-  serialized_end=1259,
-)
-
-_VNFPP_REPORT_SNAPSHOT_EVALUATIONSENTRY = _descriptor.Descriptor(
-  name='EvaluationsEntry',
-  full_name='gym.VnfPp.Report.Snapshot.EvaluationsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.VnfPp.Report.Snapshot.EvaluationsEntry.key', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.VnfPp.Report.Snapshot.EvaluationsEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1261,
-  serialized_end=1350,
+  serialized_start=1264,
+  serialized_end=1298,
 )
 
 _VNFPP_REPORT_SNAPSHOT = _descriptor.Descriptor(
@@ -351,6 +330,7 @@ _VNFPP_REPORT_SNAPSHOT = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='gym.VnfPp.Report.Snapshot.id', index=0,
@@ -358,39 +338,46 @@ _VNFPP_REPORT_SNAPSHOT = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='trial', full_name='gym.VnfPp.Report.Snapshot.trial', index=1,
       number=2, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='origin', full_name='gym.VnfPp.Report.Snapshot.origin', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='evaluations', full_name='gym.VnfPp.Report.Snapshot.evaluations', index=3,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='timestamp', full_name='gym.VnfPp.Report.Snapshot.timestamp', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='gym.VnfPp.Report.Snapshot.error', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
-  nested_types=[_VNFPP_REPORT_SNAPSHOT_EVALUATION, _VNFPP_REPORT_SNAPSHOT_ORIGIN, _VNFPP_REPORT_SNAPSHOT_EVALUATIONSENTRY, ],
+  nested_types=[_VNFPP_REPORT_SNAPSHOT_EVALUATION, _VNFPP_REPORT_SNAPSHOT_ORIGIN, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -399,8 +386,8 @@ _VNFPP_REPORT_SNAPSHOT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=401,
-  serialized_end=1350,
+  serialized_start=416,
+  serialized_end=1298,
 )
 
 _VNFPP_REPORT_SNAPSHOTSENTRY = _descriptor.Descriptor(
@@ -409,6 +396,7 @@ _VNFPP_REPORT_SNAPSHOTSENTRY = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='key', full_name='gym.VnfPp.Report.SnapshotsEntry.key', index=0,
@@ -416,14 +404,14 @@ _VNFPP_REPORT_SNAPSHOTSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='value', full_name='gym.VnfPp.Report.SnapshotsEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -436,8 +424,8 @@ _VNFPP_REPORT_SNAPSHOTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1352,
-  serialized_end=1428,
+  serialized_start=1300,
+  serialized_end=1376,
 )
 
 _VNFPP_REPORT = _descriptor.Descriptor(
@@ -446,6 +434,7 @@ _VNFPP_REPORT = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='gym.VnfPp.Report.id', index=0,
@@ -453,28 +442,35 @@ _VNFPP_REPORT = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='test', full_name='gym.VnfPp.Report.test', index=1,
       number=2, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='snapshots', full_name='gym.VnfPp.Report.snapshots', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='timestamp', full_name='gym.VnfPp.Report.timestamp', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='gym.VnfPp.Report.error', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -488,7 +484,7 @@ _VNFPP_REPORT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=264,
-  serialized_end=1428,
+  serialized_end=1376,
 )
 
 _VNFPP_REPORTSENTRY = _descriptor.Descriptor(
@@ -497,6 +493,7 @@ _VNFPP_REPORTSENTRY = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='key', full_name='gym.VnfPp.ReportsEntry.key', index=0,
@@ -504,14 +501,14 @@ _VNFPP_REPORTSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='value', full_name='gym.VnfPp.ReportsEntry.value', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -524,8 +521,8 @@ _VNFPP_REPORTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1430,
-  serialized_end=1495,
+  serialized_start=1378,
+  serialized_end=1443,
 )
 
 _VNFPP = _descriptor.Descriptor(
@@ -534,6 +531,7 @@ _VNFPP = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
+  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='gym.VnfPp.id', index=0,
@@ -541,49 +539,49 @@ _VNFPP = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='name', full_name='gym.VnfPp.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='version', full_name='gym.VnfPp.version', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='author', full_name='gym.VnfPp.author', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='description', full_name='gym.VnfPp.description', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='timestamp', full_name='gym.VnfPp.timestamp', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='reports', full_name='gym.VnfPp.reports', index=6,
       number=7, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -597,7 +595,7 @@ _VNFPP = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=85,
-  serialized_end=1495,
+  serialized_end=1443,
 )
 
 _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRIC.fields_by_name['series'].message_type = google_dot_protobuf_dot_struct__pb2._STRUCT
@@ -619,10 +617,8 @@ _VNFPP_REPORT_SNAPSHOT_EVALUATION.fields_by_name['metrics'].message_type = _VNFP
 _VNFPP_REPORT_SNAPSHOT_EVALUATION.fields_by_name['timestamp'].message_type = _VNFPP_REPORT_SNAPSHOT_EVALUATION_TIMESTAMP
 _VNFPP_REPORT_SNAPSHOT_EVALUATION.containing_type = _VNFPP_REPORT_SNAPSHOT
 _VNFPP_REPORT_SNAPSHOT_ORIGIN.containing_type = _VNFPP_REPORT_SNAPSHOT
-_VNFPP_REPORT_SNAPSHOT_EVALUATIONSENTRY.fields_by_name['value'].message_type = _VNFPP_REPORT_SNAPSHOT_EVALUATION
-_VNFPP_REPORT_SNAPSHOT_EVALUATIONSENTRY.containing_type = _VNFPP_REPORT_SNAPSHOT
 _VNFPP_REPORT_SNAPSHOT.fields_by_name['origin'].message_type = _VNFPP_REPORT_SNAPSHOT_ORIGIN
-_VNFPP_REPORT_SNAPSHOT.fields_by_name['evaluations'].message_type = _VNFPP_REPORT_SNAPSHOT_EVALUATIONSENTRY
+_VNFPP_REPORT_SNAPSHOT.fields_by_name['evaluations'].message_type = _VNFPP_REPORT_SNAPSHOT_EVALUATION
 _VNFPP_REPORT_SNAPSHOT.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _VNFPP_REPORT_SNAPSHOT.containing_type = _VNFPP_REPORT
 _VNFPP_REPORT_SNAPSHOTSENTRY.fields_by_name['value'].message_type = _VNFPP_REPORT_SNAPSHOT
@@ -684,13 +680,6 @@ VnfPp = _reflection.GeneratedProtocolMessageType('VnfPp', (_message.Message,), {
         # @@protoc_insertion_point(class_scope:gym.VnfPp.Report.Snapshot.Origin)
         })
       ,
-
-      'EvaluationsEntry' : _reflection.GeneratedProtocolMessageType('EvaluationsEntry', (_message.Message,), {
-        'DESCRIPTOR' : _VNFPP_REPORT_SNAPSHOT_EVALUATIONSENTRY,
-        '__module__' : 'vnf_pp_pb2'
-        # @@protoc_insertion_point(class_scope:gym.VnfPp.Report.Snapshot.EvaluationsEntry)
-        })
-      ,
       'DESCRIPTOR' : _VNFPP_REPORT_SNAPSHOT,
       '__module__' : 'vnf_pp_pb2'
       # @@protoc_insertion_point(class_scope:gym.VnfPp.Report.Snapshot)
@@ -728,13 +717,11 @@ _sym_db.RegisterMessage(VnfPp.Report.Snapshot.Evaluation.Source)
 _sym_db.RegisterMessage(VnfPp.Report.Snapshot.Evaluation.Timestamp)
 _sym_db.RegisterMessage(VnfPp.Report.Snapshot.Evaluation.MetricsEntry)
 _sym_db.RegisterMessage(VnfPp.Report.Snapshot.Origin)
-_sym_db.RegisterMessage(VnfPp.Report.Snapshot.EvaluationsEntry)
 _sym_db.RegisterMessage(VnfPp.Report.SnapshotsEntry)
 _sym_db.RegisterMessage(VnfPp.ReportsEntry)
 
 
 _VNFPP_REPORT_SNAPSHOT_EVALUATION_METRICSENTRY._options = None
-_VNFPP_REPORT_SNAPSHOT_EVALUATIONSENTRY._options = None
 _VNFPP_REPORT_SNAPSHOTSENTRY._options = None
 _VNFPP_REPORTSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

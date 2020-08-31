@@ -1,4 +1,5 @@
 import logging
+
 logger = logging.getLogger(__name__)
 
 import psutil as ps
@@ -14,29 +15,47 @@ from subprocess import check_output, CalledProcessError
 
 class ListenerProcess(Listener):
     PARAMETERS = {
-        'interval': 'interval',
-        'name': 'name',
-        'pid': 'pid',
-        'duration': 'duration',
+        "interval": "interval",
+        "name": "name",
+        "pid": "pid",
+        "duration": "duration",
     }
-    
-    METRICS = {0: 'cpu_num', 1: 'cpu_percent', 2: 'user_time', 3: 'system_time', 4: 'num_threads', 5: 'mem_percent', 6: 'read_count', 7: 'read_bytes', 8: 'write_count', 9: 'write_bytes', 10: 'read_chars', 11: 'write_chars', 12: 'time'}
+
+    METRICS = {
+        0: "cpu_num",
+        1: "cpu_percent",
+        2: "user_time",
+        3: "system_time",
+        4: "num_threads",
+        5: "mem_percent",
+        6: "read_count",
+        7: "read_bytes",
+        8: "write_count",
+        9: "write_bytes",
+        10: "read_chars",
+        11: "write_chars",
+        12: "time",
+    }
 
     def __init__(self):
-        Listener.__init__(self, id=LISTENER_PROCESS, name='process',
-                          parameters=ListenerProcess.PARAMETERS,
-                          metrics=ListenerProcess.METRICS)
+        Listener.__init__(
+            self,
+            id=LISTENER_PROCESS,
+            name="process",
+            parameters=ListenerProcess.PARAMETERS,
+            metrics=ListenerProcess.METRICS,
+        )
         self._first = True
         self._command = None
 
     def _get_process_info(self):
         info = {}
-        info['name'] = self._p.name()
-        info['exe'] = self._p.exe()
-        info['cwd'] = self._p.cwd()
-        info['status'] = self._p.status()
-        info['username'] = self._p.username()
-        info['create_time'] = self._p.create_time()
+        info["name"] = self._p.name()
+        info["exe"] = self._p.exe()
+        info["cwd"] = self._p.cwd()
+        info["status"] = self._p.status()
+        info["username"] = self._p.username()
+        info["create_time"] = self._p.create_time()
         return info
 
     def _get_process_cpu(self, tm, prev_info):
@@ -61,8 +80,12 @@ class ListenerProcess(Listener):
         user_time, system_time = cpu_times.user, cpu_times.system
 
         if self._first == False:
-            cpu_stats["user_time"] = (user_time - prev_info["user_time"]) / (tm - prev_info["time"])
-            cpu_stats["system_time"] = (system_time - prev_info["system_time"]) / (tm - prev_info["time"])
+            cpu_stats["user_time"] = (user_time - prev_info["user_time"]) / (
+                tm - prev_info["time"]
+            )
+            cpu_stats["system_time"] = (system_time - prev_info["system_time"]) / (
+                tm - prev_info["time"]
+            )
 
         cpu_stats["user_time"] = user_time
         cpu_stats["system_time"] = system_time
@@ -94,12 +117,24 @@ class ListenerProcess(Listener):
         io_counters = self._p.io_counters()
 
         if self._first == False:
-            io_stats["read_count"] = (io_counters.read_count * 1.0 - prev_info["read_count"]) / (tm - prev_info["time"])
-            io_stats["read_bytes"] = (io_counters.read_bytes * 1.0 - prev_info["read_bytes"]) / (tm - prev_info["time"])
-            io_stats["write_count"] = (io_counters.write_count * 1.0 - prev_info["write_count"]) / (tm - prev_info["time"])
-            io_stats["write_bytes"] = (io_counters.write_bytes * 1.0 - prev_info["write_bytes"]) / (tm - prev_info["time"])
-            io_stats["write_chars"] = (io_counters.write_chars * 1.0 - prev_info["write_chars"]) / (tm - prev_info["time"])
-            io_stats["read_chars"] = (io_counters.read_chars * 1.0 - prev_info["read_chars"]) / (tm - prev_info["time"])
+            io_stats["read_count"] = (
+                io_counters.read_count * 1.0 - prev_info["read_count"]
+            ) / (tm - prev_info["time"])
+            io_stats["read_bytes"] = (
+                io_counters.read_bytes * 1.0 - prev_info["read_bytes"]
+            ) / (tm - prev_info["time"])
+            io_stats["write_count"] = (
+                io_counters.write_count * 1.0 - prev_info["write_count"]
+            ) / (tm - prev_info["time"])
+            io_stats["write_bytes"] = (
+                io_counters.write_bytes * 1.0 - prev_info["write_bytes"]
+            ) / (tm - prev_info["time"])
+            io_stats["write_chars"] = (
+                io_counters.write_chars * 1.0 - prev_info["write_chars"]
+            ) / (tm - prev_info["time"])
+            io_stats["read_chars"] = (
+                io_counters.read_chars * 1.0 - prev_info["read_chars"]
+            ) / (tm - prev_info["time"])
 
         io_stats["read_count"] = io_counters.read_count * 1.0
         io_stats["read_bytes"] = io_counters.read_bytes * 1.0
@@ -114,7 +149,7 @@ class ListenerProcess(Listener):
         #     io_stats["write_bytes"] = "0.0"
 
         return io_stats
-            # storage = {}
+        # storage = {}
         # of = self._p.open_files()
         # of = [f.__dict__ for f in of]
         # storage['open_files'] = of
@@ -126,8 +161,8 @@ class ListenerProcess(Listener):
         net = {}
         conns = self._p.connections()
         conns = [c.__dict__ for c in conns]
-        net['connections'] = conns
-        net['connections'] = []
+        net["connections"] = conns
+        net["connections"] = []
         return net
 
     def _get_process_stats(self, tm, measurement):
@@ -144,27 +179,22 @@ class ListenerProcess(Listener):
 
     def options(self, options):
         opts = {}
-        stop = False
-        timeout = 0
+        timeout = None
         for k, v in options.items():
-            if k == 'stop':
-                stop = True
-            if k == 'duration':
-                timeout = v
+            # if k == "stop":
+            #     stop = True
+            if k == "duration":
+                timeout = float(v)
             opts[k] = v
 
-        settings = {
-            "opts": opts,
-            "stop": stop,
-            "timeout": timeout
-        }
+        settings = {"opts": opts, "timeout": timeout}
         return settings
-        
+
     def get_pid(self, name):
         pidlist = []
         try:
             pidlist = list(map(int, check_output(["pidof", name]).split()))
-        except  CalledProcessError:
+        except CalledProcessError:
             pidlist = []
         finally:
             if pidlist:
@@ -178,18 +208,18 @@ class ListenerProcess(Listener):
         interval = 1
         pid = None
 
-        if 'interval' in opts:
-            interval = float(opts['interval'])
+        if "interval" in opts:
+            interval = float(opts["interval"])
 
-        if 'duration' in opts:
-            t = float(opts.get('duration'))
+        if "duration" in opts:
+            t = float(opts.get("duration"))
         else:
             return results
 
-        if 'pid' in opts:
-            pid = int(opts['pid'])
-        elif 'name' in opts:
-            name = str(opts['name'])
+        if "pid" in opts:
+            pid = int(opts["pid"])
+        elif "name" in opts:
+            name = str(opts["name"])
             pid = self.get_pid(name)
         else:
             return results
@@ -200,7 +230,7 @@ class ListenerProcess(Listener):
 
         if not ps.pid_exists(pid):
             return results
-        
+
         self._p = ps.Process(pid)
         # stats = self._get_process_info()
         measurement = {}
@@ -209,8 +239,8 @@ class ListenerProcess(Listener):
 
         while True:
             current = datetime.now()
-            
-            seconds = (current-past).total_seconds()
+
+            seconds = (current - past).total_seconds()
             if seconds > t:
                 break
             else:
@@ -221,18 +251,39 @@ class ListenerProcess(Listener):
                 results.append(measurement)
                 time.sleep(interval)
 
-        ret, out, err = 0, results, None
-        return ret, out, err
+        results = {
+            "code": 0,
+            "out": results,
+            "err": "",
+        }
+        return results
 
-    def parser(self, out):
-        metrics = []
+    def parser(self, results):
+        metrics, error = [], ""
+
+        out = results.get("out", [])
+        err = results.get("err", "")
+
+        if err:
+            error = err
 
         if out:
             metric_names = list(out[0].keys())
-            
+
             for name in metric_names:
                 # metric_values = dict([ (out.index(out_value),float(out_value.get(name))) for out_value in out ])
-                metric_values = dict([ ( out.index(out_value), {"key":out.index(out_value), "value":float(out_value.get(name))} ) for out_value in out ])
+                metric_values = dict(
+                    [
+                        (
+                            out.index(out_value),
+                            {
+                                "key": out.index(out_value),
+                                "value": float(out_value.get(name)),
+                            },
+                        )
+                        for out_value in out
+                    ]
+                )
 
                 m = {
                     "name": name,
@@ -242,11 +293,11 @@ class ListenerProcess(Listener):
                 }
 
                 metrics.append(m)
-        
-        return metrics
+
+        return metrics, error
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # opts = {
     #     'interval':1,
     #     'duration':5,

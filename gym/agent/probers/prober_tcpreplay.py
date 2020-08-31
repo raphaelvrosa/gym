@@ -10,92 +10,103 @@ logger = logging.getLogger()
 
 class ProberTcpReplay(Prober):
     PARAMETERS = {
-        'interface':'-i',
-        'duration':'--duration',
-        'speed':'-t',
-        'timing':'-T',
-        'preload':'-K',
-        'loop':'-l',
-        'pcap':'-f'
+        "interface": "-i",
+        "duration": "--duration",
+        "speed": "-t",
+        "timing": "-T",
+        "preload": "-K",
+        "loop": "-l",
+        "pcap": "-f",
     }
 
     METRICS = {
-        'packets': 'Estimated number of packets sent',
-        'time': "Time took to send the packets"
+        "packets": "Estimated number of packets sent",
+        "time": "Time took to send the packets",
     }
 
     def __init__(self):
-        Prober.__init__(self, id=PROBER_TCPREPLAY, name="tcpreplay",
-                        parameters=ProberTcpReplay.PARAMETERS,
-                        metrics=ProberTcpReplay.METRICS)
-        self._command = 'tcpreplay'
-        self._instances_folder = '/mnt/pcaps/'
+        Prober.__init__(
+            self,
+            id=PROBER_TCPREPLAY,
+            name="tcpreplay",
+            parameters=ProberTcpReplay.PARAMETERS,
+            metrics=ProberTcpReplay.METRICS,
+        )
+        self._command = "tcpreplay"
+        self._instances_folder = "/mnt/pcaps/"
 
     def options(self, options):
         opts = []
-        stop = False
-        timeout = 0
+        timeout = None
 
-        for k,v in options.items():
-            if k == '-t':
+        for k, v in options.items():
+            if k == "-t":
                 opts.extend([k])
-            elif k == '-K':
+            elif k == "-K":
                 opts.extend([k])
             else:
-                if k != '-f':
-                    opts.extend([k,v])
+                if k != "-f":
+                    opts.extend([k, v])
 
-        opts.append('-q')
-        
-        if '-f' in options:
-            pcap_value = options.get('-f')
+        opts.append("-q")
+
+        if "-f" in options:
+            pcap_value = options.get("-f")
             pcap_path = self.filepath(pcap_value)
             opts.append(pcap_path)
 
-        settings = {
-            "opts": opts,
-            "stop": stop,
-            "timeout": timeout
-        }
+        settings = {"opts": opts, "timeout": timeout}
         return settings
 
     def filepath(self, filename):
-        _filepath = os.path.normpath(os.path.join(
-            # os.path.dirname(__file__),
-            self._instances_folder, filename))
+        _filepath = os.path.normpath(
+            os.path.join(
+                # os.path.dirname(__file__),
+                self._instances_folder,
+                filename,
+            )
+        )
         return _filepath
 
-    def parser(self, output):
-        _eval = []
-        lines = output.split('\n')
-        if len(lines) > 1:
-            actual = [line for line in lines if 'Actual' in line]
-            actual_info = actual.pop().split()
-            
-            # eval_info = {
-            #     'packets': int(actual_info[1]),
-            #     'time': float(actual_info[-2]),
-            # }
+    def parser(self, results):
+        metrics, error = [], ""
 
-            m1 = {
-                "name": "packets",
-                "type": "int",
-                "unit": "packets",
-                "scalar": int(actual_info[1]),
-            }
+        out = results.get("out", [])
+        err = results.get("err", "")
 
-            m2 = {
-                "name": "time",
-                "type": "float",
-                "unit": "seconds",
-                "scalar": float(actual_info[-2]),
-            }
+        if err:
+            error = err
 
-            _eval = [m1, m2]
+        if out:
+            lines = out.split("\n")
+            if len(lines) > 1:
+                actual = [line for line in lines if "Actual" in line]
+                actual_info = actual.pop().split()
 
-        return _eval
+                # eval_info = {
+                #     'packets': int(actual_info[1]),
+                #     'time': float(actual_info[-2]),
+                # }
+
+                m1 = {
+                    "name": "packets",
+                    "type": "int",
+                    "unit": "packets",
+                    "scalar": int(actual_info[1]),
+                }
+
+                m2 = {
+                    "name": "time",
+                    "type": "float",
+                    "unit": "seconds",
+                    "scalar": float(actual_info[-2]),
+                }
+
+                metrics = [m1, m2]
+
+        return metrics, error
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = ProberTcpReplay()
     print(app.main())

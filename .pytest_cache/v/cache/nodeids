@@ -1,3 +1,15 @@
 [
-  "gym/tests/integration/test_player.py::TestPlayer::test_info"
+  "gym/tests/integration/test_agent.py::TestAgent::test_info",
+  "gym/tests/integration/test_agent.py::TestAgent::test_instruction",
+  "gym/tests/integration/test_manager.py::TestManager::test_info",
+  "gym/tests/integration/test_manager.py::TestManager::test_task",
+  "gym/tests/integration/test_monitor.py::Testmonitor::test_info",
+  "gym/tests/integration/test_monitor.py::Testmonitor::test_instruction",
+  "gym/tests/integration/test_player.py::TestPlayer::test_info",
+  "gym/tests/integration/test_player.py::TestPlayer::test_layout",
+  "gym/tests/unit/test_models.py::TestVNFBD::test_inputs",
+  "gym/tests/unit/test_models.py::TestVNFBD::test_template",
+  "gym/tests/unit/test_models.py::TestVNFBD::test_vnfbd_parse",
+  "gym/tests/unit/test_models.py::TestVNFBD::test_vnfbd_protobuf",
+  "gym/tests/unit/test_tools.py::TestTools::test_tools_sched"
 ]

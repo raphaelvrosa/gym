@@ -1,0 +1,13 @@
+paramiko==2.6.0
+mininet==3.0
+psutil==5.7.0
+grpcio==1.31.0
+bitarray==1.5.3
+docker_py==1.10.6
+flatten_json==0.1.7
+grpc==1.0.0
+grpclib==0.4.0
+numpy==1.19.1
+pandas==1.1.1
+pyangbind==0.8.1
+scp==0.13.2

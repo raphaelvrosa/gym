@@ -205,8 +205,8 @@
                 },
                 "connection_points": {},
                 "relationships": {
-                    "d4-inside-d1": {
-                        "name": "d4-inside-d2",
+                    "d4-outside-d1": {
+                        "name": "d4-outside-d2",
                         "type": "AttachesTo",
                         "target": "d2"
                     }
@@ -308,8 +308,8 @@
             }
         },
         "agents": {
-            "1": {
-                "uuid": "1",
+            "d1": {
+                "uuid": "d1",
                 "name": "",
                 "probers": {
                     "1": {
@@ -345,8 +345,8 @@
                     }
                 }
             },
-            "2": {
-                "uuid": "2",
+            "d3": {
+                "uuid": "d3",
                 "name": "",
                 "probers": {
                     "1": {
@@ -376,8 +376,8 @@
             }
         },
         "monitors": {
-            "3": {
-                "uuid": "3",
+            "d4": {
+                "uuid": "d4",
                 "name": "",
                 "listeners": {
                     "1": {
