@@ -131,13 +131,27 @@ class Tool:
         """
         raise NotImplementedError("Method parser not implemented for tool")
 
+    def format_metrics(self, metrics):
+        logger.info("Formating metrics")
+        try:
+            format_metrics = {m.get("name"): m for m in metrics if m.get("name", None)}
+            logger.info("Metrics formated")
+
+        except Exception as e:
+            logger.info(f"Error formating metrics - exception {repr(e)}")
+            format_metrics = []
+        finally:
+            return format_metrics
+
     def format(self, results):
         metrics, error = [], ""
 
         try:
-            metrics, error = self.parser(results)
+            raw_metrics, error = self.parser(results)
         except Exception as e:
             error = repr(e)
+        else:
+            metrics = self.format_metrics(raw_metrics)
         finally:
             return metrics, error
 

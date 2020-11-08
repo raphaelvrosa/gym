@@ -1,12 +1,11 @@
 import logging
+from datetime import datetime
 
 from google.protobuf import json_format
-
 from pyangbind.lib.xpathhelper import YANGPathHelper
 
 from gym.common.yang import vnf_pp
 from gym.common.yang.utils import Utils
-
 from gym.common.protobuf.vnf_pp_pb2 import VnfPp
 
 
@@ -20,10 +19,6 @@ class VNFPP:
         self._protobuf = VnfPp()
         self._utils = Utils()
 
-    def load_info(self, vnfbd):
-        logger.info("Loading vnf-pp info from vnf-bd")
-        pass
-
     def load_reports(self, reports):
         logger.info("Loading vnf-pp reports")
         for report in reports:
@@ -36,6 +31,9 @@ class VNFPP:
 
         self._data["reports"][report_id] = report
 
+    def data(self):
+        return self._data
+
     def yang(self):
         return self._yang
 
@@ -46,8 +44,6 @@ class VNFPP:
     def protobuf(self):
         logger.info("Generating vnf-pp protobuf")
         self._protobuf = VnfPp()
-        logger.debug(f"Parsing vnf-pp data")
-        # logger.debug(f"{self._data}")
         json_format.ParseDict(self._data, self._protobuf)
         return self._protobuf
 
@@ -59,6 +55,7 @@ class VNFPP:
         if yang_model:
             logger.info(f"Parsing YANG model data successful")
             self._yang = yang_model
+            self._data = data
             return True
 
         logger.info(f"Could not parse YANG model data")
@@ -91,3 +88,13 @@ class VNFPP:
 
         logger.info("vnf-pp message not instance of vnfpp protobuf")
         return False
+
+    def build(self):
+        tz = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        self._data["timestamp"] = tz
+        self.parse()
+
+    def dictionary(self):
+        self.build()
+        data_dict = self._utils.dictionary(self._yang)
+        return data_dict

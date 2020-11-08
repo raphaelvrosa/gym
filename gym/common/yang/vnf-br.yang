@@ -1,0 +1,251 @@
+module vnf-br {
+  namespace "urn:ietf:params:xml:ns:yang:vnf-br";
+  prefix "vnf-br";
+
+  import vnf-bd {
+        prefix "vnfbd";
+        revision-date 2020-10-08;
+  }
+
+  import vnf-pp {
+        prefix "vnfpp";
+        revision-date 2020-10-08;
+  }
+
+  organization "IETF/BMWG";
+  contact "Raphael Vicente Rosa <raphaelvrosa@gmail.com>, 
+  Manuel Peuster <peuster@mail.uni-paderborn.de>";
+  description "Yang model for a VNF Benchmark Report (VNF-BR).";
+
+revision "2020-09-09" {
+      description "V0.2: Review the structure 
+      and the grouping/leaf descriptions.";
+      reference ""; 
+  }
+
+  revision "2020-09-09" {
+      description "V0.1: First release";
+      reference ""; 
+  }
+
+  grouping variable {
+    leaf name { 
+      type string; 
+      description "The name of the variable.";
+    }
+    leaf path { 
+      type string; 
+      description "The VNF-BD YANG path of the 
+      variable.";
+    }
+    leaf type { 
+      type string; 
+      description "The type of the
+      variable values.";
+    }
+    leaf class { 
+      type string; 
+      description "The class of the
+      variable (one of resource, stimulus,
+      configuration).";
+    }
+    leaf-list values { 
+      type string; 
+      description "The list of values
+      of the variable."; 
+    }
+  }
+
+  grouping output {
+    leaf id { 
+      type string; 
+      description "The output unique identifier.";
+    }
+    list variables {
+      key "name";
+      leaf name { type string; }
+      leaf value { type string; }
+      description "The list of instance of varibles 
+      from VNF-BR:inputs utilized by a VNF-BD to
+      generate a VNF-PP.";
+    }
+
+    container vnfbd {
+      uses vnfbd:vnf-bd;
+      description "The VNF-BD that was executed
+      to generate a output.";
+    }
+
+    container vnfpp {
+      uses vnfpp:vnf-pp;
+      description "The output VNF-PP of the
+      execution of a VNF-BD.";
+    }
+  }
+
+  grouping vnf {
+    leaf id {
+      type string;
+      description "The VNF unique identifier.";
+    }
+    leaf name {
+      type string;
+      description "The VNF name.";
+    }
+    leaf version {
+      type string;
+      description "The VNF version.";
+    }
+    leaf author {
+      type string;
+      description "The author of the VNF.";
+    }
+    leaf description {
+      type string;
+      description "The description of the VNF.";
+    }
+    description "The details of the VNF SUT.";
+  }
+
+  grouping header {
+    leaf id {
+      type string;
+      description "The unique identifier of the VNF-BR ";    
+    }
+    leaf name {
+      type string;
+      description "The name of the VNF-BR.";    
+    }
+    leaf version {
+      type string;
+      description "The VNF-BR version.";
+    }
+    leaf author {
+      type string;
+      description "The VNF-BR author.";
+    }
+    leaf description {
+      type string;
+      description "The description of the VNF-BR.";    
+    }
+
+    container vnf {
+      uses vnf;
+      description "The VNF-BR target SUT VNF.";
+    }
+
+    container environment {
+      leaf name {
+        type string;
+        description "The evironment name";
+      }
+      leaf description {
+        type string;
+        description "A description 
+        of the environment";
+      }
+      leaf deploy {
+        type boolean;
+        description "Defines if (True) the environment enables
+        the automated deployment by an orchestrator platform.";
+      }
+      container orchestrator {
+        leaf name {
+          type string;
+          description "Name of the orchestrator
+          platform.";
+        }
+
+        leaf type {
+          type string;
+          description "The type of the orchestrator
+          platform.";
+        }
+
+        leaf description {
+          type string;
+          description "The description of the
+          orchestrator platform.";
+        }
+
+        list parameters {
+          key "input";
+          leaf input {
+            type string;
+            description "The name of the parameter";
+          }
+          leaf value {
+            type string;
+            description "The value of the parameter";
+          }
+          
+          description "List of orchestrator 
+          input parameters.";
+        } 
+
+        description "The specification of the orchestration platform
+        settings of a VNF-BR.";
+      }
+  
+      description "The environment settings of a VNF-BR.";
+    }
+
+    description "Defines the content of a VNF-BR header.";
+  }
+
+  grouping vnf-br {
+    description "Grouping for a single vnf-br.";
+
+    uses header;
+
+    container inputs {
+      list variables {
+        key "name";
+        uses variable;
+        description "The list of 
+        input variables.";
+      }
+
+      container vnfbd {
+        uses vnfbd:vnf-bd;
+        description "The input VNF-BD.";
+      }
+
+      description "The inputs needed to
+      realize a VNF-BR.";
+    }
+
+    list outputs {
+        key "id";
+        uses output;
+        description "The list of outputs
+        of a VNF-BR.";
+    }
+
+    container timestamp {
+      leaf start { 
+        type string; 
+        description "Time (date, hour, minute, second)
+        of when the VNF-BR realization started";
+      }
+
+      leaf stop { 
+        type string; 
+        description "Time (date, hour, minute, second)
+        of when the VNF-BR realization stopped";
+      }
+
+      description "Timestamps of the procedures that
+      realized the realization of a VNF-BR.";
+    }
+
+    leaf error { 
+      type string; 
+      description "The VNF-BR error,
+      if ocurred during its realization.";  
+    }     
+  }
+
+  uses vnf-br;
+}
+

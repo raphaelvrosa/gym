@@ -32,7 +32,7 @@
                 "id": "agent-1",
                 "type": "",
                 "image": "",
-                "image_format": "",
+                "format": "",
                 "resources": {
                     "cpu": {
                         "vcpus": 0,
@@ -57,7 +57,7 @@
                 "id": "agent-2",
                 "type": "",
                 "image": "",
-                "image_format": "",
+                "format": "",
                 "resources": {
                     "cpu": {
                         "vcpus": 0,
@@ -82,7 +82,7 @@
                 "id": "manager",
                 "type": "",
                 "image": "",
-                "image_format": "",
+                "format": "",
                 "resources": {
                     "cpu": {
                         "vcpus": 0,
@@ -111,25 +111,17 @@
         "attributes": {},
         "agents": {
             "agent-1": {
-                "id": "agent-1",
+                "uuid": "agent-1",
                 "name": "",
-                "host": {
-                    "setting": "",
-                    "node": ""
-                },
                 "probers": {
                     "2": {
-                        "id": "2",
-                        "instances": 0,
-                        "name": "",
+                        "id": 2,
+                        "instances": 2,
+                        "name": "ping",
                         "parameters": {
                             "interval": {
                                 "input": "interval",
                                 "value": "1"
-                            },
-                            "duration": {
-                                "input": "duration",
-                                "value": ""
                             },
                             "packets": {
                                 "input": "packets",
@@ -146,8 +138,8 @@
                         }
                     },
                     "4": {
-                        "id": "4",
-                        "instances": 0,
+                        "id": 4,
+                        "instances": 1,
                         "name": "iperf3",
                         "parameters": {
                             "client": {
@@ -179,29 +171,21 @@
                 }
             },
             "agent-2": {
-                "id": "agent-2",
+                "uuid": "agent-2",
                 "name": "",
-                "host": {
-                    "setting": "",
-                    "node": ""
-                },
                 "probers": {
                     "2": {
-                        "id": "2",
-                        "instances": 0,
-                        "name": "",
+                        "id": 2,
+                        "instances": 1,
+                        "name": "ping",
                         "parameters": {
                             "interval": {
                                 "input": "interval",
-                                "value": ""
+                                "value": "1"
                             },
                             "duration": {
                                 "input": "duration",
-                                "value": "{{ settings_duration }}"
-                            },
-                            "packets": {
-                                "input": "packets",
-                                "value": ""
+                                "value": "10"
                             },
                             "frame_size": {
                                 "input": "frame_size",
@@ -211,12 +195,19 @@
                                 "input": "target",
                                 "value": "127.0.0.1"
                             }
+                        },
+                        "sched": {
+                            "from": 0,
+                            "until": 0,
+                            "duration": 0,
+                            "interval": 0,
+                            "repeat": 2
                         }
                     },
                     "4": {
-                        "id": "4",
-                        "instances": 0,
-                        "name": "",
+                        "id": 4,
+                        "instances": 1,
+                        "name": "iperf3",
                         "parameters": {
                             "client": {
                                 "input": "client",

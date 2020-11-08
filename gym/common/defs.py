@@ -25,7 +25,7 @@ LISTENER_SURICATA = 14
 """Defines the map of name to IDs 
 of probers and listeners.
 It is used by the map of VNF-BD name of
-prober/listener into the correct ID.
+probers/listeners.
 """
 TOOLS_MAP = {
     "iperf": PROBER_IPERF,
@@ -34,7 +34,7 @@ TOOLS_MAP = {
     "iperf3": PROBER_IPERF3,
     "pktgen": PROBER_PKTGEN,
     "tcpreplay": PROBER_TCPREPLAY,
-#
+    #
     "host": LISTENER_HOST,
     "docker": LISTENER_DOCKER,
     "process": LISTENER_PROCESS,

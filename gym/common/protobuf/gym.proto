@@ -5,8 +5,8 @@ package gym;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
+import "vnf_br.proto";
 import "vnf_bd.proto";
-import "vnf_pp.proto";
 
 
 service Player {
@@ -37,7 +37,12 @@ service Infra {
   rpc Run(Deploy) returns (Built);
 }
 
+service CLI {
+  rpc Inform(State) returns (Status);
+  rpc Collect(Stats) returns (Status);
+}
 
+  
 message Apparatus {
     repeated Info agents = 1;
     repeated Info monitors = 2;
@@ -82,14 +87,16 @@ message Sched {
 
 message Action {
     int32 id = 1;
-    map<string, string> args = 2;
-    Sched sched = 3;
+    int32 instance = 2;
+    string name = 3;
+    map<string, string> args = 4;
+    Sched sched = 5;
 }
 
 message Instruction {
     int32 id = 1;
     int32 trial = 2;
-    map<int32, Action> actions = 3;
+    repeated Action actions = 3;
 }
 
 message Evaluation {
@@ -118,10 +125,12 @@ message Evaluation {
     }
 
     int32 id = 1;
-    Source source = 2;
-    repeated Metric metrics = 3;
-    Timestamp timestamp = 4;
-    string error = 5;
+    int32 instance = 2;
+    int32 repeat = 3;
+    Source source = 4;
+    map<string, Metric> metrics = 5;
+    Timestamp timestamp = 6;
+    string error = 7;
 }
 
 message Snapshot {
@@ -129,11 +138,12 @@ message Snapshot {
     message Origin {
         string id = 1;
         string role = 2;
+        string host = 3;
     }
     int32 id = 1;
     int32 trial = 2;
     Origin origin = 3;
-    repeated Evaluation evaluations = 4;
+    map<int32, Evaluation> evaluations = 4;
     google.protobuf.Timestamp timestamp = 5;
     string error = 6;
 }
@@ -144,6 +154,7 @@ message Tool {
     map<string, string> parameters = 3;
     map<string, string> metrics = 4;
     Sched sched = 5;
+    int32 instance = 6;
 }
 
 message Task {
@@ -175,23 +186,21 @@ message Report {
 
 message Layout {
     int32 id = 1;
-    VnfBd vnfbd = 2;
-    bytes inputs = 3;
-    bytes template = 4;
+    VnfBr vnfbr = 2;
+    string feat = 3;
 }
 
 message Result {
     int32 id = 1;
-    VnfPp vnfpp = 2;
+    VnfBr vnfbr = 2;
     google.protobuf.Timestamp timestamp = 3;
 }
-
 
 message Deploy {
     int32 id = 1;
     string workflow = 2;
     Scenario scenario = 3;
-    Environment environment = 4;
+    Environment environment = 4;    
 }
 
 message Built {
@@ -200,3 +209,43 @@ message Built {
     string error = 3;
     bytes info = 4;
 }
+
+message Stats {
+
+    message Measurement {
+        message Field {
+            string name = 1;
+            string type = 2;
+            string unit = 3;
+            string value = 4;
+        }
+        
+        string name = 1;
+        map<string,string> tags = 2;
+        map<string,Field> fields = 3;
+    }
+    
+    string environment = 1;
+    string source = 2;
+    repeated Measurement measurements = 3;
+}
+  
+
+message State {
+    message Content {
+        string info = 1;
+        string error = 2;
+    }
+
+    string source = 1;
+    repeated Content messages = 2;
+    google.protobuf.Timestamp ts = 3;
+}
+
+message Status {
+    string id = 1;
+    string error = 2;
+    bytes info = 3;
+    google.protobuf.Timestamp timestamp = 4;
+}
+  

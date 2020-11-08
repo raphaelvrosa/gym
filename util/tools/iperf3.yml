@@ -1,0 +1,8 @@
+name: iperf3
+mode: prober
+
+install:
+  - sudo apt install iperf3
+
+uninstall:
+  - sudo apt remove iperf3

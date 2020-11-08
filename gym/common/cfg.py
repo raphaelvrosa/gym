@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 class Config:
     def __init__(self):
         self._info = None
+        self.parser = argparse.ArgumentParser(description="Gym App")
 
     def get(self):
         return self._info
@@ -74,6 +75,15 @@ class Config:
         ack = address_ok and contacts_ok
         return ack
 
+    def get_cfg_attrib(self, name):
+        try:
+            value = getattr(self.cfg, name)
+        except AttributeError as e:
+            logger.debug(f"Argparser attrib name not found - exception {e}")
+            value = None
+        finally:
+            return value
+
     def check(self):
         _contacts = None
 
@@ -112,32 +122,31 @@ class Config:
         """
 
         print(f"Initializing Gym App - Parsing Argv")
-        parser = argparse.ArgumentParser(description="Gym App")
 
-        parser.add_argument(
+        self.parser.add_argument(
             "--uuid", type=str, help="Define the app unique id (default: None)"
         )
 
-        parser.add_argument(
+        self.parser.add_argument(
             "--address",
             type=str,
             help="Define the app address (host:port) (default: None)",
         )
 
-        parser.add_argument(
+        self.parser.add_argument(
             "--contacts",
             nargs="+",
             help="Define the app contacts - role/address "
             "(e.g., agent/localhost:18080) (default: [])",
         )
 
-        parser.add_argument(
+        self.parser.add_argument(
             "--debug",
             action="store_true",
             help="Define the app logging mode (default: False)",
         )
 
-        self.cfg, _ = parser.parse_known_args(argv)
+        self.cfg, _ = self.parser.parse_known_args(argv)
         info = self.check()
 
         if info:

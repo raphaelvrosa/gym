@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 class Logs:
-    def __init__(self, filename, debug=False):
+    def __init__(self, filename, screen=True, debug=False):
         """Starts logging for screen and file handlers
         By default INFO on screen and DEBUG in filename
         if debug specified, logs DEBUG on screen too
@@ -21,13 +21,13 @@ class Logs:
 
         op_mode = "DEBUG" if debug else "INFO"
 
-        logging.config.dictConfig(
-            {
+        if screen:
+            log_config = {
                 "version": 1,
                 "disable_existing_loggers": False,
                 "formatters": {
                     "strict": {
-                        "format": "%(asctime)s [%(levelname)s] " "%(name)s: %(message)s"
+                        "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
                     },
                     "standard": {"format": "%(asctime)s [%(levelname)s]: %(message)s"},
                 },
@@ -55,6 +55,34 @@ class Logs:
                     }
                 },
             }
-        )
-        logger.info(f"Starting logs in {op_mode} mode")
-        logger.info(f"Logging DEBUG mode into file {filename}")
+        else:
+            log_config = {
+                "version": 1,
+                "disable_existing_loggers": False,
+                "formatters": {
+                    "strict": {
+                        "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+                    },
+                    "standard": {"format": "%(asctime)s [%(levelname)s]: %(message)s"},
+                },
+                "handlers": {
+                    "info_file_handler": {
+                        "class": "logging.handlers.RotatingFileHandler",
+                        "level": "DEBUG",
+                        "formatter": "strict",
+                        "filename": filename,
+                        "maxBytes": 10485760,
+                        "backupCount": 20,
+                        "encoding": "utf8",
+                    },
+                },
+                "loggers": {
+                    "": {
+                        "handlers": ["info_file_handler"],
+                        "level": "DEBUG",
+                        "propagate": True,
+                    }
+                },
+            }
+
+        logging.config.dictConfig(log_config)

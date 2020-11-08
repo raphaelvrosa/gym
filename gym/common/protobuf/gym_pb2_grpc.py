@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import gym_pb2 as gym__pb2
+from gym.common.protobuf import gym_pb2 as gym__pb2
 
 
 class PlayerStub(object):
@@ -15,15 +15,15 @@ class PlayerStub(object):
             channel: A grpc.Channel.
         """
         self.Greet = channel.unary_unary(
-                '/gym.Player/Greet',
-                request_serializer=gym__pb2.Info.SerializeToString,
-                response_deserializer=gym__pb2.Info.FromString,
-                )
+            "/gym.Player/Greet",
+            request_serializer=gym__pb2.Info.SerializeToString,
+            response_deserializer=gym__pb2.Info.FromString,
+        )
         self.CallLayout = channel.unary_unary(
-                '/gym.Player/CallLayout',
-                request_serializer=gym__pb2.Layout.SerializeToString,
-                response_deserializer=gym__pb2.Result.FromString,
-                )
+            "/gym.Player/CallLayout",
+            request_serializer=gym__pb2.Layout.SerializeToString,
+            response_deserializer=gym__pb2.Result.FromString,
+        )
 
 
 class PlayerServicer(object):
@@ -32,69 +32,92 @@ class PlayerServicer(object):
     def Greet(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CallLayout(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_PlayerServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Greet': grpc.unary_unary_rpc_method_handler(
-                    servicer.Greet,
-                    request_deserializer=gym__pb2.Info.FromString,
-                    response_serializer=gym__pb2.Info.SerializeToString,
-            ),
-            'CallLayout': grpc.unary_unary_rpc_method_handler(
-                    servicer.CallLayout,
-                    request_deserializer=gym__pb2.Layout.FromString,
-                    response_serializer=gym__pb2.Result.SerializeToString,
-            ),
+        "Greet": grpc.unary_unary_rpc_method_handler(
+            servicer.Greet,
+            request_deserializer=gym__pb2.Info.FromString,
+            response_serializer=gym__pb2.Info.SerializeToString,
+        ),
+        "CallLayout": grpc.unary_unary_rpc_method_handler(
+            servicer.CallLayout,
+            request_deserializer=gym__pb2.Layout.FromString,
+            response_serializer=gym__pb2.Result.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'gym.Player', rpc_method_handlers)
+        "gym.Player", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Player(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Greet(request,
+    def Greet(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Player/Greet',
+            "/gym.Player/Greet",
             gym__pb2.Info.SerializeToString,
             gym__pb2.Info.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CallLayout(request,
+    def CallLayout(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Player/CallLayout',
+            "/gym.Player/CallLayout",
             gym__pb2.Layout.SerializeToString,
             gym__pb2.Result.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
 
 class ManagerStub(object):
@@ -107,15 +130,15 @@ class ManagerStub(object):
             channel: A grpc.Channel.
         """
         self.Greet = channel.unary_unary(
-                '/gym.Manager/Greet',
-                request_serializer=gym__pb2.Info.SerializeToString,
-                response_deserializer=gym__pb2.Info.FromString,
-                )
+            "/gym.Manager/Greet",
+            request_serializer=gym__pb2.Info.SerializeToString,
+            response_deserializer=gym__pb2.Info.FromString,
+        )
         self.CallTask = channel.unary_unary(
-                '/gym.Manager/CallTask',
-                request_serializer=gym__pb2.Task.SerializeToString,
-                response_deserializer=gym__pb2.Report.FromString,
-                )
+            "/gym.Manager/CallTask",
+            request_serializer=gym__pb2.Task.SerializeToString,
+            response_deserializer=gym__pb2.Report.FromString,
+        )
 
 
 class ManagerServicer(object):
@@ -124,69 +147,92 @@ class ManagerServicer(object):
     def Greet(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CallTask(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_ManagerServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Greet': grpc.unary_unary_rpc_method_handler(
-                    servicer.Greet,
-                    request_deserializer=gym__pb2.Info.FromString,
-                    response_serializer=gym__pb2.Info.SerializeToString,
-            ),
-            'CallTask': grpc.unary_unary_rpc_method_handler(
-                    servicer.CallTask,
-                    request_deserializer=gym__pb2.Task.FromString,
-                    response_serializer=gym__pb2.Report.SerializeToString,
-            ),
+        "Greet": grpc.unary_unary_rpc_method_handler(
+            servicer.Greet,
+            request_deserializer=gym__pb2.Info.FromString,
+            response_serializer=gym__pb2.Info.SerializeToString,
+        ),
+        "CallTask": grpc.unary_unary_rpc_method_handler(
+            servicer.CallTask,
+            request_deserializer=gym__pb2.Task.FromString,
+            response_serializer=gym__pb2.Report.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'gym.Manager', rpc_method_handlers)
+        "gym.Manager", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Manager(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Greet(request,
+    def Greet(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Manager/Greet',
+            "/gym.Manager/Greet",
             gym__pb2.Info.SerializeToString,
             gym__pb2.Info.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CallTask(request,
+    def CallTask(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Manager/CallTask',
+            "/gym.Manager/CallTask",
             gym__pb2.Task.SerializeToString,
             gym__pb2.Report.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
 
 class AgentStub(object):
@@ -199,15 +245,15 @@ class AgentStub(object):
             channel: A grpc.Channel.
         """
         self.Greet = channel.unary_unary(
-                '/gym.Agent/Greet',
-                request_serializer=gym__pb2.Info.SerializeToString,
-                response_deserializer=gym__pb2.Info.FromString,
-                )
+            "/gym.Agent/Greet",
+            request_serializer=gym__pb2.Info.SerializeToString,
+            response_deserializer=gym__pb2.Info.FromString,
+        )
         self.CallInstruction = channel.unary_unary(
-                '/gym.Agent/CallInstruction',
-                request_serializer=gym__pb2.Instruction.SerializeToString,
-                response_deserializer=gym__pb2.Snapshot.FromString,
-                )
+            "/gym.Agent/CallInstruction",
+            request_serializer=gym__pb2.Instruction.SerializeToString,
+            response_deserializer=gym__pb2.Snapshot.FromString,
+        )
 
 
 class AgentServicer(object):
@@ -216,69 +262,92 @@ class AgentServicer(object):
     def Greet(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CallInstruction(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_AgentServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Greet': grpc.unary_unary_rpc_method_handler(
-                    servicer.Greet,
-                    request_deserializer=gym__pb2.Info.FromString,
-                    response_serializer=gym__pb2.Info.SerializeToString,
-            ),
-            'CallInstruction': grpc.unary_unary_rpc_method_handler(
-                    servicer.CallInstruction,
-                    request_deserializer=gym__pb2.Instruction.FromString,
-                    response_serializer=gym__pb2.Snapshot.SerializeToString,
-            ),
+        "Greet": grpc.unary_unary_rpc_method_handler(
+            servicer.Greet,
+            request_deserializer=gym__pb2.Info.FromString,
+            response_serializer=gym__pb2.Info.SerializeToString,
+        ),
+        "CallInstruction": grpc.unary_unary_rpc_method_handler(
+            servicer.CallInstruction,
+            request_deserializer=gym__pb2.Instruction.FromString,
+            response_serializer=gym__pb2.Snapshot.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'gym.Agent', rpc_method_handlers)
+        "gym.Agent", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Agent(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Greet(request,
+    def Greet(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Agent/Greet',
+            "/gym.Agent/Greet",
             gym__pb2.Info.SerializeToString,
             gym__pb2.Info.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CallInstruction(request,
+    def CallInstruction(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Agent/CallInstruction',
+            "/gym.Agent/CallInstruction",
             gym__pb2.Instruction.SerializeToString,
             gym__pb2.Snapshot.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
 
 class MonitorStub(object):
@@ -291,15 +360,15 @@ class MonitorStub(object):
             channel: A grpc.Channel.
         """
         self.Greet = channel.unary_unary(
-                '/gym.Monitor/Greet',
-                request_serializer=gym__pb2.Info.SerializeToString,
-                response_deserializer=gym__pb2.Info.FromString,
-                )
+            "/gym.Monitor/Greet",
+            request_serializer=gym__pb2.Info.SerializeToString,
+            response_deserializer=gym__pb2.Info.FromString,
+        )
         self.CallInstruction = channel.unary_unary(
-                '/gym.Monitor/CallInstruction',
-                request_serializer=gym__pb2.Instruction.SerializeToString,
-                response_deserializer=gym__pb2.Snapshot.FromString,
-                )
+            "/gym.Monitor/CallInstruction",
+            request_serializer=gym__pb2.Instruction.SerializeToString,
+            response_deserializer=gym__pb2.Snapshot.FromString,
+        )
 
 
 class MonitorServicer(object):
@@ -308,69 +377,92 @@ class MonitorServicer(object):
     def Greet(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CallInstruction(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_MonitorServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Greet': grpc.unary_unary_rpc_method_handler(
-                    servicer.Greet,
-                    request_deserializer=gym__pb2.Info.FromString,
-                    response_serializer=gym__pb2.Info.SerializeToString,
-            ),
-            'CallInstruction': grpc.unary_unary_rpc_method_handler(
-                    servicer.CallInstruction,
-                    request_deserializer=gym__pb2.Instruction.FromString,
-                    response_serializer=gym__pb2.Snapshot.SerializeToString,
-            ),
+        "Greet": grpc.unary_unary_rpc_method_handler(
+            servicer.Greet,
+            request_deserializer=gym__pb2.Info.FromString,
+            response_serializer=gym__pb2.Info.SerializeToString,
+        ),
+        "CallInstruction": grpc.unary_unary_rpc_method_handler(
+            servicer.CallInstruction,
+            request_deserializer=gym__pb2.Instruction.FromString,
+            response_serializer=gym__pb2.Snapshot.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'gym.Monitor', rpc_method_handlers)
+        "gym.Monitor", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Monitor(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Greet(request,
+    def Greet(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Monitor/Greet',
+            "/gym.Monitor/Greet",
             gym__pb2.Info.SerializeToString,
             gym__pb2.Info.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CallInstruction(request,
+    def CallInstruction(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Monitor/CallInstruction',
+            "/gym.Monitor/CallInstruction",
             gym__pb2.Instruction.SerializeToString,
             gym__pb2.Snapshot.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
 
 class InfraStub(object):
@@ -383,10 +475,10 @@ class InfraStub(object):
             channel: A grpc.Channel.
         """
         self.Run = channel.unary_unary(
-                '/gym.Infra/Run',
-                request_serializer=gym__pb2.Deploy.SerializeToString,
-                response_deserializer=gym__pb2.Built.FromString,
-                )
+            "/gym.Infra/Run",
+            request_serializer=gym__pb2.Deploy.SerializeToString,
+            response_deserializer=gym__pb2.Built.FromString,
+        )
 
 
 class InfraServicer(object):
@@ -395,39 +487,51 @@ class InfraServicer(object):
     def Run(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_InfraServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Run': grpc.unary_unary_rpc_method_handler(
-                    servicer.Run,
-                    request_deserializer=gym__pb2.Deploy.FromString,
-                    response_serializer=gym__pb2.Built.SerializeToString,
-            ),
+        "Run": grpc.unary_unary_rpc_method_handler(
+            servicer.Run,
+            request_deserializer=gym__pb2.Deploy.FromString,
+            response_serializer=gym__pb2.Built.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'gym.Infra', rpc_method_handlers)
+        "gym.Infra", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Infra(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Run(request,
+    def Run(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/gym.Infra/Run',
+            "/gym.Infra/Run",
             gym__pb2.Deploy.SerializeToString,
             gym__pb2.Built.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

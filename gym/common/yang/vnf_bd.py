@@ -27,7 +27,8 @@ class yc_experiments_vnf_bd__experiments(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Number of trails and test to be executed
+  YANG Description: Defines the number of trials and tests
+the VNF-BD must execute.
   """
   __slots__ = ('_path_helper', '_extmethods', '__trials','__tests',)
 
@@ -49,8 +50,8 @@ class yc_experiments_vnf_bd__experiments(PybindBase):
       self._extmethods = extmethods
     else:
       self._extmethods = False
-    self.__trials = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
-    self.__tests = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
+    self.__trials = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
+    self.__tests = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
 
     load = kwargs.pop("load", None)
     if args:
@@ -83,7 +84,10 @@ class yc_experiments_vnf_bd__experiments(PybindBase):
     """
     Getter method for trials, mapped from YANG variable /experiments/trials (uint32)
 
-    YANG Description: Number of trials
+    YANG Description: Number of trials.
+A trial is a single process or iteration
+to obtain VNF performance metrics from
+benchmarking the VNF-BD proceedings.
     """
     return self.__trials
       
@@ -95,17 +99,20 @@ class yc_experiments_vnf_bd__experiments(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_trials() directly.
 
-    YANG Description: Number of trials
+    YANG Description: Number of trials.
+A trial is a single process or iteration
+to obtain VNF performance metrics from
+benchmarking the VNF-BD proceedings.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
     try:
-      t = YANGDynClass(v,base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
+      t = YANGDynClass(v,base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
     except (TypeError, ValueError):
       raise ValueError({
           'error-string': """trials must be of a type compatible with uint32""",
           'defined-type': "uint32",
-          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)""",
+          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)""",
         })
 
     self.__trials = t
@@ -113,14 +120,20 @@ class yc_experiments_vnf_bd__experiments(PybindBase):
       self._set()
 
   def _unset_trials(self):
-    self.__trials = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
+    self.__trials = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="trials", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
 
 
   def _get_tests(self):
     """
     Getter method for tests, mapped from YANG variable /experiments/tests (uint32)
 
-    YANG Description: Number of tests
+    YANG Description: Number of tests.
+Each test defines unique structural
+and functional parameters (e.g., configurations,
+resource assignment) for benchmarked components
+to perform one or multiple Trials.
+Each Test must be executed following a
+particular scenario.
     """
     return self.__tests
       
@@ -132,17 +145,23 @@ class yc_experiments_vnf_bd__experiments(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_tests() directly.
 
-    YANG Description: Number of tests
+    YANG Description: Number of tests.
+Each test defines unique structural
+and functional parameters (e.g., configurations,
+resource assignment) for benchmarked components
+to perform one or multiple Trials.
+Each Test must be executed following a
+particular scenario.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
     try:
-      t = YANGDynClass(v,base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
+      t = YANGDynClass(v,base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
     except (TypeError, ValueError):
       raise ValueError({
           'error-string': """tests must be of a type compatible with uint32""",
           'defined-type': "uint32",
-          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)""",
+          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)""",
         })
 
     self.__tests = t
@@ -150,774 +169,13 @@ class yc_experiments_vnf_bd__experiments(PybindBase):
       self._set()
 
   def _unset_tests(self):
-    self.__tests = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), default=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32)(1), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
+    self.__tests = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="tests", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='uint32', is_config=True)
 
   trials = __builtin__.property(_get_trials, _set_trials)
   tests = __builtin__.property(_get_tests, _set_tests)
 
 
   _pyangbind_elements = OrderedDict([('trials', trials), ('tests', tests), ])
-
-
-class yc_parameters_vnf_bd__environment_plugin_parameters(PybindBase):
-  """
-  This class was auto-generated by the PythonClass plugin for PYANG
-  from YANG module vnf-bd - based on the path /environment/plugin/parameters. Each member element of
-  the container is represented as a class variable - with a specific
-  YANG type.
-
-  YANG Description: List of key/value parameters
-  """
-  __slots__ = ('_path_helper', '_extmethods', '__input','__value',)
-
-  _yang_name = 'parameters'
-
-  _pybind_generated_by = 'container'
-
-  def __init__(self, *args, **kwargs):
-
-    self._path_helper = kwargs.get("path_helper", False)
-
-    extmethods = kwargs.pop("extmethods", None)
-    if extmethods is False:
-      self._extmethods = False
-    elif extmethods is not None and isinstance(extmethods, dict):
-      self._extmethods = extmethods
-    elif hasattr(self, "_parent"):
-      extmethods = getattr(self._parent, "_extmethods", None)
-      self._extmethods = extmethods
-    else:
-      self._extmethods = False
-    self.__input = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="input", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__value = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-    load = kwargs.pop("load", None)
-    if args:
-      if len(args) > 1:
-        raise TypeError("cannot create a YANG container with >1 argument")
-      all_attr = True
-      for e in self._pyangbind_elements:
-        if not hasattr(args[0], e):
-          all_attr = False
-          break
-      if not all_attr:
-        raise ValueError("Supplied object did not have the correct attributes")
-      for e in self._pyangbind_elements:
-        nobj = getattr(args[0], e)
-        if nobj._changed() is False:
-          continue
-        setmethod = getattr(self, "_set_%s" % e)
-        if load is None:
-          setmethod(getattr(args[0], e))
-        else:
-          setmethod(getattr(args[0], e), load=load)
-
-  def _path(self):
-    if hasattr(self, "_parent"):
-      return self._parent._path()+[self._yang_name]
-    else:
-      return ['environment', 'plugin', 'parameters']
-
-  def _get_input(self):
-    """
-    Getter method for input, mapped from YANG variable /environment/plugin/parameters/input (string)
-
-    YANG Description: Key of the parameter
-    """
-    return self.__input
-      
-  def _set_input(self, v, load=False):
-    """
-    Setter method for input, mapped from YANG variable /environment/plugin/parameters/input (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_input is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_input() directly.
-
-    YANG Description: Key of the parameter
-    """
-    parent = getattr(self, "_parent", None)
-    if parent is not None and load is False:
-      raise AttributeError("Cannot set keys directly when" +
-                             " within an instantiated list")
-
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="input", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """input must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="input", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__input = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_input(self):
-    self.__input = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="input", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_value(self):
-    """
-    Getter method for value, mapped from YANG variable /environment/plugin/parameters/value (string)
-
-    YANG Description: Value of the parameter
-    """
-    return self.__value
-      
-  def _set_value(self, v, load=False):
-    """
-    Setter method for value, mapped from YANG variable /environment/plugin/parameters/value (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_value is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_value() directly.
-
-    YANG Description: Value of the parameter
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """value must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__value = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_value(self):
-    self.__value = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-  input = __builtin__.property(_get_input, _set_input)
-  value = __builtin__.property(_get_value, _set_value)
-
-
-  _pyangbind_elements = OrderedDict([('input', input), ('value', value), ])
-
-
-class yc_plugin_vnf_bd__environment_plugin(PybindBase):
-  """
-  This class was auto-generated by the PythonClass plugin for PYANG
-  from YANG module vnf-bd - based on the path /environment/plugin. Each member element of
-  the container is represented as a class variable - with a specific
-  YANG type.
-
-  YANG Description: Management plugin used for given envrionment
-  """
-  __slots__ = ('_path_helper', '_extmethods', '__type','__parameters',)
-
-  _yang_name = 'plugin'
-
-  _pybind_generated_by = 'container'
-
-  def __init__(self, *args, **kwargs):
-
-    self._path_helper = kwargs.get("path_helper", False)
-
-    extmethods = kwargs.pop("extmethods", None)
-    if extmethods is False:
-      self._extmethods = False
-    elif extmethods is not None and isinstance(extmethods, dict):
-      self._extmethods = extmethods
-    elif hasattr(self, "_parent"):
-      extmethods = getattr(self._parent, "_extmethods", None)
-      self._extmethods = extmethods
-    else:
-      self._extmethods = False
-    self.__type = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="type", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__parameters = YANGDynClass(base=YANGListType("input",yc_parameters_vnf_bd__environment_plugin_parameters, yang_name="parameters", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='input', extensions=None), is_container='list', yang_name="parameters", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-
-    load = kwargs.pop("load", None)
-    if args:
-      if len(args) > 1:
-        raise TypeError("cannot create a YANG container with >1 argument")
-      all_attr = True
-      for e in self._pyangbind_elements:
-        if not hasattr(args[0], e):
-          all_attr = False
-          break
-      if not all_attr:
-        raise ValueError("Supplied object did not have the correct attributes")
-      for e in self._pyangbind_elements:
-        nobj = getattr(args[0], e)
-        if nobj._changed() is False:
-          continue
-        setmethod = getattr(self, "_set_%s" % e)
-        if load is None:
-          setmethod(getattr(args[0], e))
-        else:
-          setmethod(getattr(args[0], e), load=load)
-
-  def _path(self):
-    if hasattr(self, "_parent"):
-      return self._parent._path()+[self._yang_name]
-    else:
-      return ['environment', 'plugin']
-
-  def _get_type(self):
-    """
-    Getter method for type, mapped from YANG variable /environment/plugin/type (string)
-
-    YANG Description: Type of the plugin
-    """
-    return self.__type
-      
-  def _set_type(self, v, load=False):
-    """
-    Setter method for type, mapped from YANG variable /environment/plugin/type (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_type is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_type() directly.
-
-    YANG Description: Type of the plugin
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="type", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """type must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="type", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__type = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_type(self):
-    self.__type = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="type", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_parameters(self):
-    """
-    Getter method for parameters, mapped from YANG variable /environment/plugin/parameters (list)
-
-    YANG Description: List of key/value parameters
-    """
-    return self.__parameters
-      
-  def _set_parameters(self, v, load=False):
-    """
-    Setter method for parameters, mapped from YANG variable /environment/plugin/parameters (list)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_parameters is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_parameters() directly.
-
-    YANG Description: List of key/value parameters
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=YANGListType("input",yc_parameters_vnf_bd__environment_plugin_parameters, yang_name="parameters", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='input', extensions=None), is_container='list', yang_name="parameters", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """parameters must be of a type compatible with list""",
-          'defined-type': "list",
-          'generated-type': """YANGDynClass(base=YANGListType("input",yc_parameters_vnf_bd__environment_plugin_parameters, yang_name="parameters", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='input', extensions=None), is_container='list', yang_name="parameters", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)""",
-        })
-
-    self.__parameters = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_parameters(self):
-    self.__parameters = YANGDynClass(base=YANGListType("input",yc_parameters_vnf_bd__environment_plugin_parameters, yang_name="parameters", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='input', extensions=None), is_container='list', yang_name="parameters", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-
-  type = __builtin__.property(_get_type, _set_type)
-  parameters = __builtin__.property(_get_parameters, _set_parameters)
-
-
-  _pyangbind_elements = OrderedDict([('type', type), ('parameters', parameters), ])
-
-
-class yc_environment_vnf_bd__environment(PybindBase):
-  """
-  This class was auto-generated by the PythonClass plugin for PYANG
-  from YANG module vnf-bd - based on the path /environment. Each member element of
-  the container is represented as a class variable - with a specific
-  YANG type.
-
-  YANG Description: Definition of the benchmarking execution environment
-  """
-  __slots__ = ('_path_helper', '_extmethods', '__name','__description','__deploy','__plugin',)
-
-  _yang_name = 'environment'
-
-  _pybind_generated_by = 'container'
-
-  def __init__(self, *args, **kwargs):
-
-    self._path_helper = kwargs.get("path_helper", False)
-
-    extmethods = kwargs.pop("extmethods", None)
-    if extmethods is False:
-      self._extmethods = False
-    elif extmethods is not None and isinstance(extmethods, dict):
-      self._extmethods = extmethods
-    elif hasattr(self, "_parent"):
-      extmethods = getattr(self._parent, "_extmethods", None)
-      self._extmethods = extmethods
-    else:
-      self._extmethods = False
-    self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__description = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__deploy = YANGDynClass(base=YANGBool, is_leaf=True, yang_name="deploy", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='boolean', is_config=True)
-    self.__plugin = YANGDynClass(base=yc_plugin_vnf_bd__environment_plugin, is_container='container', yang_name="plugin", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
-
-    load = kwargs.pop("load", None)
-    if args:
-      if len(args) > 1:
-        raise TypeError("cannot create a YANG container with >1 argument")
-      all_attr = True
-      for e in self._pyangbind_elements:
-        if not hasattr(args[0], e):
-          all_attr = False
-          break
-      if not all_attr:
-        raise ValueError("Supplied object did not have the correct attributes")
-      for e in self._pyangbind_elements:
-        nobj = getattr(args[0], e)
-        if nobj._changed() is False:
-          continue
-        setmethod = getattr(self, "_set_%s" % e)
-        if load is None:
-          setmethod(getattr(args[0], e))
-        else:
-          setmethod(getattr(args[0], e), load=load)
-
-  def _path(self):
-    if hasattr(self, "_parent"):
-      return self._parent._path()+[self._yang_name]
-    else:
-      return ['environment']
-
-  def _get_name(self):
-    """
-    Getter method for name, mapped from YANG variable /environment/name (string)
-
-    YANG Description: The evironment's name
-    """
-    return self.__name
-      
-  def _set_name(self, v, load=False):
-    """
-    Setter method for name, mapped from YANG variable /environment/name (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_name is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_name() directly.
-
-    YANG Description: The evironment's name
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """name must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__name = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_name(self):
-    self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_description(self):
-    """
-    Getter method for description, mapped from YANG variable /environment/description (string)
-
-    YANG Description: A description
-    """
-    return self.__description
-      
-  def _set_description(self, v, load=False):
-    """
-    Setter method for description, mapped from YANG variable /environment/description (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_description is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_description() directly.
-
-    YANG Description: A description
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """description must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__description = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_description(self):
-    self.__description = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_deploy(self):
-    """
-    Getter method for deploy, mapped from YANG variable /environment/deploy (boolean)
-
-    YANG Description: Deploy the SUT and probes or use a running deployment
-    """
-    return self.__deploy
-      
-  def _set_deploy(self, v, load=False):
-    """
-    Setter method for deploy, mapped from YANG variable /environment/deploy (boolean)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_deploy is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_deploy() directly.
-
-    YANG Description: Deploy the SUT and probes or use a running deployment
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=YANGBool, is_leaf=True, yang_name="deploy", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='boolean', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """deploy must be of a type compatible with boolean""",
-          'defined-type': "boolean",
-          'generated-type': """YANGDynClass(base=YANGBool, is_leaf=True, yang_name="deploy", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='boolean', is_config=True)""",
-        })
-
-    self.__deploy = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_deploy(self):
-    self.__deploy = YANGDynClass(base=YANGBool, is_leaf=True, yang_name="deploy", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='boolean', is_config=True)
-
-
-  def _get_plugin(self):
-    """
-    Getter method for plugin, mapped from YANG variable /environment/plugin (container)
-
-    YANG Description: Management plugin used for given envrionment
-    """
-    return self.__plugin
-      
-  def _set_plugin(self, v, load=False):
-    """
-    Setter method for plugin, mapped from YANG variable /environment/plugin (container)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_plugin is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_plugin() directly.
-
-    YANG Description: Management plugin used for given envrionment
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=yc_plugin_vnf_bd__environment_plugin, is_container='container', yang_name="plugin", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """plugin must be of a type compatible with container""",
-          'defined-type': "container",
-          'generated-type': """YANGDynClass(base=yc_plugin_vnf_bd__environment_plugin, is_container='container', yang_name="plugin", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)""",
-        })
-
-    self.__plugin = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_plugin(self):
-    self.__plugin = YANGDynClass(base=yc_plugin_vnf_bd__environment_plugin, is_container='container', yang_name="plugin", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
-
-  name = __builtin__.property(_get_name, _set_name)
-  description = __builtin__.property(_get_description, _set_description)
-  deploy = __builtin__.property(_get_deploy, _set_deploy)
-  plugin = __builtin__.property(_get_plugin, _set_plugin)
-
-
-  _pyangbind_elements = OrderedDict([('name', name), ('description', description), ('deploy', deploy), ('plugin', plugin), ])
-
-
-class yc_targets_vnf_bd__targets(PybindBase):
-  """
-  This class was auto-generated by the PythonClass plugin for PYANG
-  from YANG module vnf-bd - based on the path /targets. Each member element of
-  the container is represented as a class variable - with a specific
-  YANG type.
-
-  YANG Description: Target SUTs
-  """
-  __slots__ = ('_path_helper', '_extmethods', '__id','__name','__version','__author','__description',)
-
-  _yang_name = 'targets'
-
-  _pybind_generated_by = 'container'
-
-  def __init__(self, *args, **kwargs):
-
-    self._path_helper = kwargs.get("path_helper", False)
-
-    extmethods = kwargs.pop("extmethods", None)
-    if extmethods is False:
-      self._extmethods = False
-    elif extmethods is not None and isinstance(extmethods, dict):
-      self._extmethods = extmethods
-    elif hasattr(self, "_parent"):
-      extmethods = getattr(self._parent, "_extmethods", None)
-      self._extmethods = extmethods
-    else:
-      self._extmethods = False
-    self.__id = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__version = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__author = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__description = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-    load = kwargs.pop("load", None)
-    if args:
-      if len(args) > 1:
-        raise TypeError("cannot create a YANG container with >1 argument")
-      all_attr = True
-      for e in self._pyangbind_elements:
-        if not hasattr(args[0], e):
-          all_attr = False
-          break
-      if not all_attr:
-        raise ValueError("Supplied object did not have the correct attributes")
-      for e in self._pyangbind_elements:
-        nobj = getattr(args[0], e)
-        if nobj._changed() is False:
-          continue
-        setmethod = getattr(self, "_set_%s" % e)
-        if load is None:
-          setmethod(getattr(args[0], e))
-        else:
-          setmethod(getattr(args[0], e), load=load)
-
-  def _path(self):
-    if hasattr(self, "_parent"):
-      return self._parent._path()+[self._yang_name]
-    else:
-      return ['targets']
-
-  def _get_id(self):
-    """
-    Getter method for id, mapped from YANG variable /targets/id (string)
-
-    YANG Description: Unique identifier
-    """
-    return self.__id
-      
-  def _set_id(self, v, load=False):
-    """
-    Setter method for id, mapped from YANG variable /targets/id (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_id is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_id() directly.
-
-    YANG Description: Unique identifier
-    """
-    parent = getattr(self, "_parent", None)
-    if parent is not None and load is False:
-      raise AttributeError("Cannot set keys directly when" +
-                             " within an instantiated list")
-
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """id must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__id = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_id(self):
-    self.__id = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_name(self):
-    """
-    Getter method for name, mapped from YANG variable /targets/name (string)
-
-    YANG Description: Name of target
-    """
-    return self.__name
-      
-  def _set_name(self, v, load=False):
-    """
-    Setter method for name, mapped from YANG variable /targets/name (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_name is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_name() directly.
-
-    YANG Description: Name of target
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """name must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__name = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_name(self):
-    self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_version(self):
-    """
-    Getter method for version, mapped from YANG variable /targets/version (string)
-
-    YANG Description: Version of target
-    """
-    return self.__version
-      
-  def _set_version(self, v, load=False):
-    """
-    Setter method for version, mapped from YANG variable /targets/version (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_version is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_version() directly.
-
-    YANG Description: Version of target
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """version must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__version = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_version(self):
-    self.__version = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_author(self):
-    """
-    Getter method for author, mapped from YANG variable /targets/author (string)
-
-    YANG Description: Author of target
-    """
-    return self.__author
-      
-  def _set_author(self, v, load=False):
-    """
-    Setter method for author, mapped from YANG variable /targets/author (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_author is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_author() directly.
-
-    YANG Description: Author of target
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """author must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__author = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_author(self):
-    self.__author = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_description(self):
-    """
-    Getter method for description, mapped from YANG variable /targets/description (string)
-
-    YANG Description: Description of target
-    """
-    return self.__description
-      
-  def _set_description(self, v, load=False):
-    """
-    Setter method for description, mapped from YANG variable /targets/description (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_description is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_description() directly.
-
-    YANG Description: Description of target
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """description must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__description = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_description(self):
-    self.__description = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-  id = __builtin__.property(_get_id, _set_id)
-  name = __builtin__.property(_get_name, _set_name)
-  version = __builtin__.property(_get_version, _set_version)
-  author = __builtin__.property(_get_author, _set_author)
-  description = __builtin__.property(_get_description, _set_description)
-
-
-  _pyangbind_elements = OrderedDict([('id', id), ('name', name), ('version', version), ('author', author), ('description', description), ])
 
 
 class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
@@ -927,7 +185,8 @@ class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: CPU resources
+  YANG Description: The node CPU resources that must
+be allocated for a benchmarking Test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__vcpus','__cpu_bw','__pinning',)
 
@@ -984,7 +243,8 @@ class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
     """
     Getter method for vcpus, mapped from YANG variable /scenario/nodes/resources/cpu/vcpus (uint32)
 
-    YANG Description: Number of cores to be used
+    YANG Description: The number of cores to be allocated
+for a node.
     """
     return self.__vcpus
       
@@ -996,7 +256,8 @@ class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_vcpus() directly.
 
-    YANG Description: Number of cores to be used
+    YANG Description: The number of cores to be allocated
+for a node.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1021,7 +282,7 @@ class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
     """
     Getter method for cpu_bw, mapped from YANG variable /scenario/nodes/resources/cpu/cpu_bw (string)
 
-    YANG Description: CPU bandwidth (CFS limit in 0.01-1.0)
+    YANG Description: The CPU bandwidth (CFS limit in 0.01-1.0)
     """
     return self.__cpu_bw
       
@@ -1033,7 +294,7 @@ class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_cpu_bw() directly.
 
-    YANG Description: CPU bandwidth (CFS limit in 0.01-1.0)
+    YANG Description: The CPU bandwidth (CFS limit in 0.01-1.0)
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1058,7 +319,8 @@ class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
     """
     Getter method for pinning, mapped from YANG variable /scenario/nodes/resources/cpu/pinning (string)
 
-    YANG Description: CPU core set to be used
+    YANG Description: The list of CPU cores, separated by comma,
+that a node must be pinned to.
     """
     return self.__pinning
       
@@ -1070,7 +332,8 @@ class yc_cpu_vnf_bd__scenario_nodes_resources_cpu(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_pinning() directly.
 
-    YANG Description: CPU core set to be used
+    YANG Description: The list of CPU cores, separated by comma,
+that a node must be pinned to.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1105,7 +368,9 @@ class yc_memory_vnf_bd__scenario_nodes_resources_memory(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Memory resources
+  YANG Description: The node memory resources
+that must be allocated for a benchmarking
+Test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__size','__unit',)
 
@@ -1161,7 +426,7 @@ class yc_memory_vnf_bd__scenario_nodes_resources_memory(PybindBase):
     """
     Getter method for size, mapped from YANG variable /scenario/nodes/resources/memory/size (uint32)
 
-    YANG Description: Memory size
+    YANG Description: The memory allocation size.
     """
     return self.__size
       
@@ -1173,7 +438,7 @@ class yc_memory_vnf_bd__scenario_nodes_resources_memory(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_size() directly.
 
-    YANG Description: Memory size
+    YANG Description: The memory allocation size.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1198,7 +463,7 @@ class yc_memory_vnf_bd__scenario_nodes_resources_memory(PybindBase):
     """
     Getter method for unit, mapped from YANG variable /scenario/nodes/resources/memory/unit (string)
 
-    YANG Description: Memory unit
+    YANG Description: The memory unit.
     """
     return self.__unit
       
@@ -1210,7 +475,7 @@ class yc_memory_vnf_bd__scenario_nodes_resources_memory(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_unit() directly.
 
-    YANG Description: Memory unit
+    YANG Description: The memory unit.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1244,7 +509,8 @@ class yc_storage_vnf_bd__scenario_nodes_resources_storage(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Storage resources
+  YANG Description: The node storage resources
+that must be allocated for a benchmarking Test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__size','__unit','__volumes',)
 
@@ -1301,7 +567,7 @@ class yc_storage_vnf_bd__scenario_nodes_resources_storage(PybindBase):
     """
     Getter method for size, mapped from YANG variable /scenario/nodes/resources/storage/size (uint32)
 
-    YANG Description: Storage size
+    YANG Description: The storage allocation size.
     """
     return self.__size
       
@@ -1313,7 +579,7 @@ class yc_storage_vnf_bd__scenario_nodes_resources_storage(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_size() directly.
 
-    YANG Description: Storage size
+    YANG Description: The storage allocation size.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1338,7 +604,7 @@ class yc_storage_vnf_bd__scenario_nodes_resources_storage(PybindBase):
     """
     Getter method for unit, mapped from YANG variable /scenario/nodes/resources/storage/unit (string)
 
-    YANG Description: Storage unit
+    YANG Description: The storage unit.
     """
     return self.__unit
       
@@ -1350,7 +616,7 @@ class yc_storage_vnf_bd__scenario_nodes_resources_storage(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_unit() directly.
 
-    YANG Description: Storage unit
+    YANG Description: The storage unit.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1375,7 +641,13 @@ class yc_storage_vnf_bd__scenario_nodes_resources_storage(PybindBase):
     """
     Getter method for volumes, mapped from YANG variable /scenario/nodes/resources/storage/volumes (string)
 
-    YANG Description: Valumes to be used
+    YANG Description: Volumes to be allocated by
+a node storage.
+A volume defines a mapping of an outside storage
+partition inside the node storage system.
+Volumes must be separated by comma and be defined
+using a colon to separate the node internal and external
+references of storage system paths.
     """
     return self.__volumes
       
@@ -1387,7 +659,13 @@ class yc_storage_vnf_bd__scenario_nodes_resources_storage(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_volumes() directly.
 
-    YANG Description: Valumes to be used
+    YANG Description: Volumes to be allocated by
+a node storage.
+A volume defines a mapping of an outside storage
+partition inside the node storage system.
+Volumes must be separated by comma and be defined
+using a colon to separate the node internal and external
+references of storage system paths.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1422,7 +700,8 @@ class yc_resources_vnf_bd__scenario_nodes_resources(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Resource assigned to SUT
+  YANG Description: The set of resources that must be allocated
+for a node in a benchmarking Test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__cpu','__memory','__storage',)
 
@@ -1479,7 +758,8 @@ class yc_resources_vnf_bd__scenario_nodes_resources(PybindBase):
     """
     Getter method for cpu, mapped from YANG variable /scenario/nodes/resources/cpu (container)
 
-    YANG Description: CPU resources
+    YANG Description: The node CPU resources that must
+be allocated for a benchmarking Test.
     """
     return self.__cpu
       
@@ -1491,7 +771,8 @@ class yc_resources_vnf_bd__scenario_nodes_resources(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_cpu() directly.
 
-    YANG Description: CPU resources
+    YANG Description: The node CPU resources that must
+be allocated for a benchmarking Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1516,7 +797,9 @@ class yc_resources_vnf_bd__scenario_nodes_resources(PybindBase):
     """
     Getter method for memory, mapped from YANG variable /scenario/nodes/resources/memory (container)
 
-    YANG Description: Memory resources
+    YANG Description: The node memory resources
+that must be allocated for a benchmarking
+Test.
     """
     return self.__memory
       
@@ -1528,7 +811,9 @@ class yc_resources_vnf_bd__scenario_nodes_resources(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_memory() directly.
 
-    YANG Description: Memory resources
+    YANG Description: The node memory resources
+that must be allocated for a benchmarking
+Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1553,7 +838,8 @@ class yc_resources_vnf_bd__scenario_nodes_resources(PybindBase):
     """
     Getter method for storage, mapped from YANG variable /scenario/nodes/resources/storage (container)
 
-    YANG Description: Storage resources
+    YANG Description: The node storage resources
+that must be allocated for a benchmarking Test.
     """
     return self.__storage
       
@@ -1565,7 +851,8 @@ class yc_resources_vnf_bd__scenario_nodes_resources(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_storage() directly.
 
-    YANG Description: Storage resources
+    YANG Description: The node storage resources
+that must be allocated for a benchmarking Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1600,7 +887,7 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of connection points of node
+  YANG Description: The list of connection points of a node.
   """
   __slots__ = ('_path_helper', '_extmethods', '__id','__interface','__type','__address',)
 
@@ -1658,7 +945,8 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     """
     Getter method for id, mapped from YANG variable /scenario/nodes/connection_points/id (string)
 
-    YANG Description: Unique identifier
+    YANG Description: The connection-point
+unique identifier
     """
     return self.__id
       
@@ -1670,7 +958,8 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: The connection-point
+unique identifier
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -1700,7 +989,8 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     """
     Getter method for interface, mapped from YANG variable /scenario/nodes/connection_points/interface (string)
 
-    YANG Description: Interface name
+    YANG Description: The name of the node interface
+associated with the connection-point.
     """
     return self.__interface
       
@@ -1712,7 +1002,8 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_interface() directly.
 
-    YANG Description: Interface name
+    YANG Description: The name of the node interface
+associated with the connection-point.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1737,7 +1028,8 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     """
     Getter method for type, mapped from YANG variable /scenario/nodes/connection_points/type (string)
 
-    YANG Description: Network type
+    YANG Description: The type of the network the
+connection-point interface is attached to.
     """
     return self.__type
       
@@ -1749,7 +1041,8 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_type() directly.
 
-    YANG Description: Network type
+    YANG Description: The type of the network the
+connection-point interface is attached to.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1774,7 +1067,9 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     """
     Getter method for address, mapped from YANG variable /scenario/nodes/connection_points/address (string)
 
-    YANG Description: Network address, e.g., 10.0.0.1/24
+    YANG Description: The Network address of the
+connection-point. It can be specified as a
+Ethernet MAC address, a IPv4 address or an IPv6 address.
     """
     return self.__address
       
@@ -1786,7 +1081,9 @@ class yc_connection_points_vnf_bd__scenario_nodes_connection_points(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_address() directly.
 
-    YANG Description: Network address, e.g., 10.0.0.1/24
+    YANG Description: The Network address of the
+connection-point. It can be specified as a
+Ethernet MAC address, a IPv4 address or an IPv6 address.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1822,7 +1119,8 @@ class yc_relationships_vnf_bd__scenario_nodes_relationships(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Relationship of node to other components in the experiment
+  YANG Description: Relationship of a node with the other
+scenario components.
   """
   __slots__ = ('_path_helper', '_extmethods', '__name','__type','__target',)
 
@@ -1879,7 +1177,7 @@ class yc_relationships_vnf_bd__scenario_nodes_relationships(PybindBase):
     """
     Getter method for name, mapped from YANG variable /scenario/nodes/relationships/name (string)
 
-    YANG Description: Name of relationship
+    YANG Description: Name of the relationship.
     """
     return self.__name
       
@@ -1891,7 +1189,7 @@ class yc_relationships_vnf_bd__scenario_nodes_relationships(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of relationship
+    YANG Description: Name of the relationship.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -1921,7 +1219,7 @@ class yc_relationships_vnf_bd__scenario_nodes_relationships(PybindBase):
     """
     Getter method for type, mapped from YANG variable /scenario/nodes/relationships/type (string)
 
-    YANG Description: Type of relationship
+    YANG Description: Type of the relationship.
     """
     return self.__type
       
@@ -1933,7 +1231,7 @@ class yc_relationships_vnf_bd__scenario_nodes_relationships(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_type() directly.
 
-    YANG Description: Type of relationship
+    YANG Description: Type of the relationship.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1958,7 +1256,7 @@ class yc_relationships_vnf_bd__scenario_nodes_relationships(PybindBase):
     """
     Getter method for target, mapped from YANG variable /scenario/nodes/relationships/target (string)
 
-    YANG Description: Target of relationship
+    YANG Description: Target of the relationship.
     """
     return self.__target
       
@@ -1970,7 +1268,7 @@ class yc_relationships_vnf_bd__scenario_nodes_relationships(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_target() directly.
 
-    YANG Description: Target of relationship
+    YANG Description: Target of the relationship.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2005,7 +1303,8 @@ class yc_parameters_vnf_bd__scenario_nodes_lifecycle_parameters(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Parameters to be applied to node
+  YANG Description: The list of parameters to be
+applied to the node workflow.
   """
   __slots__ = ('_path_helper', '_extmethods', '__input','__value',)
 
@@ -2061,7 +1360,7 @@ class yc_parameters_vnf_bd__scenario_nodes_lifecycle_parameters(PybindBase):
     """
     Getter method for input, mapped from YANG variable /scenario/nodes/lifecycle/parameters/input (string)
 
-    YANG Description: Key of parameter
+    YANG Description: The name of the parameter.
     """
     return self.__input
       
@@ -2073,7 +1372,7 @@ class yc_parameters_vnf_bd__scenario_nodes_lifecycle_parameters(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_input() directly.
 
-    YANG Description: Key of parameter
+    YANG Description: The name of the parameter.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -2103,7 +1402,7 @@ class yc_parameters_vnf_bd__scenario_nodes_lifecycle_parameters(PybindBase):
     """
     Getter method for value, mapped from YANG variable /scenario/nodes/lifecycle/parameters/value (string)
 
-    YANG Description: Value of parameter
+    YANG Description: The value of the parameter
     """
     return self.__value
       
@@ -2115,7 +1414,7 @@ class yc_parameters_vnf_bd__scenario_nodes_lifecycle_parameters(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_value() directly.
 
-    YANG Description: Value of parameter
+    YANG Description: The value of the parameter
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2149,7 +1448,8 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Lifecycle to be applied to this node
+  YANG Description: The life cycle workflows to be
+applied to this node.
   """
   __slots__ = ('_path_helper', '_extmethods', '__workflow','__name','__parameters','__implementation',)
 
@@ -2207,7 +1507,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     """
     Getter method for workflow, mapped from YANG variable /scenario/nodes/lifecycle/workflow (workflows)
 
-    YANG Description: Workflow type
+    YANG Description: The type of the Workflow.
     """
     return self.__workflow
       
@@ -2219,7 +1519,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_workflow() directly.
 
-    YANG Description: Workflow type
+    YANG Description: The type of the Workflow.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -2249,7 +1549,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     """
     Getter method for name, mapped from YANG variable /scenario/nodes/lifecycle/name (string)
 
-    YANG Description: Workflow name
+    YANG Description: The workflow name.
     """
     return self.__name
       
@@ -2261,7 +1561,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Workflow name
+    YANG Description: The workflow name.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2286,7 +1586,8 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     """
     Getter method for parameters, mapped from YANG variable /scenario/nodes/lifecycle/parameters (list)
 
-    YANG Description: Parameters to be applied to node
+    YANG Description: The list of parameters to be
+applied to the node workflow.
     """
     return self.__parameters
       
@@ -2298,7 +1599,8 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_parameters() directly.
 
-    YANG Description: Parameters to be applied to node
+    YANG Description: The list of parameters to be
+applied to the node workflow.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2323,7 +1625,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     """
     Getter method for implementation, mapped from YANG variable /scenario/nodes/lifecycle/implementation (string)
 
-    YANG Description: Type of implementation
+    YANG Description: The workflow implementation.
     """
     return self.__implementation
       
@@ -2335,7 +1637,7 @@ class yc_lifecycle_vnf_bd__scenario_nodes_lifecycle(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_implementation() directly.
 
-    YANG Description: Type of implementation
+    YANG Description: The workflow implementation.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2371,7 +1673,9 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Nodes in the scenario
+  YANG Description: The list of nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__id','__type','__image','__format','__role','__resources','__connection_points','__relationships','__lifecycle',)
 
@@ -2434,7 +1738,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for id, mapped from YANG variable /scenario/nodes/id (string)
 
-    YANG Description: Unique identifier
+    YANG Description: The unique identifier of a node
+in a scenario.
     """
     return self.__id
       
@@ -2446,7 +1751,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: The unique identifier of a node
+in a scenario.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -2476,7 +1782,7 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for type, mapped from YANG variable /scenario/nodes/type (string)
 
-    YANG Description: Node type
+    YANG Description: The type of a node.
     """
     return self.__type
       
@@ -2488,7 +1794,7 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_type() directly.
 
-    YANG Description: Node type
+    YANG Description: The type of a node.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2513,7 +1819,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for image, mapped from YANG variable /scenario/nodes/image (string)
 
-    YANG Description: Disk/container image to be used
+    YANG Description: The name of the image to be used to instantiate
+a node.
     """
     return self.__image
       
@@ -2525,7 +1832,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_image() directly.
 
-    YANG Description: Disk/container image to be used
+    YANG Description: The name of the image to be used to instantiate
+a node.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2550,7 +1858,7 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for format, mapped from YANG variable /scenario/nodes/format (string)
 
-    YANG Description: Node format (container, process, VM)
+    YANG Description: The node format (e.g., container, process, VM).
     """
     return self.__format
       
@@ -2562,7 +1870,7 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_format() directly.
 
-    YANG Description: Node format (container, process, VM)
+    YANG Description: The node format (e.g., container, process, VM).
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2587,7 +1895,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for role, mapped from YANG variable /scenario/nodes/role (string)
 
-    YANG Description: Role of the node
+    YANG Description: The role of the node in the Test scenario.
+The role must be one of: manager, agent, monitor, sut.
     """
     return self.__role
       
@@ -2599,7 +1908,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_role() directly.
 
-    YANG Description: Role of the node
+    YANG Description: The role of the node in the Test scenario.
+The role must be one of: manager, agent, monitor, sut.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2624,7 +1934,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for resources, mapped from YANG variable /scenario/nodes/resources (container)
 
-    YANG Description: Resource assigned to SUT
+    YANG Description: The set of resources that must be allocated
+for a node in a benchmarking Test.
     """
     return self.__resources
       
@@ -2636,7 +1947,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_resources() directly.
 
-    YANG Description: Resource assigned to SUT
+    YANG Description: The set of resources that must be allocated
+for a node in a benchmarking Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2661,7 +1973,7 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for connection_points, mapped from YANG variable /scenario/nodes/connection_points (list)
 
-    YANG Description: List of connection points of node
+    YANG Description: The list of connection points of a node.
     """
     return self.__connection_points
       
@@ -2673,7 +1985,7 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_connection_points() directly.
 
-    YANG Description: List of connection points of node
+    YANG Description: The list of connection points of a node.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2698,7 +2010,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for relationships, mapped from YANG variable /scenario/nodes/relationships (list)
 
-    YANG Description: Relationship of node to other components in the experiment
+    YANG Description: Relationship of a node with the other
+scenario components.
     """
     return self.__relationships
       
@@ -2710,7 +2023,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_relationships() directly.
 
-    YANG Description: Relationship of node to other components in the experiment
+    YANG Description: Relationship of a node with the other
+scenario components.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2735,7 +2049,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     """
     Getter method for lifecycle, mapped from YANG variable /scenario/nodes/lifecycle (list)
 
-    YANG Description: Lifecycle to be applied to this node
+    YANG Description: The life cycle workflows to be
+applied to this node.
     """
     return self.__lifecycle
       
@@ -2747,7 +2062,8 @@ class yc_nodes_vnf_bd__scenario_nodes(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_lifecycle() directly.
 
-    YANG Description: Lifecycle to be applied to this node
+    YANG Description: The life cycle workflows to be
+applied to this node.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2788,7 +2104,9 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Links in the scenario
+  YANG Description: The list of links among nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__id','__name','__type','__network','__connection_points',)
 
@@ -2847,7 +2165,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     """
     Getter method for id, mapped from YANG variable /scenario/links/id (string)
 
-    YANG Description: Unique identifier
+    YANG Description: The link unique identifier.
     """
     return self.__id
       
@@ -2859,7 +2177,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: The link unique identifier.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -2889,7 +2207,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     """
     Getter method for name, mapped from YANG variable /scenario/links/name (string)
 
-    YANG Description: Name of the link
+    YANG Description: The name of the link.
     """
     return self.__name
       
@@ -2901,7 +2219,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of the link
+    YANG Description: The name of the link.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2926,7 +2244,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     """
     Getter method for type, mapped from YANG variable /scenario/links/type (string)
 
-    YANG Description: Type of the link
+    YANG Description: The type of the link.
     """
     return self.__type
       
@@ -2938,7 +2256,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_type() directly.
 
-    YANG Description: Type of the link
+    YANG Description: The type of the link.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2963,7 +2281,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     """
     Getter method for network, mapped from YANG variable /scenario/links/network (string)
 
-    YANG Description: Network the link belongs to
+    YANG Description: The network the link belongs to.
     """
     return self.__network
       
@@ -2975,7 +2293,7 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_network() directly.
 
-    YANG Description: Network the link belongs to
+    YANG Description: The network the link belongs to.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3000,7 +2318,8 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     """
     Getter method for connection_points, mapped from YANG variable /scenario/links/connection_points (leafref)
 
-    YANG Description: Reference to connection points the link is connected to
+    YANG Description: Reference to the connection points of nodes
+the link is adjacent.
     """
     return self.__connection_points
       
@@ -3012,7 +2331,8 @@ class yc_links_vnf_bd__scenario_links(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_connection_points() directly.
 
-    YANG Description: Reference to connection points the link is connected to
+    YANG Description: Reference to the connection points of nodes
+the link is adjacent.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3049,7 +2369,11 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Definition of execution environment policies
+  YANG Description: Definition of policies to be
+utilized on the instantiation of the scenario.
+A policy is defined by a name, it type,
+the targets (nodes and/or links) to which it must be applied to,
+and the proper action that realizes the policy.
   """
   __slots__ = ('_path_helper', '_extmethods', '__name','__type','__targets','__action',)
 
@@ -3107,7 +2431,7 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     """
     Getter method for name, mapped from YANG variable /scenario/policies/name (string)
 
-    YANG Description: Policies in the scenarios
+    YANG Description: The name of the policy.
     """
     return self.__name
       
@@ -3119,7 +2443,7 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Policies in the scenarios
+    YANG Description: The name of the policy.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -3149,7 +2473,7 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     """
     Getter method for type, mapped from YANG variable /scenario/policies/type (string)
 
-    YANG Description: Type of the policy
+    YANG Description: The type of the policy
     """
     return self.__type
       
@@ -3161,7 +2485,7 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_type() directly.
 
-    YANG Description: Type of the policy
+    YANG Description: The type of the policy
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3186,7 +2510,8 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     """
     Getter method for targets, mapped from YANG variable /scenario/policies/targets (string)
 
-    YANG Description: Target of the policy
+    YANG Description: The targets of the policy.
+Uuid of nodes and/or links separated by comma.
     """
     return self.__targets
       
@@ -3198,7 +2523,8 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_targets() directly.
 
-    YANG Description: Target of the policy
+    YANG Description: The targets of the policy.
+Uuid of nodes and/or links separated by comma.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3223,7 +2549,7 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     """
     Getter method for action, mapped from YANG variable /scenario/policies/action (string)
 
-    YANG Description: Action of the policy
+    YANG Description: The action of the policy
     """
     return self.__action
       
@@ -3235,7 +2561,7 @@ class yc_policies_vnf_bd__scenario_policies(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_action() directly.
 
-    YANG Description: Action of the policy
+    YANG Description: The action of the policy
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3271,7 +2597,10 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Scenarios defined by this VNF-BD
+  YANG Description: Scenarios defined by this VNF-BD.
+A scenario contains all information needed to describe
+the deployment of all involved functional components
+mandatory for the execution of a benchmarking Test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__nodes','__links','__policies',)
 
@@ -3328,7 +2657,9 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
     """
     Getter method for nodes, mapped from YANG variable /scenario/nodes (list)
 
-    YANG Description: Nodes in the scenario
+    YANG Description: The list of nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.
     """
     return self.__nodes
       
@@ -3340,7 +2671,9 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_nodes() directly.
 
-    YANG Description: Nodes in the scenario
+    YANG Description: The list of nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3365,7 +2698,9 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
     """
     Getter method for links, mapped from YANG variable /scenario/links (list)
 
-    YANG Description: Links in the scenario
+    YANG Description: The list of links among nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.
     """
     return self.__links
       
@@ -3377,7 +2712,9 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_links() directly.
 
-    YANG Description: Links in the scenario
+    YANG Description: The list of links among nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3402,7 +2739,11 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
     """
     Getter method for policies, mapped from YANG variable /scenario/policies (list)
 
-    YANG Description: Definition of execution environment policies
+    YANG Description: Definition of policies to be
+utilized on the instantiation of the scenario.
+A policy is defined by a name, it type,
+the targets (nodes and/or links) to which it must be applied to,
+and the proper action that realizes the policy.
     """
     return self.__policies
       
@@ -3414,7 +2755,11 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_policies() directly.
 
-    YANG Description: Definition of execution environment policies
+    YANG Description: Definition of policies to be
+utilized on the instantiation of the scenario.
+A policy is defined by a name, it type,
+the targets (nodes and/or links) to which it must be applied to,
+and the proper action that realizes the policy.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3442,150 +2787,6 @@ class yc_scenario_vnf_bd__scenario(PybindBase):
   _pyangbind_elements = OrderedDict([('nodes', nodes), ('links', links), ('policies', policies), ])
 
 
-class yc_attributes_vnf_bd__proceedings_attributes(PybindBase):
-  """
-  This class was auto-generated by the PythonClass plugin for PYANG
-  from YANG module vnf-bd - based on the path /proceedings/attributes. Each member element of
-  the container is represented as a class variable - with a specific
-  YANG type.
-
-  YANG Description: Attributes of proceedings
-  """
-  __slots__ = ('_path_helper', '_extmethods', '__name','__value',)
-
-  _yang_name = 'attributes'
-
-  _pybind_generated_by = 'container'
-
-  def __init__(self, *args, **kwargs):
-
-    self._path_helper = kwargs.get("path_helper", False)
-
-    extmethods = kwargs.pop("extmethods", None)
-    if extmethods is False:
-      self._extmethods = False
-    elif extmethods is not None and isinstance(extmethods, dict):
-      self._extmethods = extmethods
-    elif hasattr(self, "_parent"):
-      extmethods = getattr(self._parent, "_extmethods", None)
-      self._extmethods = extmethods
-    else:
-      self._extmethods = False
-    self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__value = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-    load = kwargs.pop("load", None)
-    if args:
-      if len(args) > 1:
-        raise TypeError("cannot create a YANG container with >1 argument")
-      all_attr = True
-      for e in self._pyangbind_elements:
-        if not hasattr(args[0], e):
-          all_attr = False
-          break
-      if not all_attr:
-        raise ValueError("Supplied object did not have the correct attributes")
-      for e in self._pyangbind_elements:
-        nobj = getattr(args[0], e)
-        if nobj._changed() is False:
-          continue
-        setmethod = getattr(self, "_set_%s" % e)
-        if load is None:
-          setmethod(getattr(args[0], e))
-        else:
-          setmethod(getattr(args[0], e), load=load)
-
-  def _path(self):
-    if hasattr(self, "_parent"):
-      return self._parent._path()+[self._yang_name]
-    else:
-      return ['proceedings', 'attributes']
-
-  def _get_name(self):
-    """
-    Getter method for name, mapped from YANG variable /proceedings/attributes/name (string)
-
-    YANG Description: Attribute key
-    """
-    return self.__name
-      
-  def _set_name(self, v, load=False):
-    """
-    Setter method for name, mapped from YANG variable /proceedings/attributes/name (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_name is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_name() directly.
-
-    YANG Description: Attribute key
-    """
-    parent = getattr(self, "_parent", None)
-    if parent is not None and load is False:
-      raise AttributeError("Cannot set keys directly when" +
-                             " within an instantiated list")
-
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """name must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__name = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_name(self):
-    self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
-  def _get_value(self):
-    """
-    Getter method for value, mapped from YANG variable /proceedings/attributes/value (string)
-
-    YANG Description: Attribute value
-    """
-    return self.__value
-      
-  def _set_value(self, v, load=False):
-    """
-    Setter method for value, mapped from YANG variable /proceedings/attributes/value (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_value is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_value() directly.
-
-    YANG Description: Attribute value
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """value must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__value = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_value(self):
-    self.__value = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="value", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-  name = __builtin__.property(_get_name, _set_name)
-  value = __builtin__.property(_get_value, _set_value)
-
-
-  _pyangbind_elements = OrderedDict([('name', name), ('value', value), ])
-
-
 class yc_parameters_vnf_bd__proceedings_agents_probers_parameters(PybindBase):
   """
   This class was auto-generated by the PythonClass plugin for PYANG
@@ -3593,7 +2794,10 @@ class yc_parameters_vnf_bd__proceedings_agents_probers_parameters(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of parameters for tool
+  YANG Description: List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__input','__value',)
 
@@ -3649,7 +2853,7 @@ class yc_parameters_vnf_bd__proceedings_agents_probers_parameters(PybindBase):
     """
     Getter method for input, mapped from YANG variable /proceedings/agents/probers/parameters/input (string)
 
-    YANG Description: Key of parameter
+    YANG Description: The input key of a parameter
     """
     return self.__input
       
@@ -3661,7 +2865,7 @@ class yc_parameters_vnf_bd__proceedings_agents_probers_parameters(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_input() directly.
 
-    YANG Description: Key of parameter
+    YANG Description: The input key of a parameter
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -3691,7 +2895,7 @@ class yc_parameters_vnf_bd__proceedings_agents_probers_parameters(PybindBase):
     """
     Getter method for value, mapped from YANG variable /proceedings/agents/probers/parameters/value (string)
 
-    YANG Description: Value of parameter
+    YANG Description: The value of a parameter
     """
     return self.__value
       
@@ -3703,7 +2907,7 @@ class yc_parameters_vnf_bd__proceedings_agents_probers_parameters(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_value() directly.
 
-    YANG Description: Value of parameter
+    YANG Description: The value of a parameter
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3737,7 +2941,10 @@ class yc_sched_vnf_bd__proceedings_agents_probers_sched(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Scheduling parameters of a tool
+  YANG Description: The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.
   """
   __slots__ = ('_path_helper', '_extmethods', '__from_','__until','__duration','__interval','__repeat',)
 
@@ -3796,7 +3003,8 @@ class yc_sched_vnf_bd__proceedings_agents_probers_sched(PybindBase):
     """
     Getter method for from_, mapped from YANG variable /proceedings/agents/probers/sched/from (uint32)
 
-    YANG Description: The initial time (in seconds) of the execution of the tool
+    YANG Description: The initial time (in seconds)
+of the execution of the tool.
     """
     return self.__from_
       
@@ -3808,7 +3016,8 @@ class yc_sched_vnf_bd__proceedings_agents_probers_sched(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_from_() directly.
 
-    YANG Description: The initial time (in seconds) of the execution of the tool
+    YANG Description: The initial time (in seconds)
+of the execution of the tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3833,8 +3042,9 @@ class yc_sched_vnf_bd__proceedings_agents_probers_sched(PybindBase):
     """
     Getter method for until, mapped from YANG variable /proceedings/agents/probers/sched/until (uint32)
 
-    YANG Description: The final time (in seconds) of the execution of the tool
-counting all its periods of repeating instances, duration and interval.
+    YANG Description: The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters.
     """
     return self.__until
       
@@ -3846,8 +3056,9 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_until() directly.
 
-    YANG Description: The final time (in seconds) of the execution of the tool
-counting all its periods of repeating instances, duration and interval.
+    YANG Description: The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3872,7 +3083,8 @@ counting all its periods of repeating instances, duration and interval.
     """
     Getter method for duration, mapped from YANG variable /proceedings/agents/probers/sched/duration (uint32)
 
-    YANG Description: The total duration (in seconds) of the execution of each instance of the tool
+    YANG Description: The total duration (in seconds) of the execution
+of each instance of the tool.
     """
     return self.__duration
       
@@ -3884,7 +3096,8 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_duration() directly.
 
-    YANG Description: The total duration (in seconds) of the execution of each instance of the tool
+    YANG Description: The total duration (in seconds) of the execution
+of each instance of the tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3909,7 +3122,8 @@ counting all its periods of repeating instances, duration and interval.
     """
     Getter method for interval, mapped from YANG variable /proceedings/agents/probers/sched/interval (uint32)
 
-    YANG Description: The interval (in seconds) among the instances of the execution of the tool
+    YANG Description: The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool.
     """
     return self.__interval
       
@@ -3921,7 +3135,8 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_interval() directly.
 
-    YANG Description: The interval (in seconds) among the instances of the execution of the tool
+    YANG Description: The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3946,7 +3161,7 @@ counting all its periods of repeating instances, duration and interval.
     """
     Getter method for repeat, mapped from YANG variable /proceedings/agents/probers/sched/repeat (uint32)
 
-    YANG Description: The amount of times the tool must be executed
+    YANG Description: The number of times the tool must be executed.
     """
     return self.__repeat
       
@@ -3958,7 +3173,7 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_repeat() directly.
 
-    YANG Description: The amount of times the tool must be executed
+    YANG Description: The number of times the tool must be executed.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -3995,7 +3210,8 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Probers in experiment
+  YANG Description: Defines a list of the Prober(s)
+that must be used in a benchmarking test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__id','__instances','__name','__parameters','__sched',)
 
@@ -4054,7 +3270,10 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     """
     Getter method for id, mapped from YANG variable /proceedings/agents/probers/id (uint32)
 
-    YANG Description: Unique identifier
+    YANG Description: The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.
     """
     return self.__id
       
@@ -4066,7 +3285,10 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -4096,7 +3318,8 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     """
     Getter method for instances, mapped from YANG variable /proceedings/agents/probers/instances (uint32)
 
-    YANG Description: Number of tool instances
+    YANG Description: The number of the tool instances that
+must be executed in parallel.
     """
     return self.__instances
       
@@ -4108,7 +3331,8 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_instances() directly.
 
-    YANG Description: Number of tool instances
+    YANG Description: The number of the tool instances that
+must be executed in parallel.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4133,7 +3357,7 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     """
     Getter method for name, mapped from YANG variable /proceedings/agents/probers/name (string)
 
-    YANG Description: Name of tool
+    YANG Description: The name of a tool.
     """
     return self.__name
       
@@ -4145,7 +3369,7 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of tool
+    YANG Description: The name of a tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4170,7 +3394,10 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     """
     Getter method for parameters, mapped from YANG variable /proceedings/agents/probers/parameters (list)
 
-    YANG Description: List of parameters for tool
+    YANG Description: List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.
     """
     return self.__parameters
       
@@ -4182,7 +3409,10 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_parameters() directly.
 
-    YANG Description: List of parameters for tool
+    YANG Description: List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4207,7 +3437,10 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     """
     Getter method for sched, mapped from YANG variable /proceedings/agents/probers/sched (container)
 
-    YANG Description: Scheduling parameters of a tool
+    YANG Description: The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.
     """
     return self.__sched
       
@@ -4219,7 +3452,10 @@ class yc_probers_vnf_bd__proceedings_agents_probers(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_sched() directly.
 
-    YANG Description: Scheduling parameters of a tool
+    YANG Description: The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4256,7 +3492,8 @@ class yc_agents_vnf_bd__proceedings_agents(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Involved agents
+  YANG Description: Defines a list containing the
+Agent(s) needed for a VNF-BD test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__uuid','__name','__probers',)
 
@@ -4313,7 +3550,7 @@ class yc_agents_vnf_bd__proceedings_agents(PybindBase):
     """
     Getter method for uuid, mapped from YANG variable /proceedings/agents/uuid (string)
 
-    YANG Description: Unique identifier
+    YANG Description: A unique identifier
     """
     return self.__uuid
       
@@ -4325,7 +3562,7 @@ class yc_agents_vnf_bd__proceedings_agents(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_uuid() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: A unique identifier
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -4355,7 +3592,7 @@ class yc_agents_vnf_bd__proceedings_agents(PybindBase):
     """
     Getter method for name, mapped from YANG variable /proceedings/agents/name (string)
 
-    YANG Description: Name of component
+    YANG Description: The name of component
     """
     return self.__name
       
@@ -4367,7 +3604,7 @@ class yc_agents_vnf_bd__proceedings_agents(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of component
+    YANG Description: The name of component
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4392,7 +3629,8 @@ class yc_agents_vnf_bd__proceedings_agents(PybindBase):
     """
     Getter method for probers, mapped from YANG variable /proceedings/agents/probers (list)
 
-    YANG Description: Probers in experiment
+    YANG Description: Defines a list of the Prober(s)
+that must be used in a benchmarking test.
     """
     return self.__probers
       
@@ -4404,7 +3642,8 @@ class yc_agents_vnf_bd__proceedings_agents(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_probers() directly.
 
-    YANG Description: Probers in experiment
+    YANG Description: Defines a list of the Prober(s)
+that must be used in a benchmarking test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4439,7 +3678,10 @@ class yc_parameters_vnf_bd__proceedings_monitors_listeners_parameters(PybindBase
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of parameters for tool
+  YANG Description: List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__input','__value',)
 
@@ -4495,7 +3737,7 @@ class yc_parameters_vnf_bd__proceedings_monitors_listeners_parameters(PybindBase
     """
     Getter method for input, mapped from YANG variable /proceedings/monitors/listeners/parameters/input (string)
 
-    YANG Description: Key of parameter
+    YANG Description: The input key of a parameter
     """
     return self.__input
       
@@ -4507,7 +3749,7 @@ class yc_parameters_vnf_bd__proceedings_monitors_listeners_parameters(PybindBase
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_input() directly.
 
-    YANG Description: Key of parameter
+    YANG Description: The input key of a parameter
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -4537,7 +3779,7 @@ class yc_parameters_vnf_bd__proceedings_monitors_listeners_parameters(PybindBase
     """
     Getter method for value, mapped from YANG variable /proceedings/monitors/listeners/parameters/value (string)
 
-    YANG Description: Value of parameter
+    YANG Description: The value of a parameter
     """
     return self.__value
       
@@ -4549,7 +3791,7 @@ class yc_parameters_vnf_bd__proceedings_monitors_listeners_parameters(PybindBase
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_value() directly.
 
-    YANG Description: Value of parameter
+    YANG Description: The value of a parameter
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4583,7 +3825,10 @@ class yc_sched_vnf_bd__proceedings_monitors_listeners_sched(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Scheduling parameters of a tool
+  YANG Description: The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.
   """
   __slots__ = ('_path_helper', '_extmethods', '__from_','__until','__duration','__interval','__repeat',)
 
@@ -4642,7 +3887,8 @@ class yc_sched_vnf_bd__proceedings_monitors_listeners_sched(PybindBase):
     """
     Getter method for from_, mapped from YANG variable /proceedings/monitors/listeners/sched/from (uint32)
 
-    YANG Description: The initial time (in seconds) of the execution of the tool
+    YANG Description: The initial time (in seconds)
+of the execution of the tool.
     """
     return self.__from_
       
@@ -4654,7 +3900,8 @@ class yc_sched_vnf_bd__proceedings_monitors_listeners_sched(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_from_() directly.
 
-    YANG Description: The initial time (in seconds) of the execution of the tool
+    YANG Description: The initial time (in seconds)
+of the execution of the tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4679,8 +3926,9 @@ class yc_sched_vnf_bd__proceedings_monitors_listeners_sched(PybindBase):
     """
     Getter method for until, mapped from YANG variable /proceedings/monitors/listeners/sched/until (uint32)
 
-    YANG Description: The final time (in seconds) of the execution of the tool
-counting all its periods of repeating instances, duration and interval.
+    YANG Description: The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters.
     """
     return self.__until
       
@@ -4692,8 +3940,9 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_until() directly.
 
-    YANG Description: The final time (in seconds) of the execution of the tool
-counting all its periods of repeating instances, duration and interval.
+    YANG Description: The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4718,7 +3967,8 @@ counting all its periods of repeating instances, duration and interval.
     """
     Getter method for duration, mapped from YANG variable /proceedings/monitors/listeners/sched/duration (uint32)
 
-    YANG Description: The total duration (in seconds) of the execution of each instance of the tool
+    YANG Description: The total duration (in seconds) of the execution
+of each instance of the tool.
     """
     return self.__duration
       
@@ -4730,7 +3980,8 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_duration() directly.
 
-    YANG Description: The total duration (in seconds) of the execution of each instance of the tool
+    YANG Description: The total duration (in seconds) of the execution
+of each instance of the tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4755,7 +4006,8 @@ counting all its periods of repeating instances, duration and interval.
     """
     Getter method for interval, mapped from YANG variable /proceedings/monitors/listeners/sched/interval (uint32)
 
-    YANG Description: The interval (in seconds) among the instances of the execution of the tool
+    YANG Description: The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool.
     """
     return self.__interval
       
@@ -4767,7 +4019,8 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_interval() directly.
 
-    YANG Description: The interval (in seconds) among the instances of the execution of the tool
+    YANG Description: The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4792,7 +4045,7 @@ counting all its periods of repeating instances, duration and interval.
     """
     Getter method for repeat, mapped from YANG variable /proceedings/monitors/listeners/sched/repeat (uint32)
 
-    YANG Description: The amount of times the tool must be executed
+    YANG Description: The number of times the tool must be executed.
     """
     return self.__repeat
       
@@ -4804,7 +4057,7 @@ counting all its periods of repeating instances, duration and interval.
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_repeat() directly.
 
-    YANG Description: The amount of times the tool must be executed
+    YANG Description: The number of times the tool must be executed.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4841,7 +4094,8 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Listeners in experiment
+  YANG Description: Defines a list of the Listeners(s)
+that must used in a benchmarking test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__id','__instances','__name','__parameters','__sched',)
 
@@ -4900,7 +4154,10 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     """
     Getter method for id, mapped from YANG variable /proceedings/monitors/listeners/id (uint32)
 
-    YANG Description: Unique identifier
+    YANG Description: The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.
     """
     return self.__id
       
@@ -4912,7 +4169,10 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -4942,7 +4202,8 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     """
     Getter method for instances, mapped from YANG variable /proceedings/monitors/listeners/instances (uint32)
 
-    YANG Description: Number of tool instances
+    YANG Description: The number of the tool instances that
+must be executed in parallel.
     """
     return self.__instances
       
@@ -4954,7 +4215,8 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_instances() directly.
 
-    YANG Description: Number of tool instances
+    YANG Description: The number of the tool instances that
+must be executed in parallel.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -4979,7 +4241,7 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     """
     Getter method for name, mapped from YANG variable /proceedings/monitors/listeners/name (string)
 
-    YANG Description: Name of tool
+    YANG Description: The name of a tool.
     """
     return self.__name
       
@@ -4991,7 +4253,7 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of tool
+    YANG Description: The name of a tool.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5016,7 +4278,10 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     """
     Getter method for parameters, mapped from YANG variable /proceedings/monitors/listeners/parameters (list)
 
-    YANG Description: List of parameters for tool
+    YANG Description: List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.
     """
     return self.__parameters
       
@@ -5028,7 +4293,10 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_parameters() directly.
 
-    YANG Description: List of parameters for tool
+    YANG Description: List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5053,7 +4321,10 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     """
     Getter method for sched, mapped from YANG variable /proceedings/monitors/listeners/sched (container)
 
-    YANG Description: Scheduling parameters of a tool
+    YANG Description: The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.
     """
     return self.__sched
       
@@ -5065,7 +4336,10 @@ class yc_listeners_vnf_bd__proceedings_monitors_listeners(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_sched() directly.
 
-    YANG Description: Scheduling parameters of a tool
+    YANG Description: The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5102,7 +4376,8 @@ class yc_monitors_vnf_bd__proceedings_monitors(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Involved monitors
+  YANG Description: Defines a list containing the
+Monitor(s) needed for a VNF-BD test.
   """
   __slots__ = ('_path_helper', '_extmethods', '__uuid','__name','__listeners',)
 
@@ -5159,7 +4434,7 @@ class yc_monitors_vnf_bd__proceedings_monitors(PybindBase):
     """
     Getter method for uuid, mapped from YANG variable /proceedings/monitors/uuid (string)
 
-    YANG Description: Unique identifier
+    YANG Description: A unique identifier
     """
     return self.__uuid
       
@@ -5171,7 +4446,7 @@ class yc_monitors_vnf_bd__proceedings_monitors(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_uuid() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: A unique identifier
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -5201,7 +4476,7 @@ class yc_monitors_vnf_bd__proceedings_monitors(PybindBase):
     """
     Getter method for name, mapped from YANG variable /proceedings/monitors/name (string)
 
-    YANG Description: Name of component
+    YANG Description: The name of component
     """
     return self.__name
       
@@ -5213,7 +4488,7 @@ class yc_monitors_vnf_bd__proceedings_monitors(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of component
+    YANG Description: The name of component
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5238,7 +4513,8 @@ class yc_monitors_vnf_bd__proceedings_monitors(PybindBase):
     """
     Getter method for listeners, mapped from YANG variable /proceedings/monitors/listeners (list)
 
-    YANG Description: Listeners in experiment
+    YANG Description: Defines a list of the Listeners(s)
+that must used in a benchmarking test.
     """
     return self.__listeners
       
@@ -5250,7 +4526,8 @@ class yc_monitors_vnf_bd__proceedings_monitors(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_listeners() directly.
 
-    YANG Description: Listeners in experiment
+    YANG Description: Defines a list of the Listeners(s)
+that must used in a benchmarking test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5285,9 +4562,13 @@ class yc_proceedings_vnf_bd__proceedings(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Proceedings of VNF-BD
+  YANG Description: Proceedings of VNF-BD.
+The proceedings are utilized by the Manager component
+to execute a benchmarking Test. It consists of
+agent(s)/monitor(s) settings, detailing their prober(s)/listener(s)
+specification and running parameters.
   """
-  __slots__ = ('_path_helper', '_extmethods', '__attributes','__agents','__monitors',)
+  __slots__ = ('_path_helper', '_extmethods', '__agents','__monitors',)
 
   _yang_name = 'proceedings'
 
@@ -5307,7 +4588,6 @@ class yc_proceedings_vnf_bd__proceedings(PybindBase):
       self._extmethods = extmethods
     else:
       self._extmethods = False
-    self.__attributes = YANGDynClass(base=YANGListType("name",yc_attributes_vnf_bd__proceedings_attributes, yang_name="attributes", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='name', extensions=None), is_container='list', yang_name="attributes", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
     self.__agents = YANGDynClass(base=YANGListType("uuid",yc_agents_vnf_bd__proceedings_agents, yang_name="agents", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='uuid', extensions=None), is_container='list', yang_name="agents", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
     self.__monitors = YANGDynClass(base=YANGListType("uuid",yc_monitors_vnf_bd__proceedings_monitors, yang_name="monitors", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='uuid', extensions=None), is_container='list', yang_name="monitors", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
 
@@ -5338,48 +4618,12 @@ class yc_proceedings_vnf_bd__proceedings(PybindBase):
     else:
       return ['proceedings']
 
-  def _get_attributes(self):
-    """
-    Getter method for attributes, mapped from YANG variable /proceedings/attributes (list)
-
-    YANG Description: Attributes of proceedings
-    """
-    return self.__attributes
-      
-  def _set_attributes(self, v, load=False):
-    """
-    Setter method for attributes, mapped from YANG variable /proceedings/attributes (list)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_attributes is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_attributes() directly.
-
-    YANG Description: Attributes of proceedings
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=YANGListType("name",yc_attributes_vnf_bd__proceedings_attributes, yang_name="attributes", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='name', extensions=None), is_container='list', yang_name="attributes", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """attributes must be of a type compatible with list""",
-          'defined-type': "list",
-          'generated-type': """YANGDynClass(base=YANGListType("name",yc_attributes_vnf_bd__proceedings_attributes, yang_name="attributes", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='name', extensions=None), is_container='list', yang_name="attributes", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)""",
-        })
-
-    self.__attributes = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_attributes(self):
-    self.__attributes = YANGDynClass(base=YANGListType("name",yc_attributes_vnf_bd__proceedings_attributes, yang_name="attributes", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='name', extensions=None), is_container='list', yang_name="attributes", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-
-
   def _get_agents(self):
     """
     Getter method for agents, mapped from YANG variable /proceedings/agents (list)
 
-    YANG Description: Involved agents
+    YANG Description: Defines a list containing the
+Agent(s) needed for a VNF-BD test.
     """
     return self.__agents
       
@@ -5391,7 +4635,8 @@ class yc_proceedings_vnf_bd__proceedings(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_agents() directly.
 
-    YANG Description: Involved agents
+    YANG Description: Defines a list containing the
+Agent(s) needed for a VNF-BD test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5416,7 +4661,8 @@ class yc_proceedings_vnf_bd__proceedings(PybindBase):
     """
     Getter method for monitors, mapped from YANG variable /proceedings/monitors (list)
 
-    YANG Description: Involved monitors
+    YANG Description: Defines a list containing the
+Monitor(s) needed for a VNF-BD test.
     """
     return self.__monitors
       
@@ -5428,7 +4674,8 @@ class yc_proceedings_vnf_bd__proceedings(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_monitors() directly.
 
-    YANG Description: Involved monitors
+    YANG Description: Defines a list containing the
+Monitor(s) needed for a VNF-BD test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5448,12 +4695,11 @@ class yc_proceedings_vnf_bd__proceedings(PybindBase):
   def _unset_monitors(self):
     self.__monitors = YANGDynClass(base=YANGListType("uuid",yc_monitors_vnf_bd__proceedings_monitors, yang_name="monitors", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='uuid', extensions=None), is_container='list', yang_name="monitors", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
 
-  attributes = __builtin__.property(_get_attributes, _set_attributes)
   agents = __builtin__.property(_get_agents, _set_agents)
   monitors = __builtin__.property(_get_monitors, _set_monitors)
 
 
-  _pyangbind_elements = OrderedDict([('attributes', attributes), ('agents', agents), ('monitors', monitors), ])
+  _pyangbind_elements = OrderedDict([('agents', agents), ('monitors', monitors), ])
 
 
 class vnf_bd(PybindBase):
@@ -5463,9 +4709,9 @@ class vnf_bd(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Yang model for a VNF Benchmark Descriptor (VNF-BD) in the scope of IETF/BMWG
+  YANG Description: Yang model for a VNF Benchmarking Descriptor (VNF-BD).
   """
-  __slots__ = ('_path_helper', '_extmethods', '__id','__name','__version','__author','__description','__experiments','__environment','__targets','__scenario','__proceedings',)
+  __slots__ = ('_path_helper', '_extmethods', '__id','__name','__version','__description','__experiments','__scenario','__proceedings',)
 
   _yang_name = 'vnf-bd'
 
@@ -5488,11 +4734,8 @@ class vnf_bd(PybindBase):
     self.__id = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
     self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
     self.__version = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    self.__author = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
     self.__description = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
     self.__experiments = YANGDynClass(base=yc_experiments_vnf_bd__experiments, is_container='container', yang_name="experiments", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
-    self.__environment = YANGDynClass(base=yc_environment_vnf_bd__environment, is_container='container', yang_name="environment", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
-    self.__targets = YANGDynClass(base=YANGListType("id",yc_targets_vnf_bd__targets, yang_name="targets", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='id', extensions=None), is_container='list', yang_name="targets", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
     self.__scenario = YANGDynClass(base=yc_scenario_vnf_bd__scenario, is_container='container', yang_name="scenario", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
     self.__proceedings = YANGDynClass(base=yc_proceedings_vnf_bd__proceedings, is_container='container', yang_name="proceedings", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
 
@@ -5527,7 +4770,7 @@ class vnf_bd(PybindBase):
     """
     Getter method for id, mapped from YANG variable /id (string)
 
-    YANG Description: Unique identifier
+    YANG Description: Unique identifier of the VNF-BD.
     """
     return self.__id
       
@@ -5539,7 +4782,7 @@ class vnf_bd(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: Unique identifier of the VNF-BD.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5564,7 +4807,7 @@ class vnf_bd(PybindBase):
     """
     Getter method for name, mapped from YANG variable /name (string)
 
-    YANG Description: Name of the experiment
+    YANG Description: Name of the VNF-BD.
     """
     return self.__name
       
@@ -5576,7 +4819,7 @@ class vnf_bd(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of the experiment
+    YANG Description: Name of the VNF-BD.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5601,7 +4844,7 @@ class vnf_bd(PybindBase):
     """
     Getter method for version, mapped from YANG variable /version (string)
 
-    YANG Description: Version of the experiment
+    YANG Description: Version of the VNF-BD.
     """
     return self.__version
       
@@ -5613,7 +4856,7 @@ class vnf_bd(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_version() directly.
 
-    YANG Description: Version of the experiment
+    YANG Description: Version of the VNF-BD.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5634,48 +4877,11 @@ class vnf_bd(PybindBase):
     self.__version = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
 
 
-  def _get_author(self):
-    """
-    Getter method for author, mapped from YANG variable /author (string)
-
-    YANG Description: Author of the experiment
-    """
-    return self.__author
-      
-  def _set_author(self, v, load=False):
-    """
-    Setter method for author, mapped from YANG variable /author (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_author is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_author() directly.
-
-    YANG Description: Author of the experiment
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """author must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)""",
-        })
-
-    self.__author = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_author(self):
-    self.__author = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='string', is_config=True)
-
-
   def _get_description(self):
     """
     Getter method for description, mapped from YANG variable /description (string)
 
-    YANG Description: Description of the experiment
+    YANG Description: Description of the VNF-BD
     """
     return self.__description
       
@@ -5687,7 +4893,7 @@ class vnf_bd(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_description() directly.
 
-    YANG Description: Description of the experiment
+    YANG Description: Description of the VNF-BD
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5712,7 +4918,8 @@ class vnf_bd(PybindBase):
     """
     Getter method for experiments, mapped from YANG variable /experiments (container)
 
-    YANG Description: Number of trails and test to be executed
+    YANG Description: Defines the number of trials and tests
+the VNF-BD must execute.
     """
     return self.__experiments
       
@@ -5724,7 +4931,8 @@ class vnf_bd(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_experiments() directly.
 
-    YANG Description: Number of trails and test to be executed
+    YANG Description: Defines the number of trials and tests
+the VNF-BD must execute.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5745,85 +4953,14 @@ class vnf_bd(PybindBase):
     self.__experiments = YANGDynClass(base=yc_experiments_vnf_bd__experiments, is_container='container', yang_name="experiments", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
 
 
-  def _get_environment(self):
-    """
-    Getter method for environment, mapped from YANG variable /environment (container)
-
-    YANG Description: Definition of the benchmarking execution environment
-    """
-    return self.__environment
-      
-  def _set_environment(self, v, load=False):
-    """
-    Setter method for environment, mapped from YANG variable /environment (container)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_environment is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_environment() directly.
-
-    YANG Description: Definition of the benchmarking execution environment
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=yc_environment_vnf_bd__environment, is_container='container', yang_name="environment", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """environment must be of a type compatible with container""",
-          'defined-type': "container",
-          'generated-type': """YANGDynClass(base=yc_environment_vnf_bd__environment, is_container='container', yang_name="environment", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)""",
-        })
-
-    self.__environment = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_environment(self):
-    self.__environment = YANGDynClass(base=yc_environment_vnf_bd__environment, is_container='container', yang_name="environment", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='container', is_config=True)
-
-
-  def _get_targets(self):
-    """
-    Getter method for targets, mapped from YANG variable /targets (list)
-
-    YANG Description: Target SUTs
-    """
-    return self.__targets
-      
-  def _set_targets(self, v, load=False):
-    """
-    Setter method for targets, mapped from YANG variable /targets (list)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_targets is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_targets() directly.
-
-    YANG Description: Target SUTs
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=YANGListType("id",yc_targets_vnf_bd__targets, yang_name="targets", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='id', extensions=None), is_container='list', yang_name="targets", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """targets must be of a type compatible with list""",
-          'defined-type': "list",
-          'generated-type': """YANGDynClass(base=YANGListType("id",yc_targets_vnf_bd__targets, yang_name="targets", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='id', extensions=None), is_container='list', yang_name="targets", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)""",
-        })
-
-    self.__targets = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_targets(self):
-    self.__targets = YANGDynClass(base=YANGListType("id",yc_targets_vnf_bd__targets, yang_name="targets", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='id', extensions=None), is_container='list', yang_name="targets", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-bd', defining_module='vnf-bd', yang_type='list', is_config=True)
-
-
   def _get_scenario(self):
     """
     Getter method for scenario, mapped from YANG variable /scenario (container)
 
-    YANG Description: Scenarios defined by this VNF-BD
+    YANG Description: Scenarios defined by this VNF-BD.
+A scenario contains all information needed to describe
+the deployment of all involved functional components
+mandatory for the execution of a benchmarking Test.
     """
     return self.__scenario
       
@@ -5835,7 +4972,10 @@ class vnf_bd(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_scenario() directly.
 
-    YANG Description: Scenarios defined by this VNF-BD
+    YANG Description: Scenarios defined by this VNF-BD.
+A scenario contains all information needed to describe
+the deployment of all involved functional components
+mandatory for the execution of a benchmarking Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5860,7 +5000,11 @@ class vnf_bd(PybindBase):
     """
     Getter method for proceedings, mapped from YANG variable /proceedings (container)
 
-    YANG Description: Proceedings of VNF-BD
+    YANG Description: Proceedings of VNF-BD.
+The proceedings are utilized by the Manager component
+to execute a benchmarking Test. It consists of
+agent(s)/monitor(s) settings, detailing their prober(s)/listener(s)
+specification and running parameters.
     """
     return self.__proceedings
       
@@ -5872,7 +5016,11 @@ class vnf_bd(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_proceedings() directly.
 
-    YANG Description: Proceedings of VNF-BD
+    YANG Description: Proceedings of VNF-BD.
+The proceedings are utilized by the Manager component
+to execute a benchmarking Test. It consists of
+agent(s)/monitor(s) settings, detailing their prober(s)/listener(s)
+specification and running parameters.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -5895,15 +5043,12 @@ class vnf_bd(PybindBase):
   id = __builtin__.property(_get_id, _set_id)
   name = __builtin__.property(_get_name, _set_name)
   version = __builtin__.property(_get_version, _set_version)
-  author = __builtin__.property(_get_author, _set_author)
   description = __builtin__.property(_get_description, _set_description)
   experiments = __builtin__.property(_get_experiments, _set_experiments)
-  environment = __builtin__.property(_get_environment, _set_environment)
-  targets = __builtin__.property(_get_targets, _set_targets)
   scenario = __builtin__.property(_get_scenario, _set_scenario)
   proceedings = __builtin__.property(_get_proceedings, _set_proceedings)
 
 
-  _pyangbind_elements = OrderedDict([('id', id), ('name', name), ('version', version), ('author', author), ('description', description), ('experiments', experiments), ('environment', environment), ('targets', targets), ('scenario', scenario), ('proceedings', proceedings), ])
+  _pyangbind_elements = OrderedDict([('id', id), ('name', name), ('version', version), ('description', description), ('experiments', experiments), ('scenario', scenario), ('proceedings', proceedings), ])
 
 

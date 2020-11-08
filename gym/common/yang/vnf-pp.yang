@@ -1,255 +1,324 @@
 module vnf-pp {
-    namespace "urn:ietf:params:xml:ns:yang:vnf-pp";
-    prefix "vnf-pp";
+  namespace "urn:ietf:params:xml:ns:yang:vnf-pp";
+  prefix "vnf-pp";
 
-    organization "IETF/BMWG";
-    contact "Manuel Peuster <peuster@mail.uni-paderborn.de>, Raphael Vicente Rosa <raphaelvrosa@gmail.com>";
-    description "Yang model for a VNF Performance Profile (VNF-PP) in the scope of IETF/BMWG";
+  organization "IETF/BMWG";
+  contact "Raphael Vicente Rosa <raphaelvrosa@gmail.com>, 
+  Manuel Peuster <peuster@mail.uni-paderborn.de>";
+  
+  description "Yang model for a VNF Performance Profile (VNF-PP).";
 
-    revision "2019-10-15" {
-        description "Reviewed VNF-PP structure - defines reports, snapshots, evaluations";
-        reference ""; 
+  revision "2020-10-08" {
+    description "V0.4: Reviewed header and descriptions.";
+    reference ""; 
+  }
+
+  revision "2019-10-15" {
+      description "Reviewed VNF-PP structure - 
+      defines reports, snapshots, evaluations";
+      reference ""; 
+  }
+
+  revision "2019-08-13" {
+      description "V0.1: First release";
+      reference ""; 
+  }
+
+  grouping tuple {
+    description "A tuple used as key-value.";
+    leaf key { 
+      type string; 
+      description "Tuple key.";
+    }
+    
+    leaf value { 
+      type string; 
+      description "Tuple value.";
+    }
+  }
+
+  
+  grouping metric {   
+    leaf name { 
+      type string; 
+      description "The metric name";    
+    }
+    
+    leaf unit { 
+      type string; 
+      description "The unit of the metric value(s).";    
+    }
+    
+    leaf type {
+      type string;
+      mandatory true;
+      description "The data type encoded in the value.
+      It must refer to a known variable type, i.e., 
+      string, float, uint, etc.";
     }
 
-    revision "2019-08-13" {
-        description "V0.1: First release";
-        reference "https://datatracker.ietf.org/doc/draft-rosa-bmwg-vnfbench/"; 
+    choice value {
+      case scalar {
+        leaf scalar {
+          type string;
+          mandatory true;
+          description "A single scalar value.";
+        }
+      }
+      case series {
+        list series {
+          key "key";
+          uses tuple;
+          description "A list of key/values,
+          e.g., a timeseries.";
+        }
+      }
+
+      mandatory true;     
+      description "Value choice: scalar, series.
+      A metric can only contain a value with one of them.";
     }
 
-    grouping tuple {
-        description "A tuple used as key-value.";
-        leaf key { 
-            type string; 
-            description "Tuple key.";
+    description "A metric that holds the recorded benchmarking
+    results, can be a single value (scalar), or a list of 
+    key/value data (series), e.g., for timeseries.";
+
+  }
+
+  grouping evaluation {
+      leaf id { 
+        type string; 
+        description "The evaluation 
+        unique identifier.";
+      }
+
+      leaf instance { 
+        type uint32; 
+        description "The unique identifier of the 
+        parallel instance of the prober/listener that
+        was executed and created the evaluation.";
+      }
+
+      leaf repeat { 
+          type uint32; 
+          description "The unique identifier of the 
+          prober/listener repeatition instance
+          was executed and created the evaluation.";
+      }
+
+      container source {
+        
+        leaf id { 
+          type string; 
+          description "The unique identifier of the source 
+          of the evaluation,
+          i.e., the prober/listener unique identifier.";
         }
         
-        leaf value { 
-            type string; 
-            description "Tuple value.";
-        }
-    }
-
-    grouping settings {
-        description "Settings of a single vnf-pp.";
-
-        leaf id {
-            type string;
-            description "Unique identifier";    
-        }
-        leaf name {
-            type string;
-            description "Name of the experiment";    
-        }
-        leaf version {
-            type string;
-            description "Version of the experiment";
-        }
-        leaf author {
-            type string;
-            description "Author of the experiment";
-        }
-        leaf description {
-            type string;
-            description "Description of the experiment";    
-        }
-        leaf timestamp {
-            type string;
-            description "Time (date, hour, minute, second) when the vnf-pp was created.";    
-        }
-    }
-
-    grouping metric {
-        description "Metric that holds the recorded benchmarking results, can be
-        a single value (scalar), a list of values (vector), or a list of key/value
-        data(tuple-vector), e.g., for timeseries.";
-
         leaf name { 
-            type string; 
-            description "Metric name";    
+          type string; 
+          description "The name of the source of the evaluation,
+          i.e., the prober/listener name.";
+        }
+
+        leaf type { 
+          type string; 
+          description "The type of the source of the evaluation,
+          i.e., one of prober or listener,  that was used to obtain
+          it.";
         }
         
-        leaf unit { 
-            type string; 
-            description "Unit of the metric value(s)";    
+        leaf version { 
+          type string; 
+          description "The version of the tool interfacing
+          the prober/listener that was used to obtain
+          the evaluation.";
         }
         
-        leaf type {
-            type string;
-            mandatory true;
-            description "The data type encoded in the value.";
+        leaf call { 
+          type string; 
+          description "The full call of the tool realized by
+          the source of the evaluation that performed
+          the acquisiton of the metrics.";
         }
 
-        choice value {
-            case scalar {
-                leaf scalar {
-                    type string;
-                    mandatory true;
-                    description "Single value";
-                }
-            }
-            case vector {
-                leaf-list vector {
-                    type string;
-                    min-elements 1;
-                    description "List of values";
-                }
-            }
-            case series {
-                list series {
-                    key "key";
-                    uses tuple;
-                    description "List of key/values e.g. timeseries.";
-                }
-            }
-            mandatory true;
-            description "Choice: scalar, vector, tupleg-vector";
-        }
-    }
+        description "The details regarding the
+        source of the evaluation.";
+      }
 
-    grouping evaluation {
-        description "A set of metrics and their source associated with a single trial.";
-
-        leaf id { 
-            type string; 
-            description "Unique id";
-        }
-
-        container source {
-            description "Details regarding the source of the evaluation.";
-
-            leaf id { 
-                type string; 
-                description "Unique source id";
-            }
-            
-            leaf name { 
-                type string; 
-                description "Name of the source of the evaluation.";
-            }
-
-            leaf type { 
-                type string; 
-                description "Type of the evaluation source, i.e., prober or listener.";
-            }
-            
-            leaf version { 
-                type string; 
-                description "Version of the tool interfacing the prober/listener.";
-            }
-            
-            leaf call { 
-                type string; 
-                description "Full call realized by the source of evaluation.";
-            }
-        }
-
-        container timestamp {
-            description "Timestamps of the procedures that realized the extraction of the evaluation.";
-
-            leaf start { 
-                type string; 
-                description "Time (date, hour, minute, second) when the evaluation started";
-            }
-
-            leaf stop { 
-                type string; 
-                description "Time (date, hour, minute, second) when the evaluation stopped";
-            }
-        }
-
-        list metrics {
-            key "name";
-            uses metric;
-            description "List of metrics obtained by evaluation.";
-        }
-    }
-
-
-    grouping snapshot {
-        description "Set of evaluations and their origin based on a single trial.";
+      container timestamp {
         
-        leaf id { 
-            type string; 
-            description "Unique identifier.";
-        }
-        
-        leaf trial { 
-            type uint32; 
-            description "Trial identifier when the snapshot was obtained.";
+        leaf start { 
+          type string; 
+          description "Time (date, hour, minute, second)
+          when the evaluation started";
         }
 
-        container origin {
-            description "Trial when the snapshot was obtained.";
-
-            leaf id { 
-                type string; 
-                description "Unique origin identifier, i.e., agent or monitor identifier.";
-            }
-
-            leaf role { 
-                type string; 
-                description "Role of the component, origin of the snapshop, i.e., agent or monitor.";
-            }
-            
-            leaf host { 
-                type string; 
-                description "Host name where the source of the snapshot was placed.";
-            }
+        leaf stop { 
+          type string; 
+          description "Time (date, hour, minute, second)
+          when the evaluation stopped";
         }
 
-        list evaluations {
-            key "id";
-            uses evaluation;
-            description "List of evaluations contained in a single snapshot.";
-        }
+        description "Timestamps of the procedures 
+        that realized the extraction of the evaluation.";
+      }
 
-        leaf timestamp {
-            type string;
-            description "Time (date, hour, minute, second) when the snapshot was created.";    
-        }
+    list metrics {
+      key "name";
+      uses metric;
+      description "List of metrics obtained 
+      from a single evaluation.";
     }
 
-    grouping report {
-        description "Set of snapshots based on a single test.";
-
-        leaf id { 
-            type string; 
-            description "Unique identifier.";
-        }
- 
-        leaf test { 
-            type uint32; 
-            description "Test identifier when the snapshot was obtained.";
-        }
-        
-        list snapshots {
-            key "id";
-            uses snapshot;
-            description "List of snapshots contained in a single report.";
-        }
-
-        leaf timestamp {
-            type string;
-            description "Time (date, hour, minute, second) when the report was created.";    
-        }
+    leaf error {
+      type string;
+      description "Error, if existent, 
+      when obtaining evaluation.";    
     }
 
-    grouping vnf-pp {
-        description "Grouping for a single vnf-pp.";
+    description "The set of metrics and their source
+    associated with a single Trial.";
+  }
 
-        uses settings;
 
-        list reports {
-            key "id";
-            uses report;
-            description "List of reports obtained in a vnf-pp.";
-        }
+  grouping snapshot {
+    leaf id { 
+      type string; 
+      description "The snapshot 
+      unique identifier.";
+    }
+    
+    leaf trial { 
+      type uint32; 
+      description "The identifier of the trial
+      when the snapshot was obtained.";
     }
 
-    // container vnf-pp {
-    //     uses vnf-pp;
-    //     description "A VNF-PP.";
-    // }
+    container origin {
+      
+      leaf id { 
+        type string; 
+        description "The unique identifier of the
+        component of the origin of the snapshot, 
+        i.e., the agent or monitor unique identifier.";
+      }
 
-    uses vnf-pp;
+      leaf role { 
+        type string; 
+        description "The role of the component,
+        origin of the snapshop, i.e.,
+        one of agent or monitor.";
+      }
+      
+      leaf host { 
+        type string; 
+        description "The hostname where the
+        source of the snapshot was placed.";
+      }
+
+      description "The detailed origin of
+      the snapshot.";
+
+    }
+
+    list evaluations {
+      key "id";
+      uses evaluation;
+      description "The list of evaluations
+      contained in a single snapshot Test.";
+    }
+
+    leaf timestamp {
+      type string;
+      description "Time (date, hour, minute, second)
+      when the snapshot was created.";    
+    }
+
+    leaf error {
+      type string;
+      description "Error, if existent, 
+      when obtaining the snapshot.";    
+    }
+    
+    description "The set of evaluations and their origin
+    output of the execution of a single trial.";
+  }
+
+  grouping report {
+    leaf id { 
+      type string; 
+      description "The report unique identifier.";
+    }
+
+    leaf test { 
+      type uint32; 
+      description "The identifier of the Test 
+      when the snapshots were obtained.";
+    }
+    
+    list snapshots {
+      key "id";
+      uses snapshot;
+      description "List of snapshots contained
+      in a single report.";
+    }
+
+    leaf timestamp {
+      type string;
+      description "Time (date, hour, minute, second)
+      when the report was created.";    
+    }
+
+    leaf error {
+      type string;
+      description "Error, if existent, 
+      when obtaining the report.";    
+    }
+  
+    description "The set of snapshots output
+    of a single Test.";
+  }
+
+
+  grouping header {
+    leaf id {
+      type string;
+      description "Unique identifier of the VNF-PP.";    
+    }
+    leaf name {
+      type string;
+      description "Name of the VNF-PP.";    
+    }
+    leaf version {
+      type string;
+      description "Version of the VNF-PP.";
+    }
+    leaf description {
+      type string;
+      description "Description of the VNF-PP";    
+    }
+    leaf timestamp {
+      type string;
+      description "Time (date, hour, minute, second) 
+      when the VNF-PP was created.";
+    }
+    
+    description "The header content of a VNF-PP.";
+  }
+
+  grouping vnf-pp {
+
+    uses header;
+
+    list reports {
+      key "id";
+      uses report;
+      description "List of the reports of a VNF-PP.";
+    }
+
+    description "A single VNF-PP.";
+  }
+
+  uses vnf-pp;
 }

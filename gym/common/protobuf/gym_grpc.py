@@ -12,8 +12,8 @@ if typing.TYPE_CHECKING:
 
 import google.protobuf.struct_pb2
 import google.protobuf.timestamp_pb2
+from gym.common.protobuf import vnf_br_pb2
 from gym.common.protobuf import vnf_bd_pb2
-from gym.common.protobuf import vnf_pp_pb2
 from gym.common.protobuf import gym_pb2
 
 
@@ -50,10 +50,16 @@ class PlayerBase(abc.ABC):
 class PlayerStub:
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel, "/gym.Player/Greet", gym_pb2.Info, gym_pb2.Info,
+            channel,
+            "/gym.Player/Greet",
+            gym_pb2.Info,
+            gym_pb2.Info,
         )
         self.CallLayout = grpclib.client.UnaryUnaryMethod(
-            channel, "/gym.Player/CallLayout", gym_pb2.Layout, gym_pb2.Result,
+            channel,
+            "/gym.Player/CallLayout",
+            gym_pb2.Layout,
+            gym_pb2.Result,
         )
 
 
@@ -90,10 +96,16 @@ class ManagerBase(abc.ABC):
 class ManagerStub:
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel, "/gym.Manager/Greet", gym_pb2.Info, gym_pb2.Info,
+            channel,
+            "/gym.Manager/Greet",
+            gym_pb2.Info,
+            gym_pb2.Info,
         )
         self.CallTask = grpclib.client.UnaryUnaryMethod(
-            channel, "/gym.Manager/CallTask", gym_pb2.Task, gym_pb2.Report,
+            channel,
+            "/gym.Manager/CallTask",
+            gym_pb2.Task,
+            gym_pb2.Report,
         )
 
 
@@ -130,7 +142,10 @@ class AgentBase(abc.ABC):
 class AgentStub:
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel, "/gym.Agent/Greet", gym_pb2.Info, gym_pb2.Info,
+            channel,
+            "/gym.Agent/Greet",
+            gym_pb2.Info,
+            gym_pb2.Info,
         )
         self.CallInstruction = grpclib.client.UnaryUnaryMethod(
             channel,
@@ -173,7 +188,10 @@ class MonitorBase(abc.ABC):
 class MonitorStub:
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Greet = grpclib.client.UnaryUnaryMethod(
-            channel, "/gym.Monitor/Greet", gym_pb2.Info, gym_pb2.Info,
+            channel,
+            "/gym.Monitor/Greet",
+            gym_pb2.Info,
+            gym_pb2.Info,
         )
         self.CallInstruction = grpclib.client.UnaryUnaryMethod(
             channel,
@@ -204,6 +222,54 @@ class InfraBase(abc.ABC):
 class InfraStub:
     def __init__(self, channel: grpclib.client.Channel) -> None:
         self.Run = grpclib.client.UnaryUnaryMethod(
-            channel, "/gym.Infra/Run", gym_pb2.Deploy, gym_pb2.Built,
+            channel,
+            "/gym.Infra/Run",
+            gym_pb2.Deploy,
+            gym_pb2.Built,
         )
 
+
+class CLIBase(abc.ABC):
+    @abc.abstractmethod
+    async def Inform(
+        self, stream: "grpclib.server.Stream[gym_pb2.State, gym_pb2.Status]"
+    ) -> None:
+        pass
+
+    @abc.abstractmethod
+    async def Collect(
+        self, stream: "grpclib.server.Stream[gym_pb2.Stats, gym_pb2.Status]"
+    ) -> None:
+        pass
+
+    def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
+        return {
+            "/gym.CLI/Inform": grpclib.const.Handler(
+                self.Inform,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                gym_pb2.State,
+                gym_pb2.Status,
+            ),
+            "/gym.CLI/Collect": grpclib.const.Handler(
+                self.Collect,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                gym_pb2.Stats,
+                gym_pb2.Status,
+            ),
+        }
+
+
+class CLIStub:
+    def __init__(self, channel: grpclib.client.Channel) -> None:
+        self.Inform = grpclib.client.UnaryUnaryMethod(
+            channel,
+            "/gym.CLI/Inform",
+            gym_pb2.State,
+            gym_pb2.Status,
+        )
+        self.Collect = grpclib.client.UnaryUnaryMethod(
+            channel,
+            "/gym.CLI/Collect",
+            gym_pb2.Stats,
+            gym_pb2.Status,
+        )

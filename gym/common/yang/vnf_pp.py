@@ -27,7 +27,8 @@ class yc_origin_vnf_pp__reports_snapshots_origin(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Trial when the snapshot was obtained.
+  YANG Description: The detailed origin of
+the snapshot.
   """
   __slots__ = ('_path_helper', '_extmethods', '__id','__role','__host',)
 
@@ -84,7 +85,9 @@ class yc_origin_vnf_pp__reports_snapshots_origin(PybindBase):
     """
     Getter method for id, mapped from YANG variable /reports/snapshots/origin/id (string)
 
-    YANG Description: Unique origin identifier, i.e., agent or monitor identifier.
+    YANG Description: The unique identifier of the
+component of the origin of the snapshot,
+i.e., the agent or monitor unique identifier.
     """
     return self.__id
       
@@ -96,7 +99,9 @@ class yc_origin_vnf_pp__reports_snapshots_origin(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique origin identifier, i.e., agent or monitor identifier.
+    YANG Description: The unique identifier of the
+component of the origin of the snapshot,
+i.e., the agent or monitor unique identifier.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -121,7 +126,9 @@ class yc_origin_vnf_pp__reports_snapshots_origin(PybindBase):
     """
     Getter method for role, mapped from YANG variable /reports/snapshots/origin/role (string)
 
-    YANG Description: Role of the component, origin of the snapshop, i.e., agent or monitor.
+    YANG Description: The role of the component,
+origin of the snapshop, i.e.,
+one of agent or monitor.
     """
     return self.__role
       
@@ -133,7 +140,9 @@ class yc_origin_vnf_pp__reports_snapshots_origin(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_role() directly.
 
-    YANG Description: Role of the component, origin of the snapshop, i.e., agent or monitor.
+    YANG Description: The role of the component,
+origin of the snapshop, i.e.,
+one of agent or monitor.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -158,7 +167,8 @@ class yc_origin_vnf_pp__reports_snapshots_origin(PybindBase):
     """
     Getter method for host, mapped from YANG variable /reports/snapshots/origin/host (string)
 
-    YANG Description: Host name where the source of the snapshot was placed.
+    YANG Description: The hostname where the
+source of the snapshot was placed.
     """
     return self.__host
       
@@ -170,7 +180,8 @@ class yc_origin_vnf_pp__reports_snapshots_origin(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_host() directly.
 
-    YANG Description: Host name where the source of the snapshot was placed.
+    YANG Description: The hostname where the
+source of the snapshot was placed.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -205,7 +216,8 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Details regarding the source of the evaluation.
+  YANG Description: The details regarding the
+source of the evaluation.
   """
   __slots__ = ('_path_helper', '_extmethods', '__id','__name','__type','__version','__call',)
 
@@ -264,7 +276,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     """
     Getter method for id, mapped from YANG variable /reports/snapshots/evaluations/source/id (string)
 
-    YANG Description: Unique source id
+    YANG Description: The unique identifier of the source
+of the evaluation,
+i.e., the prober/listener unique identifier.
     """
     return self.__id
       
@@ -276,7 +290,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique source id
+    YANG Description: The unique identifier of the source
+of the evaluation,
+i.e., the prober/listener unique identifier.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -301,7 +317,8 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     """
     Getter method for name, mapped from YANG variable /reports/snapshots/evaluations/source/name (string)
 
-    YANG Description: Name of the source of the evaluation.
+    YANG Description: The name of the source of the evaluation,
+i.e., the prober/listener name.
     """
     return self.__name
       
@@ -313,7 +330,8 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of the source of the evaluation.
+    YANG Description: The name of the source of the evaluation,
+i.e., the prober/listener name.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -338,7 +356,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     """
     Getter method for type, mapped from YANG variable /reports/snapshots/evaluations/source/type (string)
 
-    YANG Description: Type of the evaluation source, i.e., prober or listener.
+    YANG Description: The type of the source of the evaluation,
+i.e., one of prober or listener,  that was used to obtain
+it.
     """
     return self.__type
       
@@ -350,7 +370,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_type() directly.
 
-    YANG Description: Type of the evaluation source, i.e., prober or listener.
+    YANG Description: The type of the source of the evaluation,
+i.e., one of prober or listener,  that was used to obtain
+it.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -375,7 +397,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     """
     Getter method for version, mapped from YANG variable /reports/snapshots/evaluations/source/version (string)
 
-    YANG Description: Version of the tool interfacing the prober/listener.
+    YANG Description: The version of the tool interfacing
+the prober/listener that was used to obtain
+the evaluation.
     """
     return self.__version
       
@@ -387,7 +411,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_version() directly.
 
-    YANG Description: Version of the tool interfacing the prober/listener.
+    YANG Description: The version of the tool interfacing
+the prober/listener that was used to obtain
+the evaluation.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -412,7 +438,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     """
     Getter method for call, mapped from YANG variable /reports/snapshots/evaluations/source/call (string)
 
-    YANG Description: Full call realized by the source of evaluation.
+    YANG Description: The full call of the tool realized by
+the source of the evaluation that performed
+the acquisiton of the metrics.
     """
     return self.__call
       
@@ -424,7 +452,9 @@ class yc_source_vnf_pp__reports_snapshots_evaluations_source(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_call() directly.
 
-    YANG Description: Full call realized by the source of evaluation.
+    YANG Description: The full call of the tool realized by
+the source of the evaluation that performed
+the acquisiton of the metrics.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -461,7 +491,8 @@ class yc_timestamp_vnf_pp__reports_snapshots_evaluations_timestamp(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Timestamps of the procedures that realized the extraction of the evaluation.
+  YANG Description: Timestamps of the procedures
+that realized the extraction of the evaluation.
   """
   __slots__ = ('_path_helper', '_extmethods', '__start','__stop',)
 
@@ -517,7 +548,8 @@ class yc_timestamp_vnf_pp__reports_snapshots_evaluations_timestamp(PybindBase):
     """
     Getter method for start, mapped from YANG variable /reports/snapshots/evaluations/timestamp/start (string)
 
-    YANG Description: Time (date, hour, minute, second) when the evaluation started
+    YANG Description: Time (date, hour, minute, second)
+when the evaluation started
     """
     return self.__start
       
@@ -529,7 +561,8 @@ class yc_timestamp_vnf_pp__reports_snapshots_evaluations_timestamp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_start() directly.
 
-    YANG Description: Time (date, hour, minute, second) when the evaluation started
+    YANG Description: Time (date, hour, minute, second)
+when the evaluation started
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -554,7 +587,8 @@ class yc_timestamp_vnf_pp__reports_snapshots_evaluations_timestamp(PybindBase):
     """
     Getter method for stop, mapped from YANG variable /reports/snapshots/evaluations/timestamp/stop (string)
 
-    YANG Description: Time (date, hour, minute, second) when the evaluation stopped
+    YANG Description: Time (date, hour, minute, second)
+when the evaluation stopped
     """
     return self.__stop
       
@@ -566,7 +600,8 @@ class yc_timestamp_vnf_pp__reports_snapshots_evaluations_timestamp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_stop() directly.
 
-    YANG Description: Time (date, hour, minute, second) when the evaluation stopped
+    YANG Description: Time (date, hour, minute, second)
+when the evaluation stopped
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -600,7 +635,8 @@ class yc_series_vnf_pp__reports_snapshots_evaluations_metrics_series(PybindBase)
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of key/values e.g. timeseries.
+  YANG Description: A list of key/values,
+e.g., a timeseries.
   """
   __slots__ = ('_path_helper', '_extmethods', '__key','__value',)
 
@@ -744,9 +780,10 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of metrics obtained by evaluation.
+  YANG Description: List of metrics obtained
+from a single evaluation.
   """
-  __slots__ = ('_path_helper', '_extmethods', '__name','__unit','__type','__scalar','__vector','__series',)
+  __slots__ = ('_path_helper', '_extmethods', '__name','__unit','__type','__scalar','__series',)
 
   _yang_name = 'metrics'
 
@@ -770,7 +807,6 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     self.__unit = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="unit", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__type = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="type", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__scalar = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="scalar", parent=self, choice=('value', 'scalar'), path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
-    self.__vector = YANGDynClass(unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="vector", parent=self, choice=('value', 'vector'), path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__series = YANGDynClass(base=YANGListType("key",yc_series_vnf_pp__reports_snapshots_evaluations_metrics_series, yang_name="series", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='key', extensions=None, choice=False), is_container='list', yang_name="series", parent=self, choice=('value', 'series'), path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='list', is_config=True)
 
     load = kwargs.pop("load", None)
@@ -804,7 +840,7 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     """
     Getter method for name, mapped from YANG variable /reports/snapshots/evaluations/metrics/name (string)
 
-    YANG Description: Metric name
+    YANG Description: The metric name
     """
     return self.__name
       
@@ -816,7 +852,7 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Metric name
+    YANG Description: The metric name
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -846,7 +882,7 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     """
     Getter method for unit, mapped from YANG variable /reports/snapshots/evaluations/metrics/unit (string)
 
-    YANG Description: Unit of the metric value(s)
+    YANG Description: The unit of the metric value(s).
     """
     return self.__unit
       
@@ -858,7 +894,7 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_unit() directly.
 
-    YANG Description: Unit of the metric value(s)
+    YANG Description: The unit of the metric value(s).
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -884,6 +920,8 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     Getter method for type, mapped from YANG variable /reports/snapshots/evaluations/metrics/type (string)
 
     YANG Description: The data type encoded in the value.
+It must refer to a known variable type, i.e.,
+string, float, uint, etc.
     """
     return self.__type
       
@@ -896,6 +934,8 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     do so via calling thisObj._set_type() directly.
 
     YANG Description: The data type encoded in the value.
+It must refer to a known variable type, i.e.,
+string, float, uint, etc.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -920,7 +960,7 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     """
     Getter method for scalar, mapped from YANG variable /reports/snapshots/evaluations/metrics/scalar (string)
 
-    YANG Description: Single value
+    YANG Description: A single scalar value.
     """
     return self.__scalar
       
@@ -932,7 +972,7 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_scalar() directly.
 
-    YANG Description: Single value
+    YANG Description: A single scalar value.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -953,48 +993,12 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     self.__scalar = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="scalar", parent=self, choice=('value', 'scalar'), path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
 
-  def _get_vector(self):
-    """
-    Getter method for vector, mapped from YANG variable /reports/snapshots/evaluations/metrics/vector (string)
-
-    YANG Description: List of values
-    """
-    return self.__vector
-      
-  def _set_vector(self, v, load=False):
-    """
-    Setter method for vector, mapped from YANG variable /reports/snapshots/evaluations/metrics/vector (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_vector is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_vector() directly.
-
-    YANG Description: List of values
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="vector", parent=self, choice=('value', 'vector'), path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """vector must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="vector", parent=self, choice=('value', 'vector'), path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)""",
-        })
-
-    self.__vector = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_vector(self):
-    self.__vector = YANGDynClass(unique=True, base=TypedListType(allowed_type=six.text_type), is_leaf=False, yang_name="vector", parent=self, choice=('value', 'vector'), path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
-
-
   def _get_series(self):
     """
     Getter method for series, mapped from YANG variable /reports/snapshots/evaluations/metrics/series (list)
 
-    YANG Description: List of key/values e.g. timeseries.
+    YANG Description: A list of key/values,
+e.g., a timeseries.
     """
     return self.__series
       
@@ -1006,7 +1010,8 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_series() directly.
 
-    YANG Description: List of key/values e.g. timeseries.
+    YANG Description: A list of key/values,
+e.g., a timeseries.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1030,11 +1035,10 @@ class yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics(PybindBase):
   unit = __builtin__.property(_get_unit, _set_unit)
   type = __builtin__.property(_get_type, _set_type)
   scalar = __builtin__.property(_get_scalar, _set_scalar)
-  vector = __builtin__.property(_get_vector, _set_vector)
   series = __builtin__.property(_get_series, _set_series)
 
-  __choices__ = {'value': {'scalar': ['scalar'], 'vector': ['vector'], 'series': ['series']}}
-  _pyangbind_elements = OrderedDict([('name', name), ('unit', unit), ('type', type), ('scalar', scalar), ('vector', vector), ('series', series), ])
+  __choices__ = {'value': {'scalar': ['scalar'], 'series': ['series']}}
+  _pyangbind_elements = OrderedDict([('name', name), ('unit', unit), ('type', type), ('scalar', scalar), ('series', series), ])
 
 
 class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
@@ -1044,9 +1048,10 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of evaluations contained in a single snapshot.
+  YANG Description: The list of evaluations
+contained in a single snapshot Test.
   """
-  __slots__ = ('_path_helper', '_extmethods', '__id','__source','__timestamp','__metrics',)
+  __slots__ = ('_path_helper', '_extmethods', '__id','__instance','__repeat','__source','__timestamp','__metrics','__error',)
 
   _yang_name = 'evaluations'
 
@@ -1067,9 +1072,12 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     else:
       self._extmethods = False
     self.__id = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+    self.__instance = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="instance", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)
+    self.__repeat = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="repeat", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)
     self.__source = YANGDynClass(base=yc_source_vnf_pp__reports_snapshots_evaluations_source, is_container='container', yang_name="source", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='container', is_config=True)
     self.__timestamp = YANGDynClass(base=yc_timestamp_vnf_pp__reports_snapshots_evaluations_timestamp, is_container='container', yang_name="timestamp", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='container', is_config=True)
     self.__metrics = YANGDynClass(base=YANGListType("name",yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics, yang_name="metrics", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='name', extensions=None), is_container='list', yang_name="metrics", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='list', is_config=True)
+    self.__error = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
     load = kwargs.pop("load", None)
     if args:
@@ -1102,7 +1110,8 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     """
     Getter method for id, mapped from YANG variable /reports/snapshots/evaluations/id (string)
 
-    YANG Description: Unique id
+    YANG Description: The evaluation
+unique identifier.
     """
     return self.__id
       
@@ -1114,7 +1123,8 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique id
+    YANG Description: The evaluation
+unique identifier.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -1140,11 +1150,94 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     self.__id = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, is_keyval=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
 
+  def _get_instance(self):
+    """
+    Getter method for instance, mapped from YANG variable /reports/snapshots/evaluations/instance (uint32)
+
+    YANG Description: The unique identifier of the
+parallel instance of the prober/listener that
+was executed and created the evaluation.
+    """
+    return self.__instance
+      
+  def _set_instance(self, v, load=False):
+    """
+    Setter method for instance, mapped from YANG variable /reports/snapshots/evaluations/instance (uint32)
+    If this variable is read-only (config: false) in the
+    source YANG file, then _set_instance is considered as a private
+    method. Backends looking to populate this variable should
+    do so via calling thisObj._set_instance() directly.
+
+    YANG Description: The unique identifier of the
+parallel instance of the prober/listener that
+was executed and created the evaluation.
+    """
+    if hasattr(v, "_utype"):
+      v = v._utype(v)
+    try:
+      t = YANGDynClass(v,base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="instance", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)
+    except (TypeError, ValueError):
+      raise ValueError({
+          'error-string': """instance must be of a type compatible with uint32""",
+          'defined-type': "uint32",
+          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="instance", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)""",
+        })
+
+    self.__instance = t
+    if hasattr(self, '_set'):
+      self._set()
+
+  def _unset_instance(self):
+    self.__instance = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="instance", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)
+
+
+  def _get_repeat(self):
+    """
+    Getter method for repeat, mapped from YANG variable /reports/snapshots/evaluations/repeat (uint32)
+
+    YANG Description: The unique identifier of the
+prober/listener repeatition instance
+was executed and created the evaluation.
+    """
+    return self.__repeat
+      
+  def _set_repeat(self, v, load=False):
+    """
+    Setter method for repeat, mapped from YANG variable /reports/snapshots/evaluations/repeat (uint32)
+    If this variable is read-only (config: false) in the
+    source YANG file, then _set_repeat is considered as a private
+    method. Backends looking to populate this variable should
+    do so via calling thisObj._set_repeat() directly.
+
+    YANG Description: The unique identifier of the
+prober/listener repeatition instance
+was executed and created the evaluation.
+    """
+    if hasattr(v, "_utype"):
+      v = v._utype(v)
+    try:
+      t = YANGDynClass(v,base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="repeat", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)
+    except (TypeError, ValueError):
+      raise ValueError({
+          'error-string': """repeat must be of a type compatible with uint32""",
+          'defined-type': "uint32",
+          'generated-type': """YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="repeat", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)""",
+        })
+
+    self.__repeat = t
+    if hasattr(self, '_set'):
+      self._set()
+
+  def _unset_repeat(self):
+    self.__repeat = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="repeat", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)
+
+
   def _get_source(self):
     """
     Getter method for source, mapped from YANG variable /reports/snapshots/evaluations/source (container)
 
-    YANG Description: Details regarding the source of the evaluation.
+    YANG Description: The details regarding the
+source of the evaluation.
     """
     return self.__source
       
@@ -1156,7 +1249,8 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_source() directly.
 
-    YANG Description: Details regarding the source of the evaluation.
+    YANG Description: The details regarding the
+source of the evaluation.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1181,7 +1275,8 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     """
     Getter method for timestamp, mapped from YANG variable /reports/snapshots/evaluations/timestamp (container)
 
-    YANG Description: Timestamps of the procedures that realized the extraction of the evaluation.
+    YANG Description: Timestamps of the procedures
+that realized the extraction of the evaluation.
     """
     return self.__timestamp
       
@@ -1193,7 +1288,8 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_timestamp() directly.
 
-    YANG Description: Timestamps of the procedures that realized the extraction of the evaluation.
+    YANG Description: Timestamps of the procedures
+that realized the extraction of the evaluation.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1218,7 +1314,8 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     """
     Getter method for metrics, mapped from YANG variable /reports/snapshots/evaluations/metrics (list)
 
-    YANG Description: List of metrics obtained by evaluation.
+    YANG Description: List of metrics obtained
+from a single evaluation.
     """
     return self.__metrics
       
@@ -1230,7 +1327,8 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_metrics() directly.
 
-    YANG Description: List of metrics obtained by evaluation.
+    YANG Description: List of metrics obtained
+from a single evaluation.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1250,13 +1348,55 @@ class yc_evaluations_vnf_pp__reports_snapshots_evaluations(PybindBase):
   def _unset_metrics(self):
     self.__metrics = YANGDynClass(base=YANGListType("name",yc_metrics_vnf_pp__reports_snapshots_evaluations_metrics, yang_name="metrics", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='name', extensions=None), is_container='list', yang_name="metrics", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='list', is_config=True)
 
+
+  def _get_error(self):
+    """
+    Getter method for error, mapped from YANG variable /reports/snapshots/evaluations/error (string)
+
+    YANG Description: Error, if existent,
+when obtaining evaluation.
+    """
+    return self.__error
+      
+  def _set_error(self, v, load=False):
+    """
+    Setter method for error, mapped from YANG variable /reports/snapshots/evaluations/error (string)
+    If this variable is read-only (config: false) in the
+    source YANG file, then _set_error is considered as a private
+    method. Backends looking to populate this variable should
+    do so via calling thisObj._set_error() directly.
+
+    YANG Description: Error, if existent,
+when obtaining evaluation.
+    """
+    if hasattr(v, "_utype"):
+      v = v._utype(v)
+    try:
+      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+    except (TypeError, ValueError):
+      raise ValueError({
+          'error-string': """error must be of a type compatible with string""",
+          'defined-type': "string",
+          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)""",
+        })
+
+    self.__error = t
+    if hasattr(self, '_set'):
+      self._set()
+
+  def _unset_error(self):
+    self.__error = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+
   id = __builtin__.property(_get_id, _set_id)
+  instance = __builtin__.property(_get_instance, _set_instance)
+  repeat = __builtin__.property(_get_repeat, _set_repeat)
   source = __builtin__.property(_get_source, _set_source)
   timestamp = __builtin__.property(_get_timestamp, _set_timestamp)
   metrics = __builtin__.property(_get_metrics, _set_metrics)
+  error = __builtin__.property(_get_error, _set_error)
 
 
-  _pyangbind_elements = OrderedDict([('id', id), ('source', source), ('timestamp', timestamp), ('metrics', metrics), ])
+  _pyangbind_elements = OrderedDict([('id', id), ('instance', instance), ('repeat', repeat), ('source', source), ('timestamp', timestamp), ('metrics', metrics), ('error', error), ])
 
 
 class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
@@ -1266,9 +1406,10 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of snapshots contained in a single report.
+  YANG Description: List of snapshots contained
+in a single report.
   """
-  __slots__ = ('_path_helper', '_extmethods', '__id','__trial','__origin','__evaluations','__timestamp',)
+  __slots__ = ('_path_helper', '_extmethods', '__id','__trial','__origin','__evaluations','__timestamp','__error',)
 
   _yang_name = 'snapshots'
 
@@ -1293,6 +1434,7 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     self.__origin = YANGDynClass(base=yc_origin_vnf_pp__reports_snapshots_origin, is_container='container', yang_name="origin", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='container', is_config=True)
     self.__evaluations = YANGDynClass(base=YANGListType("id",yc_evaluations_vnf_pp__reports_snapshots_evaluations, yang_name="evaluations", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='id', extensions=None), is_container='list', yang_name="evaluations", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='list', is_config=True)
     self.__timestamp = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="timestamp", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+    self.__error = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
     load = kwargs.pop("load", None)
     if args:
@@ -1325,7 +1467,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     """
     Getter method for id, mapped from YANG variable /reports/snapshots/id (string)
 
-    YANG Description: Unique identifier.
+    YANG Description: The snapshot
+unique identifier.
     """
     return self.__id
       
@@ -1337,7 +1480,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier.
+    YANG Description: The snapshot
+unique identifier.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -1367,7 +1511,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     """
     Getter method for trial, mapped from YANG variable /reports/snapshots/trial (uint32)
 
-    YANG Description: Trial identifier when the snapshot was obtained.
+    YANG Description: The identifier of the trial
+when the snapshot was obtained.
     """
     return self.__trial
       
@@ -1379,7 +1524,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_trial() directly.
 
-    YANG Description: Trial identifier when the snapshot was obtained.
+    YANG Description: The identifier of the trial
+when the snapshot was obtained.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1404,7 +1550,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     """
     Getter method for origin, mapped from YANG variable /reports/snapshots/origin (container)
 
-    YANG Description: Trial when the snapshot was obtained.
+    YANG Description: The detailed origin of
+the snapshot.
     """
     return self.__origin
       
@@ -1416,7 +1563,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_origin() directly.
 
-    YANG Description: Trial when the snapshot was obtained.
+    YANG Description: The detailed origin of
+the snapshot.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1441,7 +1589,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     """
     Getter method for evaluations, mapped from YANG variable /reports/snapshots/evaluations (list)
 
-    YANG Description: List of evaluations contained in a single snapshot.
+    YANG Description: The list of evaluations
+contained in a single snapshot Test.
     """
     return self.__evaluations
       
@@ -1453,7 +1602,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_evaluations() directly.
 
-    YANG Description: List of evaluations contained in a single snapshot.
+    YANG Description: The list of evaluations
+contained in a single snapshot Test.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1478,7 +1628,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     """
     Getter method for timestamp, mapped from YANG variable /reports/snapshots/timestamp (string)
 
-    YANG Description: Time (date, hour, minute, second) when the snapshot was created.
+    YANG Description: Time (date, hour, minute, second)
+when the snapshot was created.
     """
     return self.__timestamp
       
@@ -1490,7 +1641,8 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_timestamp() directly.
 
-    YANG Description: Time (date, hour, minute, second) when the snapshot was created.
+    YANG Description: Time (date, hour, minute, second)
+when the snapshot was created.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1510,14 +1662,54 @@ class yc_snapshots_vnf_pp__reports_snapshots(PybindBase):
   def _unset_timestamp(self):
     self.__timestamp = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="timestamp", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
+
+  def _get_error(self):
+    """
+    Getter method for error, mapped from YANG variable /reports/snapshots/error (string)
+
+    YANG Description: Error, if existent,
+when obtaining the snapshot.
+    """
+    return self.__error
+      
+  def _set_error(self, v, load=False):
+    """
+    Setter method for error, mapped from YANG variable /reports/snapshots/error (string)
+    If this variable is read-only (config: false) in the
+    source YANG file, then _set_error is considered as a private
+    method. Backends looking to populate this variable should
+    do so via calling thisObj._set_error() directly.
+
+    YANG Description: Error, if existent,
+when obtaining the snapshot.
+    """
+    if hasattr(v, "_utype"):
+      v = v._utype(v)
+    try:
+      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+    except (TypeError, ValueError):
+      raise ValueError({
+          'error-string': """error must be of a type compatible with string""",
+          'defined-type': "string",
+          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)""",
+        })
+
+    self.__error = t
+    if hasattr(self, '_set'):
+      self._set()
+
+  def _unset_error(self):
+    self.__error = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+
   id = __builtin__.property(_get_id, _set_id)
   trial = __builtin__.property(_get_trial, _set_trial)
   origin = __builtin__.property(_get_origin, _set_origin)
   evaluations = __builtin__.property(_get_evaluations, _set_evaluations)
   timestamp = __builtin__.property(_get_timestamp, _set_timestamp)
+  error = __builtin__.property(_get_error, _set_error)
 
 
-  _pyangbind_elements = OrderedDict([('id', id), ('trial', trial), ('origin', origin), ('evaluations', evaluations), ('timestamp', timestamp), ])
+  _pyangbind_elements = OrderedDict([('id', id), ('trial', trial), ('origin', origin), ('evaluations', evaluations), ('timestamp', timestamp), ('error', error), ])
 
 
 class yc_reports_vnf_pp__reports(PybindBase):
@@ -1527,9 +1719,9 @@ class yc_reports_vnf_pp__reports(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: List of reports obtained in a vnf-pp.
+  YANG Description: List of the reports of a VNF-PP.
   """
-  __slots__ = ('_path_helper', '_extmethods', '__id','__test','__snapshots','__timestamp',)
+  __slots__ = ('_path_helper', '_extmethods', '__id','__test','__snapshots','__timestamp','__error',)
 
   _yang_name = 'reports'
 
@@ -1553,6 +1745,7 @@ class yc_reports_vnf_pp__reports(PybindBase):
     self.__test = YANGDynClass(base=RestrictedClassType(base_type=long, restriction_dict={'range': ['0..4294967295']}, int_size=32), is_leaf=True, yang_name="test", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='uint32', is_config=True)
     self.__snapshots = YANGDynClass(base=YANGListType("id",yc_snapshots_vnf_pp__reports_snapshots, yang_name="snapshots", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='id', extensions=None), is_container='list', yang_name="snapshots", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='list', is_config=True)
     self.__timestamp = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="timestamp", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+    self.__error = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
     load = kwargs.pop("load", None)
     if args:
@@ -1585,7 +1778,7 @@ class yc_reports_vnf_pp__reports(PybindBase):
     """
     Getter method for id, mapped from YANG variable /reports/id (string)
 
-    YANG Description: Unique identifier.
+    YANG Description: The report unique identifier.
     """
     return self.__id
       
@@ -1597,7 +1790,7 @@ class yc_reports_vnf_pp__reports(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier.
+    YANG Description: The report unique identifier.
     """
     parent = getattr(self, "_parent", None)
     if parent is not None and load is False:
@@ -1627,7 +1820,8 @@ class yc_reports_vnf_pp__reports(PybindBase):
     """
     Getter method for test, mapped from YANG variable /reports/test (uint32)
 
-    YANG Description: Test identifier when the snapshot was obtained.
+    YANG Description: The identifier of the Test
+when the snapshots were obtained.
     """
     return self.__test
       
@@ -1639,7 +1833,8 @@ class yc_reports_vnf_pp__reports(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_test() directly.
 
-    YANG Description: Test identifier when the snapshot was obtained.
+    YANG Description: The identifier of the Test
+when the snapshots were obtained.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1664,7 +1859,8 @@ class yc_reports_vnf_pp__reports(PybindBase):
     """
     Getter method for snapshots, mapped from YANG variable /reports/snapshots (list)
 
-    YANG Description: List of snapshots contained in a single report.
+    YANG Description: List of snapshots contained
+in a single report.
     """
     return self.__snapshots
       
@@ -1676,7 +1872,8 @@ class yc_reports_vnf_pp__reports(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_snapshots() directly.
 
-    YANG Description: List of snapshots contained in a single report.
+    YANG Description: List of snapshots contained
+in a single report.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1701,7 +1898,8 @@ class yc_reports_vnf_pp__reports(PybindBase):
     """
     Getter method for timestamp, mapped from YANG variable /reports/timestamp (string)
 
-    YANG Description: Time (date, hour, minute, second) when the report was created.
+    YANG Description: Time (date, hour, minute, second)
+when the report was created.
     """
     return self.__timestamp
       
@@ -1713,7 +1911,8 @@ class yc_reports_vnf_pp__reports(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_timestamp() directly.
 
-    YANG Description: Time (date, hour, minute, second) when the report was created.
+    YANG Description: Time (date, hour, minute, second)
+when the report was created.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1733,13 +1932,53 @@ class yc_reports_vnf_pp__reports(PybindBase):
   def _unset_timestamp(self):
     self.__timestamp = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="timestamp", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
+
+  def _get_error(self):
+    """
+    Getter method for error, mapped from YANG variable /reports/error (string)
+
+    YANG Description: Error, if existent,
+when obtaining the report.
+    """
+    return self.__error
+      
+  def _set_error(self, v, load=False):
+    """
+    Setter method for error, mapped from YANG variable /reports/error (string)
+    If this variable is read-only (config: false) in the
+    source YANG file, then _set_error is considered as a private
+    method. Backends looking to populate this variable should
+    do so via calling thisObj._set_error() directly.
+
+    YANG Description: Error, if existent,
+when obtaining the report.
+    """
+    if hasattr(v, "_utype"):
+      v = v._utype(v)
+    try:
+      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+    except (TypeError, ValueError):
+      raise ValueError({
+          'error-string': """error must be of a type compatible with string""",
+          'defined-type': "string",
+          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)""",
+        })
+
+    self.__error = t
+    if hasattr(self, '_set'):
+      self._set()
+
+  def _unset_error(self):
+    self.__error = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="error", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
+
   id = __builtin__.property(_get_id, _set_id)
   test = __builtin__.property(_get_test, _set_test)
   snapshots = __builtin__.property(_get_snapshots, _set_snapshots)
   timestamp = __builtin__.property(_get_timestamp, _set_timestamp)
+  error = __builtin__.property(_get_error, _set_error)
 
 
-  _pyangbind_elements = OrderedDict([('id', id), ('test', test), ('snapshots', snapshots), ('timestamp', timestamp), ])
+  _pyangbind_elements = OrderedDict([('id', id), ('test', test), ('snapshots', snapshots), ('timestamp', timestamp), ('error', error), ])
 
 
 class vnf_pp(PybindBase):
@@ -1749,9 +1988,9 @@ class vnf_pp(PybindBase):
   the container is represented as a class variable - with a specific
   YANG type.
 
-  YANG Description: Yang model for a VNF Performance Profile (VNF-PP) in the scope of IETF/BMWG
+  YANG Description: Yang model for a VNF Performance Profile (VNF-PP).
   """
-  __slots__ = ('_path_helper', '_extmethods', '__id','__name','__version','__author','__description','__timestamp','__reports',)
+  __slots__ = ('_path_helper', '_extmethods', '__id','__name','__version','__description','__timestamp','__reports',)
 
   _yang_name = 'vnf-pp'
 
@@ -1774,7 +2013,6 @@ class vnf_pp(PybindBase):
     self.__id = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="id", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__name = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="name", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__version = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
-    self.__author = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__description = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="description", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__timestamp = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="timestamp", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
     self.__reports = YANGDynClass(base=YANGListType("id",yc_reports_vnf_pp__reports, yang_name="reports", parent=self, is_container='list', user_ordered=False, path_helper=self._path_helper, yang_keys='id', extensions=None), is_container='list', yang_name="reports", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, extensions=None, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='list', is_config=True)
@@ -1810,7 +2048,7 @@ class vnf_pp(PybindBase):
     """
     Getter method for id, mapped from YANG variable /id (string)
 
-    YANG Description: Unique identifier
+    YANG Description: Unique identifier of the VNF-PP.
     """
     return self.__id
       
@@ -1822,7 +2060,7 @@ class vnf_pp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_id() directly.
 
-    YANG Description: Unique identifier
+    YANG Description: Unique identifier of the VNF-PP.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1847,7 +2085,7 @@ class vnf_pp(PybindBase):
     """
     Getter method for name, mapped from YANG variable /name (string)
 
-    YANG Description: Name of the experiment
+    YANG Description: Name of the VNF-PP.
     """
     return self.__name
       
@@ -1859,7 +2097,7 @@ class vnf_pp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_name() directly.
 
-    YANG Description: Name of the experiment
+    YANG Description: Name of the VNF-PP.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1884,7 +2122,7 @@ class vnf_pp(PybindBase):
     """
     Getter method for version, mapped from YANG variable /version (string)
 
-    YANG Description: Version of the experiment
+    YANG Description: Version of the VNF-PP.
     """
     return self.__version
       
@@ -1896,7 +2134,7 @@ class vnf_pp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_version() directly.
 
-    YANG Description: Version of the experiment
+    YANG Description: Version of the VNF-PP.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1917,48 +2155,11 @@ class vnf_pp(PybindBase):
     self.__version = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="version", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
 
 
-  def _get_author(self):
-    """
-    Getter method for author, mapped from YANG variable /author (string)
-
-    YANG Description: Author of the experiment
-    """
-    return self.__author
-      
-  def _set_author(self, v, load=False):
-    """
-    Setter method for author, mapped from YANG variable /author (string)
-    If this variable is read-only (config: false) in the
-    source YANG file, then _set_author is considered as a private
-    method. Backends looking to populate this variable should
-    do so via calling thisObj._set_author() directly.
-
-    YANG Description: Author of the experiment
-    """
-    if hasattr(v, "_utype"):
-      v = v._utype(v)
-    try:
-      t = YANGDynClass(v,base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
-    except (TypeError, ValueError):
-      raise ValueError({
-          'error-string': """author must be of a type compatible with string""",
-          'defined-type': "string",
-          'generated-type': """YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)""",
-        })
-
-    self.__author = t
-    if hasattr(self, '_set'):
-      self._set()
-
-  def _unset_author(self):
-    self.__author = YANGDynClass(base=six.text_type, is_leaf=True, yang_name="author", parent=self, path_helper=self._path_helper, extmethods=self._extmethods, register_paths=True, namespace='urn:ietf:params:xml:ns:yang:vnf-pp', defining_module='vnf-pp', yang_type='string', is_config=True)
-
-
   def _get_description(self):
     """
     Getter method for description, mapped from YANG variable /description (string)
 
-    YANG Description: Description of the experiment
+    YANG Description: Description of the VNF-PP
     """
     return self.__description
       
@@ -1970,7 +2171,7 @@ class vnf_pp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_description() directly.
 
-    YANG Description: Description of the experiment
+    YANG Description: Description of the VNF-PP
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -1995,7 +2196,8 @@ class vnf_pp(PybindBase):
     """
     Getter method for timestamp, mapped from YANG variable /timestamp (string)
 
-    YANG Description: Time (date, hour, minute, second) when the vnf-pp was created.
+    YANG Description: Time (date, hour, minute, second)
+when the VNF-PP was created.
     """
     return self.__timestamp
       
@@ -2007,7 +2209,8 @@ class vnf_pp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_timestamp() directly.
 
-    YANG Description: Time (date, hour, minute, second) when the vnf-pp was created.
+    YANG Description: Time (date, hour, minute, second)
+when the VNF-PP was created.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2032,7 +2235,7 @@ class vnf_pp(PybindBase):
     """
     Getter method for reports, mapped from YANG variable /reports (list)
 
-    YANG Description: List of reports obtained in a vnf-pp.
+    YANG Description: List of the reports of a VNF-PP.
     """
     return self.__reports
       
@@ -2044,7 +2247,7 @@ class vnf_pp(PybindBase):
     method. Backends looking to populate this variable should
     do so via calling thisObj._set_reports() directly.
 
-    YANG Description: List of reports obtained in a vnf-pp.
+    YANG Description: List of the reports of a VNF-PP.
     """
     if hasattr(v, "_utype"):
       v = v._utype(v)
@@ -2067,12 +2270,11 @@ class vnf_pp(PybindBase):
   id = __builtin__.property(_get_id, _set_id)
   name = __builtin__.property(_get_name, _set_name)
   version = __builtin__.property(_get_version, _set_version)
-  author = __builtin__.property(_get_author, _set_author)
   description = __builtin__.property(_get_description, _set_description)
   timestamp = __builtin__.property(_get_timestamp, _set_timestamp)
   reports = __builtin__.property(_get_reports, _set_reports)
 
 
-  _pyangbind_elements = OrderedDict([('id', id), ('name', name), ('version', version), ('author', author), ('description', description), ('timestamp', timestamp), ('reports', reports), ])
+  _pyangbind_elements = OrderedDict([('id', id), ('name', name), ('version', version), ('description', description), ('timestamp', timestamp), ('reports', reports), ])
 
 

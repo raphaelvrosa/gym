@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package gym;
+
+import "google/protobuf/timestamp.proto";
+
+import "vnf_bd.proto";
+import "vnf_pp.proto";
+
+
+message Environment {
+
+  message Orchestrator {
+
+    message Parameter {
+      string input = 1;
+      string value = 2;
+    }
+    
+    string type = 1;
+    string name = 2;
+    string description = 3;
+    map<string,Parameter> parameters = 4;
+  }
+
+  bool deploy = 1;
+  string description = 2;
+  string name = 3;
+  string type = 4;
+  Orchestrator orchestrator = 5;
+}
+
+
+message Input {
+
+  message Variable {
+    string name = 1;
+    repeated string values = 2;
+    string path = 3;
+    string type = 4;
+    string class = 5;
+  }
+
+  map<string,Variable> variables = 1;
+  VnfBd vnfbd = 2;
+}
+
+message Output {
+
+  message Variable {
+    string name = 1;
+    string value = 2;
+  }
+
+  message Timestamp {
+    google.protobuf.Timestamp start = 1;
+    google.protobuf.Timestamp stop = 2;
+  }
+
+  string id = 1;
+  map<string,Variable> variables = 2;
+  VnfBd vnfbd = 3;
+  VnfPp vnfpp = 4;  
+  Timestamp timestamp = 5;
+  string error = 6;
+}
+
+
+message VnfBr {
+
+  message Vnf {
+    string id = 1;
+    string author = 2;
+    string description = 3;
+    string name = 4;
+    string version = 5;
+  }
+
+  message Timestamp {
+    google.protobuf.Timestamp start = 1;
+    google.protobuf.Timestamp stop = 2;
+  }
+
+  string id = 1;
+  string name = 2;
+  string version = 3;
+  string author = 4;
+  string description = 5;
+
+  Environment environment = 7;
+  Vnf vnf = 8;
+
+  Input inputs = 9;
+  map<string,Output> outputs = 10;
+
+  Timestamp timestamp = 11;
+  string error = 12;
+}

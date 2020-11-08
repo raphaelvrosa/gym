@@ -23,11 +23,13 @@ from gym.common.protobuf.gym_pb2 import (
     Task,
     Report,
     Instruction,
+    Action,
     Snapshot,
     Info,
     Deploy,
 )
 
+from gym.common.vnfbr import VNFBR
 from gym.common.vnfbd import VNFBD
 from gym.common.vnfpp import VNFPP
 
@@ -86,7 +88,7 @@ class Core:
             return info_reply
 
     async def _contact(self, role, host, port, contacts=[]):
-        """Establishes the contact with a remote peer having 
+        """Establishes the contact with a remote peer having
         the provided role (to be able to build the proper stub) at the
         specified host:port params.
 
@@ -126,15 +128,15 @@ class Core:
     async def greet(self, info, startup=False):
         """Establishes peering with a contact (another gym component)
         that has the provided fields defined by the info param
-        At startup waits a bit so agent/monitor can load its tools 
+        At startup waits a bit so agent/monitor can load its tools
         before greetings.
 
         Arguments:
-            info {dict} -- Set of information that enables a contact 
+            info {dict} -- Set of information that enables a contact
             to be reached and become a peer
 
         Keyword Arguments:
-            startup {bool} -- A flag that signs if the App is 
+            startup {bool} -- A flag that signs if the App is
             in startup mode. This function can be called to reach
             contacts in run-time too. (default: {False})
         """
@@ -160,10 +162,10 @@ class Core:
 
     async def info(self, message):
         """This function is called every time a gym component
-        receives an Info gRPC service call. So it adds the peer to its 
-        database, and if the message contains contacts, it tries to 
+        receives an Info gRPC service call. So it adds the peer to its
+        database, and if the message contains contacts, it tries to
         greet those contacts before replying the Info.
-        In summary, gym components exchange Info messages to 
+        In summary, gym components exchange Info messages to
         establish peering, i.e., their add the peer info to its
         peers database.
 
@@ -199,7 +201,7 @@ class WorkerCore(Core):
 
     Arguments:
         Core {class} -- Agent and Monitor contain all the
-        behavior of a Core component (i.e., peer 
+        behavior of a Core component (i.e., peer
         with each other exchanging Info messages)
     """
 
@@ -249,13 +251,13 @@ class WorkerCore(Core):
         return tools_cfg
 
     def _update_status(self, tools_cfg):
-        """After loading the tools, their information 
+        """After loading the tools, their information
         is stored in the artifacts of a Agent/Monitor
         status (Identity instance)
 
         Arguments:
-            tools_cfg {dict} -- Contains the name of the 
-            tools to be stored in the artifacts. 
+            tools_cfg {dict} -- Contains the name of the
+            tools to be stored in the artifacts.
             I.e., probers or listeners
         """
         tools = self.tools.info()
@@ -299,7 +301,7 @@ class WorkerCore(Core):
         return origin
 
     def snapshot(self, instruction, results):
-        """Builds a Snapshot (gRPC message) based on 
+        """Builds a Snapshot (gRPC message) based on
         the results extracted from a Instruction (gRPC service call)
 
         Arguments:
@@ -311,7 +313,7 @@ class WorkerCore(Core):
             service call
 
         Returns:
-            Snapshot -- A gRPC Snapshot message, containing 
+            Snapshot -- A gRPC Snapshot message, containing
             a timestamp, the origin of the snapshot, and its
             evaluations.
         """
@@ -359,6 +361,7 @@ class WorkerCore(Core):
 class ManagerCore(Core):
     def __init__(self, info):
         Core.__init__(self, info)
+        self.instructions_ids = 1001
 
     def actions(self, instruction, req_tools):
         """Build the set of actions inside a intruction
@@ -371,18 +374,16 @@ class ManagerCore(Core):
         logger.info(f"Building actions")
         logger.debug(f"Tools: {req_tools}")
 
-        action_ids = 1
-
         for tool in req_tools:
-            action = instruction.actions.get_or_create(action_ids)
+            action = instruction.actions.add()
             action.id = tool.id
+            action.name = tool.name
+            action.instance = tool.instance
 
             for k in tool.parameters:
                 action.args[k] = tool.parameters[k]
 
             action.sched.CopyFrom(tool.sched)
-
-            action_ids += 1
 
     def instruction(self, req_peer, tools_type):
         """Builds a gRPC message of type Instruction
@@ -390,14 +391,14 @@ class ManagerCore(Core):
         defined in the prober/listeners alocated to this peer
 
         Arguments:
-            req_peer {dict} -- Contains a uuid and definitions of 
+            req_peer {dict} -- Contains a uuid and definitions of
             tools (probers or listeners) with parameters and values
             thath will be used to compose a Instruction
             tools_type {string} -- Defines the types of tools that
             the req_peer must contain (probers or listeners)
 
         Returns:
-            tuple -- (Instruction, bool) A gRPC message of type 
+            tuple -- (Instruction, bool) A gRPC message of type
             Instruction and a bool indicating if the instruction was
             successfuly built or not
         """
@@ -423,7 +424,7 @@ class ManagerCore(Core):
             tools_type {string} -- Defines if the tools type is probers or listeners
 
         Returns:
-            tuple -- (dict, bool) A dict containing all the (indexed by uuid) set of 
+            tuple -- (dict, bool) A dict containing all the (indexed by uuid) set of
             Instructions (gRPC messages), and a bool defining if all those instructions
             that were requested were fulfilled
         """
@@ -537,7 +538,7 @@ class ManagerCore(Core):
             address {string} -- The address (ip:port) of the peer
             being called
             instruction {Instruction} -- A gRPC message of type Instruction
-            
+
         Returns:
             Snapshot -- A gRPC message of type Snapshot
             if not exceptions are raised because of grpc error
@@ -641,17 +642,17 @@ class ManagerCore(Core):
 
         Returns:
             tuple -- (list, bool) A list of Snapshots obtained from
-            running the instructions, and a bool indicating if all 
+            running the instructions, and a bool indicating if all
             the snapshots were obtained from the instructions called
         """
-        ids = 1001
+
         instruction_ids = []
 
         for intruction in instructions.values():
-            intruction.id = ids
+            intruction.id = self.instructions_ids
             intruction.trial = trial
-            instruction_ids.append(ids)
-            ids += 1
+            instruction_ids.append(self.instructions_ids)
+            self.instructions_ids += 1
 
         trial_snapshots = await self.call_instructions(instructions, peers)
 
@@ -680,7 +681,7 @@ class ManagerCore(Core):
         """
         snapshots = []
 
-        for trial in range(trials, trials + 1):
+        for trial in range(1, trials + 1):
             logger.info(f"Trial: {trial} of total {trials}")
 
             trial_snapshots, snaps_status = await self.trial(trial, instructions, peers)
@@ -706,13 +707,14 @@ class ManagerCore(Core):
         logger.info(f"Building report {report.id} in test {report.test}")
 
         for snap in snapshots:
+            logger.info(f"Parsing snapshot id {snap.id} into report")
             report_snap = report.snapshots.get_or_create(snap.id)
             report_snap.CopyFrom(snap)
 
     async def task(self, task):
         """Function called when a task gRPC service call
         is performed in the Manager component.
-        It performs all the lifecycle of a task, i.e., 
+        It performs all the lifecycle of a task, i.e.,
         calls all the trials to run instructions in Agents/Monitors
         And then builds a Report containing all the Snapshots obtained
 
@@ -765,7 +767,7 @@ class PlayerCore(Core):
     async def updateGreetings(self, info_str, vnfbd):
         """Calls the greet method from the base Core class
         to be used when a new scenario is deployed, so Player
-        can contact the Manager component deployed and collects 
+        can contact the Manager component deployed and collects
         its information: apparatus with set of Agents/Monitors info
 
         Arguments:
@@ -773,8 +775,8 @@ class PlayerCore(Core):
             encoded management info of interfaces of Manager/Agents/Monitors
             that must execute peering and retrieve info
             vnfbd {VNFBD} -- A VNFBD object instance that establishes
-            the contacts proper definition of interfaces that must 
-            be reached (i.e., default port numbers) 
+            the contacts proper definition of interfaces that must
+            be reached (i.e., default port numbers)
         """
         logger.info(f"Greetings to deployed scenario contacts")
         info = json.loads(info_str)
@@ -802,7 +804,7 @@ class PlayerCore(Core):
         Arguments:
             command {string} -- Defines if the scenario being
             called must be in mode start or stop
-            test {int} -- The number of the test case that identifies 
+            test {int} -- The number of the test case that identifies
             that scenario deployment
             vnfbd {VNFBD} -- A VNFBD object instance from which
             the scenario will be extracted to be deployed
@@ -814,9 +816,8 @@ class PlayerCore(Core):
         logger.info(f"Calling test {test} scenario - {command}")
 
         environment = vnfbd.environment()
-        environment = vnfbd.environment()
-        env_plugin = environment.get("plugin")
-        env_params = env_plugin.get("parameters")
+        env_orchestrator = environment.get("orchestrator")
+        env_params = env_orchestrator.get("parameters")
         address = env_params.get("address").get("value")
         host, port = address.split(":")
 
@@ -860,7 +861,7 @@ class PlayerCore(Core):
         return ack
 
     async def call_task(self, uuid, task):
-        """Calls a task in a Manager component 
+        """Calls a task in a Manager component
         using a gRPC stub
 
         Arguments:
@@ -868,7 +869,7 @@ class PlayerCore(Core):
             that is a peer of Player and by whom the Task will
             be executed
             task {Task} -- A gRPC message of type Task that
-            the Manager component being called will have to 
+            the Manager component being called will have to
             execute
 
         Returns:
@@ -905,6 +906,7 @@ class PlayerCore(Core):
             logger.debug(f"Report received")
 
         finally:
+            logger.debug(f"{json_format.MessageToJson(report_msg)}")
             report = json_format.MessageToDict(report_msg)
             channel.close()
 
@@ -963,7 +965,6 @@ class PlayerCore(Core):
 
         if uuid and task_template:
             logger.info(f"Building task for test {test} with {trials} trials")
-            # logger.debug(f"Creating task from template: {task_template}")
 
             task = Task(id=test, test=test, trials=trials)
 
@@ -984,7 +985,7 @@ class PlayerCore(Core):
 
         return report
 
-    async def scenario(self, test, vnfbd_instance, previous_deployment):
+    async def scenario(self, test, vnfbd_instance, previous_deployment, action):
         """Handles the deployment of a scenario for a specific instance
         of a vnfbd, in a particular test case
 
@@ -993,19 +994,36 @@ class PlayerCore(Core):
             vnfbd_instance {VNFBD} -- A VNFBD object instance
             previous_deployment {bool} -- If a previous deployment exists
             or not
+            action {string} -- The action (start or stop) to be taken for
+            a given scenario
 
         Returns:
-            bool -- If the needed vnfbd scenario is deployed or not
+            bool -- If the needed vnfbd scenario action was confirmed or not
         """
-        if previous_deployment:
-            ok = await self.call_scenario("stop", test, vnfbd_instance)
-            logger.info(f"Stopped previous test {test} deployment scenario: {ok}")
 
-        if vnfbd_instance.deploy():
-            vnfbd_deployed = await self.call_scenario("start", test, vnfbd_instance)
-            logger.info(f"Started test {test} deployment scenario: {vnfbd_deployed}")
+        if action == "start":
+            if previous_deployment:
+                ok = await self.call_scenario("stop", test, vnfbd_instance)
+                logger.info(f"Stopped previous test {test} deployment scenario: {ok}")
+
+            if vnfbd_instance.deploy():
+                vnfbd_deployed = await self.call_scenario("start", test, vnfbd_instance)
+                logger.info(
+                    f"Started test {test} deployment scenario: {vnfbd_deployed}"
+                )
+            else:
+                vnfbd_deployed = True
+
+        elif action == "stop":
+            ok = await self.call_scenario("stop", test, vnfbd_instance)
+            logger.info(f"Stopped test {test} deployment scenario: {ok}")
+            vnfbd_deployed = ok
+
         else:
-            vnfbd_deployed = True
+            logger.info(
+                f"No action in [start or stop] for test {test} deployment scenario"
+            )
+            vnfbd_deployed = False
 
         return vnfbd_deployed
 
@@ -1022,7 +1040,6 @@ class PlayerCore(Core):
             tasks created from the vnfbd instance, and a bool indicating
             if all the tasks were performed successfuly
         """
-        logger.info("Starting vnf-bd instance tests")
 
         tests = vnfbd_instance.tests()
         trials = vnfbd_instance.trials()
@@ -1030,13 +1047,17 @@ class PlayerCore(Core):
         reports = []
         vnfbd_deployed = False
 
-        for test in range(tests, tests + 1):
+        logger.info(f"Starting vnf-bd instance tests {tests} - trials {trials}")
+
+        for test in range(1, tests + 1):
             logger.info(
                 f"Starting test {test} out of {tests} in total - trials {trials}"
             )
             reports_ok[test] = False
 
-            vnfbd_deployed = await self.scenario(test, vnfbd_instance, vnfbd_deployed)
+            vnfbd_deployed = await self.scenario(
+                test, vnfbd_instance, vnfbd_deployed, action="start"
+            )
             if vnfbd_deployed:
 
                 report = await self.task(test, trials, vnfbd_instance)
@@ -1050,6 +1071,11 @@ class PlayerCore(Core):
             else:
                 logger.info(f"Deployment of vnf-bd instance failed in test {test}")
 
+        vnfbd_not_deployed = await self.scenario(
+            test, vnfbd_instance, vnfbd_deployed, action="stop"
+        )
+        logger.info(f"Stopped deployment of vnfbd scenario: {vnfbd_not_deployed}")
+
         logger.debug(f"Status tests reports: {reports_ok}")
         if all(reports_ok.values()):
             all_reports_ok = True
@@ -1060,39 +1086,39 @@ class PlayerCore(Core):
         return reports, all_reports_ok
 
     async def vnfbd(self, vnfbd):
-        """Executes all the possible instances of 
-        a vnfbd. Each instance is obtained from the 
+        """Executes all the possible instances of
+        a vnfbd. Each instance is obtained from the
         possible mutiplexing of inputs for a vnfbd
 
         Arguments:
             vnfbd {VNFBD} -- A VNFBD object instance
 
         Returns:
-            list -- A set of reports obtained from the 
+            list -- A set of reports obtained from the
             execution of the tests of vnfbd instances
         """
-        logger.info("Starting vnf-bd execution")
+        logger.info("Starting vnf-bd instance execution")
         all_reports = []
 
-        for vnfbd_instance in vnfbd.instances():
-            reports, ack = await self.tests(vnfbd_instance)
+        reports, ack = await self.tests(vnfbd)
+
+        if not ack:
+            logger.info(f"Error in vnf-bd instance - missing reports")
+        else:
             all_reports.extend(reports)
 
-            if not ack:
-                logger.info(f"Error in vnf-bd instance - missing reports")
-
-        logger.info("Finishing vnf-bd execution")
+        logger.info("Finishing vnf-bd instance execution")
         return all_reports
 
-    def vnfpp(self, vnfbd, reports):
+    def vnfpp(self, reports):
         """From the set of reports obtained
         from the tasks generated and executed based
         on a VNF-BD, creates a VNF-PP
 
         Arguments:
             vnfbd {VNFBD} -- A VNFBD object instance
-            reports {list} -- A list of reports, output 
-            of the tasks generated from the execution of 
+            reports {list} -- A list of reports, output
+            of the tasks generated from the execution of
             the vnfbd
 
         Returns:
@@ -1101,28 +1127,28 @@ class PlayerCore(Core):
             vnfbd.
         """
         vnfpp = VNFPP()
-        vnfpp.load_info(vnfbd)
         vnfpp.load_reports(reports)
         return vnfpp
 
-    def vnfbr(self, vnfbd, vnfpp):
-        # TODO: Create and fill VNFBR class for result msg
-        pass
+    async def vnfbr(self, vnfbr):
+
+        for vnfbd in vnfbr.instances():
+            reports = await self.vnfbd(vnfbd)
+            vnfpp = self.vnfpp(reports)
+            vnfbr.add_output(vnfbd, vnfpp)
 
     async def layout(self, message):
-        """Called when a Player receives a gRPC service call 
+        """Called when a Player receives a gRPC service call
         of Layout type. It means it must run the VNF-BD inside
         the Layout and return a Result type of gRPC message
 
         Arguments:
             message {Layout} -- A gRPC message of type Layout
-            containing a VNF-BD, its (optional) template, and its
-            (optional) inputs
+            containing a VNF-BR, the inputs part of it
 
         Returns:
             Result -- A gRPC message of type Result.
-            It contains the obtained VNF-PP from the 
-            execution of the Layout VNF-BD
+            It contains the obtained VNF-BR outputs
         """
         logger.info("Received Layout")
         logger.debug(f"{json_format.MessageToJson(message)}")
@@ -1130,24 +1156,21 @@ class PlayerCore(Core):
         result = Result(id=message.id)
         result.timestamp.FromDatetime(datetime.now())
 
-        inputs = message.inputs
-        template = message.template
-        vnfbd_model = message.vnfbd
+        vnfbr_model = message.vnfbr
 
-        vnfbd = VNFBD()
-        init_ok = vnfbd.init(inputs, template, vnfbd_model)
+        vnfbr = VNFBR()
+        init_ok = vnfbr.from_protobuf(vnfbr_model)
 
         if init_ok:
-            logger.info("Init vnfbd successful")
-
-            reports = await self.vnfbd(vnfbd)
-            vnfpp = self.vnfpp(vnfbd, reports)
-            vnfpp_pb = vnfpp.protobuf()
-            result.vnfpp.CopyFrom(vnfpp_pb)
+            logger.info("Init vnfbr successful")
+            await self.vnfbr(vnfbr)
+            vnfbr.build()
+            vnfbr_protobuf = vnfbr.protobuf()
+            result.vnfbr.CopyFrom(vnfbr_protobuf)
             result.timestamp.FromDatetime(datetime.now())
 
         else:
-            logger.info("Could not init vnfbd - empty result")
+            logger.info("Could not init vnfbr - empty result")
 
         logger.info("Replying Result")
         logger.debug(f"{json_format.MessageToJson(result)}")

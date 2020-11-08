@@ -7,9 +7,14 @@
   "gym/tests/integration/test_monitor.py::Testmonitor::test_instruction",
   "gym/tests/integration/test_player.py::TestPlayer::test_info",
   "gym/tests/integration/test_player.py::TestPlayer::test_layout",
-  "gym/tests/unit/test_models.py::TestVNFBD::test_inputs",
-  "gym/tests/unit/test_models.py::TestVNFBD::test_template",
-  "gym/tests/unit/test_models.py::TestVNFBD::test_vnfbd_parse",
-  "gym/tests/unit/test_models.py::TestVNFBD::test_vnfbd_protobuf",
-  "gym/tests/unit/test_tools.py::TestTools::test_tools_sched"
+  "gym/tests/unit/test_model_vnfbd.py::TestVNFBD::test_inputs",
+  "gym/tests/unit/test_model_vnfbd.py::TestVNFBD::test_template",
+  "gym/tests/unit/test_model_vnfbd.py::TestVNFBD::test_vnfbd_parse",
+  "gym/tests/unit/test_model_vnfbd.py::TestVNFBD::test_vnfbd_protobuf",
+  "gym/tests/unit/test_model_vnfbd.py::TestVNFBD::test_vnfbd_yang",
+  "gym/tests/unit/test_model_vnfpp.py::TestVNFPP::test_vnfpp_parse",
+  "gym/tests/unit/test_tools.py::TestTools::test_listeners_sched",
+  "gym/tests/unit/test_tools.py::TestTools::test_probers_sched",
+  "gym/tests/unit/test_vnfbr.py::TestVNFBR::test_vnfbr_compile",
+  "gym/tests/unit/test_vnfbr.py::TestVNFBR::test_vnfbr_parse"
 ]

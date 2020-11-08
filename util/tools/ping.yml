@@ -1,0 +1,9 @@
+name: ping
+
+mode: prober
+
+install:
+  - sudo apt install net-tools
+
+uninstall:
+  - sudo apt remove net-tools

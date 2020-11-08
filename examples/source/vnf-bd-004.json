@@ -17,7 +17,7 @@
             "parameters": {
                 "address": {
                     "input": "address",
-                    "value": "172.17.0.1:9090"
+                    "value": "localhost:9090"
                 }
             }
         }

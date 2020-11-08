@@ -87,9 +87,44 @@ class TestVNFBD(unittest.TestCase):
         # assert vnfbd.parse() == False
         assert vnfbd.parse(vnfbd_data) == True
 
+    def test_vnfbd_yang(self):
+        """Tests the parse of vnfbd content against YANG model
+        """
+
+        vnfbd_data = load_file("vnf-bd-003.json")
+        vnfbd = VNFBD()
+
+        assert vnfbd.parse(vnfbd_data) == True
+
+        vnfbd_yang = vnfbd.yang()
+        vnfbd_yang_ph = vnfbd.yang_ph()
+
+        # print(vnfbd_yang)
+        # path_name = vnfbd_yang.name._yang_path()
+        # name = vnfbd_yang_ph.get_unique(path_name)
+        # print(dir(name))
+        # print("old name: ", name)
+        # name_parent = name._parent
+        # name_parent._set_name("testing vnf")
+        # print("set name: ", name)
+        # new_name = vnfbd_yang_ph.get_unique(path_name)
+        # print("new name: ", new_name)
+
+        _name = vnfbd_yang.proceedings.agents["1"].probers["1"].name._yang_name
+        _path = vnfbd_yang.proceedings.agents["1"].probers["1"].name._yang_path()
+        _obj = vnfbd_yang_ph.get_unique(_path)
+        _obj_parent = _obj._parent
+        _set_func_name = f"_set_{_name}"
+        _set_func = getattr(_obj_parent, _set_func_name)
+        _set_func("tcpreplaaaaaay")
+
+        assert "tcpreplaaaaaay" == str(
+            vnfbd_yang.proceedings.agents["1"].probers["1"].name
+        )
+
 
 if __name__ == "__main__":
     # unittest.main()
 
     t = TestVNFBD()
-    t.test_template()
+    t.test_vnfbd_yang()

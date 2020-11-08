@@ -294,9 +294,9 @@ class ListenerDocker(Listener):
 
 if __name__ == "__main__":
     opts = {
-        "interval": 1,
-        "duration": 5,
-        "target": "elastic",
+        # "interval": "1",
+        "duration": "3",
+        "target": "hammurabi",
     }
 
     # docker_listener = ListenerDocker()

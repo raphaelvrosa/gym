@@ -39,21 +39,24 @@ message VnfPp {
         }
 
         int32 id = 1;
-        Source source = 2;
-        map<string, Metric> metrics = 3;
-        Timestamp timestamp = 4;
-        string error = 5;
+        int32 instance = 2;
+        int32 repeat = 3;
+        Source source = 4;
+        map<string, Metric> metrics = 5;
+        Timestamp timestamp = 6;
+        string error = 7;
       }
 
       message Origin {
         string id = 1;
         string role = 2;
+        string host = 3;
       }
       
       int32 id = 1;
       uint32 trial = 2;
       Origin origin = 3;
-      repeated Evaluation evaluations = 4;
+      map<int32,Evaluation> evaluations = 4;
       google.protobuf.Timestamp timestamp = 5;
       string error = 6;
     }

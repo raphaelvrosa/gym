@@ -105,7 +105,11 @@ class TestManager(unittest.TestCase):
                 {
                     "uuid": "agent-test",
                     "probers": [
-                        {"id": 2, "parameters": {"target": "1.1.1.1", "packets": "3"}}
+                        {
+                            "id": 2,
+                            "name": "ping",
+                            "parameters": {"target": "1.1.1.1", "packets": "3"},
+                        }
                     ],
                 }
             ],
@@ -113,7 +117,11 @@ class TestManager(unittest.TestCase):
                 {
                     "uuid": "monitor-test",
                     "listeners": [
-                        {"id": 10, "parameters": {"duration": "3", "interval": "1"}}
+                        {
+                            "id": 10,
+                            "name": "host",
+                            "parameters": {"duration": "3", "interval": "1"},
+                        }
                     ],
                 }
             ],
@@ -204,4 +212,3 @@ if __name__ == "__main__":
     unittest.main()
     # t = TestManager()
     # t.test_task()
-

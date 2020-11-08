@@ -1,452 +1,275 @@
 {
-      "reports": {
-        "1": {
-          "id": 1,
-          "test": 1,
-          "snapshots": {
-            "1001": {
-              "id": 1001,
-              "trial": 1,
-              "origin": {
-                "id": "agent-test",
-                "role": "agent"
+  "reports": {
+    "1": {
+      "id": 1,
+      "test": 1,
+      "snapshots": {
+        "1001": {
+          "id": 1001,
+          "trial": 1,
+          "origin": {
+            "id": "agent-1",
+            "role": "agent"
+          },
+          "evaluations": {
+            "2": {
+              "id": 2,
+              "instance": 2,
+              "repeat": 1,
+              "source": {
+                "id": 2,
+                "call": "ping -s 64 -i 1 -c 5 www.google.com",
+                "name": "ping",
+                "type": "prober"
               },
-              "evaluations": [
-                {
-                  "id": 1,
-                  "metrics": {
-                    "rtt_mdev": {
-                      "name": "rtt_mdev",
-                      "type": "float",
-                      "unit": "ms",
-                      "scalar": 0.022
-                    },
-                    "rtt_min": {
-                      "name": "rtt_min",
-                      "type": "float",
-                      "unit": "ms",
-                      "scalar": 0.025
-                    },
-                    "frame_loss": {
-                      "name": "frame_loss",
-                      "type": "float",
-                      "unit": "%",
-                      "scalar": 0.0
-                    },
-                    "rtt_max": {
-                      "name": "rtt_max",
-                      "type": "float",
-                      "unit": "ms",
-                      "scalar": 0.073
-                    },
-                    "rtt_avg": {
-                      "name": "rtt_avg",
-                      "type": "float",
-                      "unit": "ms",
-                      "scalar": 0.056
-                    }
-                  }
+              "metrics": {
+                "rtt_min": {
+                  "name": "rtt_min",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 12.274
+                },
+                "rtt_mdev": {
+                  "name": "rtt_mdev",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 9.201
+                },
+                "rtt_max": {
+                  "name": "rtt_max",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 37.287
+                },
+                "frame_loss": {
+                  "name": "frame_loss",
+                  "type": "float",
+                  "unit": "%",
+                  "scalar": 0.0
+                },
+                "rtt_avg": {
+                  "name": "rtt_avg",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 21.147
                 }
-              ],
-              "timestamp": "2020-08-15T17:21:10.636271Z"
+              },
+              "timestamp": {
+                "start": "2020-09-02T14:46:37.771877Z",
+                "stop": "2020-09-02T14:46:41.821973Z"
+              }
             },
-            "1002": {
-              "id": 1002,
-              "trial": 1,
-              "origin": {
-                "id": "monitor-test",
-                "role": "monitor"
+            "3": {
+              "id": 3,
+              "instance": 1,
+              "repeat": 1,
+              "source": {
+                "id": 4,
+                "call": "iperf3 -c 127.0.0.1 -p 6594 -t 10.0 -u -b 10G -f m -J",
+                "name": "iperf3",
+                "type": "prober"
               },
-              "evaluations": [
-                {
-                  "id": 1,
-                  "metrics": {
-                    "inactive_mem": {
-                      "name": "inactive_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 4126.765625,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 4126.765625,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "steal_time": {
-                      "name": "steal_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 0.0,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 0.0,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "write_bytes": {
-                      "name": "write_bytes",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 53665661952.0,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 53665784832.0,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "irq_time": {
-                      "name": "irq_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 0.0,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 0.0,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "total_mem": {
-                      "name": "total_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 15660.55859375,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 15660.55859375,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "cpu_percent": {
-                      "name": "cpu_percent",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 0.2,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 0.7,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "guest_nice_time": {
-                      "name": "guest_nice_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 0.0,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 0.0,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "system_time": {
-                      "name": "system_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 36158.6,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 36158.64,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "slab_mem": {
-                      "name": "slab_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 963.6171875,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 963.6171875,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "write_count": {
-                      "name": "write_count",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 2214773.0,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 2214775.0,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "user_time": {
-                      "name": "user_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 138702.91,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 138702.97,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "active_mem": {
-                      "name": "active_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 8996.8125,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 8991.13671875,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "shared_mem": {
-                      "name": "shared_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 290.0859375,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 290.0859375,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "read_bytes": {
-                      "name": "read_bytes",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 11322561024.0,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 11322561024.0,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "used_mem": {
-                      "name": "used_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 6053.609375,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 6047.9453125,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "mem_percent": {
-                      "name": "mem_percent",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 41.9,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 41.9,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "cached_mem": {
-                      "name": "cached_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 7577.36328125,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 7577.36328125,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "free_mem": {
-                      "name": "free_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 1110.4453125,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 1116.10546875,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "iowait_time": {
-                      "name": "iowait_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 1193.98,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 1193.99,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "available_mem": {
-                      "name": "available_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 9093.24609375,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 9098.90625,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "nice_time": {
-                      "name": "nice_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 166.64,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 166.64,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "guest_time": {
-                      "name": "guest_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 300.87,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 300.87,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "softirq_time": {
-                      "name": "softirq_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 14353.51,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 14353.51,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "buffers_mem": {
-                      "name": "buffers_mem",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 919.140625,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 919.14453125,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "read_count": {
-                      "name": "read_count",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 467803.0,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 467803.0,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "time": {
-                      "name": "time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 1597522868.587267,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 1597522870.0920522,
-                          "key": 1.0
-                        }
-                      }
-                    },
-                    "idle_time": {
-                      "name": "idle_time",
-                      "type": "float",
-                      "series": {
-                        "0": {
-                          "value": 5245387.87,
-                          "key": 0.0
-                        },
-                        "1": {
-                          "value": 5245405.78,
-                          "key": 1.0
-                        }
-                      }
-                    }
-                  }
+              "metrics": {
+                "jitter_ms": {
+                  "name": "jitter_ms",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.0010326055203170583
+                },
+                "lost_percent": {
+                  "name": "lost_percent",
+                  "type": "float",
+                  "unit": "%",
+                  "scalar": 2.548198172218348
+                },
+                "bits_per_second": {
+                  "name": "bits_per_second",
+                  "type": "float",
+                  "unit": "bits_per_second",
+                  "scalar": 9999265030.705153
+                },
+                "lost_packets": {
+                  "name": "lost_packets",
+                  "type": "int",
+                  "unit": "packets",
+                  "scalar": 9720.0
+                },
+                "bytes": {
+                  "name": "bytes",
+                  "type": "int",
+                  "unit": "bytes",
+                  "scalar": 12499222528.0
+                },
+                "packets": {
+                  "name": "packets",
+                  "type": "int",
+                  "unit": "packets",
+                  "scalar": 381446.0
                 }
-              ],
-              "timestamp": "2020-08-15T17:21:11.607487Z"
+              },
+              "timestamp": {
+                "start": "2020-09-02T14:46:38.775996Z",
+                "stop": "2020-09-02T14:46:48.793055Z"
+              },
+              "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+            },
+            "1": {
+              "id": 1,
+              "instance": 1,
+              "repeat": 1,
+              "source": {
+                "id": 2,
+                "call": "ping -s 64 -i 1 -c 5 www.google.com",
+                "name": "ping",
+                "type": "prober"
+              },
+              "metrics": {
+                "rtt_min": {
+                  "name": "rtt_min",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 12.286
+                },
+                "rtt_mdev": {
+                  "name": "rtt_mdev",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 5.11
+                },
+                "rtt_max": {
+                  "name": "rtt_max",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 24.573
+                },
+                "frame_loss": {
+                  "name": "frame_loss",
+                  "type": "float",
+                  "unit": "%",
+                  "scalar": 0.0
+                },
+                "rtt_avg": {
+                  "name": "rtt_avg",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 18.383
+                }
+              },
+              "timestamp": {
+                "start": "2020-09-02T14:46:37.753434Z",
+                "stop": "2020-09-02T14:46:41.808205Z"
+              }
             }
           },
-          "timestamp": "2020-08-15T17:21:11.613366Z"
+          "timestamp": "2020-09-02T14:46:48.800441Z"
+        },
+        "1002": {
+          "id": 1002,
+          "trial": 1,
+          "origin": {
+            "id": "agent-2",
+            "role": "agent"
+          },
+          "evaluations": {
+            "2": {
+              "id": 2,
+              "instance": 1,
+              "repeat": 2,
+              "source": {
+                "id": 2,
+                "call": "ping -w 10 -s 128 -i 1 127.0.0.1",
+                "name": "ping",
+                "type": "prober"
+              },
+              "metrics": {
+                "rtt_avg": {
+                  "name": "rtt_avg",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.055
+                },
+                "rtt_min": {
+                  "name": "rtt_min",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.016
+                },
+                "rtt_mdev": {
+                  "name": "rtt_mdev",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.019
+                },
+                "rtt_max": {
+                  "name": "rtt_max",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.077
+                },
+                "frame_loss": {
+                  "name": "frame_loss",
+                  "type": "float",
+                  "unit": "%",
+                  "scalar": 0.0
+                }
+              },
+              "timestamp": {
+                "start": "2020-09-02T14:46:47.835236Z",
+                "stop": "2020-09-02T14:46:57.838485Z"
+              }
+            },
+            "1": {
+              "id": 1,
+              "instance": 1,
+              "repeat": 1,
+              "source": {
+                "id": 2,
+                "call": "ping -w 10 -s 128 -i 1 127.0.0.1",
+                "name": "ping",
+                "type": "prober"
+              },
+              "metrics": {
+                "rtt_avg": {
+                  "name": "rtt_avg",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.026
+                },
+                "rtt_min": {
+                  "name": "rtt_min",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.014
+                },
+                "rtt_mdev": {
+                  "name": "rtt_mdev",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.016
+                },
+                "rtt_max": {
+                  "name": "rtt_max",
+                  "type": "float",
+                  "unit": "ms",
+                  "scalar": 0.068
+                },
+                "frame_loss": {
+                  "name": "frame_loss",
+                  "type": "float",
+                  "unit": "%",
+                  "scalar": 0.0
+                }
+              },
+              "timestamp": {
+                "start": "2020-09-02T14:46:37.773557Z",
+                "stop": "2020-09-02T14:46:47.775863Z"
+              }
+            }
+          },
+          "timestamp": "2020-09-02T14:46:57.859428Z"
         }
-      }
+      },
+      "timestamp": "2020-09-02T14:46:57.871715Z"
+    }
+  }
 }
-    

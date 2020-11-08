@@ -10,7 +10,7 @@ with open("gym/__init__.py") as f:
 
 setup(
     name="gym",
-    version="0.2.0",
+    version="0.3.0",
     description="Gym - VNF Testing Framework",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -39,6 +39,7 @@ setup(
         "gym/manager/gym-manager",
         "gym/player/gym-player",
         "gym/infra/gym-infra",
+        "gym/cli/gym-cli",
     ],
     install_requires=[
         "asyncio<=3.4.3",
@@ -54,6 +55,9 @@ setup(
         "psutil<=5.7.0",
         "paramiko<=2.6.0",
         "scp<=0.13.2",
+        "prompt_toolkit==3.0.6",
+        "influxdb==5.3.0",
+        "aiohttp==3.6.2",
     ],
     python_requires=">=3.7",
     setup_requires=["setuptools>=41.1.0"],

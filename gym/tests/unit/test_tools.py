@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestTools(unittest.TestCase):
-    async def run_tools(self):
+    async def run_probers(self):
         folder_path = os.path.join(os.path.dirname(__file__), "../../agent/probers")
 
         tools = Tools()
@@ -24,10 +24,15 @@ class TestTools(unittest.TestCase):
 
         await tools.load(tools_cfg)
 
-        actions = {
-            1: {
-                "id": 2,
-                "args": {"packets": None, "target": "8.8.8.8",},
+        actions = [
+            {
+                "id": 1,
+                "instance": 1,
+                "name": "ping",
+                "args": {
+                    "packets": 2,
+                    "target": "1.1.1.1",
+                },
                 "sched": {
                     "from": 0,
                     "until": 14,
@@ -36,37 +41,88 @@ class TestTools(unittest.TestCase):
                     "repeat": 2,
                 },
             },
-            2: {
+            {
                 "id": 2,
-                "args": {"packets": 3, "target": "1.1.1.1",},
+                "name": "ping",
+                "instance": 1,
+                "args": {
+                    "packets": 2,
+                    "target": "127.0.0.1",
+                },
                 "sched": {
-                    "from": 5,
-                    "until": 10,
-                    "duration": 10,
+                    "from": 0,
+                    "until": 0,
+                    "duration": 0,
                     "interval": 0,
-                    "repeat": 0,
+                    "repeat": 2,
                 },
             },
-        }
+        ]
 
         reply = await tools.handle(actions)
         logger.debug(json.dumps(reply, sort_keys=True, indent=4))
         return reply
 
-    def test_tools_sched(self):
+    def test_probers_sched(self):
         """Runs example of tools handler on probers
         Interacts with ping prober ("id":2 in each action)
-        Realizes two actions, each with its own sched parameters       
+        Realizes two actions, each with its own sched parameters
         """
-        # [{'id': 1, 'metrics': {'rtt_min': {'name': 'rtt_min', 'scalar': 21.163, 'type': 'float', 'unit': 'ms'}, 'rtt_avg': {'name': 'rtt_avg', 'scalar': 23.232, 'type': 'float', 'unit': 'ms'}, 'rtt_max': {'name': 'rtt_max', 'scalar': 26.994, 'type': 'float', 'unit': 'ms'}, 'rtt_mdev': {'name': 'rtt_mdev', 'scalar': 2.253, 'type': 'float', 'unit': 'ms'}, 'frame_loss': {'name': 'frame_loss', 'scalar': 0.0, 'type': 'float', 'unit': '%'}}}, {'id': 1, 'metrics': {'rtt_min': {'name': 'rtt_min', 'scalar': 22.313, 'type': 'float', 'unit': 'ms'}, 'rtt_avg': {'name': 'rtt_avg', 'scalar': 52.383, 'type': 'float', 'unit': 'ms'}, 'rtt_max': {'name': 'rtt_max', 'scalar': 136.783, 'type': 'float', 'unit': 'ms'}, 'rtt_mdev': {'name': 'rtt_mdev', 'scalar': 48.751, 'type': 'float', 'unit': 'ms'}, 'frame_loss': {'name': 'frame_loss', 'scalar': 0.0, 'type': 'float', 'unit': '%'}}}, {'id': 2, 'metrics': {'rtt_min': {'name': 'rtt_min', 'scalar': 126.244, 'type': 'float', 'unit': 'ms'}, 'rtt_avg': {'name': 'rtt_avg', 'scalar': 154.848, 'type': 'float', 'unit': 'ms'}, 'rtt_max': {'name': 'rtt_max', 'scalar': 219.048, 'type': 'float', 'unit': 'ms'}, 'rtt_mdev': {'name': 'rtt_mdev', 'scalar': 34.183, 'type': 'float', 'unit': 'ms'}, 'frame_loss': {'name': 'frame_loss', 'scalar': 0.0, 'type': 'float', 'unit': '%'}}}]
+        tools_outputs = asyncio.run(self.run_probers())
+        logger.debug(len(tools_outputs))
+        assert len(tools_outputs) == 4
 
-        tools_outputs = asyncio.run(self.run_tools())
-        assert len(tools_outputs) == 3
+    async def run_listeners(self):
+        folder_path = os.path.join(os.path.dirname(__file__), "../../monitor/listeners")
+
+        tools = Tools()
+        tools_cfg = {
+            "folder": folder_path,
+            "prefix": "listener_",
+            "suffix": "py",
+            "full_path": True,
+        }
+
+        await tools.load(tools_cfg)
+
+        actions = [
+            # {
+            #     "id": 1,
+            #     "instance": 1,
+            #     "name": "docker",
+            #     "args": {"target": "hammurabi", "duration": "3",},
+            # },
+            {
+                "id": 2,
+                "name": "host",
+                "instance": 1,
+                "args": {"duration": "3"},
+                "sched": {
+                    "from": 0,
+                    "until": 0,
+                    "duration": 0,
+                    "interval": 0,
+                    "repeat": 2,
+                },
+            },
+        ]
+
+        reply = await tools.handle(actions)
+        logger.debug(json.dumps(reply, sort_keys=True, indent=4))
+        return reply
+
+    def test_listeners_sched(self):
+        tools_outputs = asyncio.run(self.run_listeners())
+        logger.debug(len(tools_outputs))
+        assert len(tools_outputs) == 2
 
 
 if __name__ == "__main__":
+    # unittest.main()
+
     logging.basicConfig(
         level=logging.DEBUG,
         format="%(asctime)s %(levelname)s %(threadName)s %(name)s %(message)s",
     )
-    unittest.main()
+    t = TestTools()
+    t.test_listeners_sched()

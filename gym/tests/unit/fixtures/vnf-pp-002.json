@@ -1,0 +1,2870 @@
+{
+      "reports": {
+        "1": {
+          "id": 1,
+          "test": 1,
+          "snapshots": {
+            "1001": {
+              "id": 1001,
+              "trial": 1,
+              "origin": {
+                "id": "d1",
+                "role": "agent"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 4,
+                    "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 1G -f m -J",
+                    "name": "iperf3",
+                    "type": "prober"
+                  },
+                  "metrics": {
+                    "lost_packets": {
+                      "name": "lost_packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 289.0
+                    },
+                    "bytes": {
+                      "name": "bytes",
+                      "type": "int",
+                      "unit": "bytes",
+                      "scalar": 3749946416.0
+                    },
+                    "packets": {
+                      "name": "packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 2589742.0
+                    },
+                    "jitter_ms": {
+                      "name": "jitter_ms",
+                      "type": "float",
+                      "unit": "ms",
+                      "scalar": 0.0003644734787694598
+                    },
+                    "lost_percent": {
+                      "name": "lost_percent",
+                      "type": "float",
+                      "unit": "%",
+                      "scalar": 0.011159412790926663
+                    },
+                    "bits_per_second": {
+                      "name": "bits_per_second",
+                      "type": "float",
+                      "unit": "bits_per_second",
+                      "scalar": 999985242.050381
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-04T02:02:32.026854Z",
+                    "stop": "2020-09-04T02:03:02.043218Z"
+                  },
+                  "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+                }
+              },
+              "timestamp": "2020-09-04T02:03:02.057266Z"
+            },
+            "1002": {
+              "id": 1002,
+              "trial": 1,
+              "origin": {
+                "id": "d3",
+                "role": "agent"
+              },
+              "timestamp": "2020-09-04T02:03:03.110106Z"
+            },
+            "1003": {
+              "id": 1003,
+              "trial": 1,
+              "origin": {
+                "id": "d4",
+                "role": "monitor"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 11,
+                    "call": "ListenerDocker duration 3 target hammurabi",
+                    "name": "docker",
+                    "type": "listener"
+                  },
+                  "metrics": {
+                    "system_cpu_usage": {
+                      "name": "system_cpu_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9912214690000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9912240480000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgmajfault": {
+                      "name": "mem_total_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_cache": {
+                      "name": "mem_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memory_limit": {
+                      "name": "mem_hierarchical_memory_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9.223372036854772e+18,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9.223372036854772e+18,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_usage": {
+                      "name": "mem_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 50552832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 50552832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_percent": {
+                      "name": "cpu_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.006695662251655628,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0016015100154083205,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_cache": {
+                      "name": "mem_total_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_anon": {
+                      "name": "mem_total_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_anon": {
+                      "name": "mem_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_anon": {
+                      "name": "mem_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgfault": {
+                      "name": "mem_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgmajfault": {
+                      "name": "mem_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_file": {
+                      "name": "mem_total_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_writeback": {
+                      "name": "mem_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_rss_huge": {
+                      "name": "mem_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_unevictable": {
+                      "name": "mem_total_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memsw_limit": {
+                      "name": "mem_hierarchical_memsw_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_unevictable": {
+                      "name": "mem_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgpgin": {
+                      "name": "mem_total_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_rss": {
+                      "name": "mem_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_dirty": {
+                      "name": "mem_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_percent": {
+                      "name": "mem_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.30784933491373634,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.30784933491373634,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_total_usage": {
+                      "name": "cpu_total_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 59176079715.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 59176112964.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_max_usage": {
+                      "name": "mem_max_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 75923456.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 75923456.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_file": {
+                      "name": "mem_total_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_file": {
+                      "name": "mem_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_writeback": {
+                      "name": "mem_total_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_file": {
+                      "name": "mem_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_dirty": {
+                      "name": "mem_total_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgpgout": {
+                      "name": "mem_total_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_write": {
+                      "name": "io_write",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 245760.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 245760.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_limit": {
+                      "name": "mem_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16421289984.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16421289984.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_mapped_file": {
+                      "name": "mem_total_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_anon": {
+                      "name": "mem_total_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgin": {
+                      "name": "mem_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_mapped_file": {
+                      "name": "mem_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_kernelmode": {
+                      "name": "cpu_usage_in_kernelmode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 32880000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 32880000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_read": {
+                      "name": "io_read",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 42872832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 42872832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgfault": {
+                      "name": "mem_total_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgout": {
+                      "name": "mem_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_usermode": {
+                      "name": "cpu_usage_in_usermode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 15690000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 15690000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss": {
+                      "name": "mem_total_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss_huge": {
+                      "name": "mem_total_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-03T23:02:31.167197Z",
+                    "stop": "2020-09-03T23:02:35.181678Z"
+                  }
+                }
+              },
+              "timestamp": "2020-09-03T23:02:35.207552Z"
+            },
+            "1004": {
+              "id": 1004,
+              "trial": 2,
+              "origin": {
+                "id": "d1",
+                "role": "agent"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 4,
+                    "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 1G -f m -J",
+                    "name": "iperf3",
+                    "type": "prober"
+                  },
+                  "metrics": {
+                    "jitter_ms": {
+                      "name": "jitter_ms",
+                      "type": "float",
+                      "unit": "ms",
+                      "scalar": 0.00033278359271575106
+                    },
+                    "lost_percent": {
+                      "name": "lost_percent",
+                      "type": "float",
+                      "unit": "%",
+                      "scalar": 0.004401952304460645
+                    },
+                    "bits_per_second": {
+                      "name": "bits_per_second",
+                      "type": "float",
+                      "unit": "bits_per_second",
+                      "scalar": 999989331.4560372
+                    },
+                    "lost_packets": {
+                      "name": "lost_packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 114.0
+                    },
+                    "bytes": {
+                      "name": "bytes",
+                      "type": "int",
+                      "unit": "bytes",
+                      "scalar": 3749972480.0
+                    },
+                    "packets": {
+                      "name": "packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 2589760.0
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-04T02:03:04.240787Z",
+                    "stop": "2020-09-04T02:03:34.257167Z"
+                  },
+                  "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+                }
+              },
+              "timestamp": "2020-09-04T02:03:34.268211Z"
+            },
+            "1005": {
+              "id": 1005,
+              "trial": 2,
+              "origin": {
+                "id": "d3",
+                "role": "agent"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 4,
+                    "call": "iperf3 -s -p 9015 -f m -J",
+                    "name": "iperf3",
+                    "type": "prober"
+                  },
+                  "timestamp": {
+                    "start": "2020-09-04T02:03:03.238419Z",
+                    "stop": "2020-09-04T02:03:03.244269Z"
+                  },
+                  "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+                }
+              },
+              "timestamp": "2020-09-04T02:03:03.264076Z"
+            },
+            "1006": {
+              "id": 1006,
+              "trial": 2,
+              "origin": {
+                "id": "d4",
+                "role": "monitor"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 11,
+                    "call": "ListenerDocker duration 3 target hammurabi",
+                    "name": "docker",
+                    "type": "listener"
+                  },
+                  "metrics": {
+                    "mem_total_pgpgin": {
+                      "name": "mem_total_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_rss": {
+                      "name": "mem_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_dirty": {
+                      "name": "mem_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_percent": {
+                      "name": "mem_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.30784933491373634,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.30784933491373634,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_total_usage": {
+                      "name": "cpu_total_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 59177321697.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 59177370053.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_max_usage": {
+                      "name": "mem_max_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 75923456.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 75923456.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_file": {
+                      "name": "mem_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_file": {
+                      "name": "mem_total_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_dirty": {
+                      "name": "mem_total_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_writeback": {
+                      "name": "mem_total_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_file": {
+                      "name": "mem_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgpgout": {
+                      "name": "mem_total_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_write": {
+                      "name": "io_write",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 245760.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 245760.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_limit": {
+                      "name": "mem_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16421289984.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16421289984.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgin": {
+                      "name": "mem_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_mapped_file": {
+                      "name": "mem_total_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_anon": {
+                      "name": "mem_total_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_mapped_file": {
+                      "name": "mem_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_read": {
+                      "name": "io_read",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 42872832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 42872832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_kernelmode": {
+                      "name": "cpu_usage_in_kernelmode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 32880000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 32880000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgout": {
+                      "name": "mem_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgfault": {
+                      "name": "mem_total_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss": {
+                      "name": "mem_total_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_usermode": {
+                      "name": "cpu_usage_in_usermode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 15690000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 15690000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss_huge": {
+                      "name": "mem_total_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "system_cpu_usage": {
+                      "name": "system_cpu_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9912628990000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9912652880000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgmajfault": {
+                      "name": "mem_total_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_cache": {
+                      "name": "mem_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memory_limit": {
+                      "name": "mem_hierarchical_memory_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9.223372036854772e+18,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9.223372036854772e+18,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_usage": {
+                      "name": "mem_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 50552832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 50552832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_percent": {
+                      "name": "cpu_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0016915288220551378,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0027489230769230768,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_cache": {
+                      "name": "mem_total_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_anon": {
+                      "name": "mem_total_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_anon": {
+                      "name": "mem_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgfault": {
+                      "name": "mem_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgmajfault": {
+                      "name": "mem_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_anon": {
+                      "name": "mem_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_file": {
+                      "name": "mem_total_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_rss_huge": {
+                      "name": "mem_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_writeback": {
+                      "name": "mem_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_unevictable": {
+                      "name": "mem_total_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memsw_limit": {
+                      "name": "mem_hierarchical_memsw_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_unevictable": {
+                      "name": "mem_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-03T23:03:03.375009Z",
+                    "stop": "2020-09-03T23:03:07.390630Z"
+                  }
+                }
+              },
+              "timestamp": "2020-09-03T23:03:07.416068Z"
+            }
+          },
+          "timestamp": "2020-09-04T02:03:34.273005Z"
+        },
+        "2": {
+          "id": 2,
+          "test": 2,
+          "snapshots": {
+            "1002": {
+              "id": 1002,
+              "trial": 1,
+              "origin": {
+                "id": "d3",
+                "role": "agent"
+              },
+              "timestamp": "2020-09-04T02:04:24.850253Z"
+            },
+            "1003": {
+              "id": 1003,
+              "trial": 1,
+              "origin": {
+                "id": "d4",
+                "role": "monitor"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 11,
+                    "call": "ListenerDocker duration 3 target hammurabi",
+                    "name": "docker",
+                    "type": "listener"
+                  },
+                  "metrics": {
+                    "mem_rss": {
+                      "name": "mem_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_dirty": {
+                      "name": "mem_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_percent": {
+                      "name": "mem_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.30784933491373634,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.30784933491373634,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_total_usage": {
+                      "name": "cpu_total_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 59179177614.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 59179214081.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_max_usage": {
+                      "name": "mem_max_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 75923456.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 75923456.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_file": {
+                      "name": "mem_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_file": {
+                      "name": "mem_total_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_dirty": {
+                      "name": "mem_total_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_writeback": {
+                      "name": "mem_total_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_file": {
+                      "name": "mem_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgpgout": {
+                      "name": "mem_total_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_write": {
+                      "name": "io_write",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 245760.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 245760.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_limit": {
+                      "name": "mem_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16421289984.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16421289984.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_mapped_file": {
+                      "name": "mem_total_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_anon": {
+                      "name": "mem_total_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgin": {
+                      "name": "mem_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_mapped_file": {
+                      "name": "mem_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_read": {
+                      "name": "io_read",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 42872832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 42872832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_kernelmode": {
+                      "name": "cpu_usage_in_kernelmode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 32880000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 32880000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgfault": {
+                      "name": "mem_total_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgout": {
+                      "name": "mem_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_usermode": {
+                      "name": "cpu_usage_in_usermode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 15690000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 15690000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss": {
+                      "name": "mem_total_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss_huge": {
+                      "name": "mem_total_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgmajfault": {
+                      "name": "mem_total_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "system_cpu_usage": {
+                      "name": "system_cpu_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9913213020000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9913236000000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_cache": {
+                      "name": "mem_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memory_limit": {
+                      "name": "mem_hierarchical_memory_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9.223372036854772e+18,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9.223372036854772e+18,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_usage": {
+                      "name": "mem_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 50552832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 50552832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_percent": {
+                      "name": "cpu_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.00746036974789916,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0017365263157894735,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_cache": {
+                      "name": "mem_total_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_anon": {
+                      "name": "mem_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_anon": {
+                      "name": "mem_total_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgfault": {
+                      "name": "mem_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_anon": {
+                      "name": "mem_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgmajfault": {
+                      "name": "mem_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_file": {
+                      "name": "mem_total_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_rss_huge": {
+                      "name": "mem_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_writeback": {
+                      "name": "mem_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memsw_limit": {
+                      "name": "mem_hierarchical_memsw_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_unevictable": {
+                      "name": "mem_total_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_unevictable": {
+                      "name": "mem_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgpgin": {
+                      "name": "mem_total_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-03T23:03:52.970509Z",
+                    "stop": "2020-09-03T23:03:56.984895Z"
+                  }
+                }
+              },
+              "timestamp": "2020-09-03T23:03:57.008914Z"
+            },
+            "1004": {
+              "id": 1004,
+              "trial": 2,
+              "origin": {
+                "id": "d1",
+                "role": "agent"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 4,
+                    "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 1G -f m -J",
+                    "name": "iperf3",
+                    "type": "prober"
+                  },
+                  "metrics": {
+                    "lost_packets": {
+                      "name": "lost_packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 167.0
+                    },
+                    "bytes": {
+                      "name": "bytes",
+                      "type": "int",
+                      "unit": "bytes",
+                      "scalar": 3749937728.0
+                    },
+                    "packets": {
+                      "name": "packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 2589736.0
+                    },
+                    "jitter_ms": {
+                      "name": "jitter_ms",
+                      "type": "float",
+                      "unit": "ms",
+                      "scalar": 0.0008897602671997869
+                    },
+                    "lost_percent": {
+                      "name": "lost_percent",
+                      "type": "float",
+                      "unit": "%",
+                      "scalar": 0.006448533750158318
+                    },
+                    "bits_per_second": {
+                      "name": "bits_per_second",
+                      "type": "float",
+                      "unit": "bits_per_second",
+                      "scalar": 999980032.4984928
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-04T02:04:25.975053Z",
+                    "stop": "2020-09-04T02:04:55.989930Z"
+                  },
+                  "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+                }
+              },
+              "timestamp": "2020-09-04T02:04:56.000243Z"
+            },
+            "1005": {
+              "id": 1005,
+              "trial": 2,
+              "origin": {
+                "id": "d3",
+                "role": "agent"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 4,
+                    "call": "iperf3 -s -p 9015 -f m -J",
+                    "name": "iperf3",
+                    "type": "prober"
+                  },
+                  "timestamp": {
+                    "start": "2020-09-04T02:04:24.957684Z",
+                    "stop": "2020-09-04T02:04:24.961760Z"
+                  },
+                  "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+                }
+              },
+              "timestamp": "2020-09-04T02:04:24.983216Z"
+            },
+            "1006": {
+              "id": 1006,
+              "trial": 2,
+              "origin": {
+                "id": "d4",
+                "role": "monitor"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 11,
+                    "call": "ListenerDocker duration 3 target hammurabi",
+                    "name": "docker",
+                    "type": "listener"
+                  },
+                  "metrics": {
+                    "mem_dirty": {
+                      "name": "mem_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_percent": {
+                      "name": "mem_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.30784933491373634,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.30784933491373634,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_total_usage": {
+                      "name": "cpu_total_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 59180115896.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 59180149449.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_max_usage": {
+                      "name": "mem_max_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 75923456.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 75923456.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_file": {
+                      "name": "mem_total_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_file": {
+                      "name": "mem_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_writeback": {
+                      "name": "mem_total_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_dirty": {
+                      "name": "mem_total_dirty",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_file": {
+                      "name": "mem_active_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4870144.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4870144.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgpgout": {
+                      "name": "mem_total_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_write": {
+                      "name": "io_write",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 245760.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 245760.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_limit": {
+                      "name": "mem_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16421289984.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16421289984.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_mapped_file": {
+                      "name": "mem_total_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgin": {
+                      "name": "mem_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_anon": {
+                      "name": "mem_total_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_mapped_file": {
+                      "name": "mem_mapped_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13246464.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13246464.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_kernelmode": {
+                      "name": "cpu_usage_in_kernelmode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 32880000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 32880000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "io_read": {
+                      "name": "io_read",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 42872832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 42872832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgfault": {
+                      "name": "mem_total_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgpgout": {
+                      "name": "mem_pgpgout",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 16545.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 16545.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss_huge": {
+                      "name": "mem_total_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_usage_in_usermode": {
+                      "name": "cpu_usage_in_usermode",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 15690000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 15690000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_rss": {
+                      "name": "mem_total_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "system_cpu_usage": {
+                      "name": "system_cpu_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9913581060000000.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9913605260000000.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgmajfault": {
+                      "name": "mem_total_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_cache": {
+                      "name": "mem_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memory_limit": {
+                      "name": "mem_hierarchical_memory_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 9.223372036854772e+18,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 9.223372036854772e+18,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_usage": {
+                      "name": "mem_usage",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 50552832.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 50552832.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "cpu_percent": {
+                      "name": "cpu_percent",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.009499010896898575,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0015896284062758051,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_cache": {
+                      "name": "mem_total_cache",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13262848.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13262848.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_inactive_anon": {
+                      "name": "mem_inactive_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13651968.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13651968.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_active_anon": {
+                      "name": "mem_total_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_active_anon": {
+                      "name": "mem_active_anon",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 13864960.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 13864960.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgfault": {
+                      "name": "mem_pgfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25245.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25245.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_pgmajfault": {
+                      "name": "mem_pgmajfault",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 264.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 264.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_inactive_file": {
+                      "name": "mem_total_inactive_file",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 4759552.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 4759552.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_rss_huge": {
+                      "name": "mem_rss_huge",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_writeback": {
+                      "name": "mem_writeback",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_hierarchical_memsw_limit": {
+                      "name": "mem_hierarchical_memsw_limit",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_unevictable": {
+                      "name": "mem_total_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_unevictable": {
+                      "name": "mem_unevictable",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 0.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 0.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_total_pgpgin": {
+                      "name": "mem_total_pgpgin",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 25509.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 25509.0,
+                          "key": 1.0
+                        }
+                      }
+                    },
+                    "mem_rss": {
+                      "name": "mem_rss",
+                      "type": "float",
+                      "series": {
+                        "0": {
+                          "value": 23941120.0,
+                          "key": 0.0
+                        },
+                        "1": {
+                          "value": 23941120.0,
+                          "key": 1.0
+                        }
+                      }
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-03T23:04:25.118713Z",
+                    "stop": "2020-09-03T23:04:29.135195Z"
+                  }
+                }
+              },
+              "timestamp": "2020-09-03T23:04:29.163883Z"
+            },
+            "1001": {
+              "id": 1001,
+              "trial": 1,
+              "origin": {
+                "id": "d1",
+                "role": "agent"
+              },
+              "evaluations": {
+                "1": {
+                  "id": 1,
+                  "instance": 1,
+                  "repeat": 1,
+                  "source": {
+                    "id": 4,
+                    "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 1G -f m -J",
+                    "name": "iperf3",
+                    "type": "prober"
+                  },
+                  "metrics": {
+                    "jitter_ms": {
+                      "name": "jitter_ms",
+                      "type": "float",
+                      "unit": "ms",
+                      "scalar": 0.00048615604649948147
+                    },
+                    "lost_percent": {
+                      "name": "lost_percent",
+                      "type": "float",
+                      "unit": "%",
+                      "scalar": 0.0006178200143565926
+                    },
+                    "bits_per_second": {
+                      "name": "bits_per_second",
+                      "type": "float",
+                      "unit": "bits_per_second",
+                      "scalar": 999980952.9018905
+                    },
+                    "lost_packets": {
+                      "name": "lost_packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 16.0
+                    },
+                    "bytes": {
+                      "name": "bytes",
+                      "type": "int",
+                      "unit": "bytes",
+                      "scalar": 3749959448.0
+                    },
+                    "packets": {
+                      "name": "packets",
+                      "type": "int",
+                      "unit": "packets",
+                      "scalar": 2589751.0
+                    }
+                  },
+                  "timestamp": {
+                    "start": "2020-09-04T02:03:53.829055Z",
+                    "stop": "2020-09-04T02:04:23.845585Z"
+                  },
+                  "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+                }
+              },
+              "timestamp": "2020-09-04T02:04:23.856756Z"
+            }
+          },
+          "timestamp": "2020-09-04T02:04:56.004133Z"
+        }
+      }
+}

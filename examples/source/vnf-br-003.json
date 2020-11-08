@@ -1,0 +1,447 @@
+{
+    "id": "003",
+    "name": "Tests Suricata container VNF",
+    "version": "0.1",
+    "author": "VNF Benchmark Report",
+    "description": "Tests Suricata container VNF",
+    "vnf": {
+        "id": "vnf-sut-02",
+        "name": "vnf/suricata:0.1",
+        "version": "0.1",
+        "author": "Test case",
+        "description": "Suricata VNF"
+    },
+    "environment": {
+        "name": "Execution-Environment",
+        "description": "Esablishes scenario in containernet",
+        "deploy": true,
+        "orchestrator": {
+            "type": "containernet",
+            "description": "Uses containernet to deploy vnfbd scenario",
+            "parameters": {
+                "address": {
+                    "input": "address",
+                    "value": "172.17.0.1:9090"
+                }
+            }
+        }
+    },
+    "inputs": {
+        "variables": {
+            "vnf_vcpu": {
+                "name": "vnf_vcpu",
+                "values": ["1", "2"],
+                "path": "/scenario/nodes[id='d2']/resources/cpu/vcpus",
+                "class": "resource",
+                "type": "uint32"
+            },
+            "vnf_memory": {
+                "name": "vnf_memory",
+                "values": ["1024", "2048"],
+                "path": "/scenario/nodes[id='d2']/resources/memory/size",
+                "class": "resource",
+                "type": "uint32"
+            }
+        },
+        "vnfbd": {
+            "experiments": {
+                "trials": 1,
+                "tests": 1
+            },
+            "scenario": {
+                "nodes": {
+                    "d1": {
+                        "id": "d1",
+                        "type": "internal",
+                        "image": "raphaelvrosa/gym:latest",
+                        "format": "docker",
+                        "role": "agent",
+                        "resources": {
+                            "cpu": {
+                                "vcpus": 1,
+                                "cpu_bw": "1.0",
+                                "pinning": ""
+                            },
+                            "memory": {
+                                "size": 512,
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": 2,
+                                "unit": "GB",
+                                "volumes": "/mnt/pcaps/:/mnt/pcaps:rw"
+                            }
+                        },
+                        "connection_points": {
+                            "eth1": {
+                                "id": "eth1",
+                                "interface": "ipv4",
+                                "type": "internal",
+                                "address": "172.31.1.1/24"
+                            }
+                        },
+                        "relationships": {},
+                        "lifecycle": {
+                            "start": {
+                                "workflow": "start",
+                                "name": "",
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d1"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "implementation": [
+                                    "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                ]
+                            }
+                        }
+                    },
+                    "d2": {
+                        "id": "d2",
+                        "type": "internal",
+                        "image": "vnf/suricata:0.1",
+                        "format": "docker",
+                        "role": "sut",
+                        "resources": {
+                            "cpu": {
+                                "vcpus": 1,
+                                "cpu_bw": "",
+                                "pinning": ""
+                            },
+                            "memory": {
+                                "size": 512,
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": 2,
+                                "unit": "GB",
+                                "volumes": ""
+                            }
+                        },
+                        "connection_points": {
+                            "input": {
+                                "id": "input",
+                                "interface": "ipv4",
+                                "type": "internal",
+                                "address": "172.31.1.2/24"
+                            },
+                            "output": {
+                                "id": "output",
+                                "interface": "ipv4",
+                                "type": "internal",
+                                "address": "172.31.1.3/24"
+                            }
+                        },
+                        "relationships": {},
+                        "lifecycle": {
+                            "start": {
+                                "workflow": "start",
+                                "parameters": {
+                                    "configuration": {
+                                        "input": "configuration",
+                                        "value": "small_ruleset"
+                                    }
+                                },                            
+                                "implementation": [
+                                    "./start.sh {configuration}"
+                                ]
+                            }
+                        }
+                    },
+                    "d3": {
+                        "id": "d3",
+                        "type": "internal",
+                        "image": "raphaelvrosa/gym:latest",
+                        "format": "docker",
+                        "role": "agent",
+                        "resources": {
+                            "cpu": {
+                                "vcpus": 1,
+                                "cpu_bw": "1.0",
+                                "pinning": ""
+                            },
+                            "memory": {
+                                "size": 512,
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": 2,
+                                "unit": "GB",
+                                "volumes": ""
+                            }
+                        },
+                        "connection_points": {
+                            "eth1": {
+                                "id": "eth1",
+                                "interface": "ipv4",
+                                "type": "internal",
+                                "address": "172.31.1.4/24"
+                            }
+                        },
+                        "relationships": {},
+                        "lifecycle": {
+                            "start": {
+                                "workflow": "start",
+                                "name": "",
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d3"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "implementation": [
+                                    "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                ]
+                            }
+                        }
+                    },
+                    "d4": {
+                        "id": "d4",
+                        "type": "external",
+                        "image": "",
+                        "format": "process",
+                        "role": "monitor",
+                        "resources": {},
+                        "connection_points": {},
+                        "relationships": {
+                            "d4-inside-d1": {
+                                "name": "d4-inside-d2",
+                                "type": "AttachesTo",
+                                "target": "d2"
+                            }
+                        },
+                        "lifecycle": {
+                            "start": {
+                                "workflow": "start",
+                                "name": "",
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d4"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "implementation": [
+                                    "gym-monitor --uuid {host_id} --address {host_ip}:50056  > gym-monitor.log 2>&1 &"
+                                ]
+                            }
+                        }
+                    },
+                    "d5": {
+                        "id": "d5",
+                        "type": "internal",
+                        "image": "",
+                        "format": "process",
+                        "role": "monitor",
+                        "resources": {},
+                        "connection_points": {},
+                        "relationships": {
+                            "d4-inside-d1": {
+                                "name": "d4-inside-d2",
+                                "type": "HostedOn",
+                                "target": "d2"
+                            }
+                        },
+                        "lifecycle": {
+                            "start": {
+                                "workflow": "start",
+                                "name": "",
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d5"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "implementation": [
+                                    "gym-monitor --uuid {host_id} --address {host_ip}:50057  > gym-monitor.log 2>&1 &"
+                                ]
+                            }
+                        }
+                    },
+                    "d6": {
+                        "id": "d6",
+                        "type": "internal",
+                        "image": "raphaelvrosa/gym:latest",
+                        "format": "docker",
+                        "role": "manager",
+                        "resources": {
+                            "cpu": {
+                                "vcpus": 1,
+                                "cpu_bw": "",
+                                "pinning": ""
+                            },
+                            "memory": {
+                                "size": 1024,
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": 1,
+                                "unit": "GB",
+                                "volumes": ""
+                            }
+                        },
+                        "connection_points": {},
+                        "relationships": {},
+                        "lifecycle": {
+                            "start": {
+                                "workflow": "start",
+                                "name": "",
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d5"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "implementation": [
+                                    "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "links": {
+                    "1": {
+                        "id": "1",
+                        "name": "d1-d2",
+                        "type": "E-Line",
+                        "network": "s1",
+                        "connection_points": [
+                            "d1:eth1",
+                            "d2:input"
+                        ]
+                    },
+                    "2": {
+                        "id": "2",
+                        "name": "d2-d3",
+                        "type": "E-Line",
+                        "network": "s2",
+                        "connection_points": [
+                            "d2:output",
+                            "d3:eth1"
+                        ]
+                    }
+                },
+                "policies": {}
+            },
+            "proceedings": {
+                "agents": {
+                    "1": {
+                        "uuid": "1",
+                        "name": "",
+                        "probers": {
+                            "1": {
+                                "id": 6,
+                                "instances": 1,
+                                "name": "tcpreplay",
+                                "parameters": {
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    },
+                                    "speed": {
+                                        "input": "speed",
+                                        "value": "true"
+                                    },
+                                    "timing": {
+                                        "input": "timing",
+                                        "value": "gtod"
+                                    },
+                                    "loop": {
+                                        "input": "loop",
+                                        "value": "1000"
+                                    },
+                                    "preload": {
+                                        "input": "preload",
+                                        "value": "true"
+                                    },
+                                    "interface": {
+                                        "input": "interface",
+                                        "value": "eth1"
+                                    },
+                                    "pcap": {
+                                        "input": "pcap",
+                                        "value": "smallFlows.pcap"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "monitors": {
+                    "2": {
+                        "uuid": "2",
+                        "name": "",
+                        "listeners": {
+                            "1": {
+                                "id": 11,
+                                "instances": 1,
+                                "name": "docker",
+                                "parameters": {
+                                    "target": {
+                                        "input": "target",
+                                        "value": "d2"
+                                    },
+                                    "interval": {
+                                        "input": "interval",
+                                        "value": "2"
+                                    },
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "3": {
+                        "uuid": "3",
+                        "name": "",
+                        "listeners": {
+                            "1": {
+                                "id": 14,
+                                "instances": 1,
+                                "name": "docker",
+                                "parameters": {
+                                    "interface": {
+                                        "input": "interface",
+                                        "value": "input"
+                                    },
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    }
+                                },
+                                "sched": {
+                                    "from": 1,
+                                    "until": 10,
+                                    "repeat": 3
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "outputs": {}
+}

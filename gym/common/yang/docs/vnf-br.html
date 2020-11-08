@@ -1,0 +1,5051 @@
+<head><title> vnf-br 
+</title>
+<style type="text/css" media="all">
+
+body, h1, h2, h3, h4, h5, h6, p, td, table td, input, select {
+        font-family: Verdana, Helvetica, Arial, sans-serif;
+        font-size: 10pt;
+}
+
+body, ol, li, h2 {padding:0; margin: 0;}
+
+ol#root  {padding-left: 5px; margin-top: 2px; margin-bottom: 1px;
+          list-style: none;}
+
+#root ol {padding-left: 5px; margin-top: 2px; margin-bottom: 1px;
+          list-style: none;}
+
+#root li {margin-bottom: 1px; padding-left: 5px;  margin-top: 2px;
+          font-size: x-small;}
+
+.panel   {border-bottom: 1px solid #999; margin-bottom: 2px; margin-top: 2px;
+          background: #eee;}
+
+#root ul {margin-bottom: 1px; margin-top: 2px; list-style-position: inside;}
+
+#root a {text-decoration: none;}
+
+.folder {
+   background:url(data:image/gif;base64,R0lGODlhGgAOALMLAJmZmYuLi3p6ev///+zs7MzMzGZmZqqqqrS0tLq6uuHh4f///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAAaAA4AAASJcMlJq714qgROKUtxAABBgJkUFMQwFEhyFoFAKini7idSHwGDQXAYYAADxQdBOjiBQqGgYKx4AomCYoYAHqLRVVUCKCBdSthhCgYDKIDuTpnoGgptgxged3FHBgpgU2MTASsmdCM1gkNFGDVaHx91QQQ3KZGSZocHBCEpEgIrCYdxn6EVAnoIGREAOw==) no-repeat;
+float: left; padding-right: 30px;margin-left: 3px;
+
+}
+
+.doc {
+   background:url(data:image/gif;base64,R0lGODlhDAAOALMJAMzMzODg4P///+np6a+vr+7u7jMzM5mZmYmJif///wAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAAkALAAAAAAMAA4AAARFEEhyCAEjackPCESwBRxwCKD4BSSACCgxrKyJ3B42sK2FSINgsAa4AApI4W5yFCCTywts+txJp9TC4IrFcruwi2FMLgMiADs=) no-repeat;
+float: left; padding-right: 10px; margin-left: 3px;
+cursor: pointer;
+
+}
+
+.leaf {
+   background:url(data:image/gif;base64,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) no-repeat;
+float: left; padding-right: 10px;margin-left: 3px;
+
+}
+
+.leaf-list {
+   background:url(data:image/gif;base64,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) no-repeat;
+float: left; padding-right: 10px; margin-left: 3px;
+
+}
+
+.action {
+   background:url(data:image/gif;base64,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) no-repeat;
+float: left; height: 14px; width: 12px; padding-right: 10px; margin-left: 3px;
+
+}
+
+.tier1  {margin-left: 0;     }
+.tier2  {margin-left: 1.5em; }
+.tier3  {margin-left: 3em;   }
+.tier4  {margin-left: 4.5em; }
+.tier5  {margin-left: 6em;   }
+.tier6  {margin-left: 7.5em; }
+.tier7  {margin-left: 9em;   }
+.tier8  {margin-left: 10.5em;}
+.tier9  {margin-left: 12em;  }
+.tier10 {margin-left: 13.5em;}
+.tier11 {margin-left: 15em;  }
+.tier12 {margin-left: 16.5em;}
+
+.level1 {padding-left: 0;    }
+.level2 {padding-left: 1em;  }
+.level3 {padding-left: 2em;  }
+.level4 {padding-left: 3em;  }
+</style>
+
+<script language="javascript1.2">
+function toggleRows(elm) {
+ var rows = document.getElementsByTagName("TR");
+ elm.style.backgroundImage = "url(data:image/gif;base64,R0lGODlhGgAOALMLAJmZmYuLi3p6ev///+zs7MzMzGZmZqqqqrS0tLq6uuHh4f///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAAaAA4AAASJcMlJq714qgROKUtxAABBgJkUFMQwFEhyFoFAKini7idSHwGDQXAYYAADxQdBOjiBQqGgYKx4AomCYoYAHqLRVVUCKCBdSthhCgYDKIDuTpnoGgptgxged3FHBgpgU2MTASsmdCM1gkNFGDVaHx91QQQ3KZGSZocHBCEpEgIrCYdxn6EVAnoIGREAOw==)";
+ var newDisplay = "none";
+ var thisID = elm.parentNode.parentNode.parentNode.id + "-";
+ // Are we expanding or contracting? If the first child is hidden, we expand
+  for (var i = 0; i < rows.length; i++) {
+   var r = rows[i];
+   if (matchStart(r.id, thisID, true)) {
+    if (r.style.display == "none") {
+     if (document.all) newDisplay = "block"; //IE4+ specific code
+     else newDisplay = "table-row"; //Netscape and Mozilla
+     elm.style.backgroundImage = "url(data:image/gif;base64,R0lGODlhGgAOALMLAJmZmYqKiv///+zs7MzMzGZmZrOzs7q6uqqqqnZ2duHh4f///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAAaAA4AAASScMlJq714qgMMIQuBAMAwZBRADIJAGMfwBQE6GW0uGzRS2wuAQPHhABAIAyBAABSe0IJKgiAEDgSF7OVDBKNQwEQlbBG5CZAiAA4oxsoc8WBAFEALe9SQ6rS2dU5vCwJsTwECKUwmcyMBCYMhUHgTj1kfRTwFJxKFBYgVlpdNNCUVBHcWCUwHpQacFgJCqp98GBEAOw==)";
+    }
+    break;
+   }
+ }
+
+ // When expanding, only expand one level.  Collapse all desendants.
+ var matchDirectChildrenOnly = (newDisplay != "none");
+
+ for (var j = 0; j < rows.length; j++) {
+   var s = rows[j];
+   if (matchStart(s.id, thisID, matchDirectChildrenOnly)) {
+     s.style.display = newDisplay;
+     var cell = s.getElementsByTagName("TD")[0];
+     var tier = cell.getElementsByTagName("DIV")[0];
+     var folder = tier.getElementsByTagName("A")[0];
+     if (folder.getAttribute("onclick") != null) {
+     folder.style.backgroundImage = "url(data:image/gif;base64,R0lGODlhGgAOALMLAJmZmYuLi3p6ev///+zs7MzMzGZmZqqqqrS0tLq6uuHh4f///wAAAAAAAAAAAAAAACH5BAEAAAsALAAAAAAaAA4AAASJcMlJq714qgROKUtxAABBgJkUFMQwFEhyFoFAKini7idSHwGDQXAYYAADxQdBOjiBQqGgYKx4AomCYoYAHqLRVVUCKCBdSthhCgYDKIDuTpnoGgptgxged3FHBgpgU2MTASsmdCM1gkNFGDVaHx91QQQ3KZGSZocHBCEpEgIrCYdxn6EVAnoIGREAOw==)";
+     }
+   }
+ }
+}
+
+function matchStart(target, pattern, matchDirectChildrenOnly) {
+ var pos = target.indexOf(pattern);
+ if (pos != 0)
+    return false;
+ if (!matchDirectChildrenOnly)
+    return true;
+ if (target.slice(pos + pattern.length, target.length).indexOf("-") >= 0)
+    return false;
+ return true;
+}
+
+function collapseAllRows() {
+ var rows = document.getElementsByTagName("TR");
+ for (var i = 0; i < rows.length; i++) {
+   var r = rows[i];
+   if (r.id.indexOf("-") >= 0) {
+     r.style.display = "none";
+   }
+ }
+}
+
+function expandAllRows() {
+  var rows = document.getElementsByTagName("TR");
+  for (var i = 0; i < rows.length; i ++) {
+    var r = rows[i];
+    if (r.id.indexOf("-") >= 0) {
+      r.style.display = "table-row";
+    }
+  }
+}
+</script>
+
+<body onload="collapseAllRows();">
+<a href="http://www.tail-f.com">
+   <img src="data:image/gif;base64,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" />
+</a>
+<div class="app">
+<div style="background: #eee; border: dashed 1px #000;">
+<h1> Module: <font color=blue>vnf-br</font>, Namespace:
+                     <font color=blue>urn:ietf:params:xml:ns:yang:vnf-br</font>, Prefix:
+                     <font color=blue>vnf-br</font></h1> 
+
+ <table width="100%">
+
+ <tr>
+  <!-- specifing one or more widths keeps columns
+       constant despite changes in visible content -->
+  <th align=left>
+     Element
+     <a href='#' onclick='expandAllRows();'>[+]Expand all</a>
+     <a href='#' onclick='collapseAllRows();'>[-]Collapse all</a>
+  </th>
+  <th align=left>Schema</th>
+  <th align=left>Type</th>
+  <th align=left>Flags</th>
+  <th align=left>Opts</th>
+  <th align=left>Status</th>
+  <th align=left>Path</th>
+</tr>
+<tr id="1" class="a">
+                         <td id="p1">
+                            <div id="p2" class="tier1">
+                               <a href="#" id="p3"
+                                  onclick="toggleRows(this);return false;"
+                                  class="folder">&nbsp;
+                               </a>
+                               <font color=blue>vnf-br</font>
+                            </div>
+                         </td> 
+<td>module</td><td></td><td></td><td></td><td>
+                        </td></tr>
+
+        <tr id="1-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier2>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of the VNF-BR "> <em> id </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:id</td>
+        </tr>
+        <tr id="1-2" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier2>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the VNF-BR."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:name</td>
+        </tr>
+        <tr id="1-3" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier2>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The VNF-BR version."> <em> version </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:version</td>
+        </tr>
+        <tr id="1-4" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier2>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The VNF-BR author."> <em> author </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:author</td>
+        </tr>
+        <tr id="1-5" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier2>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The description of the VNF-BR."> <em> description </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:description</td>
+        </tr>
+        <tr id="1-6" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier2">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The VNF-BR target SUT VNF.">vnf</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:vnf</td>
+        </tr>
+        <tr id="1-6-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The VNF unique identifier."> <em> id </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:vnf/vnf-br:id</td>
+        </tr>
+        <tr id="1-6-2" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The VNF name."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:vnf/vnf-br:name</td>
+        </tr>
+        <tr id="1-6-3" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The VNF version."> <em> version </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:vnf/vnf-br:version</td>
+        </tr>
+        <tr id="1-6-4" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The author of the VNF."> <em> author </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:vnf/vnf-br:author</td>
+        </tr>
+        <tr id="1-6-5" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The description of the VNF."> <em> description </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:vnf/vnf-br:description</td>
+        </tr>
+        <tr id="1-7" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier2">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The environment settings of a VNF-BR.">environment</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment</td>
+        </tr>
+        <tr id="1-7-6" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The evironment name"> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:name</td>
+        </tr>
+        <tr id="1-7-7" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="A description
+of the environment"> <em> description </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:description</td>
+        </tr>
+        <tr id="1-7-8" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Defines if (True) the environment enables
+the automated deployment by an orchestrator platform."> <em> deploy </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="boolean
+">boolean</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:deploy</td>
+        </tr>
+        <tr id="1-7-9" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier3">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The specification of the orchestration platform
+settings of a VNF-BR.">orchestrator</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:orchestrator</td>
+        </tr>
+        <tr id="1-7-9-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Name of the orchestrator
+platform."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:orchestrator/vnf-br:name</td>
+        </tr>
+        <tr id="1-7-9-2" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the orchestrator
+platform."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:orchestrator/vnf-br:type</td>
+        </tr>
+        <tr id="1-7-9-3" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The description of the
+orchestrator platform."> <em> description </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:orchestrator/vnf-br:description</td>
+        </tr>
+        <tr id="1-7-9-4" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of orchestrator
+input parameters.">parameters[input]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:orchestrator/vnf-br:parameters</td>
+        </tr>
+        <tr id="1-7-9-4-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the parameter">  input </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:orchestrator/vnf-br:parameters/vnf-br:input</td>
+        </tr>
+        <tr id="1-7-9-4-2" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The value of the parameter"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:environment/vnf-br:orchestrator/vnf-br:parameters/vnf-br:value</td>
+        </tr>
+        <tr id="1-8" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier2">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The inputs needed to
+realize a VNF-BR.">inputs</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs</td>
+        </tr>
+        <tr id="1-8-10" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier3">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of
+input variables.">variables[name]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:variables</td>
+        </tr>
+        <tr id="1-8-10-5" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the variable.">  name </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:variables/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-10-6" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The VNF-BD YANG path of the
+variable."> <em> path </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:variables/vnf-br:path</td>
+        </tr>
+        <tr id="1-8-10-7" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the
+variable values."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:variables/vnf-br:type</td>
+        </tr>
+        <tr id="1-8-10-8" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The class of the
+variable (one of resource, stimulus,
+configuration)."> <em> class </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:variables/vnf-br:class</td>
+        </tr>
+        <tr id="1-8-10-9" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf-list">&nbsp;</a>
+                  <attr title="The list of values
+of the variable.">  values </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf-list</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>*</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:variables/vnf-br:values</td>
+        </tr>
+        <tr id="1-8-11" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier3">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The input VNF-BD.">vnfbd</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd</td>
+        </tr>
+        <tr id="1-8-11-10" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Unique identifier of the VNF-BD."> <em> id </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:id</td>
+        </tr>
+        <tr id="1-8-11-11" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Name of the VNF-BD."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-12" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Version of the VNF-BD."> <em> version </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:version</td>
+        </tr>
+        <tr id="1-8-11-13" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Description of the VNF-BD"> <em> description </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:description</td>
+        </tr>
+        <tr id="1-8-11-14" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines the number of trials and tests
+the VNF-BD must execute.">experiments</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:experiments</td>
+        </tr>
+        <tr id="1-8-11-14-3" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Number of trials.
+A trial is a single process or iteration
+to obtain VNF performance metrics from
+benchmarking the VNF-BD proceedings."> <em> trials </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:experiments/vnf-br:trials</td>
+        </tr>
+        <tr id="1-8-11-14-4" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Number of tests.
+Each test defines unique structural
+and functional parameters (e.g., configurations,
+resource assignment) for benchmarked components
+to perform one or multiple Trials.
+Each Test must be executed following a
+particular scenario."> <em> tests </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:experiments/vnf-br:tests</td>
+        </tr>
+        <tr id="1-8-11-15" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Scenarios defined by this VNF-BD.
+A scenario contains all information needed to describe
+the deployment of all involved functional components
+mandatory for the execution of a benchmarking Test.">scenario</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario</td>
+        </tr>
+        <tr id="1-8-11-15-5" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.">nodes[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes</td>
+        </tr>
+        <tr id="1-8-11-15-5-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of a node
+in a scenario.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:id</td>
+        </tr>
+        <tr id="1-8-11-15-5-2" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of a node."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:type</td>
+        </tr>
+        <tr id="1-8-11-15-5-3" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the image to be used to instantiate
+a node."> <em> image </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:image</td>
+        </tr>
+        <tr id="1-8-11-15-5-4" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The node format (e.g., container, process, VM)."> <em> format </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:format</td>
+        </tr>
+        <tr id="1-8-11-15-5-5" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The role of the node in the Test scenario.
+The role must be one of: manager, agent, monitor, sut."> <em> role </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:role</td>
+        </tr>
+        <tr id="1-8-11-15-5-6" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The set of resources that must be allocated
+for a node in a benchmarking Test.">resources</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-1" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The node CPU resources that must
+be allocated for a benchmarking Test.">cpu</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-1-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of cores to be allocated
+for a node."> <em> vcpus </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu/vnf-br:vcpus</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-1-2" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The CPU bandwidth (CFS limit in 0.01-1.0)"> <em> cpu_bw </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu/vnf-br:cpu_bw</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-1-3" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The list of CPU cores, separated by comma,
+that a node must be pinned to."> <em> pinning </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu/vnf-br:pinning</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-2" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The node memory resources
+that must be allocated for a benchmarking
+Test.">memory</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:memory</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-2-4" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The memory allocation size."> <em> size </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:memory/vnf-br:size</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-2-5" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The memory unit."> <em> unit </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:memory/vnf-br:unit</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-3" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The node storage resources
+that must be allocated for a benchmarking Test.">storage</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-3-6" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The storage allocation size."> <em> size </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage/vnf-br:size</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-3-7" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The storage unit."> <em> unit </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage/vnf-br:unit</td>
+        </tr>
+        <tr id="1-8-11-15-5-6-3-8" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Volumes to be allocated by
+a node storage.
+A volume defines a mapping of an outside storage
+partition inside the node storage system.
+Volumes must be separated by comma and be defined
+using a colon to separate the node internal and external
+references of storage system paths."> <em> volumes </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage/vnf-br:volumes</td>
+        </tr>
+        <tr id="1-8-11-15-5-7" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of connection points of a node.">connection_points[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points</td>
+        </tr>
+        <tr id="1-8-11-15-5-7-4" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The connection-point
+unique identifier">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:id</td>
+        </tr>
+        <tr id="1-8-11-15-5-7-5" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the node interface
+associated with the connection-point."> <em> interface </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:interface</td>
+        </tr>
+        <tr id="1-8-11-15-5-7-6" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the network the
+connection-point interface is attached to."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:type</td>
+        </tr>
+        <tr id="1-8-11-15-5-7-7" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The Network address of the
+connection-point. It can be specified as a
+Ethernet MAC address, a IPv4 address or an IPv6 address."> <em> address </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:address</td>
+        </tr>
+        <tr id="1-8-11-15-5-8" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Relationship of a node with the other
+scenario components.">relationships[name]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships</td>
+        </tr>
+        <tr id="1-8-11-15-5-8-8" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Name of the relationship.">  name </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-15-5-8-9" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Type of the relationship."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships/vnf-br:type</td>
+        </tr>
+        <tr id="1-8-11-15-5-8-10" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Target of the relationship."> <em> target </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships/vnf-br:target</td>
+        </tr>
+        <tr id="1-8-11-15-5-9" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The life cycle workflows to be
+applied to this node.">lifecycle[workflow]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle</td>
+        </tr>
+        <tr id="1-8-11-15-5-9-11" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the Workflow.">  workflow </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="workflows
+enumeration
+ : {create,configure,start,stop,delete,custom,}">workflows</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:workflow</td>
+        </tr>
+        <tr id="1-8-11-15-5-9-12" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The workflow name."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-15-5-9-13" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of parameters to be
+applied to the node workflow.">parameters[input]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:parameters</td>
+        </tr>
+        <tr id="1-8-11-15-5-9-13-9" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the parameter.">  input </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:parameters/vnf-br:input</td>
+        </tr>
+        <tr id="1-8-11-15-5-9-13-10" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The value of the parameter"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:parameters/vnf-br:value</td>
+        </tr>
+        <tr id="1-8-11-15-5-9-14" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf-list">&nbsp;</a>
+                  <attr title="The workflow implementation.">  implementation </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf-list</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>*</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:implementation</td>
+        </tr>
+        <tr id="1-8-11-15-6" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of links among nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.">links[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links</td>
+        </tr>
+        <tr id="1-8-11-15-6-10" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The link unique identifier.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:id</td>
+        </tr>
+        <tr id="1-8-11-15-6-11" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the link."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-15-6-12" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the link."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:type</td>
+        </tr>
+        <tr id="1-8-11-15-6-13" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The network the link belongs to."> <em> network </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:network</td>
+        </tr>
+        <tr id="1-8-11-15-6-14" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf-list">&nbsp;</a>
+                  <attr title="Reference to the connection points of nodes
+the link is adjacent.">  connection_points </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf-list</td>
+        <td nowrap><abbr title="leafref
+ : ../../nodes/connection_points/id">leafref</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>*</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:connection_points</td>
+        </tr>
+        <tr id="1-8-11-15-7" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Definition of policies to be
+utilized on the instantiation of the scenario.
+A policy is defined by a name, it type,
+the targets (nodes and/or links) to which it must be applied to,
+and the proper action that realizes the policy.">policies[name]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies</td>
+        </tr>
+        <tr id="1-8-11-15-7-15" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the policy.">  name </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-15-7-16" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the policy"> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:type</td>
+        </tr>
+        <tr id="1-8-11-15-7-17" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The targets of the policy.
+Uuid of nodes and/or links separated by comma."> <em> targets </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:targets</td>
+        </tr>
+        <tr id="1-8-11-15-7-18" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The action of the policy"> <em> action </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:action</td>
+        </tr>
+        <tr id="1-8-11-16" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Proceedings of VNF-BD.
+The proceedings are utilized by the Manager component
+to execute a benchmarking Test. It consists of
+agent(s)/monitor(s) settings, detailing their prober(s)/listener(s)
+specification and running parameters.">proceedings</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings</td>
+        </tr>
+        <tr id="1-8-11-16-8" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list containing the
+Agent(s) needed for a VNF-BD test.">agents[uuid]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents</td>
+        </tr>
+        <tr id="1-8-11-16-8-19" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="A unique identifier">  uuid </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:uuid</td>
+        </tr>
+        <tr id="1-8-11-16-8-20" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of component"> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-16-8-21" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list of the Prober(s)
+that must be used in a benchmarking test.">probers[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-15" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:id</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-16" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of the tool instances that
+must be executed in parallel."> <em> instances </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:instances</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-17" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of a tool."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-18" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.">parameters[input]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:parameters</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-18-11" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The input key of a parameter">  input </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:parameters/vnf-br:input</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-18-12" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The value of a parameter"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:parameters/vnf-br:value</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-19" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.">sched</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-19-13" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The initial time (in seconds)
+of the execution of the tool."> <em> from </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:from</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-19-14" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters."> <em> until </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:until</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-19-15" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The total duration (in seconds) of the execution
+of each instance of the tool."> <em> duration </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:duration</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-19-16" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool."> <em> interval </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:interval</td>
+        </tr>
+        <tr id="1-8-11-16-8-21-19-17" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of times the tool must be executed."> <em> repeat </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:repeat</td>
+        </tr>
+        <tr id="1-8-11-16-9" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list containing the
+Monitor(s) needed for a VNF-BD test.">monitors[uuid]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors</td>
+        </tr>
+        <tr id="1-8-11-16-9-22" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="A unique identifier">  uuid </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:uuid</td>
+        </tr>
+        <tr id="1-8-11-16-9-23" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of component"> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-16-9-24" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list of the Listeners(s)
+that must used in a benchmarking test.">listeners[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-20" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:id</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-21" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of the tool instances that
+must be executed in parallel."> <em> instances </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:instances</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-22" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of a tool."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:name</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-23" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.">parameters[input]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:parameters</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-23-18" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The input key of a parameter">  input </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:parameters/vnf-br:input</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-23-19" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The value of a parameter"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:parameters/vnf-br:value</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-24" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.">sched</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-24-20" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The initial time (in seconds)
+of the execution of the tool."> <em> from </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:from</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-24-21" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters."> <em> until </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:until</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-24-22" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The total duration (in seconds) of the execution
+of each instance of the tool."> <em> duration </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:duration</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-24-23" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool."> <em> interval </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:interval</td>
+        </tr>
+        <tr id="1-8-11-16-9-24-24-24" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of times the tool must be executed."> <em> repeat </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:inputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:repeat</td>
+        </tr>
+        <tr id="1-9" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier2">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of outputs
+of a VNF-BR.">outputs[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs</td>
+        </tr>
+        <tr id="1-9-12" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The output unique identifier.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-13" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier3">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of instance of varibles
+from VNF-BR:inputs utilized by a VNF-BD to
+generate a VNF-PP.">variables[name]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:variables</td>
+        </tr>
+        <tr id="1-9-13-17" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="No description">  name </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:variables/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-13-18" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="No description"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:variables/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-14" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier3">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The VNF-BD that was executed
+to generate a output.">vnfbd</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd</td>
+        </tr>
+        <tr id="1-9-14-19" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Unique identifier of the VNF-BD."> <em> id </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-14-20" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Name of the VNF-BD."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-21" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Version of the VNF-BD."> <em> version </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:version</td>
+        </tr>
+        <tr id="1-9-14-22" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Description of the VNF-BD"> <em> description </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:description</td>
+        </tr>
+        <tr id="1-9-14-23" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines the number of trials and tests
+the VNF-BD must execute.">experiments</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:experiments</td>
+        </tr>
+        <tr id="1-9-14-23-10" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Number of trials.
+A trial is a single process or iteration
+to obtain VNF performance metrics from
+benchmarking the VNF-BD proceedings."> <em> trials </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:experiments/vnf-br:trials</td>
+        </tr>
+        <tr id="1-9-14-23-11" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Number of tests.
+Each test defines unique structural
+and functional parameters (e.g., configurations,
+resource assignment) for benchmarked components
+to perform one or multiple Trials.
+Each Test must be executed following a
+particular scenario."> <em> tests </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:experiments/vnf-br:tests</td>
+        </tr>
+        <tr id="1-9-14-24" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Scenarios defined by this VNF-BD.
+A scenario contains all information needed to describe
+the deployment of all involved functional components
+mandatory for the execution of a benchmarking Test.">scenario</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario</td>
+        </tr>
+        <tr id="1-9-14-24-12" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.">nodes[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes</td>
+        </tr>
+        <tr id="1-9-14-24-12-25" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of a node
+in a scenario.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-14-24-12-26" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of a node."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:type</td>
+        </tr>
+        <tr id="1-9-14-24-12-27" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the image to be used to instantiate
+a node."> <em> image </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:image</td>
+        </tr>
+        <tr id="1-9-14-24-12-28" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The node format (e.g., container, process, VM)."> <em> format </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:format</td>
+        </tr>
+        <tr id="1-9-14-24-12-29" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The role of the node in the Test scenario.
+The role must be one of: manager, agent, monitor, sut."> <em> role </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:role</td>
+        </tr>
+        <tr id="1-9-14-24-12-30" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The set of resources that must be allocated
+for a node in a benchmarking Test.">resources</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-25" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The node CPU resources that must
+be allocated for a benchmarking Test.">cpu</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-25-25" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of cores to be allocated
+for a node."> <em> vcpus </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu/vnf-br:vcpus</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-25-26" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The CPU bandwidth (CFS limit in 0.01-1.0)"> <em> cpu_bw </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu/vnf-br:cpu_bw</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-25-27" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The list of CPU cores, separated by comma,
+that a node must be pinned to."> <em> pinning </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:cpu/vnf-br:pinning</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-26" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The node memory resources
+that must be allocated for a benchmarking
+Test.">memory</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:memory</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-26-28" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The memory allocation size."> <em> size </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:memory/vnf-br:size</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-26-29" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The memory unit."> <em> unit </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:memory/vnf-br:unit</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-27" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The node storage resources
+that must be allocated for a benchmarking Test.">storage</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-27-30" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The storage allocation size."> <em> size </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage/vnf-br:size</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-27-31" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The storage unit."> <em> unit </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage/vnf-br:unit</td>
+        </tr>
+        <tr id="1-9-14-24-12-30-27-32" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Volumes to be allocated by
+a node storage.
+A volume defines a mapping of an outside storage
+partition inside the node storage system.
+Volumes must be separated by comma and be defined
+using a colon to separate the node internal and external
+references of storage system paths."> <em> volumes </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:resources/vnf-br:storage/vnf-br:volumes</td>
+        </tr>
+        <tr id="1-9-14-24-12-31" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of connection points of a node.">connection_points[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points</td>
+        </tr>
+        <tr id="1-9-14-24-12-31-28" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The connection-point
+unique identifier">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-14-24-12-31-29" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the node interface
+associated with the connection-point."> <em> interface </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:interface</td>
+        </tr>
+        <tr id="1-9-14-24-12-31-30" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the network the
+connection-point interface is attached to."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:type</td>
+        </tr>
+        <tr id="1-9-14-24-12-31-31" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The Network address of the
+connection-point. It can be specified as a
+Ethernet MAC address, a IPv4 address or an IPv6 address."> <em> address </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:connection_points/vnf-br:address</td>
+        </tr>
+        <tr id="1-9-14-24-12-32" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Relationship of a node with the other
+scenario components.">relationships[name]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships</td>
+        </tr>
+        <tr id="1-9-14-24-12-32-32" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Name of the relationship.">  name </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-24-12-32-33" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Type of the relationship."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships/vnf-br:type</td>
+        </tr>
+        <tr id="1-9-14-24-12-32-34" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Target of the relationship."> <em> target </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:relationships/vnf-br:target</td>
+        </tr>
+        <tr id="1-9-14-24-12-33" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The life cycle workflows to be
+applied to this node.">lifecycle[workflow]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle</td>
+        </tr>
+        <tr id="1-9-14-24-12-33-35" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the Workflow.">  workflow </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="workflows
+enumeration
+ : {create,configure,start,stop,delete,custom,}">workflows</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:workflow</td>
+        </tr>
+        <tr id="1-9-14-24-12-33-36" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The workflow name."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-24-12-33-37" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of parameters to be
+applied to the node workflow.">parameters[input]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:parameters</td>
+        </tr>
+        <tr id="1-9-14-24-12-33-37-33" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the parameter.">  input </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:parameters/vnf-br:input</td>
+        </tr>
+        <tr id="1-9-14-24-12-33-37-34" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The value of the parameter"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:parameters/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-14-24-12-33-38" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf-list">&nbsp;</a>
+                  <attr title="The workflow implementation.">  implementation </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf-list</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>*</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:nodes/vnf-br:lifecycle/vnf-br:implementation</td>
+        </tr>
+        <tr id="1-9-14-24-13" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of links among nodes that must be
+instantiated in a scenario in order to enable
+a benchmarking Test.">links[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links</td>
+        </tr>
+        <tr id="1-9-14-24-13-34" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The link unique identifier.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-14-24-13-35" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the link."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-24-13-36" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the link."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:type</td>
+        </tr>
+        <tr id="1-9-14-24-13-37" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The network the link belongs to."> <em> network </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:network</td>
+        </tr>
+        <tr id="1-9-14-24-13-38" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf-list">&nbsp;</a>
+                  <attr title="Reference to the connection points of nodes
+the link is adjacent.">  connection_points </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf-list</td>
+        <td nowrap><abbr title="leafref
+ : ../../nodes/connection_points/id">leafref</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>*</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:links/vnf-br:connection_points</td>
+        </tr>
+        <tr id="1-9-14-24-14" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Definition of policies to be
+utilized on the instantiation of the scenario.
+A policy is defined by a name, it type,
+the targets (nodes and/or links) to which it must be applied to,
+and the proper action that realizes the policy.">policies[name]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies</td>
+        </tr>
+        <tr id="1-9-14-24-14-39" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the policy.">  name </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-24-14-40" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the policy"> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:type</td>
+        </tr>
+        <tr id="1-9-14-24-14-41" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The targets of the policy.
+Uuid of nodes and/or links separated by comma."> <em> targets </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:targets</td>
+        </tr>
+        <tr id="1-9-14-24-14-42" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The action of the policy"> <em> action </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:scenario/vnf-br:policies/vnf-br:action</td>
+        </tr>
+        <tr id="1-9-14-25" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Proceedings of VNF-BD.
+The proceedings are utilized by the Manager component
+to execute a benchmarking Test. It consists of
+agent(s)/monitor(s) settings, detailing their prober(s)/listener(s)
+specification and running parameters.">proceedings</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings</td>
+        </tr>
+        <tr id="1-9-14-25-15" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list containing the
+Agent(s) needed for a VNF-BD test.">agents[uuid]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents</td>
+        </tr>
+        <tr id="1-9-14-25-15-43" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="A unique identifier">  uuid </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:uuid</td>
+        </tr>
+        <tr id="1-9-14-25-15-44" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of component"> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-25-15-45" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list of the Prober(s)
+that must be used in a benchmarking test.">probers[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-39" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-40" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of the tool instances that
+must be executed in parallel."> <em> instances </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:instances</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-41" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of a tool."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-42" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.">parameters[input]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:parameters</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-42-35" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The input key of a parameter">  input </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:parameters/vnf-br:input</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-42-36" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The value of a parameter"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:parameters/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-43" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.">sched</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-43-37" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The initial time (in seconds)
+of the execution of the tool."> <em> from </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:from</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-43-38" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters."> <em> until </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:until</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-43-39" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The total duration (in seconds) of the execution
+of each instance of the tool."> <em> duration </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:duration</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-43-40" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool."> <em> interval </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:interval</td>
+        </tr>
+        <tr id="1-9-14-25-15-45-43-41" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of times the tool must be executed."> <em> repeat </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:agents/vnf-br:probers/vnf-br:sched/vnf-br:repeat</td>
+        </tr>
+        <tr id="1-9-14-25-16" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list containing the
+Monitor(s) needed for a VNF-BD test.">monitors[uuid]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors</td>
+        </tr>
+        <tr id="1-9-14-25-16-46" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="A unique identifier">  uuid </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:uuid</td>
+        </tr>
+        <tr id="1-9-14-25-16-47" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of component"> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-25-16-48" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Defines a list of the Listeners(s)
+that must used in a benchmarking test.">listeners[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-44" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of a tool.
+This information specifies how a tool can be
+identified in a list of probers/listeners of an
+Agent/Monitor.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-45" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of the tool instances that
+must be executed in parallel."> <em> instances </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:instances</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-46" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of a tool."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-47" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of parameters for the execution
+of the tool. Each tool detains the proper set of running
+parameters that must be utilized to realize a benchmarking
+test.">parameters[input]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:parameters</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-47-42" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The input key of a parameter">  input </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:parameters/vnf-br:input</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-47-43" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The value of a parameter"> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:parameters/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-48" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The scheduling parameters of a tool.
+Each Agent/Monitor must utilize the scheduling parameters
+to perform the execution of its tools (probers/listeners)
+accordingly.">sched</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-48-44" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The initial time (in seconds)
+of the execution of the tool."> <em> from </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:from</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-48-45" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The final/maximum time (in seconds)
+of the execution of the tool summed all its instances
+repeat, duration and interval parameters."> <em> until </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:until</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-48-46" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The total duration (in seconds) of the execution
+of each instance of the tool."> <em> duration </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:duration</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-48-47" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The interval (in seconds) to be awaited
+among each one of the instances of the execution of the tool."> <em> interval </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:interval</td>
+        </tr>
+        <tr id="1-9-14-25-16-48-48-48" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The number of times the tool must be executed."> <em> repeat </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfbd/vnf-br:proceedings/vnf-br:monitors/vnf-br:listeners/vnf-br:sched/vnf-br:repeat</td>
+        </tr>
+        <tr id="1-9-15" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier3">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The output VNF-PP of the
+execution of a VNF-BD.">vnfpp</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp</td>
+        </tr>
+        <tr id="1-9-15-26" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Unique identifier of the VNF-PP."> <em> id </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-15-27" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Name of the VNF-PP."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-15-28" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Version of the VNF-PP."> <em> version </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:version</td>
+        </tr>
+        <tr id="1-9-15-29" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Description of the VNF-PP"> <em> description </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:description</td>
+        </tr>
+        <tr id="1-9-15-30" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier4>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Time (date, hour, minute, second)
+when the VNF-PP was created."> <em> timestamp </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:timestamp</td>
+        </tr>
+        <tr id="1-9-15-31" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier4">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of the reports of a VNF-PP.">reports[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports</td>
+        </tr>
+        <tr id="1-9-15-31-17" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The report unique identifier.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-15-31-18" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The identifier of the Test
+when the snapshots were obtained."> <em> test </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:test</td>
+        </tr>
+        <tr id="1-9-15-31-19" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier5">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of snapshots contained
+in a single report.">snapshots[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots</td>
+        </tr>
+        <tr id="1-9-15-31-19-49" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The snapshot
+unique identifier.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-15-31-19-50" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The identifier of the trial
+when the snapshot was obtained."> <em> trial </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:trial</td>
+        </tr>
+        <tr id="1-9-15-31-19-51" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The detailed origin of
+the snapshot.">origin</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:origin</td>
+        </tr>
+        <tr id="1-9-15-31-19-51-49" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of the
+component of the origin of the snapshot,
+i.e., the agent or monitor unique identifier."> <em> id </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:origin/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-15-31-19-51-50" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The role of the component,
+origin of the snapshop, i.e.,
+one of agent or monitor."> <em> role </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:origin/vnf-br:role</td>
+        </tr>
+        <tr id="1-9-15-31-19-51-51" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The hostname where the
+source of the snapshot was placed."> <em> host </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:origin/vnf-br:host</td>
+        </tr>
+        <tr id="1-9-15-31-19-52" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier6">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The list of evaluations
+contained in a single snapshot Test.">evaluations[id]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-52" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The evaluation
+unique identifier.">  id </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-53" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of the
+parallel instance of the prober/listener that
+was executed and created the evaluation."> <em> instance </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:instance</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-54" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of the
+prober/listener repeatition instance
+was executed and created the evaluation."> <em> repeat </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="uint32
+">uint32</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:repeat</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-55" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="The details regarding the
+source of the evaluation.">source</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:source</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-55-49" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unique identifier of the source
+of the evaluation,
+i.e., the prober/listener unique identifier."> <em> id </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:source/vnf-br:id</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-55-50" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The name of the source of the evaluation,
+i.e., the prober/listener name."> <em> name </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:source/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-55-51" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The type of the source of the evaluation,
+i.e., one of prober or listener,  that was used to obtain
+it."> <em> type </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:source/vnf-br:type</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-55-52" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The version of the tool interfacing
+the prober/listener that was used to obtain
+the evaluation."> <em> version </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:source/vnf-br:version</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-55-53" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The full call of the tool realized by
+the source of the evaluation that performed
+the acquisiton of the metrics."> <em> call </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:source/vnf-br:call</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-56" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Timestamps of the procedures
+that realized the extraction of the evaluation.">timestamp</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:timestamp</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-56-54" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Time (date, hour, minute, second)
+when the evaluation started"> <em> start </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:timestamp/vnf-br:start</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-56-55" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Time (date, hour, minute, second)
+when the evaluation stopped"> <em> stop </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:timestamp/vnf-br:stop</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier7">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="List of metrics obtained
+from a single evaluation.">metrics[name]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-56" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The metric name">  name </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:name</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-57" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The unit of the metric value(s)."> <em> unit </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:unit</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-58" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier8>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The data type encoded in the value.
+It must refer to a known variable type, i.e.,
+string, float, uint, etc.">  type </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:type</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-59" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier8">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Value choice: scalar, series.
+A metric can only contain a value with one of them.">(value)</abbr>
+              </div>
+            </td>
+        <td nowrap>choice</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-59-1" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier9">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="No description">:(scalar)</abbr>
+              </div>
+            </td>
+        <td nowrap>case</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-59-1-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier10>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="A single scalar value.">  scalar </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:value/vnf-br:scalar</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-59-2" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier9">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="No description">:(series)</abbr>
+              </div>
+            </td>
+        <td nowrap>case</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-59-2-2" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier10">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="A list of key/values,
+e.g., a timeseries.">series[key]</abbr>
+              </div>
+            </td>
+        <td nowrap>list</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:value/vnf-br:series</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-59-2-2-1" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier11>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Tuple key.">  key </abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:value/vnf-br:series/vnf-br:key</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-57-59-2-2-2" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier11>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Tuple value."> <em> value </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:metrics/vnf-br:value/vnf-br:series/vnf-br:value</td>
+        </tr>
+        <tr id="1-9-15-31-19-52-58" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier7>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Error, if existent,
+when obtaining evaluation."> <em> error </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:evaluations/vnf-br:error</td>
+        </tr>
+        <tr id="1-9-15-31-19-53" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Time (date, hour, minute, second)
+when the snapshot was created."> <em> timestamp </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:timestamp</td>
+        </tr>
+        <tr id="1-9-15-31-19-54" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier6>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Error, if existent,
+when obtaining the snapshot."> <em> error </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:snapshots/vnf-br:error</td>
+        </tr>
+        <tr id="1-9-15-31-20" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Time (date, hour, minute, second)
+when the report was created."> <em> timestamp </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:timestamp</td>
+        </tr>
+        <tr id="1-9-15-31-21" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier5>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Error, if existent,
+when obtaining the report."> <em> error </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:outputs/vnf-br:vnfpp/vnf-br:reports/vnf-br:error</td>
+        </tr>
+        <tr id="1-10" class="a">
+        
+            <td nowrap id="p4000">
+               <div id="p5000" class="tier2">
+                 <a href="#" id="p6000"
+                    onclick="toggleRows(this);return false"
+                    class="folder">&nbsp;
+                 </a>
+                 <abbr title="Timestamps of the procedures that
+realized the realization of a VNF-BR.">timestamp</abbr>
+              </div>
+            </td>
+        <td nowrap>container</td>
+        <td nowrap></td>
+        <td nowrap>config</td>
+        <td></td>
+        <td>current</td>
+        <td nowrap>/vnf-br:timestamp</td>
+        </tr>
+        <tr id="1-10-16" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Time (date, hour, minute, second)
+of when the VNF-BR realization started"> <em> start </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:timestamp/vnf-br:start</td>
+        </tr>
+        <tr id="1-10-17" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier3>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="Time (date, hour, minute, second)
+of when the VNF-BR realization stopped"> <em> stop </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:timestamp/vnf-br:stop</td>
+        </tr>
+        <tr id="1-11" class="a">
+        
+            <td nowrap>
+               <div id=9999 class=tier2>
+                  <a class="leaf">&nbsp;</a>
+                  <attr title="The VNF-BR error,
+if ocurred during its realization."> <em> error </em></abbr>
+            
+               </div>
+            </td> 
+        <td nowrap>leaf</td>
+        <td nowrap><abbr title="string
+">string</abbr></td>
+                
+        <td nowrap>config</td>
+        <td>?</td>
+        <td>current</td>
+        <td nowrap>/vnf-br:error</td>
+        </tr>
+</table>
+</div>
+</body>
+</html>
+

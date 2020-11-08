@@ -12,19 +12,12 @@ hide <<leafref>> stereotype
 hide <<leafref>> circle
 page 1x1 
 Title vnf-pp 
-note top of vnf_pp_vnf_pp : <b>Namespace: </b> urn:ietf:params:xml:ns:yang:vnf-pp \n<b>Prefix: </b> vnf-pp \n<b>Organization : </b>\nIETF/BMWG \n<b>Contact : </b>\nManuel Peuster <peuster@mail.uni-paderborn.de>, Raphael Vicente Rosa <raphaelvrosa@gmail.com> \n<b>Revision : </b> 2019-10-15 \n
+note top of vnf_pp_vnf_pp : <b>Namespace: </b> urn:ietf:params:xml:ns:yang:vnf-pp \n<b>Prefix: </b> vnf-pp \n<b>Organization : </b>\nIETF/BMWG \n<b>Contact : </b>\nRaphael Vicente Rosa <raphaelvrosa@gmail.com>, \nManuel Peuster <peuster@mail.uni-paderborn.de> \n<b>Revision : </b> 2020-10-08 \n
 package "vnf-pp:vnf-pp" as vnf_pp_vnf_pp { 
 class "vnf-pp" as vnf_pp << (M, #33CCFF) module>> 
 class "tuple" as vnf_pp_I_tuple_grouping <<(G,Lime) grouping>> 
 vnf_pp_I_tuple_grouping : key : string  
 vnf_pp_I_tuple_grouping : value : string  
-class "settings" as vnf_pp_I_settings_grouping <<(G,Lime) grouping>> 
-vnf_pp_I_settings_grouping : id : string  
-vnf_pp_I_settings_grouping : name : string  
-vnf_pp_I_settings_grouping : version : string  
-vnf_pp_I_settings_grouping : author : string  
-vnf_pp_I_settings_grouping : description : string  
-vnf_pp_I_settings_grouping : timestamp : string  
 class "metric" as vnf_pp_I_metric_grouping <<(G,Lime) grouping>> 
 vnf_pp_I_metric_grouping : name : string  
 vnf_pp_I_metric_grouping : unit : string  
@@ -34,9 +27,6 @@ vnf_pp_I_metric_grouping .. vnf_pp_I_metric_I_value : choice
 class "scalar" as vnf_pp_I_metric_I_value_I_scalar_case <<case>>
 vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_scalar_case  : choice value
 vnf_pp_I_metric_I_value_I_scalar_case : scalar : string   {mandatory}
-class "vector" as vnf_pp_I_metric_I_value_I_vector_case <<case>>
-vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_vector_case  : choice value
-vnf_pp_I_metric_I_value_I_vector_case : vector []: string 
 class "series" as vnf_pp_I_metric_I_value_I_series_case <<case>>
 vnf_pp_I_metric_I_value .. vnf_pp_I_metric_I_value_I_series_case  : choice value
 class "series" as vnf_pp_I_metric_I_value_I_series_I_series << (L, #FF7700) list>> 
@@ -44,6 +34,8 @@ vnf_pp_I_metric_I_value_I_series_case *-- "0..N" vnf_pp_I_metric_I_value_I_serie
 vnf_pp_I_metric_I_value_I_series_I_series : tuple {uses} 
 class "evaluation" as vnf_pp_I_evaluation_grouping <<(G,Lime) grouping>> 
 vnf_pp_I_evaluation_grouping : id : string  
+vnf_pp_I_evaluation_grouping : instance : uint32  
+vnf_pp_I_evaluation_grouping : repeat : uint32  
 class "source" as  vnf_pp_I_evaluation_I_source <<container>> 
 vnf_pp_I_evaluation_grouping *-- "1" vnf_pp_I_evaluation_I_source 
 vnf_pp_I_evaluation_I_source : id : string  
@@ -58,6 +50,7 @@ vnf_pp_I_evaluation_I_timestamp : stop : string
 class "metrics" as vnf_pp_I_evaluation_I_metrics << (L, #FF7700) list>> 
 vnf_pp_I_evaluation_grouping *-- "0..N" vnf_pp_I_evaluation_I_metrics 
 vnf_pp_I_evaluation_I_metrics : metric {uses} 
+vnf_pp_I_evaluation_grouping : error : string  
 class "snapshot" as vnf_pp_I_snapshot_grouping <<(G,Lime) grouping>> 
 vnf_pp_I_snapshot_grouping : id : string  
 vnf_pp_I_snapshot_grouping : trial : uint32  
@@ -70,6 +63,7 @@ class "evaluations" as vnf_pp_I_snapshot_I_evaluations << (L, #FF7700) list>>
 vnf_pp_I_snapshot_grouping *-- "0..N" vnf_pp_I_snapshot_I_evaluations 
 vnf_pp_I_snapshot_I_evaluations : evaluation {uses} 
 vnf_pp_I_snapshot_grouping : timestamp : string  
+vnf_pp_I_snapshot_grouping : error : string  
 class "report" as vnf_pp_I_report_grouping <<(G,Lime) grouping>> 
 vnf_pp_I_report_grouping : +id : string  {key} 
 vnf_pp_I_report_grouping : test : uint32  
@@ -77,8 +71,15 @@ class "snapshots" as vnf_pp_I_report_I_snapshots << (L, #FF7700) list>>
 vnf_pp_I_report_grouping *-- "0..N" vnf_pp_I_report_I_snapshots 
 vnf_pp_I_report_I_snapshots : snapshot {uses} 
 vnf_pp_I_report_grouping : timestamp : string  
+vnf_pp_I_report_grouping : error : string  
+class "header" as vnf_pp_I_header_grouping <<(G,Lime) grouping>> 
+vnf_pp_I_header_grouping : +id : string  {key} 
+vnf_pp_I_header_grouping : name : string  
+vnf_pp_I_header_grouping : version : string  
+vnf_pp_I_header_grouping : description : string  
+vnf_pp_I_header_grouping : timestamp : string  
 class "vnf-pp" as vnf_pp_I_vnf_pp_grouping <<(G,Lime) grouping>> 
-vnf_pp_I_vnf_pp_grouping : settings {uses} 
+vnf_pp_I_vnf_pp_grouping : header {uses} 
 class "reports" as vnf_pp_I_vnf_pp_I_reports << (L, #FF7700) list>> 
 vnf_pp_I_vnf_pp_grouping *-- "0..N" vnf_pp_I_vnf_pp_I_reports 
 vnf_pp_I_vnf_pp_I_reports : report {uses} 
@@ -88,9 +89,9 @@ vnf_pp_I_metric_I_value_I_series_I_series --> vnf_pp_I_tuple_grouping : uses
 vnf_pp_I_evaluation_I_metrics --> vnf_pp_I_metric_grouping : uses 
 vnf_pp_I_snapshot_I_evaluations --> vnf_pp_I_evaluation_grouping : uses 
 vnf_pp_I_report_I_snapshots --> vnf_pp_I_snapshot_grouping : uses 
-vnf_pp_I_vnf_pp_grouping --> vnf_pp_I_settings_grouping : uses 
+vnf_pp_I_vnf_pp_grouping --> vnf_pp_I_header_grouping : uses 
 vnf_pp_I_vnf_pp_I_reports --> vnf_pp_I_report_grouping : uses 
 center footer
- <size:20> UML Generated : 2020-05-08 16:05 </size>
+ <size:20> UML Generated : 2020-11-06 10:47 </size>
  endfooter 
 @enduml 

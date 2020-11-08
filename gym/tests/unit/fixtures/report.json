@@ -1,0 +1,82 @@
+{
+    "id": 1,
+    "test": 1,
+    "snapshots": {
+      "1002": {
+        "id": 1002,
+        "trial": 1,
+        "origin": {
+          "id": "d3",
+          "role": "agent"
+        },
+        "timestamp": "2020-11-06T01:03:57.894321Z"
+      },
+      "1001": {
+        "id": 1001,
+        "trial": 1,
+        "origin": {
+          "id": "d1",
+          "role": "agent"
+        },
+        "evaluations": {
+          "1": {
+            "id": 1,
+            "instance": 1,
+            "repeat": 1,
+            "source": {
+              "id": 4,
+              "name": "iperf3",
+              "type": "prober",
+              "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 1G -f m -J"
+            },
+            "metrics": {
+              "jitter_ms": {
+                "name": "jitter_ms",
+                "type": "float",
+                "unit": "ms",
+                "scalar": 0.0005038784554005362
+              },
+              "lost_percent": {
+                "name": "lost_percent",
+                "type": "float",
+                "unit": "%",
+                "scalar": 0.0077227352692686106
+              },
+              "bits_per_second": {
+                "name": "bits_per_second",
+                "type": "float",
+                "unit": "bits_per_second",
+                "scalar": 999989010.7923615
+              },
+              "lost_packets": {
+                "name": "lost_packets",
+                "type": "int",
+                "unit": "packets",
+                "scalar": 200.0
+              },
+              "bytes": {
+                "name": "bytes",
+                "type": "int",
+                "unit": "bytes",
+                "scalar": 3749966688.0
+              },
+              "packets": {
+                "name": "packets",
+                "type": "int",
+                "unit": "packets",
+                "scalar": 2589756.0
+              }
+            },
+            "timestamp": {
+              "start": "2020-11-06T01:03:26.864242Z",
+              "stop": "2020-11-06T01:03:56.875597Z"
+            },
+            "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n"
+          }
+        },
+        "timestamp": "2020-11-06T01:03:56.886168Z"
+      }
+    },
+    "timestamp": "2020-11-06T01:03:57.904820Z"
+  }
+  

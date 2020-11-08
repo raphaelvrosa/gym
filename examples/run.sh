@@ -158,7 +158,7 @@ case "$COMMAND" in
         sleep 2
         echo_bold "-> Running Examples - Deploying Layout and waiting for Result"
        
-        examples="/usr/bin/python ./examples.py --test ${TEST}"
+        examples="/usr/bin/python3 ./examples.py --test ${TEST}"
         exec ${examples}
 
         echo_bold "-> Check the logs at: ./logs/*.log"

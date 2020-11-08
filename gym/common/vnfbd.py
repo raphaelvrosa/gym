@@ -1,8 +1,7 @@
 import logging
-import copy
 import json
 import itertools
-from numpy import arange
+
 
 from google.protobuf import json_format
 
@@ -15,85 +14,6 @@ from gym.common.protobuf.vnf_bd_pb2 import VnfBd
 
 
 logger = logging.getLogger(__name__)
-
-
-class Inputs:
-    def __init__(self):
-        self._data = {}
-        self._mux_inputs = []
-
-    def has_list_value(self, dict_items):
-        fields_list = [
-            field for field, value in dict_items.items() if type(value) is list
-        ]
-        return fields_list
-
-    def has_dict_value(self, inputs):
-        fields_dict = [field for field, value in inputs.items() if type(value) is dict]
-        return fields_dict
-
-    def parse_dicts(self):
-        fields_list = {}
-        fields_dict = self.has_dict_value(self._data)
-
-        for field in fields_dict:
-            value = self._data.get(field)
-
-            _min = value.get("min", None)
-            _max = value.get("max", None)
-            _step = value.get("step", None)
-
-            if _min is not None and _max is not None and _step is not None:
-
-                value_list = list(arange(_min, _max, _step))
-                fields_list[field] = value_list
-
-        return fields_list
-
-    def lists(self):
-        lists_fields = []
-        lists = []
-
-        data_dicts = self.parse_dicts()
-        data_lists = self.has_list_value(self._data)
-
-        lists_fields.extend(data_lists)
-        lists_fields.extend(data_dicts.keys())
-
-        lists.extend(data_dicts.values())
-        lists.extend([self._data.get(field) for field in data_lists])
-
-        return lists, lists_fields
-
-    def fill_unique(self, lists_fields, unique_lists):
-        unique_inputs = []
-
-        for unique_list in unique_lists:
-            unique_input = copy.deepcopy(self._data)
-
-            for field_index in range(len(lists_fields)):
-                field = lists_fields[field_index]
-                value = unique_list[field_index]
-                unique_input[field] = value
-
-            unique_inputs.append(unique_input)
-
-        return unique_inputs
-
-    def multiplex(self, data):
-        logger.info("Multiplexing inputs")
-        unique_inputs = []
-
-        self._data = data
-        lists, lists_fields = self.lists()
-
-        if lists:
-            unique_lists = list(itertools.product(*lists))
-            unique_inputs = self.fill_unique(lists_fields, unique_lists)
-            self._mux_inputs = unique_inputs
-
-        logger.info(f"Inputs multiplexed: total {len(unique_inputs)}")
-        return unique_inputs
 
 
 class Proceedings:
@@ -117,20 +37,24 @@ class Proceedings:
         if all(
             [True if param in aval_params else False for param in req_params.keys()]
         ):
-            ack_req_tool = {
-                "id": req_tool.get("id"),
-                "name": req_tool.get("name", ""),
-                "parameters": req_params,
-                "sched": req_sched,
-            }
-            req_tool_instances = req_tool.get("instances", 1)
-            ack_req_tool_set = [ack_req_tool] * len(range(int(req_tool_instances)))
+            ack_req_tool_set = []
+            req_tool_instances = int(req_tool.get("instances", 1))
+
+            for req_tool_instance in range(1, req_tool_instances + 1):
+
+                ack_req_tool = {
+                    "id": req_tool.get("id"),
+                    "name": req_tool.get("name", ""),
+                    "parameters": req_params,
+                    "sched": req_sched,
+                    "instance": req_tool_instance,
+                }
+                ack_req_tool_set.append(ack_req_tool)
 
         else:
             logger.debug(
                 f"Not all params of tools required {req_params} match with available {aval_params}"
             )
-
         return ack_req_tool_set
 
     def tools(self, req_tools, disp_tools):
@@ -139,25 +63,25 @@ class Proceedings:
         tool_set = []
 
         avail_tools = dict(
-            [(available.get("id"), available) for available in disp_tools]
+            [(available.get("name"), available) for available in disp_tools]
         )
 
         for req_tool in req_tools.values():
-            req_tool_id = req_tool.get("id")
-            tools_ok[req_tool_id] = False
-            aval_tool = avail_tools.get(req_tool_id)
+            req_tool_name = req_tool.get("name")
+            tools_ok[req_tool_name] = False
+            aval_tool = avail_tools.get(req_tool_name)
 
             if aval_tool:
                 tool_set_ok = self.params(req_tool, aval_tool)
 
                 if tool_set_ok:
                     tool_set.extend(tool_set_ok)
-                    tools_ok[req_tool_id] = True
+                    tools_ok[req_tool_name] = True
                 else:
-                    logger.debug(f"No params match for tool id {req_tool_id}")
+                    logger.debug(f"No params match for tool id {req_tool_name}")
             else:
                 logger.debug(
-                    f"No available tool id {req_tool_id} in toolset: {avail_tools.keys()}"
+                    f"No available tool id {req_tool_name} in toolset: {avail_tools.keys()}"
                 )
 
         if all(tools_ok.values()):
@@ -312,41 +236,47 @@ class Proceedings:
 
 
 class VNFBD:
-    def __init__(self, data={}, inputs={}):
+    def __init__(self, data={}):
         self._utils = Utils()
-        self._inputs = Inputs()
         self._proceedings = Proceedings()
         self._data = data
-        self._inputs_data = inputs
-        self._template = {}
-        self._yang = vnf_bd.vnf_bd(path_helper=YANGPathHelper())
+        self._yang_ph = YANGPathHelper()
+        self._yang = vnf_bd.vnf_bd(path_helper=self._yang_ph)
         self._protobuf = VnfBd()
+        self._inputs = {}
+        self._environment = {}
 
-    def parse_bytes(self, msg):
-        msg_dict = {}
+    def set_environment(self, environment):
+        self._environment = environment
 
-        if type(msg) is bytes:
-            msg_str = msg.decode("utf32")
-            msg_dict = json.loads(msg_str)
+    def environment(self):
+        return self._environment
 
-        return msg_dict
+    def deploy(self):
+        deploy = self._environment.get("deploy", False)
+        return deploy
 
-    def serialize_bytes(self, msg):
-        msg_bytes = b""
+    def set_inputs(self, inputs):
+        self._inputs = inputs
 
-        if type(msg) is dict:
-            msg_str = json.dumps(msg)
-            msg_bytes = msg_str.encode("utf32")
-
-        return msg_bytes
+    def inputs(self):
+        return self._inputs
 
     def load(self, filepath, yang=True):
         self._data = self._utils.data(filepath, is_json=True)
         if yang:
-            self._utils.load(filepath, self._yang, YANGPathHelper(), is_json=True)
+            self._yang_ph = YANGPathHelper()
+            self._utils.load(filepath, self._yang, self._yang_ph, is_json=True)
 
     def save(self, filepath):
         self._utils.save(filepath, self._yang)
+
+    def dictionary(self):
+        data_dict = self._utils.dictionary(self._yang)
+        return data_dict
+
+    def data(self):
+        return self._data
 
     def protobuf(self):
         self._protobuf = VnfBd()
@@ -354,83 +284,30 @@ class VNFBD:
         return self._protobuf
 
     def yang(self):
-        self.parse(self._data)
         return self._yang
+
+    def yang_ph(self):
+        return self._yang_ph
 
     def json(self):
         yang_json = self._utils.serialise(self._yang)
         return yang_json
-
-    def template(self):
-        return self._template
-
-    def inputs(self):
-        return self._inputs_data
-
-    def multiplex(self, data_template):
-        rendered_mux_inputs = []
-        mux_inputs = self._inputs.multiplex(self._inputs_data)
-
-        if mux_inputs:
-            logger.debug(f"Rendering mux inputs - total: {len(mux_inputs)}")
-            for inputs in mux_inputs:
-                rendered_data = self._utils.render(data_template, inputs)
-                rendered_mux_inputs.append(rendered_data)
-        else:
-            logger.debug(f"Rendering unique inputs")
-            rendered_data = self._utils.render(data_template, self._inputs_data)
-            rendered_mux_inputs.append(rendered_data)
-
-        logger.info(f"vnfbd rendered in: {len(rendered_mux_inputs)} input structures")
-        logger.debug(f"{rendered_mux_inputs}")
-        return rendered_mux_inputs
-
-    def instances(self):
-        logger.info("Creating vnf-bd instances")
-
-        if self._template:
-            logger.info("Rendering vnf-bd template")
-            templates = self.multiplex(self._template)
-        else:
-            logger.info("No vnf-bd template")
-            templates = [self._data]
-
-        for template in templates:
-
-            instance = VNFBD(data=template)
-            valid_template = instance.parse(template)
-
-            if valid_template:
-                yield instance
 
     def build_task(self, apparatus):
         proceedings = self._data.get("proceedings")
         task = self._proceedings.satisfy(apparatus, proceedings)
         return task
 
-    def deploy(self):
-        environment = self._data.get("environment")
-        deploy = environment.get("deploy", False)
-        return deploy
-
     def scenario(self):
         scenario = self._data.get("scenario")
         return scenario
 
-    def environment(self):
-        environment = self._data.get("environment")
-        return environment
-
     def tests(self):
-        # experiments = self._data.get("experiments")
-        # tests = experiments.get("tests", 1)
         tests_yang = self._yang.experiments.tests.getValue()
         tests = tests_yang.real
         return tests
 
     def trials(self):
-        # experiments = self._data.get("experiments")
-        # trials = experiments.get("trials", 1)
         trials_yang = self._yang.experiments.trials.getValue()
         trials = trials_yang.real
         return trials
@@ -499,11 +376,15 @@ class VNFBD:
     def parse(self, data=None):
         data = data if data else self._data
 
-        yang_model = self._utils.parse(data, vnf_bd, "vnf-bd")
+        self._yang_ph = YANGPathHelper()
+        yang_model = self._utils.parse(
+            data, vnf_bd, "vnf-bd", path_helper=self._yang_ph
+        )
 
         if yang_model:
             logger.info(f"Parsing YANG model data successful")
             self._yang = yang_model
+            self._data = data
             return True
 
         logger.info(f"Could not parse YANG model data")
@@ -530,67 +411,29 @@ class VNFBD:
             self._data = json_format.MessageToDict(
                 self._protobuf, preserving_proto_field_name=True
             )
+            self.parse()
             return True
 
         else:
             logger.info("Error: vnf-bd message not instance of vnfbd protobuf")
             return False
 
-    def load_inputs(self, inputs):
-        if inputs:
-            logger.info("Set vnf-bd inputs")
-            inputs_dict = {}
-
-            if type(inputs) is bytes:
-                inputs_dict = self.parse_bytes(inputs)
-
-            if type(inputs) is dict:
-                inputs_dict = inputs
-
-            if inputs_dict:
-                self._inputs_data = inputs_dict
-
-    def load_template(self, template):
-        if template:
-            template_dict = {}
-            logger.info("Set vnf-bd template")
-
-            if type(template) is bytes:
-                template_dict = self.parse_bytes(template)
-
-            if type(template) is dict:
-                template_dict = template
-
-            if template_dict:
-                self._template = template_dict
-
-    def init(self, inputs, template, model):
+    def init(self, model):
         """Inits the VNF-BD
         validating its content and parsing it
         into a yang model
-        Also parses the inputs and template
 
         Arguments:
-            inputs {bytes} -- The possible inputs that
-            can be used to be multiplexed and rendered
-            into multiple templates
-            template {bytes} -- A vnf-bd template, in the
-            same format as the vnf-bd model, but containing 
-            input fields that can be rendered by inputs.
             model {VNF-BD} -- A gRPC message of type VNF-BD
 
         Returns:
-            bool -- If the model was validated and 
+            bool -- If the model was validated and
             parsed correctly
         """
         logger.info("Init vnf-bd")
 
         if self.from_protobuf(model):
             if self.parse():
-
-                self.load_template(template)
-                self.load_inputs(inputs)
-
                 return True
 
         return False

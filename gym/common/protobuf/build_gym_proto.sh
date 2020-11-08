@@ -2,6 +2,7 @@
 
 python3 -m grpc_tools.protoc -I. --python_out=. --grpclib_python_out=. vnf_bd.proto
 python3 -m grpc_tools.protoc -I. --python_out=. --grpclib_python_out=. vnf_pp.proto
+python3 -m grpc_tools.protoc -I. --python_out=. --grpclib_python_out=. vnf_br.proto
 python3 -m grpc_tools.protoc -I. --python_out=. --grpclib_python_out=. gym.proto
 
 # Update in gym_grpc.py -> from gym.common.protobuf import gym_pb2

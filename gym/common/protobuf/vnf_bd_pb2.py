@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0cvnf_bd.proto\x12\x03gym\"\xc0\x02\n\x0b\x45nvironment\x12\x0e\n\x06\x64\x65ploy\x18\x01 \x01(\x08\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\'\n\x06plugin\x18\x04 \x01(\x0b\x32\x17.gym.Environment.Plugin\x1a\xd4\x01\n\x06Plugin\x12\x0c\n\x04type\x18\x01 \x01(\t\x12;\n\nparameters\x18\x02 \x03(\x0b\x32\'.gym.Environment.Plugin.ParametersEntry\x1a)\n\tParameter\x12\r\n\x05input\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1aT\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x30\n\x05value\x18\x02 \x01(\x0b\x32!.gym.Environment.Plugin.Parameter:\x02\x38\x01\"\xa7\x0f\n\x08Scenario\x12\'\n\x05links\x18\x01 \x03(\x0b\x32\x18.gym.Scenario.LinksEntry\x12\'\n\x05nodes\x18\x02 \x03(\x0b\x32\x18.gym.Scenario.NodesEntry\x12-\n\x08policies\x18\x03 \x03(\x0b\x32\x1b.gym.Scenario.PoliciesEntry\x1aZ\n\x04Link\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07network\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x19\n\x11\x63onnection_points\x18\x05 \x03(\t\x1a\xab\x0b\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05image\x18\x02 \x01(\t\x12\x0e\n\x06\x66ormat\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x0c\n\x04role\x18\x05 \x01(\t\x12/\n\tresources\x18\x06 \x01(\x0b\x32\x1c.gym.Scenario.Node.Resources\x12\x43\n\x11\x63onnection_points\x18\x07 \x03(\x0b\x32(.gym.Scenario.Node.ConnectionPointsEntry\x12\x34\n\tlifecycle\x18\x08 \x03(\x0b\x32!.gym.Scenario.Node.LifecycleEntry\x12<\n\rrelationships\x18\t \x03(\x0b\x32%.gym.Scenario.Node.RelationshipsEntry\x1aO\n\x0f\x43onnectionPoint\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x11\n\tinterface\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x1a\xa2\x03\n\tLifecycle\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x16\n\x0eimplementation\x18\x02 \x03(\t\x12@\n\nparameters\x18\x03 \x03(\x0b\x32,.gym.Scenario.Node.Lifecycle.ParametersEntry\x12\x38\n\x08workflow\x18\x04 \x01(\x0e\x32&.gym.Scenario.Node.Lifecycle.Workflows\x1a)\n\tParameter\x12\r\n\x05input\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1aY\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x35\n\x05value\x18\x02 \x01(\x0b\x32&.gym.Scenario.Node.Lifecycle.Parameter:\x02\x38\x01\"m\n\tWorkflows\x12\x18\n\x14VNFBDWORKFLOWS_UNSET\x10\x00\x12\n\n\x06\x63reate\x10\x01\x12\r\n\tconfigure\x10\x02\x12\t\n\x05start\x10\x03\x12\x08\n\x04stop\x10\x04\x12\n\n\x06\x64\x65lete\x10\x05\x12\n\n\x06\x63ustom\x10\x06\x1a:\n\x0cRelationship\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x1a\xbb\x02\n\tResources\x12-\n\x03\x63pu\x18\x01 \x01(\x0b\x32 .gym.Scenario.Node.Resources.Cpu\x12\x33\n\x06memory\x18\x02 \x01(\x0b\x32#.gym.Scenario.Node.Resources.Memory\x12\x35\n\x07storage\x18\x03 \x01(\x0b\x32$.gym.Scenario.Node.Resources.Storage\x1a\x35\n\x03\x43pu\x12\x0e\n\x06\x63pu_bw\x18\x01 \x01(\t\x12\x0f\n\x07pinning\x18\x02 \x01(\t\x12\r\n\x05vcpus\x18\x03 \x01(\x04\x1a$\n\x06Memory\x12\x0c\n\x04size\x18\x01 \x01(\x04\x12\x0c\n\x04unit\x18\x02 \x01(\t\x1a\x36\n\x07Storage\x12\x0c\n\x04size\x18\x01 \x01(\x04\x12\x0c\n\x04unit\x18\x02 \x01(\t\x12\x0f\n\x07volumes\x18\x03 \x01(\t\x1a[\n\x15\x43onnectionPointsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x31\n\x05value\x18\x02 \x01(\x0b\x32\".gym.Scenario.Node.ConnectionPoint:\x02\x38\x01\x1aN\n\x0eLifecycleEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12+\n\x05value\x18\x02 \x01(\x0b\x32\x1c.gym.Scenario.Node.Lifecycle:\x02\x38\x01\x1aU\n\x12RelationshipsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.gym.Scenario.Node.Relationship:\x02\x38\x01\x1a\x45\n\x06Policy\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61\x63tion\x18\x02 \x01(\t\x12\x0f\n\x07targets\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x1a@\n\nLinksEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12!\n\x05value\x18\x02 \x01(\x0b\x32\x12.gym.Scenario.Link:\x02\x38\x01\x1a@\n\nNodesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12!\n\x05value\x18\x02 \x01(\x0b\x32\x12.gym.Scenario.Node:\x02\x38\x01\x1a\x45\n\rPoliciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.gym.Scenario.Policy:\x02\x38\x01\"\xb8\x11\n\x05VnfBd\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12+\n\x0b\x65xperiments\x18\x06 \x01(\x0b\x32\x16.gym.VnfBd.Experiments\x12%\n\x0b\x65nvironment\x18\x07 \x01(\x0b\x32\x10.gym.Environment\x12(\n\x07targets\x18\x08 \x03(\x0b\x32\x17.gym.VnfBd.TargetsEntry\x12\x1f\n\x08scenario\x18\t \x01(\x0b\x32\r.gym.Scenario\x12+\n\x0bproceedings\x18\n \x01(\x0b\x32\x16.gym.VnfBd.Proceedings\x1a,\n\x0b\x45xperiments\x12\r\n\x05tests\x18\x01 \x01(\r\x12\x0e\n\x06trials\x18\x02 \x01(\r\x1aX\n\x06Target\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x0f\n\x07version\x18\x05 \x01(\t\x1a\xc7\r\n\x0bProceedings\x12:\n\nattributes\x18\x01 \x03(\x0b\x32&.gym.VnfBd.Proceedings.AttributesEntry\x12\x32\n\x06\x61gents\x18\x02 \x03(\x0b\x32\".gym.VnfBd.Proceedings.AgentsEntry\x12\x36\n\x08monitors\x18\x03 \x03(\x0b\x32$.gym.VnfBd.Proceedings.MonitorsEntry\x1a(\n\tAttribute\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1a\xd6\x04\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12:\n\x07probers\x18\x03 \x03(\x0b\x32).gym.VnfBd.Proceedings.Agent.ProbersEntry\x1a\x9f\x03\n\x06Prober\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\tinstances\x18\x02 \x01(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\x12G\n\nparameters\x18\x04 \x03(\x0b\x32\x33.gym.VnfBd.Proceedings.Agent.Prober.ParametersEntry\x12\x38\n\x05sched\x18\x05 \x01(\x0b\x32).gym.VnfBd.Proceedings.Agent.Prober.Sched\x1a)\n\tParameter\x12\r\n\x05input\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1aX\n\x05Sched\x12\x0c\n\x04\x66rom\x18\x01 \x01(\r\x12\r\n\x05until\x18\x02 \x01(\r\x12\x10\n\x08\x64uration\x18\x03 \x01(\r\x12\x10\n\x08interval\x18\x04 \x01(\r\x12\x0e\n\x06repeat\x18\x05 \x01(\r\x1a`\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12<\n\x05value\x18\x02 \x01(\x0b\x32-.gym.VnfBd.Proceedings.Agent.Prober.Parameter:\x02\x38\x01\x1aS\n\x0cProbersEntry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\x32\n\x05value\x18\x02 \x01(\x0b\x32#.gym.VnfBd.Proceedings.Agent.Prober:\x02\x38\x01\x1a\x99\x05\n\x07Monitor\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12@\n\tlisteners\x18\x03 \x03(\x0b\x32-.gym.VnfBd.Proceedings.Monitor.ListenersEntry\x1a%\n\x04Host\x12\x0c\n\x04node\x18\x01 \x01(\t\x12\x0f\n\x07setting\x18\x02 \x01(\t\x1a\xad\x03\n\x08Listener\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\tinstances\x18\x02 \x01(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\x12K\n\nparameters\x18\x04 \x03(\x0b\x32\x37.gym.VnfBd.Proceedings.Monitor.Listener.ParametersEntry\x12<\n\x05sched\x18\x05 \x01(\x0b\x32-.gym.VnfBd.Proceedings.Monitor.Listener.Sched\x1a)\n\tParameter\x12\r\n\x05input\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1aX\n\x05Sched\x12\x0c\n\x04\x66rom\x18\x01 \x01(\r\x12\r\n\x05until\x18\x02 \x01(\r\x12\x10\n\x08\x64uration\x18\x03 \x01(\r\x12\x10\n\x08interval\x18\x04 \x01(\r\x12\x0e\n\x06repeat\x18\x05 \x01(\r\x1a\x64\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12@\n\x05value\x18\x02 \x01(\x0b\x32\x31.gym.VnfBd.Proceedings.Monitor.Listener.Parameter:\x02\x38\x01\x1aY\n\x0eListenersEntry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\x36\n\x05value\x18\x02 \x01(\x0b\x32\'.gym.VnfBd.Proceedings.Monitor.Listener:\x02\x38\x01\x1aS\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12/\n\x05value\x18\x02 \x01(\x0b\x32 .gym.VnfBd.Proceedings.Attribute:\x02\x38\x01\x1aK\n\x0b\x41gentsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12+\n\x05value\x18\x02 \x01(\x0b\x32\x1c.gym.VnfBd.Proceedings.Agent:\x02\x38\x01\x1aO\n\rMonitorsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12-\n\x05value\x18\x02 \x01(\x0b\x32\x1e.gym.VnfBd.Proceedings.Monitor:\x02\x38\x01\x1a\x41\n\x0cTargetsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12 \n\x05value\x18\x02 \x01(\x0b\x32\x11.gym.VnfBd.Target:\x02\x38\x01\x62\x06proto3'
+  serialized_pb=b'\n\x0cvnf_bd.proto\x12\x03gym\"\xa7\x0f\n\x08Scenario\x12\'\n\x05links\x18\x01 \x03(\x0b\x32\x18.gym.Scenario.LinksEntry\x12\'\n\x05nodes\x18\x02 \x03(\x0b\x32\x18.gym.Scenario.NodesEntry\x12-\n\x08policies\x18\x03 \x03(\x0b\x32\x1b.gym.Scenario.PoliciesEntry\x1aZ\n\x04Link\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07network\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x19\n\x11\x63onnection_points\x18\x05 \x03(\t\x1a\xab\x0b\n\x04Node\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05image\x18\x02 \x01(\t\x12\x0e\n\x06\x66ormat\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x0c\n\x04role\x18\x05 \x01(\t\x12/\n\tresources\x18\x06 \x01(\x0b\x32\x1c.gym.Scenario.Node.Resources\x12\x43\n\x11\x63onnection_points\x18\x07 \x03(\x0b\x32(.gym.Scenario.Node.ConnectionPointsEntry\x12\x34\n\tlifecycle\x18\x08 \x03(\x0b\x32!.gym.Scenario.Node.LifecycleEntry\x12<\n\rrelationships\x18\t \x03(\x0b\x32%.gym.Scenario.Node.RelationshipsEntry\x1aO\n\x0f\x43onnectionPoint\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x11\n\tinterface\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x1a\xa2\x03\n\tLifecycle\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x16\n\x0eimplementation\x18\x02 \x03(\t\x12@\n\nparameters\x18\x03 \x03(\x0b\x32,.gym.Scenario.Node.Lifecycle.ParametersEntry\x12\x38\n\x08workflow\x18\x04 \x01(\x0e\x32&.gym.Scenario.Node.Lifecycle.Workflows\x1a)\n\tParameter\x12\r\n\x05input\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1aY\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x35\n\x05value\x18\x02 \x01(\x0b\x32&.gym.Scenario.Node.Lifecycle.Parameter:\x02\x38\x01\"m\n\tWorkflows\x12\x18\n\x14VNFBDWORKFLOWS_UNSET\x10\x00\x12\n\n\x06\x63reate\x10\x01\x12\r\n\tconfigure\x10\x02\x12\t\n\x05start\x10\x03\x12\x08\n\x04stop\x10\x04\x12\n\n\x06\x64\x65lete\x10\x05\x12\n\n\x06\x63ustom\x10\x06\x1a:\n\x0cRelationship\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x1a\xbb\x02\n\tResources\x12-\n\x03\x63pu\x18\x01 \x01(\x0b\x32 .gym.Scenario.Node.Resources.Cpu\x12\x33\n\x06memory\x18\x02 \x01(\x0b\x32#.gym.Scenario.Node.Resources.Memory\x12\x35\n\x07storage\x18\x03 \x01(\x0b\x32$.gym.Scenario.Node.Resources.Storage\x1a\x35\n\x03\x43pu\x12\x0e\n\x06\x63pu_bw\x18\x01 \x01(\t\x12\x0f\n\x07pinning\x18\x02 \x01(\t\x12\r\n\x05vcpus\x18\x03 \x01(\x04\x1a$\n\x06Memory\x12\x0c\n\x04size\x18\x01 \x01(\x04\x12\x0c\n\x04unit\x18\x02 \x01(\t\x1a\x36\n\x07Storage\x12\x0c\n\x04size\x18\x01 \x01(\x04\x12\x0c\n\x04unit\x18\x02 \x01(\t\x12\x0f\n\x07volumes\x18\x03 \x01(\t\x1a[\n\x15\x43onnectionPointsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x31\n\x05value\x18\x02 \x01(\x0b\x32\".gym.Scenario.Node.ConnectionPoint:\x02\x38\x01\x1aN\n\x0eLifecycleEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12+\n\x05value\x18\x02 \x01(\x0b\x32\x1c.gym.Scenario.Node.Lifecycle:\x02\x38\x01\x1aU\n\x12RelationshipsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12.\n\x05value\x18\x02 \x01(\x0b\x32\x1f.gym.Scenario.Node.Relationship:\x02\x38\x01\x1a\x45\n\x06Policy\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06\x61\x63tion\x18\x02 \x01(\t\x12\x0f\n\x07targets\x18\x03 \x01(\t\x12\x0c\n\x04type\x18\x04 \x01(\t\x1a@\n\nLinksEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12!\n\x05value\x18\x02 \x01(\x0b\x32\x12.gym.Scenario.Link:\x02\x38\x01\x1a@\n\nNodesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12!\n\x05value\x18\x02 \x01(\x0b\x32\x12.gym.Scenario.Node:\x02\x38\x01\x1a\x45\n\rPoliciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.gym.Scenario.Policy:\x02\x38\x01\"\xca\x0f\n\x05VnfBd\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12+\n\x0b\x65xperiments\x18\x06 \x01(\x0b\x32\x16.gym.VnfBd.Experiments\x12\x1f\n\x08scenario\x18\x07 \x01(\x0b\x32\r.gym.Scenario\x12+\n\x0bproceedings\x18\x08 \x01(\x0b\x32\x16.gym.VnfBd.Proceedings\x1a,\n\x0b\x45xperiments\x12\r\n\x05tests\x18\x01 \x01(\r\x12\x0e\n\x06trials\x18\x02 \x01(\r\x1a\xc7\r\n\x0bProceedings\x12:\n\nattributes\x18\x01 \x03(\x0b\x32&.gym.VnfBd.Proceedings.AttributesEntry\x12\x32\n\x06\x61gents\x18\x02 \x03(\x0b\x32\".gym.VnfBd.Proceedings.AgentsEntry\x12\x36\n\x08monitors\x18\x03 \x03(\x0b\x32$.gym.VnfBd.Proceedings.MonitorsEntry\x1a(\n\tAttribute\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1a\xd6\x04\n\x05\x41gent\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12:\n\x07probers\x18\x03 \x03(\x0b\x32).gym.VnfBd.Proceedings.Agent.ProbersEntry\x1a\x9f\x03\n\x06Prober\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\tinstances\x18\x02 \x01(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\x12G\n\nparameters\x18\x04 \x03(\x0b\x32\x33.gym.VnfBd.Proceedings.Agent.Prober.ParametersEntry\x12\x38\n\x05sched\x18\x05 \x01(\x0b\x32).gym.VnfBd.Proceedings.Agent.Prober.Sched\x1a)\n\tParameter\x12\r\n\x05input\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1aX\n\x05Sched\x12\x0c\n\x04\x66rom\x18\x01 \x01(\r\x12\r\n\x05until\x18\x02 \x01(\r\x12\x10\n\x08\x64uration\x18\x03 \x01(\r\x12\x10\n\x08interval\x18\x04 \x01(\r\x12\x0e\n\x06repeat\x18\x05 \x01(\r\x1a`\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12<\n\x05value\x18\x02 \x01(\x0b\x32-.gym.VnfBd.Proceedings.Agent.Prober.Parameter:\x02\x38\x01\x1aS\n\x0cProbersEntry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\x32\n\x05value\x18\x02 \x01(\x0b\x32#.gym.VnfBd.Proceedings.Agent.Prober:\x02\x38\x01\x1a\x99\x05\n\x07Monitor\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12@\n\tlisteners\x18\x03 \x03(\x0b\x32-.gym.VnfBd.Proceedings.Monitor.ListenersEntry\x1a%\n\x04Host\x12\x0c\n\x04node\x18\x01 \x01(\t\x12\x0f\n\x07setting\x18\x02 \x01(\t\x1a\xad\x03\n\x08Listener\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\tinstances\x18\x02 \x01(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\x12K\n\nparameters\x18\x04 \x03(\x0b\x32\x37.gym.VnfBd.Proceedings.Monitor.Listener.ParametersEntry\x12<\n\x05sched\x18\x05 \x01(\x0b\x32-.gym.VnfBd.Proceedings.Monitor.Listener.Sched\x1a)\n\tParameter\x12\r\n\x05input\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\x1aX\n\x05Sched\x12\x0c\n\x04\x66rom\x18\x01 \x01(\r\x12\r\n\x05until\x18\x02 \x01(\r\x12\x10\n\x08\x64uration\x18\x03 \x01(\r\x12\x10\n\x08interval\x18\x04 \x01(\r\x12\x0e\n\x06repeat\x18\x05 \x01(\r\x1a\x64\n\x0fParametersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12@\n\x05value\x18\x02 \x01(\x0b\x32\x31.gym.VnfBd.Proceedings.Monitor.Listener.Parameter:\x02\x38\x01\x1aY\n\x0eListenersEntry\x12\x0b\n\x03key\x18\x01 \x01(\r\x12\x36\n\x05value\x18\x02 \x01(\x0b\x32\'.gym.VnfBd.Proceedings.Monitor.Listener:\x02\x38\x01\x1aS\n\x0f\x41ttributesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12/\n\x05value\x18\x02 \x01(\x0b\x32 .gym.VnfBd.Proceedings.Attribute:\x02\x38\x01\x1aK\n\x0b\x41gentsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12+\n\x05value\x18\x02 \x01(\x0b\x32\x1c.gym.VnfBd.Proceedings.Agent:\x02\x38\x01\x1aO\n\rMonitorsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12-\n\x05value\x18\x02 \x01(\x0b\x32\x1e.gym.VnfBd.Proceedings.Monitor:\x02\x38\x01\x62\x06proto3'
 )
 
 
@@ -69,177 +69,10 @@ _SCENARIO_NODE_LIFECYCLE_WORKFLOWS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1283,
-  serialized_end=1392,
+  serialized_start=960,
+  serialized_end=1069,
 )
 _sym_db.RegisterEnumDescriptor(_SCENARIO_NODE_LIFECYCLE_WORKFLOWS)
-
-
-_ENVIRONMENT_PLUGIN_PARAMETER = _descriptor.Descriptor(
-  name='Parameter',
-  full_name='gym.Environment.Plugin.Parameter',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='input', full_name='gym.Environment.Plugin.Parameter.input', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.Environment.Plugin.Parameter.value', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=215,
-  serialized_end=256,
-)
-
-_ENVIRONMENT_PLUGIN_PARAMETERSENTRY = _descriptor.Descriptor(
-  name='ParametersEntry',
-  full_name='gym.Environment.Plugin.ParametersEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.Environment.Plugin.ParametersEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.Environment.Plugin.ParametersEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=258,
-  serialized_end=342,
-)
-
-_ENVIRONMENT_PLUGIN = _descriptor.Descriptor(
-  name='Plugin',
-  full_name='gym.Environment.Plugin',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='type', full_name='gym.Environment.Plugin.type', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='parameters', full_name='gym.Environment.Plugin.parameters', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_ENVIRONMENT_PLUGIN_PARAMETER, _ENVIRONMENT_PLUGIN_PARAMETERSENTRY, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=130,
-  serialized_end=342,
-)
-
-_ENVIRONMENT = _descriptor.Descriptor(
-  name='Environment',
-  full_name='gym.Environment',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='deploy', full_name='gym.Environment.deploy', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='description', full_name='gym.Environment.description', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='name', full_name='gym.Environment.name', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='plugin', full_name='gym.Environment.plugin', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[_ENVIRONMENT_PLUGIN, ],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=22,
-  serialized_end=342,
-)
 
 
 _SCENARIO_LINK = _descriptor.Descriptor(
@@ -297,8 +130,8 @@ _SCENARIO_LINK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=486,
-  serialized_end=576,
+  serialized_start=163,
+  serialized_end=253,
 )
 
 _SCENARIO_NODE_CONNECTIONPOINT = _descriptor.Descriptor(
@@ -349,8 +182,8 @@ _SCENARIO_NODE_CONNECTIONPOINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=892,
-  serialized_end=971,
+  serialized_start=569,
+  serialized_end=648,
 )
 
 _SCENARIO_NODE_LIFECYCLE_PARAMETER = _descriptor.Descriptor(
@@ -387,8 +220,8 @@ _SCENARIO_NODE_LIFECYCLE_PARAMETER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=215,
-  serialized_end=256,
+  serialized_start=826,
+  serialized_end=867,
 )
 
 _SCENARIO_NODE_LIFECYCLE_PARAMETERSENTRY = _descriptor.Descriptor(
@@ -425,8 +258,8 @@ _SCENARIO_NODE_LIFECYCLE_PARAMETERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1192,
-  serialized_end=1281,
+  serialized_start=869,
+  serialized_end=958,
 )
 
 _SCENARIO_NODE_LIFECYCLE = _descriptor.Descriptor(
@@ -478,8 +311,8 @@ _SCENARIO_NODE_LIFECYCLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=974,
-  serialized_end=1392,
+  serialized_start=651,
+  serialized_end=1069,
 )
 
 _SCENARIO_NODE_RELATIONSHIP = _descriptor.Descriptor(
@@ -523,8 +356,8 @@ _SCENARIO_NODE_RELATIONSHIP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1394,
-  serialized_end=1452,
+  serialized_start=1071,
+  serialized_end=1129,
 )
 
 _SCENARIO_NODE_RESOURCES_CPU = _descriptor.Descriptor(
@@ -568,8 +401,8 @@ _SCENARIO_NODE_RESOURCES_CPU = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1623,
-  serialized_end=1676,
+  serialized_start=1300,
+  serialized_end=1353,
 )
 
 _SCENARIO_NODE_RESOURCES_MEMORY = _descriptor.Descriptor(
@@ -606,8 +439,8 @@ _SCENARIO_NODE_RESOURCES_MEMORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1678,
-  serialized_end=1714,
+  serialized_start=1355,
+  serialized_end=1391,
 )
 
 _SCENARIO_NODE_RESOURCES_STORAGE = _descriptor.Descriptor(
@@ -651,8 +484,8 @@ _SCENARIO_NODE_RESOURCES_STORAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1716,
-  serialized_end=1770,
+  serialized_start=1393,
+  serialized_end=1447,
 )
 
 _SCENARIO_NODE_RESOURCES = _descriptor.Descriptor(
@@ -696,8 +529,8 @@ _SCENARIO_NODE_RESOURCES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1455,
-  serialized_end=1770,
+  serialized_start=1132,
+  serialized_end=1447,
 )
 
 _SCENARIO_NODE_CONNECTIONPOINTSENTRY = _descriptor.Descriptor(
@@ -734,8 +567,8 @@ _SCENARIO_NODE_CONNECTIONPOINTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1772,
-  serialized_end=1863,
+  serialized_start=1449,
+  serialized_end=1540,
 )
 
 _SCENARIO_NODE_LIFECYCLEENTRY = _descriptor.Descriptor(
@@ -772,8 +605,8 @@ _SCENARIO_NODE_LIFECYCLEENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1865,
-  serialized_end=1943,
+  serialized_start=1542,
+  serialized_end=1620,
 )
 
 _SCENARIO_NODE_RELATIONSHIPSENTRY = _descriptor.Descriptor(
@@ -810,8 +643,8 @@ _SCENARIO_NODE_RELATIONSHIPSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1945,
-  serialized_end=2030,
+  serialized_start=1622,
+  serialized_end=1707,
 )
 
 _SCENARIO_NODE = _descriptor.Descriptor(
@@ -897,8 +730,8 @@ _SCENARIO_NODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=579,
-  serialized_end=2030,
+  serialized_start=256,
+  serialized_end=1707,
 )
 
 _SCENARIO_POLICY = _descriptor.Descriptor(
@@ -949,8 +782,8 @@ _SCENARIO_POLICY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2032,
-  serialized_end=2101,
+  serialized_start=1709,
+  serialized_end=1778,
 )
 
 _SCENARIO_LINKSENTRY = _descriptor.Descriptor(
@@ -987,8 +820,8 @@ _SCENARIO_LINKSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2103,
-  serialized_end=2167,
+  serialized_start=1780,
+  serialized_end=1844,
 )
 
 _SCENARIO_NODESENTRY = _descriptor.Descriptor(
@@ -1025,8 +858,8 @@ _SCENARIO_NODESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2169,
-  serialized_end=2233,
+  serialized_start=1846,
+  serialized_end=1910,
 )
 
 _SCENARIO_POLICIESENTRY = _descriptor.Descriptor(
@@ -1063,8 +896,8 @@ _SCENARIO_POLICIESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2235,
-  serialized_end=2304,
+  serialized_start=1912,
+  serialized_end=1981,
 )
 
 _SCENARIO = _descriptor.Descriptor(
@@ -1108,8 +941,8 @@ _SCENARIO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=345,
-  serialized_end=2304,
+  serialized_start=22,
+  serialized_end=1981,
 )
 
 
@@ -1147,67 +980,8 @@ _VNFBD_EXPERIMENTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2600,
-  serialized_end=2644,
-)
-
-_VNFBD_TARGET = _descriptor.Descriptor(
-  name='Target',
-  full_name='gym.VnfBd.Target',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='id', full_name='gym.VnfBd.Target.id', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='author', full_name='gym.VnfBd.Target.author', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='description', full_name='gym.VnfBd.Target.description', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='name', full_name='gym.VnfBd.Target.name', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='version', full_name='gym.VnfBd.Target.version', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=2646,
-  serialized_end=2734,
+  serialized_start=2196,
+  serialized_end=2240,
 )
 
 _VNFBD_PROCEEDINGS_ATTRIBUTE = _descriptor.Descriptor(
@@ -1244,8 +1018,8 @@ _VNFBD_PROCEEDINGS_ATTRIBUTE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2920,
-  serialized_end=2960,
+  serialized_start=2426,
+  serialized_end=2466,
 )
 
 _VNFBD_PROCEEDINGS_AGENT_PROBER_PARAMETER = _descriptor.Descriptor(
@@ -1282,8 +1056,8 @@ _VNFBD_PROCEEDINGS_AGENT_PROBER_PARAMETER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=215,
-  serialized_end=256,
+  serialized_start=826,
+  serialized_end=867,
 )
 
 _VNFBD_PROCEEDINGS_AGENT_PROBER_SCHED = _descriptor.Descriptor(
@@ -1341,8 +1115,8 @@ _VNFBD_PROCEEDINGS_AGENT_PROBER_SCHED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3290,
-  serialized_end=3378,
+  serialized_start=2796,
+  serialized_end=2884,
 )
 
 _VNFBD_PROCEEDINGS_AGENT_PROBER_PARAMETERSENTRY = _descriptor.Descriptor(
@@ -1379,8 +1153,8 @@ _VNFBD_PROCEEDINGS_AGENT_PROBER_PARAMETERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3380,
-  serialized_end=3476,
+  serialized_start=2886,
+  serialized_end=2982,
 )
 
 _VNFBD_PROCEEDINGS_AGENT_PROBER = _descriptor.Descriptor(
@@ -1438,8 +1212,8 @@ _VNFBD_PROCEEDINGS_AGENT_PROBER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3061,
-  serialized_end=3476,
+  serialized_start=2567,
+  serialized_end=2982,
 )
 
 _VNFBD_PROCEEDINGS_AGENT_PROBERSENTRY = _descriptor.Descriptor(
@@ -1476,8 +1250,8 @@ _VNFBD_PROCEEDINGS_AGENT_PROBERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3478,
-  serialized_end=3561,
+  serialized_start=2984,
+  serialized_end=3067,
 )
 
 _VNFBD_PROCEEDINGS_AGENT = _descriptor.Descriptor(
@@ -1521,8 +1295,8 @@ _VNFBD_PROCEEDINGS_AGENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2963,
-  serialized_end=3561,
+  serialized_start=2469,
+  serialized_end=3067,
 )
 
 _VNFBD_PROCEEDINGS_MONITOR_HOST = _descriptor.Descriptor(
@@ -1559,8 +1333,8 @@ _VNFBD_PROCEEDINGS_MONITOR_HOST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3669,
-  serialized_end=3706,
+  serialized_start=3175,
+  serialized_end=3212,
 )
 
 _VNFBD_PROCEEDINGS_MONITOR_LISTENER_PARAMETER = _descriptor.Descriptor(
@@ -1597,8 +1371,8 @@ _VNFBD_PROCEEDINGS_MONITOR_LISTENER_PARAMETER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=215,
-  serialized_end=256,
+  serialized_start=826,
+  serialized_end=867,
 )
 
 _VNFBD_PROCEEDINGS_MONITOR_LISTENER_SCHED = _descriptor.Descriptor(
@@ -1656,8 +1430,8 @@ _VNFBD_PROCEEDINGS_MONITOR_LISTENER_SCHED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3290,
-  serialized_end=3378,
+  serialized_start=2796,
+  serialized_end=2884,
 )
 
 _VNFBD_PROCEEDINGS_MONITOR_LISTENER_PARAMETERSENTRY = _descriptor.Descriptor(
@@ -1694,8 +1468,8 @@ _VNFBD_PROCEEDINGS_MONITOR_LISTENER_PARAMETERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4038,
-  serialized_end=4138,
+  serialized_start=3544,
+  serialized_end=3644,
 )
 
 _VNFBD_PROCEEDINGS_MONITOR_LISTENER = _descriptor.Descriptor(
@@ -1753,8 +1527,8 @@ _VNFBD_PROCEEDINGS_MONITOR_LISTENER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3709,
-  serialized_end=4138,
+  serialized_start=3215,
+  serialized_end=3644,
 )
 
 _VNFBD_PROCEEDINGS_MONITOR_LISTENERSENTRY = _descriptor.Descriptor(
@@ -1791,8 +1565,8 @@ _VNFBD_PROCEEDINGS_MONITOR_LISTENERSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4140,
-  serialized_end=4229,
+  serialized_start=3646,
+  serialized_end=3735,
 )
 
 _VNFBD_PROCEEDINGS_MONITOR = _descriptor.Descriptor(
@@ -1836,8 +1610,8 @@ _VNFBD_PROCEEDINGS_MONITOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3564,
-  serialized_end=4229,
+  serialized_start=3070,
+  serialized_end=3735,
 )
 
 _VNFBD_PROCEEDINGS_ATTRIBUTESENTRY = _descriptor.Descriptor(
@@ -1874,8 +1648,8 @@ _VNFBD_PROCEEDINGS_ATTRIBUTESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4231,
-  serialized_end=4314,
+  serialized_start=3737,
+  serialized_end=3820,
 )
 
 _VNFBD_PROCEEDINGS_AGENTSENTRY = _descriptor.Descriptor(
@@ -1912,8 +1686,8 @@ _VNFBD_PROCEEDINGS_AGENTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4316,
-  serialized_end=4391,
+  serialized_start=3822,
+  serialized_end=3897,
 )
 
 _VNFBD_PROCEEDINGS_MONITORSENTRY = _descriptor.Descriptor(
@@ -1950,8 +1724,8 @@ _VNFBD_PROCEEDINGS_MONITORSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4393,
-  serialized_end=4472,
+  serialized_start=3899,
+  serialized_end=3978,
 )
 
 _VNFBD_PROCEEDINGS = _descriptor.Descriptor(
@@ -1995,46 +1769,8 @@ _VNFBD_PROCEEDINGS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2737,
-  serialized_end=4472,
-)
-
-_VNFBD_TARGETSENTRY = _descriptor.Descriptor(
-  name='TargetsEntry',
-  full_name='gym.VnfBd.TargetsEntry',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='gym.VnfBd.TargetsEntry.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='gym.VnfBd.TargetsEntry.value', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=b'8\001',
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=4474,
-  serialized_end=4539,
+  serialized_start=2243,
+  serialized_end=3978,
 )
 
 _VNFBD = _descriptor.Descriptor(
@@ -2088,29 +1824,15 @@ _VNFBD = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='environment', full_name='gym.VnfBd.environment', index=6,
+      name='scenario', full_name='gym.VnfBd.scenario', index=6,
       number=7, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='targets', full_name='gym.VnfBd.targets', index=7,
-      number=8, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='scenario', full_name='gym.VnfBd.scenario', index=8,
-      number=9, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='proceedings', full_name='gym.VnfBd.proceedings', index=9,
-      number=10, type=11, cpp_type=10, label=1,
+      name='proceedings', full_name='gym.VnfBd.proceedings', index=7,
+      number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -2118,7 +1840,7 @@ _VNFBD = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[_VNFBD_EXPERIMENTS, _VNFBD_TARGET, _VNFBD_PROCEEDINGS, _VNFBD_TARGETSENTRY, ],
+  nested_types=[_VNFBD_EXPERIMENTS, _VNFBD_PROCEEDINGS, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -2127,16 +1849,10 @@ _VNFBD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2307,
-  serialized_end=4539,
+  serialized_start=1984,
+  serialized_end=3978,
 )
 
-_ENVIRONMENT_PLUGIN_PARAMETER.containing_type = _ENVIRONMENT_PLUGIN
-_ENVIRONMENT_PLUGIN_PARAMETERSENTRY.fields_by_name['value'].message_type = _ENVIRONMENT_PLUGIN_PARAMETER
-_ENVIRONMENT_PLUGIN_PARAMETERSENTRY.containing_type = _ENVIRONMENT_PLUGIN
-_ENVIRONMENT_PLUGIN.fields_by_name['parameters'].message_type = _ENVIRONMENT_PLUGIN_PARAMETERSENTRY
-_ENVIRONMENT_PLUGIN.containing_type = _ENVIRONMENT
-_ENVIRONMENT.fields_by_name['plugin'].message_type = _ENVIRONMENT_PLUGIN
 _SCENARIO_LINK.containing_type = _SCENARIO
 _SCENARIO_NODE_CONNECTIONPOINT.containing_type = _SCENARIO_NODE
 _SCENARIO_NODE_LIFECYCLE_PARAMETER.containing_type = _SCENARIO_NODE_LIFECYCLE
@@ -2176,7 +1892,6 @@ _SCENARIO.fields_by_name['links'].message_type = _SCENARIO_LINKSENTRY
 _SCENARIO.fields_by_name['nodes'].message_type = _SCENARIO_NODESENTRY
 _SCENARIO.fields_by_name['policies'].message_type = _SCENARIO_POLICIESENTRY
 _VNFBD_EXPERIMENTS.containing_type = _VNFBD
-_VNFBD_TARGET.containing_type = _VNFBD
 _VNFBD_PROCEEDINGS_ATTRIBUTE.containing_type = _VNFBD_PROCEEDINGS
 _VNFBD_PROCEEDINGS_AGENT_PROBER_PARAMETER.containing_type = _VNFBD_PROCEEDINGS_AGENT_PROBER
 _VNFBD_PROCEEDINGS_AGENT_PROBER_SCHED.containing_type = _VNFBD_PROCEEDINGS_AGENT_PROBER
@@ -2211,48 +1926,12 @@ _VNFBD_PROCEEDINGS.fields_by_name['attributes'].message_type = _VNFBD_PROCEEDING
 _VNFBD_PROCEEDINGS.fields_by_name['agents'].message_type = _VNFBD_PROCEEDINGS_AGENTSENTRY
 _VNFBD_PROCEEDINGS.fields_by_name['monitors'].message_type = _VNFBD_PROCEEDINGS_MONITORSENTRY
 _VNFBD_PROCEEDINGS.containing_type = _VNFBD
-_VNFBD_TARGETSENTRY.fields_by_name['value'].message_type = _VNFBD_TARGET
-_VNFBD_TARGETSENTRY.containing_type = _VNFBD
 _VNFBD.fields_by_name['experiments'].message_type = _VNFBD_EXPERIMENTS
-_VNFBD.fields_by_name['environment'].message_type = _ENVIRONMENT
-_VNFBD.fields_by_name['targets'].message_type = _VNFBD_TARGETSENTRY
 _VNFBD.fields_by_name['scenario'].message_type = _SCENARIO
 _VNFBD.fields_by_name['proceedings'].message_type = _VNFBD_PROCEEDINGS
-DESCRIPTOR.message_types_by_name['Environment'] = _ENVIRONMENT
 DESCRIPTOR.message_types_by_name['Scenario'] = _SCENARIO
 DESCRIPTOR.message_types_by_name['VnfBd'] = _VNFBD
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
-Environment = _reflection.GeneratedProtocolMessageType('Environment', (_message.Message,), {
-
-  'Plugin' : _reflection.GeneratedProtocolMessageType('Plugin', (_message.Message,), {
-
-    'Parameter' : _reflection.GeneratedProtocolMessageType('Parameter', (_message.Message,), {
-      'DESCRIPTOR' : _ENVIRONMENT_PLUGIN_PARAMETER,
-      '__module__' : 'vnf_bd_pb2'
-      # @@protoc_insertion_point(class_scope:gym.Environment.Plugin.Parameter)
-      })
-    ,
-
-    'ParametersEntry' : _reflection.GeneratedProtocolMessageType('ParametersEntry', (_message.Message,), {
-      'DESCRIPTOR' : _ENVIRONMENT_PLUGIN_PARAMETERSENTRY,
-      '__module__' : 'vnf_bd_pb2'
-      # @@protoc_insertion_point(class_scope:gym.Environment.Plugin.ParametersEntry)
-      })
-    ,
-    'DESCRIPTOR' : _ENVIRONMENT_PLUGIN,
-    '__module__' : 'vnf_bd_pb2'
-    # @@protoc_insertion_point(class_scope:gym.Environment.Plugin)
-    })
-  ,
-  'DESCRIPTOR' : _ENVIRONMENT,
-  '__module__' : 'vnf_bd_pb2'
-  # @@protoc_insertion_point(class_scope:gym.Environment)
-  })
-_sym_db.RegisterMessage(Environment)
-_sym_db.RegisterMessage(Environment.Plugin)
-_sym_db.RegisterMessage(Environment.Plugin.Parameter)
-_sym_db.RegisterMessage(Environment.Plugin.ParametersEntry)
 
 Scenario = _reflection.GeneratedProtocolMessageType('Scenario', (_message.Message,), {
 
@@ -2414,13 +2093,6 @@ VnfBd = _reflection.GeneratedProtocolMessageType('VnfBd', (_message.Message,), {
     })
   ,
 
-  'Target' : _reflection.GeneratedProtocolMessageType('Target', (_message.Message,), {
-    'DESCRIPTOR' : _VNFBD_TARGET,
-    '__module__' : 'vnf_bd_pb2'
-    # @@protoc_insertion_point(class_scope:gym.VnfBd.Target)
-    })
-  ,
-
   'Proceedings' : _reflection.GeneratedProtocolMessageType('Proceedings', (_message.Message,), {
 
     'Attribute' : _reflection.GeneratedProtocolMessageType('Attribute', (_message.Message,), {
@@ -2546,20 +2218,12 @@ VnfBd = _reflection.GeneratedProtocolMessageType('VnfBd', (_message.Message,), {
     # @@protoc_insertion_point(class_scope:gym.VnfBd.Proceedings)
     })
   ,
-
-  'TargetsEntry' : _reflection.GeneratedProtocolMessageType('TargetsEntry', (_message.Message,), {
-    'DESCRIPTOR' : _VNFBD_TARGETSENTRY,
-    '__module__' : 'vnf_bd_pb2'
-    # @@protoc_insertion_point(class_scope:gym.VnfBd.TargetsEntry)
-    })
-  ,
   'DESCRIPTOR' : _VNFBD,
   '__module__' : 'vnf_bd_pb2'
   # @@protoc_insertion_point(class_scope:gym.VnfBd)
   })
 _sym_db.RegisterMessage(VnfBd)
 _sym_db.RegisterMessage(VnfBd.Experiments)
-_sym_db.RegisterMessage(VnfBd.Target)
 _sym_db.RegisterMessage(VnfBd.Proceedings)
 _sym_db.RegisterMessage(VnfBd.Proceedings.Attribute)
 _sym_db.RegisterMessage(VnfBd.Proceedings.Agent)
@@ -2578,10 +2242,8 @@ _sym_db.RegisterMessage(VnfBd.Proceedings.Monitor.ListenersEntry)
 _sym_db.RegisterMessage(VnfBd.Proceedings.AttributesEntry)
 _sym_db.RegisterMessage(VnfBd.Proceedings.AgentsEntry)
 _sym_db.RegisterMessage(VnfBd.Proceedings.MonitorsEntry)
-_sym_db.RegisterMessage(VnfBd.TargetsEntry)
 
 
-_ENVIRONMENT_PLUGIN_PARAMETERSENTRY._options = None
 _SCENARIO_NODE_LIFECYCLE_PARAMETERSENTRY._options = None
 _SCENARIO_NODE_CONNECTIONPOINTSENTRY._options = None
 _SCENARIO_NODE_LIFECYCLEENTRY._options = None
@@ -2596,5 +2258,4 @@ _VNFBD_PROCEEDINGS_MONITOR_LISTENERSENTRY._options = None
 _VNFBD_PROCEEDINGS_ATTRIBUTESENTRY._options = None
 _VNFBD_PROCEEDINGS_AGENTSENTRY._options = None
 _VNFBD_PROCEEDINGS_MONITORSENTRY._options = None
-_VNFBD_TARGETSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

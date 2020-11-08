@@ -1,509 +1,519 @@
 module vnf-bd {
-    namespace "urn:ietf:params:xml:ns:yang:vnf-bd";
-    prefix "vnf-bd";
+  namespace "urn:ietf:params:xml:ns:yang:vnf-bd";
+  prefix "vnf-bd";
 
-    organization "IETF/BMWG";
-    contact "Manuel Peuster <peuster@mail.uni-paderborn.de>, Raphael Vicente Rosa <raphaelvrosa@gmail.com>";
-    description "Yang model for a VNF Benchmark Descriptor (VNF-BD) in the scope of IETF/BMWG";
+  organization "IETF/BMWG";
+  contact "Raphael Vicente Rosa <raphaelvrosa@gmail.com>, 
+  Manuel Peuster <peuster@mail.uni-paderborn.de>";
+  
+  description "Yang model for a VNF Benchmarking Descriptor (VNF-BD).";
 
-    revision "2019-08-13" {
-        description "V0.3: Reviewed proceedings, tool - not VNF specific";
-        reference ""; 
+  revision "2020-10-08" {
+    description "V0.4: Reviewed header and descriptions.";
+    reference ""; 
+  }
+  
+  revision "2019-08-13" {
+    description "V0.3: Reviewed proceedings, tool - not VNF specific";
+    reference ""; 
+  }
+
+  revision "2019-03-13" {
+    description "V0.2: Reviewed role, policies, connection-points,
+    lifecycle workflows, resources";
+    reference ""; 
+  }
+
+  revision "2019-02-28" {
+    description "V0.1: First release";
+    reference "";
+  }
+
+  typedef workflows {
+    type enumeration {
+      enum create {
+        description "When calling the create workflow.";
+      }
+      enum configure {
+        description "When calling the configure workflow.";
+      }
+      enum start {
+        description "When calling the start workflow.";
+      }
+      enum stop {
+        description "When calling the stop workflow.";
+      }
+      enum delete {
+        description "When calling the delete workflow.";
+      }
+      enum custom {
+        description "When calling a custom workflow.";
+      }
     }
+    description "Defines basic life cycle workflows for a
+    node in a scenario.";
+  }
 
-    revision "2019-03-13" {
-        description "V0.2: Reviewed role, policies, connection-points, lifecycle workflows, resources";
-        reference "https://www.ietf.org/id/draft-rosa-bmwg-vnfbench-04.txt"; 
-    }
-
-    revision "2019-02-28" {
-        description "V0.1: First release";
-        reference "https://datatracker.ietf.org/doc/draft-rosa-bmwg-vnfbench/";
-    }
-
-    typedef workflows {
-        type enumeration {
-            enum create {
-                description "When calling the create workflow";
-            }
-            enum configure {
-                description "When calling the configure workflow";
-            }
-            enum start {
-                description "When calling the start workflow";
-            }
-            enum stop {
-                description "When calling the stop workflow";
-            }
-            enum delete {
-                description "When calling the delete workflow";
-            }
-            enum custom {
-                description "When calling a custom workflow";
-            }
+  grouping node_requirements {
+    container resources {
+      container cpu { 
+        leaf vcpus {
+          type uint32;
+          description "The number of cores to be allocated
+          for a node.";
         }
-        description "Defines basic lifecycle workflows of a benchmarking experiment";
-    }
-
-    grouping settings {
-        leaf id {
-            type string;
-            description "Unique identifier";    
+        leaf cpu_bw {
+          type string;
+          description "The CPU bandwidth (CFS limit in 0.01-1.0)";
         }
-        leaf name {
-            type string;
-            description "Name of the experiment";    
+        leaf pinning {
+          type string;
+          description "The list of CPU cores, separated by comma,
+          that a node must be pinned to.";
         }
-        leaf version {
-            type string;
-            description "Version of the experiment";
+        description "The node CPU resources that must
+        be allocated for a benchmarking Test.";
+      }
+      container memory { 
+        leaf size {
+          type uint32;
+          description "The memory allocation size.";
         }
-        leaf author {
-            type string;
-            description "Author of the experiment";
+        leaf unit {
+          type string;
+          description "The memory unit.";
         }
-        leaf description {
-            type string;
-            description "Description of the experiment";    
+        description "The node memory resources
+        that must be allocated for a benchmarking
+        Test.";
+      }
+      container storage { 
+        leaf size {
+          type uint32;
+          description "The storage allocation size.";
         }
-
-        container experiments {
-            leaf trials {
-                type uint32;
-                default 1;
-                description "Number of trials";
-            }
-            leaf tests {
-                type uint32;
-                default 1;
-                description "Number of tests";
-            }
-            description "Number of trails and test to be executed";
+        leaf unit {
+          type string;
+          description "The storage unit.";
         }
-
-        container environment {
-            leaf name {
-                type string;
-                description "The evironment's name";
-            }
-            leaf description {
-                type string;
-                description "A description";
-            }
-            leaf deploy {
-                type boolean;
-                description "Deploy the SUT and probes or use a running deployment";
-            }
-            container plugin {
-                leaf type {
-                    type string;
-                    description "Type of the plugin";    
-                }
-                list parameters {
-                    key "input";
-                    leaf input {
-                        type string;
-                        description "Key of the parameter";
-                        }
-                    leaf value {
-                        type string;
-                        description "Value of the parameter";
-                    }
-                    description "List of key/value parameters";
-                } 
-                description "Management plugin used for given envrionment";
-            }
-            description "Definition of the benchmarking execution environment";
+        leaf volumes {
+          type string;
+          description "Volumes to be allocated by
+          a node storage.
+          A volume defines a mapping of an outside storage
+          partition inside the node storage system.
+          Volumes must be separated by comma and be defined
+          using a colon to separate the node internal and external
+          references of storage system paths.";
         }
-        description "Genral setting of the VNF-BD.";
-    }
-
-    grouping targets {
-        leaf id {
-            type string;
-            description "Unique identifier";
-        }
-        leaf name {
-            type string;
-            description "Name of target";
-        }
-        leaf version {
-            type string;
-            description "Version of target";
-        }
-        leaf author {
-            type string;
-            description "Author of target";
-        }
-        leaf description {
-            type string;
-            description "Description of target";
-        }
-        description "Reference to the targert SUT";
-    }
-
-    grouping requirements {        
-        container resources {
-            container cpu { 
-                leaf vcpus {
-                    type uint32;
-                    description "Number of cores to be used";
-                }
-                leaf cpu_bw {
-                    type string;
-                    description "CPU bandwidth (CFS limit in 0.01-1.0)";
-                }
-                leaf pinning {
-                    type string;
-                    description "CPU core set to be used";
-                }
-                description "CPU resources";
-            }
-            container memory { 
-                leaf size {
-                    type uint32;
-                    description "Memory size";
-                }
-                leaf unit {
-                    type string;
-                    description "Memory unit";
-                }
-                description "Memory resources";
-            }
-            container storage { 
-                leaf size {
-                    type uint32;
-                    description "Storage size";
-                }
-                leaf unit {
-                    type string;
-                    description "Storage unit";
-                }
-                leaf volumes {
-                    type string;
-                    description "Valumes to be used";
-                }
-                description "Storage resources";
-            }
-            description "Resource assigned to SUT";
-        }
-        description "'Configurations to be aplied to SUT";
-    }  
-
-    grouping connection_points {
-        leaf id {
-            type string;
-            description "Unique identifier";
-        }
-        leaf interface {
-            type string;
-            description "Interface name";
-        }
-        leaf type {
-            type string;
-            description "Network type";
-        }
-        leaf address {
-            type string;
-            description "Network address, e.g., 10.0.0.1/24";
-        }
-        description "Connections points to connect to SUT";
-    }
-
-    grouping nodes {
-        leaf id {
-            type string;
-            description "Unique identifier";
-        }
-        leaf type {
-            type string;
-            description "Node type";
-        }
-        leaf image {
-            type string;
-            description "Disk/container image to be used";
-        }
-        leaf format {
-            type string;
-            description "Node format (container, process, VM)";
-        }
-        leaf role {
-            type string;
-            description "Role of the node";
-        }
-
-        uses requirements;
-        
-        list connection_points {
-            key "id";
-            uses connection_points;
-            description "List of connection points of node";
-        }
-
-        list relationships {
-            key "name";
-            leaf name {
-                type string;
-                description "Name of relationship";
-            }
-            leaf type {
-                type string;
-                description "Type of relationship";
-            }
-            leaf target {
-                type string;
-                description "Target of relationship";
-            }
-            description "Relationship of node to other components in the experiment";
-        }
-
-
-        list lifecycle {
-            key "workflow";
-            leaf workflow {
-                type workflows;
-                description "Workflow type";
-            }
-            leaf name {
-                type string;
-                description "Workflow name";   
-            }
-            
-            list parameters { 
-                key "input";
-                leaf input {
-                    type string;
-                    description "Key of parameter";
-                }
-                leaf value {
-                    type string;
-                    description "Value of parameter";
-                }
-                description "Parameters to be applied to node";
-            }
-            leaf-list implementation {
-                type string;
-                description "Type of implementation";
-            }
-            description "Lifecycle to be applied to this node";
-        }
-
-        description "Nodes involved in benchmarking experiment";
     
+        description "The node storage resources
+        that must be allocated for a benchmarking Test.";
+      }
+    
+      description "The set of resources that must be allocated 
+      for a node in a benchmarking Test.";
     }
 
-    grouping link {
-        leaf id {
-            type string;
-            description "Unique identifier";
-        }
-        leaf name {
-            type string;
-            description "Name of the link";
-        }
-        leaf type {
-            type string;
-            description "Type of the link";
-        }
-        leaf network {
-            type string;
-            description "Network the link belongs to";
-        }
-        leaf-list connection_points { 
-            type leafref {
-                path "../../nodes/connection_points/id";
-            } 
-            description "Reference to connection points the link is connected to";
-        }
-        description "Links between the nodes in the experiment";
+    description "'The grouping determining the 
+    resource requirements for a node in a scenario.";
+  }  
+
+  grouping connection_points {
+    leaf id {
+      type string;
+      description "The connection-point
+      unique identifier";
+    }
+    leaf interface {
+      type string;
+      description "The name of the node interface
+      associated with the connection-point.";
+    }
+    leaf type {
+      type string;
+      description "The type of the network the
+      connection-point interface is attached to.";
+    }
+    leaf address {
+      type string;
+      description "The Network address of the
+      connection-point. It can be specified as a 
+      Ethernet MAC address, a IPv4 address or an IPv6 address.";
+    }
+    description "A connections-point of a node.";
+  }
+
+  grouping nodes {
+    leaf id {
+      type string;
+      description "The unique identifier of a node
+      in a scenario.";
+    }
+    leaf type {
+      type string;
+      description "The type of a node.";
+    }
+    leaf image {
+      type string;
+      description "The name of the image to be used to instantiate
+      a node.";
+    }
+    leaf format {
+      type string;
+      description "The node format (e.g., container, process, VM).";
+    }
+    leaf role {
+      type string;
+      description "The role of the node in the Test scenario.
+      The role must be one of: manager, agent, monitor, sut.";
     }
 
-    grouping scenario {
-        list nodes {
-            key "id";
-            uses nodes;
-            description "Nodes in the scenario";
-        }
-
-        list links {
-            key "id";
-            uses link;
-            description "Links in the scenario";
-        }
-
-        list policies {
-            key "name";
-            leaf name {
-                type string;
-                description "Policies in the scenarios";
-            }
-            leaf type {
-                type string;
-                description "Type of the policy";
-            }
-            leaf targets {
-                type string;
-                description "Target of the policy";
-            }
-            leaf action {
-                type string;
-                description "Action of the policy";
-            }
-            description "Definition of execution environment policies";
-        }
-        description "Describes the deployment of all involved functional components mandatory for the execution of the benchmarking Tests addressed by the VNF-BD";
+    uses node_requirements;
+    
+    list connection_points {
+      key "id";
+      uses connection_points;
+      description "The list of connection points of a node.";
     }
 
-    grouping tool {
-        leaf id {
-            type uint32;
-            description "Unique identifier";    
-        }
-        leaf instances {
-            type uint32;
-            description "Number of tool instances";    
-        }
-        leaf name {
-            type string;
-            description "Name of tool";    
-        }
-        list parameters { 
-            key "input";
-            leaf input {
-                type string;
-                description "Key of parameter";    
-            }
-            leaf value {
-                type string;
-                description "Value of parameter";    
-            }
-            description "List of parameters for tool";
-        }
-        
-        container sched {
-            leaf from {
-                type uint32;
-                default 0;
-                description "The initial time (in seconds) of the execution of the tool";
-            }
+    list relationships {
+      key "name";
+      leaf name {
+        type string;
+        description "Name of the relationship.";
+      }
+      leaf type {
+        type string;
+        description "Type of the relationship.";
+      }
+      leaf target {
+        type string;
+        description "Target of the relationship.";
+      }
 
-            leaf until {
-                type uint32;
-                description "The final time (in seconds) of the execution of the tool
-                counting all its periods of repeating instances, duration and interval.";
-            }
-
-            leaf duration {
-                type uint32;
-                description "The total duration (in seconds) of the execution of each instance of the tool";
-            }
-
-            leaf interval {
-                type uint32;
-                description "The interval (in seconds) among the instances of the execution of the tool";
-            }
-
-            leaf repeat {
-                type uint32;
-                description "The amount of times the tool must be executed";
-            }
-
-            description "Scheduling parameters of a tool";
-        }
-
-        description "A tool to be used in an experiment";
+      description "Relationship of a node with the other
+      scenario components.";
     }
 
-    grouping component {
-        leaf uuid {
-            type string;
-            description "Unique identifier";
-        }
-        leaf name {
-            type string;
-            description "Name of component";
-        }
 
-        description "Component mapping for experiment";
+    list lifecycle {
+      key "workflow";
+      leaf workflow {
+        type workflows;
+        description "The type of the Workflow.";
+      }
+      leaf name {
+        type string;
+        description "The workflow name.";
+      }
+      
+      list parameters { 
+        key "input";
+        leaf input {
+          type string;
+          description "The name of the parameter.";
+        }
+        leaf value {
+          type string;
+          description "The value of the parameter";
+        }
+      
+        description "The list of parameters to be
+        applied to the node workflow.";
+      }
+
+      leaf-list implementation {
+        type string;
+        description "The workflow implementation.";
+      }
+
+      description "The life cycle workflows to be
+      applied to this node.";
     }
 
-    grouping agent {
-        uses component; 
+    description "The specification of a node to be used
+    in a scenario for a benchmarking Test.";
+  }
 
-        list probers {
-            key "id";
-            uses tool;
-            description "Probers in experiment";
-        }
-        description "Agents in experiment";
+  grouping link {
+    leaf id {
+      type string;
+      description "The link unique identifier.";
+    }
+    leaf name {
+      type string;
+      description "The name of the link.";
+    }
+    leaf type {
+        type string;
+        description "The type of the link.";
+    }
+    leaf network {
+        type string;
+        description "The network the link belongs to.";
+    }
+    leaf-list connection_points { 
+        type leafref {
+            path "../../nodes/connection_points/id";
+        } 
+        description "Reference to the connection points of nodes
+        the link is adjacent.";
+    }
+    description "A link between nodes in a scenario.";
+  }
+
+  grouping scenario {
+    list nodes {
+      key "id";
+      uses nodes;
+      description "The list of nodes that must be 
+      instantiated in a scenario in order to enable
+      a benchmarking Test.";
     }
 
-    grouping monitor {
-        uses component; 
-        
-        list listeners {
-            key "id";           
-            uses tool;
-            description "Listeners in experiment";
-        }
-        description "Monitors in experiment";
+    list links {
+      key "id";
+      uses link;
+      description "The list of links among nodes that must be 
+      instantiated in a scenario in order to enable
+      a benchmarking Test.";
     }
 
-    grouping proceedings {
-        list attributes {
-            key "name";
-            leaf name {
-                type string;
-                description "Attribute key";
-            }
-            leaf value {
-                type string;
-                description "Attribute value";
-            }
-            description "Attributes of proceedings";
-        }
+    list policies {
+      key "name";
+      leaf name {
+        type string;
+        description "The name of the policy.";
+      }
+      leaf type {
+        type string;
+        description "The type of the policy";
+      }
+      leaf targets {
+        type string;
+        description "The targets of the policy.
+        Uuid of nodes and/or links separated by comma.";
+      }
+      leaf action {
+        type string;
+        description "The action of the policy";
+      }
 
-        list agents {
-            key "uuid";
-            uses agent;
-            description "Involved agents";
-        }
-
-        list monitors {
-            key "uuid";
-            uses monitor;
-            description "Involved monitors";
-        }
-        description "Information is utilized by a manager/controller component to execute the benchmarking tests";
+      description "Definition of policies to be
+      utilized on the instantiation of the scenario.
+      A policy is defined by a name, it type, 
+      the targets (nodes and/or links) to which it must be applied to,
+      and the proper action that realizes the policy.";
     }
 
-    grouping vnf-bd {
-        description "Grouping for a single vnf-bd";
+    description "Describes the deployment of all 
+    involved functional components mandatory for 
+    the execution of a benchmarking Test.";
+  }
 
-        uses settings;
+  grouping tool {
+    leaf id {
+      type uint32;
+      description "The unique identifier of a tool.
+      This information specifies how a tool can be 
+      identified in a list of probers/listeners of an
+      Agent/Monitor.";    
+    }
+    leaf instances {
+      type uint32;
+      description "The number of the tool instances that 
+      must be executed in parallel.";
+    }
+    leaf name {
+      type string;
+      description "The name of a tool.";
+    }
+    list parameters { 
+      key "input";
+      leaf input {
+          type string;
+          description "The input key of a parameter";
+      }
+      leaf value {
+          type string;
+          description "The value of a parameter";
+      }
+      description "List of parameters for the execution 
+      of the tool. Each tool detains the proper set of running
+      parameters that must be utilized to realize a benchmarking
+      test.";
+    }
+    
+    container sched {
+      leaf from {
+        type uint32;
+        default 0;
+        description "The initial time (in seconds)
+        of the execution of the tool.";
+      }
 
-        list targets {
-            key "id";
-            uses targets;
-            description "Target SUTs";
-        }
+      leaf until {
+        type uint32;
+        description "The final/maximum time (in seconds)
+        of the execution of the tool summed all its instances
+        repeat, duration and interval parameters.";
+      }
 
-        container scenario {
-            uses scenario;
-            description "Scenarios defined by this VNF-BD";
-        }
+      leaf duration {
+        type uint32;
+        description "The total duration (in seconds) of the execution
+        of each instance of the tool.";
+      }
 
-        container proceedings {
-            uses proceedings;
-            description "Proceedings of VNF-BD";
-        }
+      leaf interval {
+        type uint32;
+        description "The interval (in seconds) to be awaited 
+        among each one of the instances of the execution of the tool.";
+      }
 
+      leaf repeat {
+        type uint32;
+        description "The number of times the tool must be executed.";
+      }
+
+      description "The scheduling parameters of a tool.
+      Each Agent/Monitor must utilize the scheduling parameters
+      to perform the execution of its tools (probers/listeners)
+      accordingly.";
     }
 
-    // container vnf-bd {
-    //     uses vnf-bd;
-    //     description "A VNF-BD";
-    // }
+    description "A tool to be used in a benchmarking test.
+    A tool can be inferred as a prober or a listener.";
+  }
 
-    uses vnf-bd;
+  grouping component {
+    leaf uuid {
+      type string;
+      description "A unique identifier";
+    }
+    leaf name {
+      type string;
+      description "The name of component";
+    }
+
+    description "A generic component.";
+  }
+
+  grouping agent {
+    uses component; 
+
+    list probers {
+      key "id";
+      uses tool;
+      description "Defines a list of the Prober(s)
+      that must be used in a benchmarking test.";
+    }
+    description "An Agent defined by its uuid,
+    name and the mandatory list of probers to be used
+    by a benchmarking test.";
+  }
+
+  grouping monitor {
+    uses component; 
+    
+    list listeners {
+      key "id";
+      uses tool;
+      description "Defines a list of the Listeners(s)
+      that must used in a benchmarking test.";
+    }
+    description "A Monitor defined by its uuid,
+    name and the mandatory list of probers to be used
+    by a benchmarking test.";
+  }
+
+  grouping proceedings {
+    list agents {
+      key "uuid";
+      uses agent;
+      description "Defines a list containing the
+      Agent(s) needed for a VNF-BD test.";
+    }
+
+    list monitors {
+      key "uuid";
+      uses monitor;
+      description "Defines a list containing the
+      Monitor(s) needed for a VNF-BD test.";
+    }
+    description "Information utilized by a Manager
+    component to execute a benchmarking test.";
+  }
+  grouping header {
+    leaf id {
+      type string;
+      description "Unique identifier of the VNF-BD.";    
+    }
+    leaf name {
+      type string;
+      description "Name of the VNF-BD.";    
+    }
+    leaf version {
+      type string;
+      description "Version of the VNF-BD.";
+    }
+    leaf description {
+      type string;
+      description "Description of the VNF-BD";    
+    }
+    
+    description "The header content of a VNF-BD.";
+  }
+
+  grouping vnf-bd {
+    
+    uses header;
+    
+    container experiments {
+      leaf trials {
+        type uint32;
+        description "Number of trials.
+        A trial is a single process or iteration
+        to obtain VNF performance metrics from
+        benchmarking the VNF-BD proceedings.";
+      }
+      leaf tests {
+        type uint32;
+        description "Number of tests. 
+        Each test defines unique structural
+        and functional parameters (e.g., configurations,
+        resource assignment) for benchmarked components
+        to perform one or multiple Trials.
+        Each Test must be executed following a 
+        particular scenario.";
+      }
+      description "Defines the number of trials and tests
+      the VNF-BD must execute.";
+    }
+
+    container scenario {
+      uses scenario;
+      description "Scenarios defined by this VNF-BD.
+      A scenario contains all information needed to describe
+      the deployment of all involved functional components 
+      mandatory for the execution of a benchmarking Test.";
+    }
+
+    container proceedings {
+      uses proceedings;
+      description "Proceedings of VNF-BD.
+      The proceedings are utilized by the Manager component
+      to execute a benchmarking Test. It consists of 
+      agent(s)/monitor(s) settings, detailing their prober(s)/listener(s)
+      specification and running parameters.";
+    }
+
+    description "A single VNF-BD.
+    A VNF-BD contains all required definitions and
+    requirements to deploy, configure, execute, and
+    reproduce VNF benchmarking tests.";
+  }
+
+  uses vnf-bd;
 }

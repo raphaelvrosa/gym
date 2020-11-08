@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 
 
 class Infra(InfraBase):
-
     def __init__(self, info):
         logger.info(f"Infra starting - uuid {info.get('uuid')}")
         self.plugins = {}
@@ -32,16 +31,16 @@ class Infra(InfraBase):
     async def play(self, command, environment, scenario):
         ack, info = False, {}
 
-        plugin = environment.get("plugin")
-        plugin_type = plugin.get("type")
+        orchestrator = environment.get("orchestrator")
+        orchestrator_type = orchestrator.get("type")
 
-        if plugin_type in self.plugins:
-            plugin_instance = self.plugin_instances.get(plugin_type, None)
+        if orchestrator_type in self.plugins:
+            plugin_instance = self.plugin_instances.get(orchestrator_type, None)
 
-            if not plugin_instance:                    
-                plugin_cls = self.plugins.get(plugin_type)
+            if not plugin_instance:
+                plugin_cls = self.plugins.get(orchestrator_type)
                 plugin_instance = plugin_cls()
-                self.plugin_instances[plugin_type] = plugin_instance
+                self.plugin_instances[orchestrator_type] = plugin_instance
 
             if plugin_instance:
                 if command == "start":
@@ -54,23 +53,24 @@ class Infra(InfraBase):
                     logger.info(f"Unknown infra plugin command {command}")
 
         else:
-            logger.info(f"Unknown infra plugin {plugin_type}")
-        
-        return ack, info                   
+            logger.info(f"Unknown infra plugin {orchestrator_type}")
+
+        return ack, info
 
     async def Run(self, stream):
-        deploy = await stream.recv_message()        
-        deploy_dict = json_format.MessageToDict(deploy, preserving_proto_field_name=True)
-        
+        deploy = await stream.recv_message()
+        deploy_dict = json_format.MessageToDict(
+            deploy, preserving_proto_field_name=True
+        )
+
         id_ = deploy_dict.get("id")
         command = deploy_dict.get("workflow")
         scenario = deploy_dict.get("scenario")
         environment = deploy_dict.get("environment")
-        
+
         ok, info = await self.play(command, environment, scenario)
         info_json = json.dumps(info)
-        built_info = info_json.encode('utf-8')
+        built_info = info_json.encode("utf-8")
         built = Built(id=id_, ack=ok, info=built_info)
-        
-        await stream.send_message(built)
 
+        await stream.send_message(built)

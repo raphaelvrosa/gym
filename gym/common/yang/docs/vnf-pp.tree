@@ -2,7 +2,6 @@ module: vnf-pp
   +--rw id?            string
   +--rw name?          string
   +--rw version?       string
-  +--rw author?        string
   +--rw description?   string
   +--rw timestamp?     string
   +--rw reports* [id]
@@ -17,6 +16,8 @@ module: vnf-pp
      |  |  +--rw host?   string
      |  +--rw evaluations* [id]
      |  |  +--rw id           string
+     |  |  +--rw instance?    uint32
+     |  |  +--rw repeat?      uint32
      |  |  +--rw source
      |  |  |  +--rw id?        string
      |  |  |  +--rw name?      string
@@ -27,17 +28,18 @@ module: vnf-pp
      |  |  |  +--rw start?   string
      |  |  |  +--rw stop?    string
      |  |  +--rw metrics* [name]
-     |  |     +--rw name            string
-     |  |     +--rw unit?           string
-     |  |     +--rw type            string
-     |  |     +--rw (value)
-     |  |        +--:(scalar)
-     |  |        |  +--rw scalar    string
-     |  |        +--:(vector)
-     |  |        |  +--rw vector*   string
-     |  |        +--:(series)
-     |  |           +--rw series* [key]
-     |  |              +--rw key      string
-     |  |              +--rw value?   string
+     |  |  |  +--rw name            string
+     |  |  |  +--rw unit?           string
+     |  |  |  +--rw type            string
+     |  |  |  +--rw (value)
+     |  |  |     +--:(scalar)
+     |  |  |     |  +--rw scalar    string
+     |  |  |     +--:(series)
+     |  |  |        +--rw series* [key]
+     |  |  |           +--rw key      string
+     |  |  |           +--rw value?   string
+     |  |  +--rw error?       string
      |  +--rw timestamp?     string
+     |  +--rw error?         string
      +--rw timestamp?   string
+     +--rw error?       string

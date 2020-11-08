@@ -44,7 +44,7 @@ class App:
                 f"{self.app_cls} and/or {self.app_role}"
             )
 
-    def logs(self):
+    def logs(self, screen=True):
         """Start logs for application in INFO or DEBUG mode
         Debug allways goes to /tmb/Gym[role][uuid].log file
         Info will be printed on screen
@@ -52,14 +52,13 @@ class App:
         """
         info = self.cfg.get()
         filename = "".join(
-            ["/tmp/", self.__class__.__name__, "-", info.get("uuid"), ".log"]
+            ["/tmp/gym/logs/", self.__class__.__name__, "-", info.get("uuid"), ".log"]
         )
 
-        Logs(filename, debug=info.get("debug"))
+        Logs(filename, debug=info.get("debug"), screen=screen)
 
     def init(self):
-        """Starts logs and calls main handling possible exceptions
-        """
+        """Starts logs and calls main handling possible exceptions"""
         self.logs()
 
         try:

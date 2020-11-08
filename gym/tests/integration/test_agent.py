@@ -1,3 +1,4 @@
+import json
 import unittest
 import asyncio
 from grpclib.client import Channel
@@ -54,12 +55,14 @@ class TestAgent(unittest.TestCase):
         request.id = 1
         request.trial = 1
 
-        action = request.actions.get_or_create(10)
-        action.id = 2
+        action = request.actions.add()
+        action.name = "ping"
+        action.id = 1
         action.args["packets"] = "3"
         action.args["target"] = "1.1.1.1"
 
-        action = request.actions.get_or_create(11)
+        action = request.actions.add()
+        action.name = "ping"
         action.id = 2
         action.args["packets"] = "2"
         action.args["target"] = "8.8.8.8"
@@ -109,8 +112,10 @@ class TestAgent(unittest.TestCase):
         assert origin.get("id") == "agent-test"
         assert origin.get("role") == "agent"
 
+        print(json.dumps(instruction_reply, indent=4))
+
         evals = instruction_reply.get("evaluations")
-        assert type(evals) is list
+        assert type(evals) is dict
 
         expected_metrics = {
             "rtt_min": "min round-trip-time",
@@ -120,17 +125,11 @@ class TestAgent(unittest.TestCase):
             "frame_loss": "frame loss ratio",
         }
 
-        import json
-
-        print(json.dumps(instruction_reply, indent=4))
-
-        eval_0 = evals[0]
+        eval_0 = evals[1]
         eval_metrics = eval_0.get("metrics")
 
         expected = list(expected_metrics.keys())
-        metrics_ok = [
-            True if m.get("name") in expected else False for m in eval_metrics
-        ]
+        metrics_ok = [True if m in expected else False for m in eval_metrics]
 
         assert all(metrics_ok) == True
 
