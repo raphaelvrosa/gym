@@ -31,7 +31,7 @@ vagrant-requirements-libvirt:
 	sudo apt-get install -y ruby-libvirt libvirt-dev
 	vagrant plugin install vagrant-libvirt
 
-examples-aux:
+examples-util:
 	sh -c "cd $(UTIL_FOLDER) && sudo ./$(UTIL_EXAMPLES) && cd - "
 
 requirements:
@@ -76,13 +76,13 @@ run: install
 
 docker-build:
 	docker build \
-	--tag=gym:latest .
+	--tag=raphaelvrosa/gym:latest .
 
 docker-run: docker-build
 	docker run \
 	--detach=false \
 	--name=gym \
-	gym:latest gym-cli
+	raphaelvrosa/gym:latest gym-cli
 
 vagrant-run-virtualbox: requirements-vagrant-virtualbox
 	vagrant up --provider virtualbox
@@ -107,7 +107,7 @@ help:
 	@echo ""
 	@echo "     requirements"
 	@echo "         Install gym requirements (i.e., python3.8 python3-setuptools python3-pip)."
-	@echo "     examples"
+	@echo "     examples-util"
 	@echo "         Install gym examples requirements (i.e., see examples.sh in gym/util)."
 	@echo "     vagrant-requirements-virtualbox"
 	@echo "         Install the requirements to build a virtual machine with gym installed using virtualbox."

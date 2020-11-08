@@ -1,0 +1,1445 @@
+{
+    "author": "VNF Benchmark Report",
+    "description": "Tests Bypass container VNF",
+    "environment": {
+        "deploy": true,
+        "description": "Esablishes scenario in containernet",
+        "name": "Execution-Environment",
+        "orchestrator": {
+            "description": "Uses containernet to deploy vnfbd scenario",
+            "parameters": {
+                "address": {
+                    "input": "address",
+                    "value": "localhost:57000"
+                }
+            },
+            "type": "containernet"
+        }
+    },
+    "id": "002",
+    "inputs": {
+        "variables": {
+            "vnf_memory": {
+                "class": "resource",
+                "name": "vnf_memory",
+                "path": "/scenario/nodes[id='d2']/resources/memory/size",
+                "type": "uint32",
+                "values": [
+                    "2048"
+                ]
+            },
+            "vnf_vcpu": {
+                "class": "resource",
+                "name": "vnf_vcpu",
+                "path": "/scenario/nodes[id='d2']/resources/cpu/vcpus",
+                "type": "uint32",
+                "values": [
+                    "2"
+                ]
+            }
+        },
+        "vnfbd": {
+            "experiments": {
+                "tests": 1,
+                "trials": 1
+            },
+            "proceedings": {
+                "agents": {
+                    "d1": {
+                        "probers": {
+                            "1": {
+                                "id": 1,
+                                "instances": "1",
+                                "name": "iperf3",
+                                "parameters": {
+                                    "client": {
+                                        "input": "client",
+                                        "value": "True"
+                                    },
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    },
+                                    "port": {
+                                        "input": "port",
+                                        "value": "9015"
+                                    },
+                                    "protocol": {
+                                        "input": "protocol",
+                                        "value": "udp"
+                                    },
+                                    "rate": {
+                                        "input": "rate",
+                                        "value": "1G"
+                                    },
+                                    "server": {
+                                        "input": "server",
+                                        "value": "172.31.1.4"
+                                    }
+                                }
+                            }
+                        },
+                        "uuid": "d1"
+                    },
+                    "d3": {
+                        "probers": {
+                            "1": {
+                                "id": 1,
+                                "instances": "1",
+                                "name": "iperf3",
+                                "parameters": {
+                                    "client": {
+                                        "input": "client",
+                                        "value": "False"
+                                    },
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    },
+                                    "port": {
+                                        "input": "port",
+                                        "value": "9015"
+                                    },
+                                    "protocol": {
+                                        "input": "protocol",
+                                        "value": "udp"
+                                    }
+                                }
+                            }
+                        },
+                        "uuid": "d3"
+                    }
+                },
+                "monitors": {
+                    "d4": {
+                        "listeners": {
+                            "1": {
+                                "id": 1,
+                                "instances": "1",
+                                "name": "docker",
+                                "parameters": {
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    },
+                                    "interval": {
+                                        "input": "interval",
+                                        "value": "5"
+                                    },
+                                    "target": {
+                                        "input": "target",
+                                        "value": "d2"
+                                    }
+                                }
+                            }
+                        },
+                        "uuid": "d4"
+                    }
+                }
+            },
+            "scenario": {
+                "links": {
+                    "1": {
+                        "connection_points": [
+                            "d1:eth1",
+                            "d2:input"
+                        ],
+                        "id": "1",
+                        "name": "d1-d2",
+                        "network": "s1",
+                        "type": "E-Line"
+                    },
+                    "2": {
+                        "connection_points": [
+                            "d2:output",
+                            "d3:eth1"
+                        ],
+                        "id": "2",
+                        "name": "d2-d3",
+                        "network": "s2",
+                        "type": "E-Line"
+                    }
+                },
+                "nodes": {
+                    "d1": {
+                        "connection_points": {
+                            "eth1": {
+                                "address": "172.31.1.1/24",
+                                "id": "eth1",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            }
+                        },
+                        "format": "docker",
+                        "id": "d1",
+                        "image": "raphaelvrosa/gym:latest",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                ],
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d1"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "cpu_bw": "1.0",
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "512",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "2",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "agent",
+                        "type": "internal"
+                    },
+                    "d2": {
+                        "connection_points": {
+                            "input": {
+                                "address": "172.31.1.2/24",
+                                "id": "input",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            },
+                            "output": {
+                                "address": "172.31.1.3/24",
+                                "id": "output",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            }
+                        },
+                        "format": "docker",
+                        "id": "d2",
+                        "image": "vnf/bypass:0.1",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "./run.sh"
+                                ],
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "512",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "2",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "sut",
+                        "type": "internal"
+                    },
+                    "d3": {
+                        "connection_points": {
+                            "eth1": {
+                                "address": "172.31.1.4/24",
+                                "id": "eth1",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            }
+                        },
+                        "format": "docker",
+                        "id": "d3",
+                        "image": "raphaelvrosa/gym:latest",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                ],
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d3"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "cpu_bw": "1.0",
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "512",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "2",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "agent",
+                        "type": "internal"
+                    },
+                    "d4": {
+                        "format": "process",
+                        "id": "d4",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "gym-monitor --uuid {host_id} --address {host_ip}:50056  > gym-monitor.log 2>&1 &"
+                                ],
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d4"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "workflow": "start"
+                            }
+                        },
+                        "relationships": {
+                            "d4-outside-d2": {
+                                "name": "d4-outside-d2",
+                                "target": "d2",
+                                "type": "AttachesTo"
+                            }
+                        },
+                        "resources": {},
+                        "role": "monitor",
+                        "type": "external"
+                    },
+                    "d5": {
+                        "format": "docker",
+                        "id": "d5",
+                        "image": "raphaelvrosa/gym:latest",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                                ],
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d5"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "1024",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "1",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "manager",
+                        "type": "internal"
+                    }
+                }
+            }
+        }
+    },
+    "name": "Tests Bypass container VNF",
+    "outputs": {
+        "1": {
+            "id": "1",
+            "variables": {
+                "vnf_memory": {
+                    "name": "vnf_memory",
+                    "value": "2048"
+                },
+                "vnf_vcpu": {
+                    "name": "vnf_vcpu",
+                    "value": "2"
+                }
+            },
+            "vnfbd": {
+                "experiments": {
+                    "tests": 1,
+                    "trials": 1
+                },
+                "proceedings": {
+                    "agents": {
+                        "d1": {
+                            "probers": {
+                                "1": {
+                                    "id": 1,
+                                    "instances": "1",
+                                    "name": "iperf3",
+                                    "parameters": {
+                                        "client": {
+                                            "input": "client",
+                                            "value": "True"
+                                        },
+                                        "duration": {
+                                            "input": "duration",
+                                            "value": "30"
+                                        },
+                                        "port": {
+                                            "input": "port",
+                                            "value": "9015"
+                                        },
+                                        "protocol": {
+                                            "input": "protocol",
+                                            "value": "udp"
+                                        },
+                                        "rate": {
+                                            "input": "rate",
+                                            "value": "1G"
+                                        },
+                                        "server": {
+                                            "input": "server",
+                                            "value": "172.31.1.4"
+                                        }
+                                    }
+                                }
+                            },
+                            "uuid": "d1"
+                        },
+                        "d3": {
+                            "probers": {
+                                "1": {
+                                    "id": 1,
+                                    "instances": "1",
+                                    "name": "iperf3",
+                                    "parameters": {
+                                        "client": {
+                                            "input": "client",
+                                            "value": "False"
+                                        },
+                                        "duration": {
+                                            "input": "duration",
+                                            "value": "30"
+                                        },
+                                        "port": {
+                                            "input": "port",
+                                            "value": "9015"
+                                        },
+                                        "protocol": {
+                                            "input": "protocol",
+                                            "value": "udp"
+                                        }
+                                    }
+                                }
+                            },
+                            "uuid": "d3"
+                        }
+                    },
+                    "monitors": {
+                        "d4": {
+                            "listeners": {
+                                "1": {
+                                    "id": 1,
+                                    "instances": "1",
+                                    "name": "docker",
+                                    "parameters": {
+                                        "duration": {
+                                            "input": "duration",
+                                            "value": "30"
+                                        },
+                                        "interval": {
+                                            "input": "interval",
+                                            "value": "5"
+                                        },
+                                        "target": {
+                                            "input": "target",
+                                            "value": "d2"
+                                        }
+                                    }
+                                }
+                            },
+                            "uuid": "d4"
+                        }
+                    }
+                },
+                "scenario": {
+                    "links": {
+                        "1": {
+                            "connection_points": [
+                                "d1:eth1",
+                                "d2:input"
+                            ],
+                            "id": "1",
+                            "name": "d1-d2",
+                            "network": "s1",
+                            "type": "E-Line"
+                        },
+                        "2": {
+                            "connection_points": [
+                                "d2:output",
+                                "d3:eth1"
+                            ],
+                            "id": "2",
+                            "name": "d2-d3",
+                            "network": "s2",
+                            "type": "E-Line"
+                        }
+                    },
+                    "nodes": {
+                        "d1": {
+                            "connection_points": {
+                                "eth1": {
+                                    "address": "172.31.1.1/24",
+                                    "id": "eth1",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d1",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d1"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "512",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "agent",
+                            "type": "internal"
+                        },
+                        "d2": {
+                            "connection_points": {
+                                "input": {
+                                    "address": "172.31.1.2/24",
+                                    "id": "input",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                },
+                                "output": {
+                                    "address": "172.31.1.3/24",
+                                    "id": "output",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d2",
+                            "image": "vnf/bypass:0.1",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "./run.sh"
+                                    ],
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "vcpus": "2"
+                                },
+                                "memory": {
+                                    "size": "2048",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "sut",
+                            "type": "internal"
+                        },
+                        "d3": {
+                            "connection_points": {
+                                "eth1": {
+                                    "address": "172.31.1.4/24",
+                                    "id": "eth1",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d3",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d3"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "512",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "agent",
+                            "type": "internal"
+                        },
+                        "d4": {
+                            "format": "process",
+                            "id": "d4",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-monitor --uuid {host_id} --address {host_ip}:50056  > gym-monitor.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d4"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "relationships": {
+                                "d4-outside-d2": {
+                                    "name": "d4-outside-d2",
+                                    "target": "d2",
+                                    "type": "AttachesTo"
+                                }
+                            },
+                            "role": "monitor",
+                            "type": "external"
+                        },
+                        "d5": {
+                            "format": "docker",
+                            "id": "d5",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d5"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "1024",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "1",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "manager",
+                            "type": "internal"
+                        }
+                    }
+                }
+            },
+            "vnfpp": {
+                "reports": {
+                    "1": {
+                        "id": 1,
+                        "snapshots": {
+                            "1001": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "bits_per_second": {
+                                                "name": "bits_per_second",
+                                                "scalar": 999993015.1674098,
+                                                "type": "float",
+                                                "unit": "bits_per_second"
+                                            },
+                                            "bytes": {
+                                                "name": "bytes",
+                                                "scalar": 3749981168.0,
+                                                "type": "int",
+                                                "unit": "bytes"
+                                            },
+                                            "jitter_ms": {
+                                                "name": "jitter_ms",
+                                                "scalar": 0.00017418871400989245,
+                                                "type": "float",
+                                                "unit": "ms"
+                                            },
+                                            "lost_packets": {
+                                                "name": "lost_packets",
+                                                "scalar": 151.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            },
+                                            "lost_percent": {
+                                                "name": "lost_percent",
+                                                "scalar": 0.005830642614043122,
+                                                "type": "float",
+                                                "unit": "%"
+                                            },
+                                            "packets": {
+                                                "name": "packets",
+                                                "scalar": 2589766.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 1G -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T22:12:53.668277Z",
+                                            "stop": "2020-11-08T22:13:23.679717Z"
+                                        }
+                                    }
+                                },
+                                "id": 1001,
+                                "origin": {
+                                    "id": "d1",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T22:13:23.689464Z",
+                                "trial": 1
+                            },
+                            "1002": {
+                                "id": 1002,
+                                "origin": {
+                                    "id": "d3",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T22:13:24.721984Z",
+                                "trial": 1
+                            },
+                            "1003": {
+                                "evaluations": {
+                                    "1": {
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "cpu_percent": {
+                                                "name": "cpu_percent",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.006700414250207125"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0015304818258664414"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "cpu_total_usage": {
+                                                "name": "cpu_total_usage",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "17297313771.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "17297349271.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "cpu_usage_in_kernelmode": {
+                                                "name": "cpu_usage_in_kernelmode",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "7780000000.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "7780000000.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "cpu_usage_in_usermode": {
+                                                "name": "cpu_usage_in_usermode",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "3460000000.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "3460000000.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "io_read": {
+                                                "name": "io_read",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "38690816.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "38690816.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "io_write": {
+                                                "name": "io_write",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "81920.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "81920.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_active_anon": {
+                                                "name": "mem_active_anon",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "6184960.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "6184960.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_active_file": {
+                                                "name": "mem_active_file",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "15282176.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "15282176.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_cache": {
+                                                "name": "mem_cache",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "33542144.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "33542144.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_dirty": {
+                                                "name": "mem_dirty",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_hierarchical_memory_limit": {
+                                                "name": "mem_hierarchical_memory_limit",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "9.223372036854772e+18"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "9.223372036854772e+18"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_hierarchical_memsw_limit": {
+                                                "name": "mem_hierarchical_memsw_limit",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_inactive_anon": {
+                                                "name": "mem_inactive_anon",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "5947392.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "5947392.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_inactive_file": {
+                                                "name": "mem_inactive_file",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "15380480.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "15380480.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_limit": {
+                                                "name": "mem_limit",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "16421285888.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "16421285888.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_mapped_file": {
+                                                "name": "mem_mapped_file",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "21491712.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "21491712.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_max_usage": {
+                                                "name": "mem_max_usage",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "60809216.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "60809216.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_percent": {
+                                                "name": "mem_percent",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.3185999461724979"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.3185999461724979"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_pgfault": {
+                                                "name": "mem_pgfault",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "15378.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "15378.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_pgmajfault": {
+                                                "name": "mem_pgmajfault",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "198.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "198.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_pgpgin": {
+                                                "name": "mem_pgpgin",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "16962.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "16962.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_pgpgout": {
+                                                "name": "mem_pgpgout",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "6592.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "6592.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_rss": {
+                                                "name": "mem_rss",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "9674752.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "9674752.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_rss_huge": {
+                                                "name": "mem_rss_huge",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_active_anon": {
+                                                "name": "mem_total_active_anon",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "6184960.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "6184960.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_active_file": {
+                                                "name": "mem_total_active_file",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "15282176.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "15282176.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_cache": {
+                                                "name": "mem_total_cache",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "33542144.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "33542144.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_dirty": {
+                                                "name": "mem_total_dirty",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_inactive_anon": {
+                                                "name": "mem_total_inactive_anon",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "5947392.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "5947392.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_inactive_file": {
+                                                "name": "mem_total_inactive_file",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "15380480.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "15380480.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_mapped_file": {
+                                                "name": "mem_total_mapped_file",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "21491712.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "21491712.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_pgfault": {
+                                                "name": "mem_total_pgfault",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "15378.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "15378.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_pgmajfault": {
+                                                "name": "mem_total_pgmajfault",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "198.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "198.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_pgpgin": {
+                                                "name": "mem_total_pgpgin",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "16962.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "16962.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_pgpgout": {
+                                                "name": "mem_total_pgpgout",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "6592.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "6592.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_rss": {
+                                                "name": "mem_total_rss",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "9674752.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "9674752.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_rss_huge": {
+                                                "name": "mem_total_rss_huge",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_unevictable": {
+                                                "name": "mem_total_unevictable",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_total_writeback": {
+                                                "name": "mem_total_writeback",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_unevictable": {
+                                                "name": "mem_unevictable",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_usage": {
+                                                "name": "mem_usage",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "52318208.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "52318208.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "mem_writeback": {
+                                                "name": "mem_writeback",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "0.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "0.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            },
+                                            "system_cpu_usage": {
+                                                "name": "system_cpu_usage",
+                                                "series": {
+                                                    "0": {
+                                                        "key": "0.0",
+                                                        "value": "3109033130000000.0"
+                                                    },
+                                                    "1": {
+                                                        "key": "1.0",
+                                                        "value": "3109056690000000.0"
+                                                    }
+                                                },
+                                                "type": "float"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "ListenerDocker duration 3 target hammurabi",
+                                            "id": 11,
+                                            "name": "docker",
+                                            "type": "listener"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T19:12:52.804256Z",
+                                            "stop": "2020-11-08T19:12:56.828568Z"
+                                        }
+                                    }
+                                },
+                                "id": 1003,
+                                "origin": {
+                                    "id": "d4",
+                                    "role": "monitor"
+                                },
+                                "timestamp": "2020-11-08T19:12:56.850334Z",
+                                "trial": 1
+                            }
+                        },
+                        "test": 1,
+                        "timestamp": "2020-11-08T22:13:24.735920Z"
+                    }
+                },
+                "timestamp": "2020-11-08T19:13:28.614849Z"
+            }
+        }
+    },
+    "version": "0.1",
+    "vnf": {
+        "author": "Test case",
+        "description": "Bypass VNF",
+        "id": "vnf-sut-02",
+        "name": "vnf/bypass:0.1",
+        "version": "0.1"
+    }
+}

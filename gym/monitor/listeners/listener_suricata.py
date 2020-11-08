@@ -233,7 +233,8 @@ class SuricataStats:
         except Exception:
             pass
         finally:
-            data_flat = flatten_json.flatten(data)
+            stats_data = data.get("stats", {})
+            data_flat = flatten_json.flatten(stats_data)
             data_flat = {METRIC_PREFIX + k: v for k, v in data_flat.items()}
             return data_flat
 
@@ -376,15 +377,19 @@ class ListenerSuricata(Listener):
             if "suricata_eve_event_type" in out.keys():
                 del out["suricata_eve_event_type"]
 
-            for name, value in out.items():
-                m = {
-                    "name": name,
-                    "type": "float",
-                    "unit": "",
-                    "scalar": float(value),
-                }
+            if "suricata_eve_detect_engines_0_last_reload" in out.keys():
+                del out["suricata_eve_detect_engines_0_last_reload"]
 
-                metrics.append(m)
+            for name, value in out.items():
+                if type(value) is int or type(value) is float:
+                    m = {
+                        "name": name,
+                        "type": "float",
+                        "unit": "",
+                        "scalar": float(value),
+                    }
+
+                    metrics.append(m)
 
         return metrics, error
 

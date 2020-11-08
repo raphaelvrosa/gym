@@ -1,3 +1,4 @@
+import os
 import logging
 import asyncio
 
@@ -16,6 +17,15 @@ class App:
         self.cfg = Config()
         self.app_cls = app_cls
         self.app_role = app_role
+        self.create_gym_dirs()
+
+    def create_gym_dirs(self):
+        dir_names = ["/tmp/gym/logs/", "/tmp/gym/results/"]
+        for dir_name in dir_names:
+            try:
+                os.makedirs(dir_name)
+            except OSError:
+                pass
 
     async def main(self):
         """Uses grpclibs to create an async grpc service

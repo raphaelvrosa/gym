@@ -52,7 +52,12 @@ class GymCLIApp(App):
         self.loader = Loader()
 
     def list_files(self, source):
-        files = self.loader.files(source, suffix=".json", full_path=True)
+        files = []
+
+        if source:
+            source_path = os.path.normpath(os.path.join(os.getcwd(), source))
+            files = self.loader.files(source_path, suffix=".json", full_path=True)
+
         return files
 
     def argparse(self, argv):

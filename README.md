@@ -37,13 +37,13 @@ This command requires root privileges. It installs gym components in the bare me
 
 ### Dependencies
 
-Gym is tested in Ubuntu, version 18.04 onwards. 
+Gym is tested in Ubuntu, version 20.04 onwards. 
 
-Gym depends on python 3.7, because it uses some gRPC libraries via asyncio. 
+Gym depends on python 3.8, because it uses some gRPC libraries via asyncio. 
 
 To run most of the examples, gym makes use of Containernet (an extension of Mininet to run containers), thus it needs to install Docker and Mininet to do so.
 Besides, these dependencies also download and build other docker images needed for most of the gym examples, download some pcap files and place them under /mnt/pcaps folder.
-The installation of such dependencies are placed into the examples/build_reqs.sh file. To install such dependencies, follow:
+To install such dependencies, follow:
 
 ```bash
 $ sudo apt install git
@@ -52,7 +52,7 @@ $ git clone https://github.com/raphaelvrosa/gym
 
 $ cd gym
 
-$ sudo examples/build_reqs.sh
+$ sudo make examples-util
 ```
 
 
@@ -70,7 +70,7 @@ Then logout the OS and login again, so the group permissions are enabled.
 To install gym and build a docker image with all its components operational.
 
 ```bash
-$ sudo ./build.sh
+$ sudo make install
 ```
 
 This command will install all the python packages needed by gym (see the setup.py file), and it will make available all the gym core components executables (i.e., gym-player, gym-manager, gym-monitor, gym-agent) to be run by terminal. 
@@ -79,29 +79,126 @@ This command will install all the python packages needed by gym (see the setup.p
 To install Gym for **development** purposes, run:
 
 ```bash
-$ sudo python3.7 setup.py develop
+$ sudo python3.8 setup.py develop
 ```
 
 This will not actually install all the files in your system, but just link them to your development directory, simplifying the code/deploy/test cycle.
 
 ### Docker Image
 
-You can also find the gym docker image directly at: https://hub.docker.com/r/raphaelvrosa/gym
+You can build and run the gym docker image via:
 
+```bash
+$ sudo make docker-build
+
+$ sudo make docker-run
+```
+
+### Virtual Machine (VM)
+
+Gym uses Vagrant to build a virtual machine (VM). 
+You can build a VM using qemu-kvm or virtualbox via:
+
+```bash
+$ sudo make vagrant-run-virtualbox
+
+$ sudo make vagrant-run-libvirt
+```
+
+You can interact with the virtual machine using vagrant commands (e.g., vagrant ssh).
 
 ## Examples
 
-In the folder gym/examples there exists a run.sh file that can trigger the execution of different examples.
+In the folder gym/examples there exists a set of different example files.
 
-To execute any test just type, for instance "sudo -H ./run.sh start 0". And after run, to stop and clean all the test environment/logs/output just run "sudo -H ./run.sh stop".
+Use gym-cli to experiment with the examples:
 
-There are 4 tests enabled by default in the run.sh file. Each one of the tests requires different capabilities, as described below.
+```bash
+$ sudo gym-cli --uuid cli --address 127.0.0.1:9988 --source ./examples
+```
+
+Specifying --source means all the files in that folder will be available to be loaded by gym-cli and have experiments performed.
+
+**Important:** sudo is needed because gym is going to start one of its components, gym-infra, that is responsible to start containernet, a platform used in the examples.
+
+
+After initializing gym-cli, load the configuration file vnfbd.json example you want to experiment with. For instance:
+
+```bash
+$ sudo gym-cli --uuid cli --address 127.0.0.1:9988 --source ./examples
+
+
+		<<< Welcome to Gym >>>		
+
+(-: gym > load vnf-br-001.json
+
+-> task: Loading configuration file at .../gym/examples/vnf-br-001.json
+-> result: Configuration loaded
+
+(-: gym > 
+
+```
+
+Having successfuly loaded the configuration, then you can begin the experiment.
+
+
+```bash
+
+		<<< Welcome to Gym >>>		
+
+-> task: Loading configuration file at .../gym/examples/vnf-br-001.json
+-> result: Configuration loaded
+
+(-: gym > begin
+
+: Beginning :
+
+-> task: Experiment Begin
+
+```
+
+Gym is going to start gym-infra and gym-player components, then send the VNF-BR loaded config to gym-player, and wait for its result.
+
+After waiting for a while, at the end of the experiment you should se something like:
+
+```bash
+: Beginning :
+
+-> task: Experiment Begin
+-> result: Gym Experiment Ok
+
+-> result: Result VNF-BR 001 (json and csv) saved to /tmp/gym/results/
+
+(-: gym > 
+
+```
+
+If errors were found, check the gym logs at /tmp/gym/logs. There exists a single log file for each component (e.g., GymCLIApp-cli.log,  GymInfra-gym-infra.log, GymPlayer-gym-player.log).
+
+
+Finally, you can end the experiment and say goodbye to gym, type <ctrl+d> to exit gym-cli.
+
+
+```bash
+
+(-: gym > end
+
+: Ending :
+
+-> task: Experiment End
+-> result: Ended Gym Experiment
+
+(-: gym > <ctrl+d>
+
+	<<< See you soon! Cheers, Gym >>>	
+
+```
+
+
 
 **Important:** To execute examples 1, 2 and 3 follow the instructions in the topic Installing/Dependencies previously explained in this readme.
 
 Description of the examples:
-
-* #0: Performs the execution of two agents just executing ping commands locally on the host machine.
 
 * #1: Uses the containernet platform to deploy agents and a dummy VNF, which just bypass the traffic among its ports. The agents perform the execution of ping/iperf3 traffic through the target VNF using multiple instances of a prober.
 
@@ -129,7 +226,7 @@ If you have any questions, please use the mailing-list at https://groups.google.
 
 Your contributions are very welcome! Please fork the GitHub repository and create a pull request.
 
-## Lead Developer
+## Creator and Lead Developer
 
 Raphael Vicente Rosa
 * Mail: <raphaelvrosa (at) gmail (dot) com>

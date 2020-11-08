@@ -190,7 +190,7 @@ class VNFBR:
                 feature_value = node.get(node_feature)
                 self.update_features(vnfbd_features, feature_items, feature_value)
 
-            node_resources = node.get("resources")
+            node_resources = node.get("resources", {})
 
             for node_resource_key, node_resource_values in node_resources.items():
                 for (
@@ -268,14 +268,28 @@ class VNFBR:
                     metric_name = metric.get("name")
                     metric_scalar = metric.get("scalar", None)
                     metric_series = metric.get("series", None)
+                    metric_type = metric.get("type", None)
 
                     if metric_scalar:
                         metrics[metric_name] = metric_scalar
                     if metric_series:
 
-                        metric_values = [
+                        metric_values_raw = [
                             ms.get("value") for ms in metric_series.values()
                         ]
+
+                        metric_values = []
+
+                        for mv in metric_values_raw:
+                            if metric_type == "float":
+                                metric_values.append(float(mv))
+
+                            elif metric_type == "int":
+                                metric_values.append(int(mv))
+
+                            else:
+                                metric_values.append(mv)
+
                         metrics_series_summary = (
                             self.extract_vnfpp_metrics_series_summary(
                                 metric_name, metric_values
@@ -325,7 +339,7 @@ class VNFBR:
 
         for report in reports.values():
             report_test = report.get("test")
-            report_snapshots = report.get("snapshots")
+            report_snapshots = report.get("snapshots", {})
 
             snaps_metrics = self.extract_snapshots_metrics(report_snapshots)
             for snap_metrics in snaps_metrics:
@@ -335,7 +349,7 @@ class VNFBR:
         return reports_metrics
 
     def extract_vnfpp_metrics(self, vnfpp):
-        reports = vnfpp.get("reports")
+        reports = vnfpp.get("reports", {})
         report_metrics = self.extract_reports_metrics(reports)
         return report_metrics
 
@@ -553,6 +567,7 @@ class VNFBR:
         except Exception as ex:
             error = f"VNF-BR save file {filepath} error: {repr(ex)}"
             logger.debug(error)
+            ack = False
         else:
             msg = f"VNF-BR save file {filepath} success."
             logger.debug(msg)

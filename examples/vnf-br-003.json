@@ -21,7 +21,7 @@
             "parameters": {
                 "address": {
                     "input": "address",
-                    "value": "172.17.0.1:9090"
+                    "value": "localhost:57000"
                 }
             }
         }
@@ -30,14 +30,14 @@
         "variables": {
             "vnf_vcpu": {
                 "name": "vnf_vcpu",
-                "values": ["1", "2"],
+                "values": ["2"],
                 "path": "/scenario/nodes[id='d2']/resources/cpu/vcpus",
                 "class": "resource",
                 "type": "uint32"
             },
             "vnf_memory": {
                 "name": "vnf_memory",
-                "values": ["1024", "2048"],
+                "values": ["2048"],
                 "path": "/scenario/nodes[id='d2']/resources/memory/size",
                 "class": "resource",
                 "type": "uint32"
@@ -109,12 +109,12 @@
                         "role": "sut",
                         "resources": {
                             "cpu": {
-                                "vcpus": 1,
+                                "vcpus": 2,
                                 "cpu_bw": "",
                                 "pinning": ""
                             },
                             "memory": {
-                                "size": 512,
+                                "size": 2048,
                                 "unit": "MB"
                             },
                             "storage": {
@@ -249,7 +249,7 @@
                         "connection_points": {},
                         "relationships": {
                             "d4-inside-d1": {
-                                "name": "d4-inside-d2",
+                                "name": "d5-inside-d2",
                                 "type": "HostedOn",
                                 "target": "d2"
                             }
@@ -269,7 +269,7 @@
                                     }
                                 },
                                 "implementation": [
-                                    "gym-monitor --uuid {host_id} --address {host_ip}:50057  > gym-monitor.log 2>&1 &"
+                                    "gym-monitor --uuid {host_id} --address {host_ip}:50056  > gym-monitor.log 2>&1 &"
                                 ]
                             }
                         }
@@ -305,7 +305,7 @@
                                 "parameters": {
                                     "host_id": {
                                         "input": "host_id",
-                                        "value": "d5"
+                                        "value": "d6"
                                     },
                                     "host_ip": {
                                         "input": "host_ip",
@@ -345,8 +345,8 @@
             },
             "proceedings": {
                 "agents": {
-                    "1": {
-                        "uuid": "1",
+                    "d1": {
+                        "uuid": "d1",
                         "name": "",
                         "probers": {
                             "1": {
@@ -388,8 +388,8 @@
                     }
                 },
                 "monitors": {
-                    "2": {
-                        "uuid": "2",
+                    "d4": {
+                        "uuid": "d4",
                         "name": "",
                         "listeners": {
                             "1": {
@@ -413,14 +413,14 @@
                             }
                         }
                     },
-                    "3": {
-                        "uuid": "3",
+                    "d5": {
+                        "uuid": "d5",
                         "name": "",
                         "listeners": {
                             "1": {
                                 "id": 14,
                                 "instances": 1,
-                                "name": "docker",
+                                "name": "suricata",
                                 "parameters": {
                                     "interface": {
                                         "input": "interface",
@@ -430,11 +430,6 @@
                                         "input": "duration",
                                         "value": "30"
                                     }
-                                },
-                                "sched": {
-                                    "from": 1,
-                                    "until": 10,
-                                    "repeat": 3
                                 }
                             }
                         }

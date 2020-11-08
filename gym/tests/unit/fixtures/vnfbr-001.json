@@ -1,0 +1,1439 @@
+{
+    "author": "VNF Benchmark Report",
+    "description": "Tests bypass container VNF",
+    "environment": {
+        "deploy": true,
+        "description": "Esablishes scenario in containernet",
+        "name": "Execution-Environment",
+        "orchestrator": {
+            "description": "Uses containernet to deploy vnfbd scenario",
+            "parameters": {
+                "address": {
+                    "input": "address",
+                    "value": "localhost:57000"
+                }
+            },
+            "type": "containernet"
+        }
+    },
+    "id": "001",
+    "inputs": {
+        "variables": {
+            "vnf_memory": {
+                "class": "resource",
+                "name": "vnf_memory",
+                "path": "/scenario/nodes[id='d2']/resources/memory/size",
+                "type": "uint32",
+                "values": [
+                    "2048"
+                ]
+            },
+            "vnf_vcpu": {
+                "class": "resource",
+                "name": "vnf_vcpu",
+                "path": "/scenario/nodes[id='d2']/resources/cpu/vcpus",
+                "type": "uint32",
+                "values": [
+                    "1",
+                    "2"
+                ]
+            }
+        },
+        "vnfbd": {
+            "experiments": {
+                "tests": 2,
+                "trials": 2
+            },
+            "proceedings": {
+                "agents": {
+                    "d1": {
+                        "probers": {
+                            "1": {
+                                "id": 1,
+                                "instances": "1",
+                                "name": "iperf3",
+                                "parameters": {
+                                    "client": {
+                                        "input": "client",
+                                        "value": "True"
+                                    },
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    },
+                                    "port": {
+                                        "input": "port",
+                                        "value": "9015"
+                                    },
+                                    "protocol": {
+                                        "input": "protocol",
+                                        "value": "udp"
+                                    },
+                                    "rate": {
+                                        "input": "rate",
+                                        "value": "4G"
+                                    },
+                                    "server": {
+                                        "input": "server",
+                                        "value": "172.31.1.4"
+                                    }
+                                }
+                            }
+                        },
+                        "uuid": "d1"
+                    },
+                    "d3": {
+                        "probers": {
+                            "1": {
+                                "id": 1,
+                                "instances": "1",
+                                "name": "iperf3",
+                                "parameters": {
+                                    "client": {
+                                        "input": "client",
+                                        "value": "False"
+                                    },
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "30"
+                                    },
+                                    "port": {
+                                        "input": "port",
+                                        "value": "9015"
+                                    },
+                                    "protocol": {
+                                        "input": "protocol",
+                                        "value": "udp"
+                                    }
+                                }
+                            }
+                        },
+                        "uuid": "d3"
+                    }
+                }
+            },
+            "scenario": {
+                "links": {
+                    "1": {
+                        "connection_points": [
+                            "d1:eth1",
+                            "d2:input"
+                        ],
+                        "id": "1",
+                        "name": "d1-d2",
+                        "network": "s1",
+                        "type": "E-Line"
+                    },
+                    "2": {
+                        "connection_points": [
+                            "d2:output",
+                            "d3:eth1"
+                        ],
+                        "id": "2",
+                        "name": "d2-d3",
+                        "network": "s2",
+                        "type": "E-Line"
+                    }
+                },
+                "nodes": {
+                    "d1": {
+                        "connection_points": {
+                            "eth1": {
+                                "address": "172.31.1.1/24",
+                                "id": "eth1",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            }
+                        },
+                        "format": "docker",
+                        "id": "d1",
+                        "image": "raphaelvrosa/gym:latest",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                ],
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d1"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "cpu_bw": "1.0",
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "512",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "2",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "agent",
+                        "type": "internal"
+                    },
+                    "d2": {
+                        "connection_points": {
+                            "input": {
+                                "address": "172.31.1.2/24",
+                                "id": "input",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            },
+                            "output": {
+                                "address": "172.31.1.3/24",
+                                "id": "output",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            }
+                        },
+                        "format": "docker",
+                        "id": "d2",
+                        "image": "vnf/bypass:0.1",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "./run.sh"
+                                ],
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "cpu_bw": "1.0",
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "512",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "2",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "sut",
+                        "type": "internal"
+                    },
+                    "d3": {
+                        "connection_points": {
+                            "eth1": {
+                                "address": "172.31.1.4/24",
+                                "id": "eth1",
+                                "interface": "ipv4",
+                                "type": "internal"
+                            }
+                        },
+                        "format": "docker",
+                        "id": "d3",
+                        "image": "raphaelvrosa/gym:latest",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                ],
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d3"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "cpu_bw": "1.0",
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "512",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "2",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "agent",
+                        "type": "internal"
+                    },
+                    "d5": {
+                        "format": "docker",
+                        "id": "d5",
+                        "image": "raphaelvrosa/gym:latest",
+                        "lifecycle": {
+                            "start": {
+                                "implementation": [
+                                    "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                                ],
+                                "parameters": {
+                                    "host_id": {
+                                        "input": "host_id",
+                                        "value": "d5"
+                                    },
+                                    "host_ip": {
+                                        "input": "host_ip",
+                                        "value": "get_attrib:ip"
+                                    }
+                                },
+                                "workflow": "start"
+                            }
+                        },
+                        "resources": {
+                            "cpu": {
+                                "vcpus": "1"
+                            },
+                            "memory": {
+                                "size": "1024",
+                                "unit": "MB"
+                            },
+                            "storage": {
+                                "size": "1",
+                                "unit": "GB"
+                            }
+                        },
+                        "role": "manager",
+                        "type": "internal"
+                    }
+                }
+            }
+        }
+    },
+    "name": "Tests bypass container VNF",
+    "outputs": {
+        "1": {
+            "id": "1",
+            "variables": {
+                "vnf_memory": {
+                    "name": "vnf_memory",
+                    "value": "2048"
+                },
+                "vnf_vcpu": {
+                    "name": "vnf_vcpu",
+                    "value": "1"
+                }
+            },
+            "vnfbd": {
+                "experiments": {
+                    "tests": 2,
+                    "trials": 2
+                },
+                "proceedings": {
+                    "agents": {
+                        "d1": {
+                            "probers": {
+                                "1": {
+                                    "id": 1,
+                                    "instances": "1",
+                                    "name": "iperf3",
+                                    "parameters": {
+                                        "client": {
+                                            "input": "client",
+                                            "value": "True"
+                                        },
+                                        "duration": {
+                                            "input": "duration",
+                                            "value": "30"
+                                        },
+                                        "port": {
+                                            "input": "port",
+                                            "value": "9015"
+                                        },
+                                        "protocol": {
+                                            "input": "protocol",
+                                            "value": "udp"
+                                        },
+                                        "rate": {
+                                            "input": "rate",
+                                            "value": "4G"
+                                        },
+                                        "server": {
+                                            "input": "server",
+                                            "value": "172.31.1.4"
+                                        }
+                                    }
+                                }
+                            },
+                            "uuid": "d1"
+                        },
+                        "d3": {
+                            "probers": {
+                                "1": {
+                                    "id": 1,
+                                    "instances": "1",
+                                    "name": "iperf3",
+                                    "parameters": {
+                                        "client": {
+                                            "input": "client",
+                                            "value": "False"
+                                        },
+                                        "duration": {
+                                            "input": "duration",
+                                            "value": "30"
+                                        },
+                                        "port": {
+                                            "input": "port",
+                                            "value": "9015"
+                                        },
+                                        "protocol": {
+                                            "input": "protocol",
+                                            "value": "udp"
+                                        }
+                                    }
+                                }
+                            },
+                            "uuid": "d3"
+                        }
+                    }
+                },
+                "scenario": {
+                    "links": {
+                        "1": {
+                            "connection_points": [
+                                "d1:eth1",
+                                "d2:input"
+                            ],
+                            "id": "1",
+                            "name": "d1-d2",
+                            "network": "s1",
+                            "type": "E-Line"
+                        },
+                        "2": {
+                            "connection_points": [
+                                "d2:output",
+                                "d3:eth1"
+                            ],
+                            "id": "2",
+                            "name": "d2-d3",
+                            "network": "s2",
+                            "type": "E-Line"
+                        }
+                    },
+                    "nodes": {
+                        "d1": {
+                            "connection_points": {
+                                "eth1": {
+                                    "address": "172.31.1.1/24",
+                                    "id": "eth1",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d1",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d1"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "512",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "agent",
+                            "type": "internal"
+                        },
+                        "d2": {
+                            "connection_points": {
+                                "input": {
+                                    "address": "172.31.1.2/24",
+                                    "id": "input",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                },
+                                "output": {
+                                    "address": "172.31.1.3/24",
+                                    "id": "output",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d2",
+                            "image": "vnf/bypass:0.1",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "./run.sh"
+                                    ],
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "2048",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "sut",
+                            "type": "internal"
+                        },
+                        "d3": {
+                            "connection_points": {
+                                "eth1": {
+                                    "address": "172.31.1.4/24",
+                                    "id": "eth1",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d3",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d3"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "512",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "agent",
+                            "type": "internal"
+                        },
+                        "d5": {
+                            "format": "docker",
+                            "id": "d5",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d5"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "1024",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "1",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "manager",
+                            "type": "internal"
+                        }
+                    }
+                }
+            },
+            "vnfpp": {
+                "reports": {
+                    "1": {
+                        "id": 1,
+                        "snapshots": {
+                            "1001": {
+                                "id": 1001,
+                                "origin": {
+                                    "id": "d3",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:09:03.719294Z",
+                                "trial": 1
+                            },
+                            "1002": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "bits_per_second": {
+                                                "name": "bits_per_second",
+                                                "scalar": 2650376479.5676723,
+                                                "type": "float",
+                                                "unit": "bits_per_second"
+                                            },
+                                            "bytes": {
+                                                "name": "bytes",
+                                                "scalar": 9938914168.0,
+                                                "type": "int",
+                                                "unit": "bytes"
+                                            },
+                                            "jitter_ms": {
+                                                "name": "jitter_ms",
+                                                "scalar": 0.0008119143171675836,
+                                                "type": "float",
+                                                "unit": "ms"
+                                            },
+                                            "lost_packets": {
+                                                "name": "lost_packets",
+                                                "scalar": 9098.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            },
+                                            "lost_percent": {
+                                                "name": "lost_percent",
+                                                "scalar": 0.13254872491419226,
+                                                "type": "float",
+                                                "unit": "%"
+                                            },
+                                            "packets": {
+                                                "name": "packets",
+                                                "scalar": 6863891.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 4G -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:08:32.703182Z",
+                                            "stop": "2020-11-08T20:09:02.714619Z"
+                                        }
+                                    }
+                                },
+                                "id": 1002,
+                                "origin": {
+                                    "id": "d1",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:09:02.724730Z",
+                                "trial": 1
+                            },
+                            "1003": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -s -p 9015 -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:09:03.817767Z",
+                                            "stop": "2020-11-08T20:09:03.820766Z"
+                                        }
+                                    }
+                                },
+                                "id": 1003,
+                                "origin": {
+                                    "id": "d3",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:09:03.830463Z",
+                                "trial": 2
+                            },
+                            "1004": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "bits_per_second": {
+                                                "name": "bits_per_second",
+                                                "scalar": 2528401030.8275533,
+                                                "type": "float",
+                                                "unit": "bits_per_second"
+                                            },
+                                            "bytes": {
+                                                "name": "bytes",
+                                                "scalar": 9481505448.0,
+                                                "type": "int",
+                                                "unit": "bytes"
+                                            },
+                                            "jitter_ms": {
+                                                "name": "jitter_ms",
+                                                "scalar": 0.0006779212312591252,
+                                                "type": "float",
+                                                "unit": "ms"
+                                            },
+                                            "lost_packets": {
+                                                "name": "lost_packets",
+                                                "scalar": 1563.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            },
+                                            "lost_percent": {
+                                                "name": "lost_percent",
+                                                "scalar": 0.023869880288656033,
+                                                "type": "float",
+                                                "unit": "%"
+                                            },
+                                            "packets": {
+                                                "name": "packets",
+                                                "scalar": 6548001.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 4G -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:09:04.817076Z",
+                                            "stop": "2020-11-08T20:09:34.828682Z"
+                                        }
+                                    }
+                                },
+                                "id": 1004,
+                                "origin": {
+                                    "id": "d1",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:09:34.839584Z",
+                                "trial": 2
+                            }
+                        },
+                        "test": 1,
+                        "timestamp": "2020-11-08T20:09:34.842760Z"
+                    },
+                    "2": {
+                        "id": 2,
+                        "snapshots": {
+                            "1001": {
+                                "id": 1001,
+                                "origin": {
+                                    "id": "d3",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:10:25.304135Z",
+                                "trial": 1
+                            },
+                            "1002": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "bits_per_second": {
+                                                "name": "bits_per_second",
+                                                "scalar": 2576605662.3916063,
+                                                "type": "float",
+                                                "unit": "bits_per_second"
+                                            },
+                                            "bytes": {
+                                                "name": "bytes",
+                                                "scalar": 9662273768.0,
+                                                "type": "int",
+                                                "unit": "bytes"
+                                            },
+                                            "jitter_ms": {
+                                                "name": "jitter_ms",
+                                                "scalar": 0.0007858745170886346,
+                                                "type": "float",
+                                                "unit": "ms"
+                                            },
+                                            "lost_packets": {
+                                                "name": "lost_packets",
+                                                "scalar": 1990.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            },
+                                            "lost_percent": {
+                                                "name": "lost_percent",
+                                                "scalar": 0.029822380002760444,
+                                                "type": "float",
+                                                "unit": "%"
+                                            },
+                                            "packets": {
+                                                "name": "packets",
+                                                "scalar": 6672841.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 4G -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:09:54.283736Z",
+                                            "stop": "2020-11-08T20:10:24.295638Z"
+                                        }
+                                    }
+                                },
+                                "id": 1002,
+                                "origin": {
+                                    "id": "d1",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:10:24.306089Z",
+                                "trial": 1
+                            },
+                            "1003": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -s -p 9015 -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:10:25.406932Z",
+                                            "stop": "2020-11-08T20:10:25.409973Z"
+                                        }
+                                    }
+                                },
+                                "id": 1003,
+                                "origin": {
+                                    "id": "d3",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:10:25.420553Z",
+                                "trial": 2
+                            },
+                            "1004": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "bits_per_second": {
+                                                "name": "bits_per_second",
+                                                "scalar": 2509751100.290591,
+                                                "type": "float",
+                                                "unit": "bits_per_second"
+                                            },
+                                            "bytes": {
+                                                "name": "bytes",
+                                                "scalar": 9411568496.0,
+                                                "type": "int",
+                                                "unit": "bytes"
+                                            },
+                                            "jitter_ms": {
+                                                "name": "jitter_ms",
+                                                "scalar": 0.0003355957690856632,
+                                                "type": "float",
+                                                "unit": "ms"
+                                            },
+                                            "lost_packets": {
+                                                "name": "lost_packets",
+                                                "scalar": 1233.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            },
+                                            "lost_percent": {
+                                                "name": "lost_percent",
+                                                "scalar": 0.018970100475375642,
+                                                "type": "float",
+                                                "unit": "%"
+                                            },
+                                            "packets": {
+                                                "name": "packets",
+                                                "scalar": 6499702.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 4G -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:10:26.407450Z",
+                                            "stop": "2020-11-08T20:10:56.419039Z"
+                                        }
+                                    }
+                                },
+                                "id": 1004,
+                                "origin": {
+                                    "id": "d1",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:10:56.429496Z",
+                                "trial": 2
+                            }
+                        },
+                        "test": 2,
+                        "timestamp": "2020-11-08T20:10:56.432748Z"
+                    }
+                },
+                "timestamp": "2020-11-08T17:11:00.347937Z"
+            }
+        },
+        "2": {
+            "id": "2",
+            "variables": {
+                "vnf_memory": {
+                    "name": "vnf_memory",
+                    "value": "2048"
+                },
+                "vnf_vcpu": {
+                    "name": "vnf_vcpu",
+                    "value": "2"
+                }
+            },
+            "vnfbd": {
+                "experiments": {
+                    "tests": 2,
+                    "trials": 2
+                },
+                "proceedings": {
+                    "agents": {
+                        "d1": {
+                            "probers": {
+                                "1": {
+                                    "id": 1,
+                                    "instances": "1",
+                                    "name": "iperf3",
+                                    "parameters": {
+                                        "client": {
+                                            "input": "client",
+                                            "value": "True"
+                                        },
+                                        "duration": {
+                                            "input": "duration",
+                                            "value": "30"
+                                        },
+                                        "port": {
+                                            "input": "port",
+                                            "value": "9015"
+                                        },
+                                        "protocol": {
+                                            "input": "protocol",
+                                            "value": "udp"
+                                        },
+                                        "rate": {
+                                            "input": "rate",
+                                            "value": "4G"
+                                        },
+                                        "server": {
+                                            "input": "server",
+                                            "value": "172.31.1.4"
+                                        }
+                                    }
+                                }
+                            },
+                            "uuid": "d1"
+                        },
+                        "d3": {
+                            "probers": {
+                                "1": {
+                                    "id": 1,
+                                    "instances": "1",
+                                    "name": "iperf3",
+                                    "parameters": {
+                                        "client": {
+                                            "input": "client",
+                                            "value": "False"
+                                        },
+                                        "duration": {
+                                            "input": "duration",
+                                            "value": "30"
+                                        },
+                                        "port": {
+                                            "input": "port",
+                                            "value": "9015"
+                                        },
+                                        "protocol": {
+                                            "input": "protocol",
+                                            "value": "udp"
+                                        }
+                                    }
+                                }
+                            },
+                            "uuid": "d3"
+                        }
+                    }
+                },
+                "scenario": {
+                    "links": {
+                        "1": {
+                            "connection_points": [
+                                "d1:eth1",
+                                "d2:input"
+                            ],
+                            "id": "1",
+                            "name": "d1-d2",
+                            "network": "s1",
+                            "type": "E-Line"
+                        },
+                        "2": {
+                            "connection_points": [
+                                "d2:output",
+                                "d3:eth1"
+                            ],
+                            "id": "2",
+                            "name": "d2-d3",
+                            "network": "s2",
+                            "type": "E-Line"
+                        }
+                    },
+                    "nodes": {
+                        "d1": {
+                            "connection_points": {
+                                "eth1": {
+                                    "address": "172.31.1.1/24",
+                                    "id": "eth1",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d1",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d1"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "512",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "agent",
+                            "type": "internal"
+                        },
+                        "d2": {
+                            "connection_points": {
+                                "input": {
+                                    "address": "172.31.1.2/24",
+                                    "id": "input",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                },
+                                "output": {
+                                    "address": "172.31.1.3/24",
+                                    "id": "output",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d2",
+                            "image": "vnf/bypass:0.1",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "./run.sh"
+                                    ],
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "2"
+                                },
+                                "memory": {
+                                    "size": "2048",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "sut",
+                            "type": "internal"
+                        },
+                        "d3": {
+                            "connection_points": {
+                                "eth1": {
+                                    "address": "172.31.1.4/24",
+                                    "id": "eth1",
+                                    "interface": "ipv4",
+                                    "type": "internal"
+                                }
+                            },
+                            "format": "docker",
+                            "id": "d3",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-agent --uuid {host_id} --address {host_ip}:50055 > gym-agent.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d3"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "cpu_bw": "1.0",
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "512",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "2",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "agent",
+                            "type": "internal"
+                        },
+                        "d5": {
+                            "format": "docker",
+                            "id": "d5",
+                            "image": "raphaelvrosa/gym:latest",
+                            "lifecycle": {
+                                "start": {
+                                    "implementation": [
+                                        "gym-manager --uuid {host_id} --address {host_ip}:50057 > gym-mngr.log 2>&1 &"
+                                    ],
+                                    "parameters": {
+                                        "host_id": {
+                                            "input": "host_id",
+                                            "value": "d5"
+                                        },
+                                        "host_ip": {
+                                            "input": "host_ip",
+                                            "value": "get_attrib:ip"
+                                        }
+                                    },
+                                    "workflow": "start"
+                                }
+                            },
+                            "resources": {
+                                "cpu": {
+                                    "vcpus": "1"
+                                },
+                                "memory": {
+                                    "size": "1024",
+                                    "unit": "MB"
+                                },
+                                "storage": {
+                                    "size": "1",
+                                    "unit": "GB"
+                                }
+                            },
+                            "role": "manager",
+                            "type": "internal"
+                        }
+                    }
+                }
+            },
+            "vnfpp": {
+                "reports": {
+                    "1": {
+                        "id": 1,
+                        "snapshots": {
+                            "1001": {
+                                "id": 1001,
+                                "origin": {
+                                    "id": "d3",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:11:46.883069Z",
+                                "trial": 1
+                            },
+                            "1002": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "bits_per_second": {
+                                                "name": "bits_per_second",
+                                                "scalar": 2510597232.092152,
+                                                "type": "float",
+                                                "unit": "bits_per_second"
+                                            },
+                                            "bytes": {
+                                                "name": "bytes",
+                                                "scalar": 9414743960.0,
+                                                "type": "int",
+                                                "unit": "bytes"
+                                            },
+                                            "jitter_ms": {
+                                                "name": "jitter_ms",
+                                                "scalar": 0.000636279277127337,
+                                                "type": "float",
+                                                "unit": "ms"
+                                            },
+                                            "lost_packets": {
+                                                "name": "lost_packets",
+                                                "scalar": 0.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            },
+                                            "lost_percent": {
+                                                "name": "lost_percent",
+                                                "scalar": 0.0,
+                                                "type": "float",
+                                                "unit": "%"
+                                            },
+                                            "packets": {
+                                                "name": "packets",
+                                                "scalar": 6501895.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 4G -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:11:15.867325Z",
+                                            "stop": "2020-11-08T20:11:45.882237Z"
+                                        }
+                                    }
+                                },
+                                "id": 1002,
+                                "origin": {
+                                    "id": "d1",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:11:45.892607Z",
+                                "trial": 1
+                            },
+                            "1003": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -s -p 9015 -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:11:46.974920Z",
+                                            "stop": "2020-11-08T20:11:46.978013Z"
+                                        }
+                                    }
+                                },
+                                "id": 1003,
+                                "origin": {
+                                    "id": "d3",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:11:46.987103Z",
+                                "trial": 2
+                            },
+                            "1004": {
+                                "evaluations": {
+                                    "1": {
+                                        "error": "warning: Report format (-f) flag ignored with JSON output (-J)\n",
+                                        "id": 1,
+                                        "instance": 1,
+                                        "metrics": {
+                                            "bits_per_second": {
+                                                "name": "bits_per_second",
+                                                "scalar": 2524811616.2215343,
+                                                "type": "float",
+                                                "unit": "bits_per_second"
+                                            },
+                                            "bytes": {
+                                                "name": "bytes",
+                                                "scalar": 9468044840.0,
+                                                "type": "int",
+                                                "unit": "bytes"
+                                            },
+                                            "jitter_ms": {
+                                                "name": "jitter_ms",
+                                                "scalar": 0.0005193940956784897,
+                                                "type": "float",
+                                                "unit": "ms"
+                                            },
+                                            "lost_packets": {
+                                                "name": "lost_packets",
+                                                "scalar": 0.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            },
+                                            "lost_percent": {
+                                                "name": "lost_percent",
+                                                "scalar": 0.0,
+                                                "type": "float",
+                                                "unit": "%"
+                                            },
+                                            "packets": {
+                                                "name": "packets",
+                                                "scalar": 6538705.0,
+                                                "type": "int",
+                                                "unit": "packets"
+                                            }
+                                        },
+                                        "repeat": 1,
+                                        "source": {
+                                            "call": "iperf3 -c 172.31.1.4 -p 9015 -t 30.0 -u -b 4G -f m -J",
+                                            "id": 4,
+                                            "name": "iperf3",
+                                            "type": "prober"
+                                        },
+                                        "timestamp": {
+                                            "start": "2020-11-08T20:11:47.978143Z",
+                                            "stop": "2020-11-08T20:12:17.989895Z"
+                                        }
+                                    }
+                                },
+                                "id": 1004,
+                                "origin": {
+                                    "id": "d1",
+                                    "role": "agent"
+                                },
+                                "timestamp": "2020-11-08T20:12:18.000276Z",
+                                "trial": 2
+                            }
+                        },
+                        "test": 1,
+                        "timestamp": "2020-11-08T20:12:18.003494Z"
+                    },
+                    "2": {
+                        "error": "ConnectionRefusedError(111, \"Connect call failed ('172.17.0.5', 50057)\")",
+                        "id": 2,
+                        "test": 2
+                    }
+                },
+                "timestamp": "2020-11-08T17:12:40.289494Z"
+            }
+        }
+    },
+    "version": "0.1",
+    "vnf": {
+        "author": "Test case",
+        "description": "bypass VNF",
+        "id": "vnf-bypass",
+        "name": "vnf/bypass:0.1",
+        "version": "0.1"
+    }
+}

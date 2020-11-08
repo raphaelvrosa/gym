@@ -6,7 +6,6 @@ import json
 
 from gym.common.tools import Tools
 
-
 logger = logging.getLogger(__name__)
 
 

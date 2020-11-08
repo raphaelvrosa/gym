@@ -98,7 +98,7 @@ class Config:
                     "contacts": _contacts,
                     "debug": self.cfg.debug,
                 }
-                print(f"App cfg args OK: id {_id} - address {_address}")
+                # print(f"App cfg args OK: id {_id} - address {_address}")
                 return info
 
             else:
@@ -121,7 +121,7 @@ class Config:
             bool -- If all the mandatory parameters (uuid and address) were in argv
         """
 
-        print(f"Initializing Gym App - Parsing Argv")
+        # print(f"Initializing Gym App - Parsing Argv")
 
         self.parser.add_argument(
             "--uuid", type=str, help="Define the app unique id (default: None)"

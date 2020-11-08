@@ -15,6 +15,7 @@
   "gym/tests/unit/test_model_vnfpp.py::TestVNFPP::test_vnfpp_parse",
   "gym/tests/unit/test_tools.py::TestTools::test_listeners_sched",
   "gym/tests/unit/test_tools.py::TestTools::test_probers_sched",
-  "gym/tests/unit/test_vnfbr.py::TestVNFBR::test_vnfbr_compile",
-  "gym/tests/unit/test_vnfbr.py::TestVNFBR::test_vnfbr_parse"
+  "gym/tests/unit/test_vnfbr.py::TestVNFBR::test_dataframe",
+  "gym/tests/unit/test_vnfbr.py::TestVNFBR::test_parse",
+  "gym/tests/unit/test_vnfbr.py::TestVNFBR::test_save"
 ]
