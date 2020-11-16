@@ -122,7 +122,7 @@ Specifying --source means all the files in that folder will be available to be l
 **Important:** sudo is needed because gym is going to start one of its components, gym-infra, that is responsible to start containernet, a platform used in the examples.
 
 
-After initializing gym-cli, load the configuration file vnfbd.json example you want to experiment with. For instance:
+After initializing gym-cli, load the configuration file vnf-br-001.json (when you type load a list of experiment files, contained in --source option, will appear) example you want to experiment with. For instance:
 
 ```bash
 $ sudo gym-cli --uuid cli --address 127.0.0.1:9988 --source ./examples
@@ -149,7 +149,7 @@ Having successfuly loaded the configuration, then you can begin the experiment.
 -> task: Loading configuration file at .../gym/examples/vnf-br-001.json
 -> result: Configuration loaded
 
-(-: gym > begin
+(-: gym > begin 
 
 : Beginning :
 
@@ -173,11 +173,12 @@ After waiting for a while, at the end of the experiment you should se something 
 
 ```
 
-If errors were found, check the gym logs at /tmp/gym/logs. There exists a single log file for each component (e.g., GymCLIApp-cli.log,  GymInfra-gym-infra.log, GymPlayer-gym-player.log).
+During the execution of an experiment or if errors were found, check the gym logs at /tmp/gym/logs. There exists a single log file for each component (e.g., GymCLIApp-cli.log,  GymInfra-gym-infra.log, GymPlayer-gym-player.log).
 
 
 Finally, you can end the experiment and say goodbye to gym, type <ctrl+d> to exit gym-cli.
 
+The end option will stop all the gym components. 
 
 ```bash
 

@@ -6,10 +6,10 @@ TEST_PATH=./gym/tests
 UTIL_FOLDER=./util
 UTIL_TOOLS=tools.py
 UTIL_VISUAL=visual.sh
-UTIL_EXAMPLES=examples.sh
+UTIL_EXAMPLES=install_examples.sh
 
 
-install-tools:
+install-tools: # make install-tools ARGS="ping iperf3"
 	sh -c "cd $(UTIL_FOLDER) && sudo /usr/bin/python3.8 $(UTIL_TOOLS) --install ${ARGS} && cd - "
 
 uninstall-tools:

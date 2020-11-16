@@ -262,6 +262,12 @@ class ToolsUtil:
         tools_install = info.get("install", [])
         tools_uninstall = info.get("uninstall", [])
 
+        if "all" in tools_install:
+            tools_install = list(self.tools.keys())
+
+        if "all" in tools_uninstall:
+            tools_uninstall = list(self.tools.keys())
+
         for tool in tools_install:
             ack = self.call("install", tool)
             acks_install[tool] = ack

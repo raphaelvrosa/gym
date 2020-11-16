@@ -37,13 +37,28 @@ def load_file(filename):
 class TestVNFBR(unittest.TestCase):
     def test_parse(self):
 
-        vnfbr_data = load_file("vnfbr-001.json")
+        vnfbr_data = load_file("vnf-br-003.json")
 
         vnfbr = VNFBR()
         vnfbr.parse(vnfbr_data)
+
+        vnfbr_yang = vnfbr.yang()
+        vnfbr_yang_ph = vnfbr.yang_ph()
+
+        _path = (
+            vnfbr_yang.inputs.vnfbd.proceedings.agents["d1"]
+            .probers["1"]
+            .parameters["pcap"]
+            .value._yang_path()
+        )
+
+        print(vnfbr_yang_ph.get_unique(_path))
+        print("_path", _path)
+
         instances = vnfbr.instances()
         all_instances = list(instances)
-        assert len(all_instances) == 2
+        print(len(all_instances))
+        assert len(all_instances) == 8
 
     def test_save(self):
         vnfbr_data = load_file("vnfbr-001.json")
@@ -70,4 +85,4 @@ if __name__ == "__main__":
     )
     # unittest.main()
     t = TestVNFBR()
-    t.test_dataframe()
+    t.test_parse()

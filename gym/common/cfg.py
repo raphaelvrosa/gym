@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 class Config:
     def __init__(self):
         self._info = None
+        self.cfg = {}
         self.parser = argparse.ArgumentParser(description="Gym App")
 
     def get(self):

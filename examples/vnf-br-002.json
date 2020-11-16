@@ -30,7 +30,7 @@
         "variables": {
             "vnf_vcpu": {
                 "name": "vnf_vcpu",
-                "values": ["2"],
+                "values": ["1", "2"],
                 "path": "/scenario/nodes[id='d2']/resources/cpu/vcpus",
                 "class": "resource",
                 "type": "uint32"

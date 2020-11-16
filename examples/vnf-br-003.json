@@ -41,12 +41,26 @@
                 "path": "/scenario/nodes[id='d2']/resources/memory/size",
                 "class": "resource",
                 "type": "uint32"
+            },
+            "pcap": {
+                "name": "pcap",
+                "values": ["smallFlows.pcap", "bigFlows.pcap"],
+                "path": "/proceedings/agents[uuid='d1']/probers[id='1']/parameters[input='pcap']/value",
+                "class": "traffic",
+                "type": "string"
+            },
+            "ruleset": {
+                "name": "ruleset",
+                "values": ["small_ruleset", "big_ruleset"],
+                "path": "/scenario/nodes[id='d2']/lifecycle[workflow='start']/parameters[input='configuration']/value",
+                "class": "configuration",
+                "type": "string"
             }
         },
         "vnfbd": {
             "experiments": {
-                "trials": 1,
-                "tests": 1
+                "trials": 2,
+                "tests": 2
             },
             "scenario": {
                 "nodes": {
@@ -350,7 +364,7 @@
                         "name": "",
                         "probers": {
                             "1": {
-                                "id": 6,
+                                "id": 1,
                                 "instances": 1,
                                 "name": "tcpreplay",
                                 "parameters": {
