@@ -17,7 +17,7 @@ def _parse(out, err):
         err {bytes} -- The stderr of the process
 
     Returns:
-        tuple -- (string, string) Both process out and err 
+        tuple -- (string, string) Both process out and err
         in string format (utf-8)
     """
     output = out.decode("UTF-8")
@@ -49,10 +49,12 @@ def start_process(args, shell=False):
         )
         process = p
 
-    except OSError:
+    except Exception as ex:
         process = None
+        logger.debug(f"Process {p.pid} error - exception {ex}")
+    else:
+        logger.debug(f"Process {p.pid} started ok")
     finally:
-
         return process
 
 
@@ -72,7 +74,6 @@ def stop_process(p):
         out, err = p.communicate()
         code = p.returncode
         logger.debug(f"Process {pid} stopped - return code {code}")
-        # logger.debug(f"Process {pid} stopped - out {out}, err {err}")
+        logger.debug(f"Process {pid} stopped - out {out}, err {err}")
         return True
     return False
-

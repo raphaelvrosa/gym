@@ -1,3 +1,4 @@
+import logging
 import json
 import unittest
 import asyncio
@@ -135,6 +136,11 @@ class TestAgent(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    # logging.basicConfig(
+    #     level=logging.DEBUG,
+    #     format="%(asctime)s %(levelname)s %(threadName)s %(name)s %(message)s",
+    # )
+
     unittest.main()
 
     # t = TestAgent()

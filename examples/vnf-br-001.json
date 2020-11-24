@@ -301,6 +301,25 @@
                                         "value": "4G"
                                     }
                                 }
+                            },
+                            "2": {
+                                "id": 2,
+                                "instances": 1,
+                                "name": "ping",
+                                "parameters": {
+                                    "target": {
+                                        "input": "target",
+                                        "value": "172.31.1.4"
+                                    },
+                                    "duration": {
+                                        "input": "duration",
+                                        "value": "20"
+                                    },
+                                    "interval": {
+                                        "input": "interval",
+                                        "value": "2"
+                                    }
+                                }
                             }
                         }
                     },

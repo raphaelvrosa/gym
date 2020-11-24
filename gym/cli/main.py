@@ -101,6 +101,9 @@ class Proxy:
         logger.info(f"Workflow start: component {info.get('name')}")
 
         if info.get("sudo", False):
+            sudo_cmd = "sudo ps aux | grep gym-"
+            ack, msg = self._plugin.execute_command(sudo_cmd)
+
             cmd = "sudo gym-{name} --uuid {uuid} --address {address} --debug &".format(
                 name=info.get("name"),
                 uuid=info.get("uuid"),
@@ -209,11 +212,19 @@ class CLIRunner:
     def begin_components(self):
         logger.info(f"Begin components")
         self.proxy.start(self._player_info)
+        print_cli(
+            f"gym requires sudo credentials to start/stop gym-infra (i.e., Containernet)",
+            style="warning",
+        )
         self.proxy.start(self._infra_info)
 
     def end_components(self):
         logger.info(f"End components")
         self.proxy.stop(self._player_info)
+        print_cli(
+            f"gym requires sudo credentials to start/stop gym-infra (i.e., Containernet)",
+            style="warning",
+        )
         self.proxy.stop(self._infra_info)
 
     def save(self, result):

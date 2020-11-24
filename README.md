@@ -41,12 +41,14 @@ Gym is tested in Ubuntu, version 20.04 onwards.
 
 Gym depends on python 3.8, because it uses some gRPC libraries via asyncio. 
 
+For a simple setup its recommended to have available at least: 4 logical cpu cores, 8 GB of RAM, and 10GB of storage.
+
 To run most of the examples, gym makes use of Containernet (an extension of Mininet to run containers), thus it needs to install Docker and Mininet to do so.
 Besides, these dependencies also download and build other docker images needed for most of the gym examples, download some pcap files and place them under /mnt/pcaps folder.
 To install such dependencies, follow:
 
 ```bash
-$ sudo apt install git
+$ sudo apt install git make
 
 $ git clone https://github.com/raphaelvrosa/gym
 
@@ -194,8 +196,6 @@ The end option will stop all the gym components.
 	<<< See you soon! Cheers, Gym >>>	
 
 ```
-
-
 
 **Important:** To execute examples 1, 2 and 3 follow the instructions in the topic Installing/Dependencies previously explained in this readme.
 

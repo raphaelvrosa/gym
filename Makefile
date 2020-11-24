@@ -8,6 +8,7 @@ UTIL_TOOLS=tools.py
 UTIL_VISUAL=visual.sh
 UTIL_EXAMPLES=install_examples.sh
 
+ARGS="all"
 
 install-tools: # make install-tools ARGS="ping iperf3"
 	sh -c "cd $(UTIL_FOLDER) && sudo /usr/bin/python3.8 $(UTIL_TOOLS) --install ${ARGS} && cd - "
@@ -34,16 +35,18 @@ vagrant-requirements-libvirt:
 examples-util:
 	sh -c "cd $(UTIL_FOLDER) && sudo ./$(UTIL_EXAMPLES) && cd - "
 
-requirements:
-	sudo apt update && sudo apt install -y python3.8 python3-setuptools python3-pip
+requirements: install-tools
+	sudo apt update && sudo apt install -y git python3.8 python3-setuptools python3-pip
+	# sudo rm -R /tmp/gym
 	mkdir -p /tmp/gym
 	mkdir -p /tmp/gym/logs
 	mkdir -p /tmp/gym/source
+	git clone https://github.com/raphaelvrosa/gym /tmp/gym/source
 
 develop: requirements
 	sudo /usr/bin/python3.8 setup.py develop
 
-install: requirements
+install: requirements docker-build
 	/usr/bin/python3.8 -m pip install .
 
 uninstall:
@@ -72,7 +75,7 @@ test: clean-pyc
 	py.test --verbose --color=yes $(TEST_PATH)
 
 run: install
-	gym-cli
+	gym-cli --uuid gym-cli --address 127.0.0.1:9988 --source /tmp/gym/source/examples 
 
 docker-build:
 	docker build \

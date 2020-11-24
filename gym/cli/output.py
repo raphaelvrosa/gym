@@ -21,7 +21,7 @@ prefixes = {
     "error": "-> error: ",
     "info": "\n-> task: ",
     "attention": "\n: ",
-    "warning": "\nwarning! ",
+    "warning": "\n-> notice! ",
     "prompt": "",
 }
 
